@@ -1,0 +1,100 @@
+{
+  "projectType": "application",
+  "root": "apps/chat-ui",
+  "sourceRoot": "apps/chat-ui/src",
+  "prefix": "pokedexe",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:webpack-browser",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/chat-ui",
+        "index": "apps/chat-ui/src/index.html",
+        "main": "apps/chat-ui/src/main.ts",
+        "polyfills": "apps/chat-ui/src/polyfills.ts",
+        "tsConfig": "apps/chat-ui/tsconfig.app.json",
+        "assets": ["apps/chat-ui/src/favicon.ico", "apps/chat-ui/src/assets"],
+        "styles": ["apps/chat-ui/src/styles.css"],
+        "scripts": [],
+        "customWebpackConfig": {
+          "path": "apps/chat-ui/webpack.config.js"
+        }
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "fileReplacements": [
+            {
+              "replace": "apps/chat-ui/src/environments/environment.ts",
+              "with": "apps/chat-ui/src/environments/environment.prod.ts"
+            }
+          ],
+          "outputHashing": "none",
+          "customWebpackConfig": {
+            "path": "apps/chat-ui/webpack.prod.config.js"
+          }
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@nrwl/angular:webpack-server",
+      "configurations": {
+        "production": {
+          "browserTarget": "chat-ui:build:production"
+        },
+        "development": {
+          "browserTarget": "chat-ui:build:development"
+        }
+      },
+      "defaultConfiguration": "development",
+      "options": {
+        "port": 5001,
+        "publicHost": "http://localhost:5001"
+      }
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "browserTarget": "chat-ui:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "apps/chat-ui/src/**/*.ts",
+          "apps/chat-ui/src/**/*.html"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/chat-ui"],
+      "options": {
+        "jestConfig": "apps/chat-ui/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["app"]
+}

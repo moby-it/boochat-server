@@ -1,0 +1,103 @@
+{
+  "projectType": "application",
+  "root": "apps/events-ui",
+  "sourceRoot": "apps/events-ui/src",
+  "prefix": "pokedexe",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:webpack-browser",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/events-ui",
+        "index": "apps/events-ui/src/index.html",
+        "main": "apps/events-ui/src/main.ts",
+        "polyfills": "apps/events-ui/src/polyfills.ts",
+        "tsConfig": "apps/events-ui/tsconfig.app.json",
+        "assets": [
+          "apps/events-ui/src/favicon.ico",
+          "apps/events-ui/src/assets"
+        ],
+        "styles": ["apps/events-ui/src/styles.css"],
+        "scripts": [],
+        "customWebpackConfig": {
+          "path": "apps/events-ui/webpack.config.js"
+        }
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "fileReplacements": [
+            {
+              "replace": "apps/events-ui/src/environments/environment.ts",
+              "with": "apps/events-ui/src/environments/environment.prod.ts"
+            }
+          ],
+          "outputHashing": "none",
+          "customWebpackConfig": {
+            "path": "apps/events-ui/webpack.prod.config.js"
+          }
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@nrwl/angular:webpack-server",
+      "configurations": {
+        "production": {
+          "browserTarget": "events-ui:build:production"
+        },
+        "development": {
+          "browserTarget": "events-ui:build:development"
+        }
+      },
+      "defaultConfiguration": "development",
+      "options": {
+        "port": 5002,
+        "publicHost": "http://localhost:5002"
+      }
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "browserTarget": "events-ui:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "apps/events-ui/src/**/*.ts",
+          "apps/events-ui/src/**/*.html"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/events-ui"],
+      "options": {
+        "jestConfig": "apps/events-ui/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["app"]
+}

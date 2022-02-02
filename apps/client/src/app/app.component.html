@@ -1,0 +1,7 @@
+<ng-container *ngIf="!(authStateReady$ | ngrxPush)">
+  Loading...
+</ng-container>
+<ng-container *ngIf="authStateReady$ |ngrxPush">
+  <pokedexe-header></pokedexe-header>
+  <router-outlet></router-outlet>
+</ng-container>

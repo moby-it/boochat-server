@@ -1,0 +1,28 @@
+{
+  "root": "apps/events-ui-e2e",
+  "sourceRoot": "apps/events-ui-e2e/src",
+  "projectType": "application",
+  "targets": {
+    "e2e": {
+      "executor": "@nrwl/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/events-ui-e2e/cypress.json",
+        "devServerTarget": "events-ui:serve:development"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "events-ui:serve:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/events-ui-e2e/**/*.{js,ts}"]
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["events-ui"]
+}
