@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'pokedexe-chat-ui-entry',
   template: `<div class="remote-entry">
-    <h2>chat-ui's Remote Entry Component changed!!</h2>
+    <h2>chat-ui's Remote Entry Component changed!!!!!</h2>
   </div>`,
   styles: [
     `
