@@ -1,8 +1,17 @@
 version: 2.1
 
 orbs:
-  aws-s3: circleci/aws-s3@3.0.0
-
+  azure-cli: circleci/azure-cli@1.2.0
+commands:
+  upload-batch:
+    parameters:
+      from:
+        type: string
+      to:
+        type: string
+    steps:
+      - run: az storage blob delete-batch --source << parameters.to >>
+      - run: az storage blob upload-batch --destination << parameters.to >> --source << parameters.from >>
 parameters:
   client-modified:
     type: boolean
@@ -22,12 +31,10 @@ jobs:
       - checkout
       - run: npm install
       - run: npm run build client
-      - aws-s3/sync:
-          aws-access-key-id: AWS_ACCESS_KEY_ID
-          aws-region: AWS_REGION
-          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
-          from: dist/apps/client
-          to: 's3://pokedexe-ui'
+      - persist_to_workspace:
+          root: .
+          paths:
+            - dist/apps/client
   build-chat:
     docker:
       - image: cimg/node:17.4.0
@@ -35,12 +42,10 @@ jobs:
       - checkout
       - run: npm install
       - run: npm run build chat-ui
-      - aws-s3/sync:
-          aws-access-key-id: AWS_ACCESS_KEY_ID
-          aws-region: AWS_REGION
-          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
-          from: dist/apps/chat-ui
-          to: 's3://pokedexe-ui/chat'
+      - persist_to_workspace:
+          root: .
+          paths:
+            - dist/apps/chat-ui
   build-events:
     docker:
       - image: cimg/node:17.4.0
@@ -48,22 +53,68 @@ jobs:
       - checkout
       - run: npm install
       - run: npm run build events-ui
-      - aws-s3/sync:
-          aws-access-key-id: AWS_ACCESS_KEY_ID
-          aws-region: AWS_REGION
-          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+      - persist_to_workspace:
+          root: .
+          paths:
+            - dist/apps/events-ui
+  upload-chat:
+    executor: azure-cli/default
+    steps:
+      - attach_workspace:
+          at: .
+      - azure-cli/install
+      - upload-batch:
+          from: dist/apps/chat-ui
+          to: chat
+  upload-events:
+    executor: azure-cli/default
+    steps:
+      - attach_workspace:
+          at: .
+      - azure-cli/install
+      - upload-batch:
           from: dist/apps/events-ui
-          to: 's3://pokedexe-ui/events'
+          to: events
+  upload-client:
+    executor: azure-cli/default
+    steps:
+      - attach_workspace:
+          at: .
+      - azure-cli/install
+      - upload-batch:
+          from: dist/apps/client
+          to: \$web
 workflows:
   deploy-client:
     when: << pipeline.parameters.client-modified >>
     jobs:
-      - build-client
+      - build-client:
+          filters:
+            branches:
+              only:
+                - main
+      - upload-client:
+          requires:
+            - build-client
   deploy-events:
     when: << pipeline.parameters.events-modified >>
     jobs:
-      - build-events
+      - build-events:
+          filters:
+            branches:
+              only:
+                - main
+      - upload-events:
+          requires:
+            - build-events
   deploy-chat:
     when: << pipeline.parameters.chat-modified >>
     jobs:
-      - build-chat
+      - build-chat:
+          filters:
+            branches:
+              only:
+                - main
+      - upload-chat:
+          requires:
+            - build-chat

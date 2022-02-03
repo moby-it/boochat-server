@@ -18,7 +18,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   async ngOnInit() {
     this.loading$.next(true);
     await this.initializeChat();
-    await this.initializeEvents();
+    // await this.initializeEvents();
     this.loading$.next(false);
   }
 
@@ -38,13 +38,13 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   private async initializeChat() {
     const viewContainerRef = this.chatHost.viewContainerRef;
     viewContainerRef.clear();
-    const {ChatComponent} = await loadRemoteModule({
+    const {ChatBoxComponent} = await loadRemoteModule({
       remoteEntry: environment.remotes.chat,
       remoteName: 'chat',
       exposedModule: './Component'
     });
-    console.log(ChatComponent);
-    viewContainerRef.createComponent(ChatComponent);
+    console.log(ChatBoxComponent);
+    viewContainerRef.createComponent(ChatBoxComponent);
 
   }
 

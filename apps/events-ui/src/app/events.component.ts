@@ -2,17 +2,8 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'pokedexe-events-ui-entry',
-  template: `<div class="remote-entry">
-    <h2>events-ui's Remote Entry Component</h2>
-  </div>`,
-  styles: [
-    `
-      .remote-entry {
-        background-color: #143055;
-        color: white;
-        padding: 5px;
-      }
-    `,
-  ],
+  template: `
+    <h2>Events Dialog </h2>`
 })
-export class EventsComponent {}
+export class EventsComponent {
+}

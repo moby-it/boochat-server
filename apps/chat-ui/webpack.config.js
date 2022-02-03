@@ -49,7 +49,7 @@ module.exports = {
       name: 'chat',
       filename: 'remoteEntry.js',
       exposes: {
-        './Component': 'apps/chat-ui/src/app/chat.component.ts',
+        './Component': 'apps/chat-ui/src/app/chat-box/chat-box.component.ts',
       },
       shared: share({
         '@angular/core': {
