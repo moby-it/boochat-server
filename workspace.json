@@ -1,13 +1,16 @@
 {
   "version": 2,
   "projects": {
+    "application": "libs/application",
     "chat-api": "apps/chat-api",
     "chat-ui": "apps/chat-ui",
     "chat-ui-e2e": "apps/chat-ui-e2e",
     "client": "apps/client",
     "client-e2e": "apps/client-e2e",
+    "domain": "libs/domain",
     "events-ui": "apps/events-ui",
     "events-ui-e2e": "apps/events-ui-e2e",
-    "feature-auth": "libs/feature-auth"
+    "persistence": "apps/persistence",
+    "utilities": "libs/utilities"
   }
 }

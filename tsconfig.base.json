@@ -15,7 +15,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@pokedexe/auth": ["libs/feature-auth/src/index.ts"]
+      "@pokedexe/application": ["libs/application/src/index.ts"],
+      "@pokedexe/domain": ["libs/domain/src/index.ts"],
+      "@pokedexe/utilities": ["libs/utilities/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
