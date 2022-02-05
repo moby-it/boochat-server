@@ -1,27 +1,27 @@
-import { ConnectedSocket, MessageBody, SubscribeMessage, WebSocketGateway } from "@nestjs/websockets";
-import { Socket } from "net";
+import { OnGatewayConnection, OnGatewayDisconnect, WebSocketGateway, WebSocketServer } from "@nestjs/websockets";
+import { Server, Socket } from 'socket.io';
 
-@WebSocketGateway(4000, {
+@WebSocketGateway({
   namespace: 'chat',
   cors: {
     origin: '*'
   }
 })
-export class ActiveUsersGateway {
+export class ActiveUsersGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
-  @SubscribeMessage('userOnline')
-  onUserOnline(@MessageBody() data: any, @ConnectedSocket() client: Socket) {
-    this.turnUserOnline();
-    client.on('close', () => {
-      this.turnUserOffine();
-    });
+  @WebSocketServer()
+  server!: Server;
+
+  handleConnection(client: Socket) {
+    const email = client.handshake.query.email as string;
+    if (email)
+      client.broadcast.emit('userOnline', {email});
   }
 
-  private turnUserOnline() {
-    console.log('user turned online');
+  handleDisconnect(client: Socket) {
+    const email = client.handshake.query.email as string;
+    if (email)
+      client.broadcast.emit('userOffline', {email});
   }
 
-  private turnUserOffine() {
-    console.log('user turned offline');
-  }
 }
