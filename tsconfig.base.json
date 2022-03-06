@@ -10,15 +10,27 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "lib": ["es2017", "dom"],
+    "lib": [
+      "es2017",
+      "dom"
+    ],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@pokedexe/application": ["libs/application/src/index.ts"],
-      "@pokedexe/domain": ["libs/domain/src/index.ts"],
-      "@pokedexe/utilities": ["libs/utilities/src/index.ts"]
+      "@oursocial/application": [
+        "libs/application/src/index.ts"
+      ],
+      "@oursocial/domain": [
+        "libs/domain/src/index.ts"
+      ],
+      "@oursocial/utilities": [
+        "libs/utilities/src/index.ts"
+      ]
     }
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
 }

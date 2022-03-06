@@ -7,7 +7,7 @@
 			"Effect": "Allow",
 			"Principal": "*",
 			"Action": "s3:*",
-			"Resource": "arn:aws:s3:::pokedexe-ui/*"
+			"Resource": "arn:aws:s3:::oursocial-ui/*"
 		}
 	]
 }

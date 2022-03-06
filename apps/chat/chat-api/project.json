@@ -1,16 +1,16 @@
 {
-  "root": "apps/chat-api",
-  "sourceRoot": "apps/chat-api/src",
+  "root": "apps/chat/chat-api",
+  "sourceRoot": "apps/chat/chat-api/src",
   "projectType": "application",
   "targets": {
     "build": {
       "executor": "@nrwl/node:build",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/apps/chat-api",
-        "main": "apps/chat-api/src/main.ts",
-        "tsConfig": "apps/chat-api/tsconfig.app.json",
-        "assets": ["apps/chat-api/src/assets"]
+        "outputPath": "dist/apps/chat/chat-api",
+        "main": "apps/chat/chat-api/src/main.ts",
+        "tsConfig": "apps/chat/chat-api/tsconfig.app.json",
+        "assets": ["apps/chat/chat-api/src/assets"]
       },
       "configurations": {
         "production": {
@@ -19,8 +19,8 @@
           "inspect": false,
           "fileReplacements": [
             {
-              "replace": "apps/chat-api/src/environments/environment.ts",
-              "with": "apps/chat-api/src/environments/environment.prod.ts"
+              "replace": "apps/chat/chat-api/src/environments/environment.ts",
+              "with": "apps/chat/chat-api/src/environments/environment.prod.ts"
             }
           ]
         }
@@ -36,14 +36,14 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["apps/chat-api/**/*.ts"]
+        "lintFilePatterns": ["apps/chat/chat-api/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/apps/chat-api"],
       "options": {
-        "jestConfig": "apps/chat-api/jest.config.js",
+        "jestConfig": "apps/chat/chat-api/jest.config.js",
         "passWithNoTests": true
       }
     }

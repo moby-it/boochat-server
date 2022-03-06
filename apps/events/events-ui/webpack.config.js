@@ -14,9 +14,9 @@ const share = mf.share;
  */
 const tsConfigPath =
   process.env.NX_TSCONFIG_PATH ??
-  path.join(__dirname, '../../tsconfig.base.json');
+  path.join(__dirname, '../../../tsconfig.base.json');
 
-const workspaceRootPath = path.join(__dirname, '../../');
+const workspaceRootPath = path.join(__dirname, '../../../');
 const sharedMappings = new mf.SharedMappings();
 sharedMappings.register(
   tsConfigPath,
@@ -48,7 +48,7 @@ module.exports = {
       name: 'events',
       filename: 'remoteEntry.js',
       exposes: {
-        './Component': 'apps/events-ui/src/app/events.component.ts',
+        './Component': 'apps/events/events-ui/src/app/events.component.ts',
       },
       shared: share({
         '@angular/core': {

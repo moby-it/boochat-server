@@ -1,0 +1,24 @@
+name: Deploy Chat Api
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'apps/chat/chat-api/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: azure/docker-login@v1
+        with:
+          login-server: oursocial.azurecr.io
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
+
+      - run: |
+          docker build -f docker/chat-api.dockerfile . -t oursocial.azurecr.io/chat-api:latest
+          docker push oursocial.azurecr.io/chat-api:latest

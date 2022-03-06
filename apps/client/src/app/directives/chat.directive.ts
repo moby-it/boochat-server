@@ -1,7 +1,7 @@
 import { Directive, ViewContainerRef } from '@angular/core';
 
 @Directive({
-  selector: '[chat]',
+  selector: '[oursocialChat]',
 })
 export class ChatDirective {
   constructor(public viewContainerRef: ViewContainerRef) { }

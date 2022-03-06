@@ -1,26 +1,30 @@
 {
   "projectType": "application",
-  "root": "apps/events-ui",
-  "sourceRoot": "apps/events-ui/src",
-  "prefix": "pokedexe",
+  "root": "apps/events/events-ui",
+  "sourceRoot": "apps/events/events-ui/src",
+  "prefix": "oursocial",
   "targets": {
     "build": {
       "executor": "@nrwl/angular:webpack-browser",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
-        "outputPath": "dist/apps/events-ui",
-        "index": "apps/events-ui/src/index.html",
-        "main": "apps/events-ui/src/main.ts",
-        "polyfills": "apps/events-ui/src/polyfills.ts",
-        "tsConfig": "apps/events-ui/tsconfig.app.json",
+        "outputPath": "dist/apps/events/events-ui",
+        "index": "apps/events/events-ui/src/index.html",
+        "main": "apps/events/events-ui/src/main.ts",
+        "polyfills": "apps/events/events-ui/src/polyfills.ts",
+        "tsConfig": "apps/events/events-ui/tsconfig.app.json",
         "assets": [
-          "apps/events-ui/src/favicon.ico",
-          "apps/events-ui/src/assets"
+          "apps/events/events-ui/src/favicon.ico",
+          "apps/events/events-ui/src/assets"
         ],
-        "styles": ["apps/events-ui/src/styles.css"],
+        "styles": [
+          "apps/events/events-ui/src/styles.css"
+        ],
         "scripts": [],
         "customWebpackConfig": {
-          "path": "apps/events-ui/webpack.config.js"
+          "path": "apps/events/events-ui/webpack.config.js"
         }
       },
       "configurations": {
@@ -39,13 +43,13 @@
           ],
           "fileReplacements": [
             {
-              "replace": "apps/events-ui/src/environments/environment.ts",
-              "with": "apps/events-ui/src/environments/environment.prod.ts"
+              "replace": "apps/events/events-ui/src/environments/environment.ts",
+              "with": "apps/events/events-ui/src/environments/environment.prod.ts"
             }
           ],
           "outputHashing": "none",
           "customWebpackConfig": {
-            "path": "apps/events-ui/webpack.prod.config.js"
+            "path": "apps/events/events-ui/webpack.prod.config.js"
           }
         },
         "development": {
@@ -92,12 +96,16 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/events-ui"],
+      "outputs": [
+        "coverage/apps/events-ui"
+      ],
       "options": {
-        "jestConfig": "apps/events-ui/jest.config.js",
+        "jestConfig": "apps/events/events-ui/jest.config.js",
         "passWithNoTests": true
       }
     }
   },
-  "tags": ["app"]
+  "tags": [
+    "app"
+  ]
 }

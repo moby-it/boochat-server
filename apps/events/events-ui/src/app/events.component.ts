@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'pokedexe-events-ui-entry',
+  selector: 'oursocial-events-ui-entry',
   template: `
     <h2>Events Dialog </h2>`
 })

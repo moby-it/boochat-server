@@ -14,9 +14,9 @@ const share = mf.share;
  */
 const tsConfigPath =
   process.env.NX_TSCONFIG_PATH ??
-  path.join(__dirname, '../../tsconfig.base.json');
+  path.join(__dirname, '../../../tsconfig.base.json');
 
-const workspaceRootPath = path.join(__dirname, '../../');
+const workspaceRootPath = path.join(__dirname, '../../../');
 const sharedMappings = new mf.SharedMappings();
 sharedMappings.register(
   tsConfigPath,
@@ -49,7 +49,7 @@ module.exports = {
       name: 'chat',
       filename: 'remoteEntry.js',
       exposes: {
-        './Component': 'apps/chat-ui/src/app/chat-box/chat-box.component.ts',
+        './Component': 'apps/chat/chat-ui/src/app/chat-box/chat-box.component.ts',
       },
       shared: share({
         '@angular/core': {

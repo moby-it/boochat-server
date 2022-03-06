@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { GoogleLoginProvider, SocialAuthService, SocialUser } from "angularx-social-login";
 import { Router } from "@angular/router";
+import { GoogleLoginProvider, SocialAuthService, SocialUser } from "angularx-social-login";
 
 @Component({
-  selector: 'pokedexe-header',
+  selector: 'oursocial-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
   encapsulation: ViewEncapsulation.Emulated

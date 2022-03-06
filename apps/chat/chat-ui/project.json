@@ -1,23 +1,30 @@
 {
   "projectType": "application",
-  "root": "apps/chat-ui",
-  "sourceRoot": "apps/chat-ui/src",
-  "prefix": "pokedexe",
+  "root": "apps/chat/chat-ui",
+  "sourceRoot": "apps/chat/chat-ui/src",
+  "prefix": "oursocial",
   "targets": {
     "build": {
       "executor": "@nrwl/angular:webpack-browser",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
-        "outputPath": "dist/apps/chat-ui",
-        "index": "apps/chat-ui/src/index.html",
-        "main": "apps/chat-ui/src/main.ts",
-        "polyfills": "apps/chat-ui/src/polyfills.ts",
-        "tsConfig": "apps/chat-ui/tsconfig.app.json",
-        "assets": ["apps/chat-ui/src/favicon.ico", "apps/chat-ui/src/assets"],
-        "styles": ["apps/chat-ui/src/styles.css"],
+        "outputPath": "dist/apps/chat/chat-ui",
+        "index": "apps/chat/chat-ui/src/index.html",
+        "main": "apps/chat/chat-ui/src/main.ts",
+        "polyfills": "apps/chat/chat-ui/src/polyfills.ts",
+        "tsConfig": "apps/chat/chat-ui/tsconfig.app.json",
+        "assets": [
+          "apps/chat/chat-ui/src/favicon.ico",
+          "apps/chat/chat-ui/src/assets"
+        ],
+        "styles": [
+          "apps/chat/chat-ui/src/styles.css"
+        ],
         "scripts": [],
         "customWebpackConfig": {
-          "path": "apps/chat-ui/webpack.config.js"
+          "path": "apps/chat/chat-ui/webpack.config.js"
         }
       },
       "configurations": {
@@ -36,13 +43,13 @@
           ],
           "fileReplacements": [
             {
-              "replace": "apps/chat-ui/src/environments/environment.ts",
-              "with": "apps/chat-ui/src/environments/environment.prod.ts"
+              "replace": "apps/chat/chat-ui/src/environments/environment.ts",
+              "with": "apps/chat/chat-ui/src/environments/environment.prod.ts"
             }
           ],
           "outputHashing": "none",
           "customWebpackConfig": {
-            "path": "apps/chat-ui/webpack.prod.config.js"
+            "path": "apps/chat/chat-ui/webpack.prod.config.js"
           }
         },
         "development": {
@@ -89,12 +96,16 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/chat-ui"],
+      "outputs": [
+        "coverage/apps/chat-ui"
+      ],
       "options": {
         "jestConfig": "apps/chat-ui/jest.config.js",
         "passWithNoTests": true
       }
     }
   },
-  "tags": ["app"]
+  "tags": [
+    "app"
+  ]
 }

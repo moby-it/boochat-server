@@ -1,19 +1,19 @@
-import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { ChatDirective, EventsDirective } from "../directives";
 import { loadRemoteModule } from "@angular-architects/module-federation";
-import { environment } from "../../environments/environment";
+import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { BehaviorSubject } from "rxjs";
+import { environment } from "../../environments/environment";
+import { ChatDirective, EventsDirective } from "../directives";
 
 @Component({
-  selector: 'pokedexe-landing-page',
+  selector: 'oursocial-landing-page',
   templateUrl: './landing-page.component.html',
   styleUrls: ['./landing-page.component.css'],
   encapsulation: ViewEncapsulation.Emulated
 })
 export class LandingPageComponent implements OnInit, OnDestroy {
   loading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
-  @ViewChild(ChatDirective, {static: true}) chatHost!: ChatDirective;
-  @ViewChild(EventsDirective, {static: true}) eventsHost!: EventsDirective;
+  @ViewChild(ChatDirective, { static: true }) chatHost!: ChatDirective;
+  @ViewChild(EventsDirective, { static: true }) eventsHost!: EventsDirective;
 
   async ngOnInit() {
     this.loading$.next(true);
@@ -25,7 +25,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   private async initializeEvents() {
     const viewContainerRef = this.eventsHost.viewContainerRef;
     viewContainerRef.clear();
-    const {EventsComponent} = await loadRemoteModule({
+    const { EventsComponent } = await loadRemoteModule({
       remoteEntry: environment.remotes.events,
       remoteName: 'events',
       exposedModule: './Component'
@@ -38,7 +38,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   private async initializeChat() {
     const viewContainerRef = this.chatHost.viewContainerRef;
     viewContainerRef.clear();
-    const {ChatBoxComponent} = await loadRemoteModule({
+    const { ChatBoxComponent } = await loadRemoteModule({
       remoteEntry: environment.remotes.chat,
       remoteName: 'chat',
       exposedModule: './Component'
