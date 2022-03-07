@@ -12,7 +12,7 @@ export class Message {
     timestamp: Date;
     @Prop()
     content: string;
-    @Prop()
-    room: string;
+    @Prop({ required: true })
+    roomId: string;
 }
 export const MessageSchema = SchemaFactory.createForClass(Message);
