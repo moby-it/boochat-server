@@ -1,7 +1,7 @@
 import { WebSocketGateway } from "@nestjs/websockets";
 
 @WebSocketGateway({
-    namespace: 'chat',
+    namespace: 'message',
     cors: {
         origin: '*'
     }

@@ -4,3 +4,4 @@ docker
 .vscode
 dist
 .angular
+*.env

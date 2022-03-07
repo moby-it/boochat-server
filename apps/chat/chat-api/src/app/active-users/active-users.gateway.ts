@@ -2,7 +2,7 @@ import { OnGatewayConnection, OnGatewayDisconnect, WebSocketGateway, WebSocketSe
 import { Server, Socket } from 'socket.io';
 
 @WebSocketGateway({
-  namespace: 'chat',
+  namespace: 'active-users',
   cors: {
     origin: '*'
   }
@@ -15,13 +15,13 @@ export class ActiveUsersGateway implements OnGatewayConnection, OnGatewayDisconn
   handleConnection(client: Socket) {
     const email = client.handshake.query.email as string;
     if (email)
-      client.broadcast.emit('userOnline', {email});
+      client.broadcast.emit('userOnline', { email });
   }
 
   handleDisconnect(client: Socket) {
     const email = client.handshake.query.email as string;
     if (email)
-      client.broadcast.emit('userOffline', {email});
+      client.broadcast.emit('userOffline', { email });
   }
 
 }
