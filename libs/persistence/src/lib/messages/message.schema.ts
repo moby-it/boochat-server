@@ -1,18 +1,19 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import * as mongoose from "mongoose";
 import { Document } from 'mongoose';
+import { BaseEntity } from "../common/base.entity";
+import { Room } from "../rooms/room.schema";
 export type MessageDocument = Message & Document;
 
 @Schema()
-export class Message {
+export class Message extends BaseEntity {
     @Prop()
     sender: string;
     @Prop()
     receiver: string;
     @Prop()
-    timestamp: Date;
-    @Prop()
     content: string;
-    @Prop({ required: true })
-    roomId: string;
+    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Room', required: true })
+    roomId: Room;
 }
 export const MessageSchema = SchemaFactory.createForClass(Message);

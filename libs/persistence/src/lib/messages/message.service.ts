@@ -5,12 +5,12 @@ import { CreateMessageDto } from './message.dto';
 import { Message, MessageDocument } from './message.schema';
 
 @Injectable()
-export class MessageService {
+export class MessagePersistenceService {
     constructor(@InjectModel(Message.name) private messageModel: Model<MessageDocument>) { }
 
     async create(createMessageDto: CreateMessageDto): Promise<Message> {
-        const createdCat = new this.messageModel(createMessageDto);
-        return createdCat.save();
+        const createdMessage = new this.messageModel(createMessageDto);
+        return createdMessage.save();
     }
 
     async findAll(): Promise<Message[]> {
