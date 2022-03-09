@@ -14,6 +14,6 @@ export class Message extends BaseEntity {
     @Prop()
     content: string;
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Room', required: true })
-    roomId: Room;
+    room: Room;
 }
 export const MessageSchema = SchemaFactory.createForClass(Message);

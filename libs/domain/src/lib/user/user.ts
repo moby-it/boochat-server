@@ -6,11 +6,17 @@ interface UserProps {
 }
 export class User extends Entity<UserProps> {
 
+  get id() {
+    return this._id;
+  }
+  get email() {
+    return this.props.email;
+  }
   private constructor(props: UserProps, id: string) {
     super(props, id);
   }
-  public static create(props: UserProps) {
+  public static create(props: UserProps, id = '') {
     Guard.AgainstNullOrUndefined([{ propName: 'email', value: props.email }]);
-    return new User(props, uuid());
+    return new User(props, id || uuid());
   }
 }
