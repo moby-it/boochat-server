@@ -1,22 +1,22 @@
 import { v4 as uuid } from 'uuid';
 import { Entity, Guard } from "../common";
-import { Email } from "./email";
+import { GoogleId } from './googleId';
 interface UserProps {
-  email: Email;
+  googleId: GoogleId;
 }
 export class User extends Entity<UserProps> {
 
   get id() {
     return this._id;
   }
-  get email() {
-    return this.props.email;
+  get googleId() {
+    return this.props.googleId;
   }
   private constructor(props: UserProps, id: string) {
     super(props, id);
   }
-  public static create(props: UserProps, id = '') {
-    Guard.AgainstNullOrUndefined([{ propName: 'email', value: props.email }]);
-    return new User(props, id || uuid());
+  public static create(props: UserProps, id = uuid()) {
+    Guard.AgainstNullOrUndefined([{ propName: 'googleId', value: props.googleId }]);
+    return new User(props, id);
   }
 }

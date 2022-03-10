@@ -1,8 +1,7 @@
-import { OnGatewayConnection, OnGatewayDisconnect, WebSocketGateway } from "@nestjs/websockets";
-import { Email, User } from "@oursocial/domain";
+import { OnGatewayConnection, OnGatewayDisconnect, WebSocketGateway, WebSocketServer } from "@nestjs/websockets";
+import { GoogleId, User } from "@oursocial/domain";
 import { RoomsPersistenceService, UserPersistenceService } from "@oursocial/persistence";
-import { Types } from 'mongoose';
-import { Socket } from 'socket.io';
+import { Server, Socket } from 'socket.io';
 @WebSocketGateway({
   namespace: 'active-users',
   cors: {
@@ -10,31 +9,29 @@ import { Socket } from 'socket.io';
   }
 })
 export class ActiveUsersGateway implements OnGatewayConnection, OnGatewayDisconnect {
-  activeUsers: Map<string, Email> = new Map();
+  activeUsers: Map<string, string> = new Map();
+  @WebSocketServer()
+  server: Server;
 
   constructor(private usersService: UserPersistenceService, private roomsService: RoomsPersistenceService) { }
   async handleConnection(client: Socket) {
-    const email = Email.create(client.handshake.query.email as string);
-    if (email) {
-      let user = await this.usersService.findOneByEmail(email);
-      if (!user) {
-        user = await this.usersService.create({ email: email.value });
-      }
-      await this.joinRooms(client, User.create({ email: Email.create(user.email) }, user._id.toString()));
-      this.activeUsers.set(client.id, email);
-      client.broadcast.emit('usersList', Array.from(this.activeUsers.values()));
-    }
+    const googleId = client.handshake.query.googleId as string;
+    const dbUser = await this.usersService.findOneByGoogleId(googleId);
+    const user = User.create({ googleId: GoogleId.create({ id: dbUser.googleId }) }, dbUser._id.toString());
+    await this.joinRooms(client, user.id);
+    this.activeUsers.set(client.id, googleId);
+    client.broadcast.emit('usersList', Array.from(this.activeUsers.values()));
   }
 
   handleDisconnect(client: Socket) {
-    const email = client.handshake.query.email as string;
-    if (email) {
+    const id = client.handshake.query.id as string;
+    if (id) {
       this.activeUsers.delete(client.id);
       client.broadcast.emit('usersList', Array.from(this.activeUsers.values()));
     }
   }
-  private async joinRooms(client: Socket, user: User) {
-    const rooms = await this.roomsService.findByUser({ _id: new Types.ObjectId(user.id), email: user.email.value, timestamp: null });
+  private async joinRooms(client: Socket, userId: string) {
+    const rooms = await this.roomsService.findByUserId(userId);
     rooms.forEach(room => client.join(room._id.toString()));
   }
 }

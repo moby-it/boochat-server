@@ -1,10 +1,10 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { Types } from 'mongoose';
-import { BaseEntity } from '../common/base.entity';
+import { BaseDbEntity } from '../common/base.entity';
 import { User } from "../users/user.schema";
 export type RoomDocument = Room & Document;
 @Schema()
-export class Room extends BaseEntity {
+export class Room extends BaseDbEntity {
     @Prop({ required: true })
     name: string;
     @Prop({ type: [Types.ObjectId], ref: 'User' })

@@ -1,12 +1,12 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import * as mongoose from "mongoose";
 import { Document } from 'mongoose';
-import { BaseEntity } from "../common/base.entity";
+import { BaseDbEntity } from "../common/base.entity";
 import { Room } from "../rooms/room.schema";
 export type MessageDocument = Message & Document;
 
 @Schema()
-export class Message extends BaseEntity {
+export class Message extends BaseDbEntity {
     @Prop()
     sender: string;
     @Prop()

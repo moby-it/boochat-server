@@ -1,5 +1,5 @@
-import { v4 as uuid } from 'uuid';
 import { Entity, Guard } from "../common";
+import { Room } from '../room';
 import { User } from "../user";
 interface MessageProps {
   readonly sender: User;
@@ -7,7 +7,7 @@ interface MessageProps {
   readonly content: string;
   readonly dateSent: Date;
   dateRead: Date | undefined;
-  readonly roomId: string;
+  readonly room: Room;
 }
 export class Message extends Entity<MessageProps>{
 
@@ -17,12 +17,12 @@ export class Message extends Entity<MessageProps>{
   setRead() {
     this.props.dateRead = new Date();
   }
-  public static create(props: MessageProps) {
+  public static create(props: MessageProps, id: string) {
     Guard.AgainstNullOrUndefined([
       { propName: 'sender', value: props.sender },
       { propName: 'receiver', value: props.receiver },
-      { propName: 'roomId', value: props.roomId },
+      { propName: 'room', value: props.room },
     ]);
-    return new Message({ ...props, dateSent: new Date() }, uuid());
+    return new Message({ ...props, dateSent: new Date() }, id);
   }
 }
