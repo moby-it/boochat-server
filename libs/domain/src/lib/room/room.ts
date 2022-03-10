@@ -3,7 +3,7 @@ import { Message } from "../message";
 import { User } from "../user";
 interface RoomProps {
   name: string;
-  participants: User[];
+  users: User[];
   messages: Message[];
 }
 export class Room extends Entity<RoomProps>{
@@ -16,8 +16,8 @@ export class Room extends Entity<RoomProps>{
   get messages() {
     return this.props.messages;
   }
-  get participants() {
-    return this.props.participants;
+  get users() {
+    return this.props.users;
   }
   private constructor(props: RoomProps, id: string) {
     super(props, id);

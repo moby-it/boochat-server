@@ -1,4 +1,5 @@
-export interface CreateRoomDto {
-    name: string;
-    participants: string[];
+export interface RoomDto {
+  id?: string;
+  name: string;
+  users: string[];
 }

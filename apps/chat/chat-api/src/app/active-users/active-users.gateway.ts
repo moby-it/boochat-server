@@ -2,32 +2,31 @@ import { OnGatewayConnection, OnGatewayDisconnect, WebSocketGateway, WebSocketSe
 import { GoogleId, User } from "@oursocial/domain";
 import { RoomsPersistenceService, UserPersistenceService } from "@oursocial/persistence";
 import { Server, Socket } from 'socket.io';
+import { ActiveUsersService } from "./active-users.service";
 @WebSocketGateway({
-  namespace: 'active-users',
   cors: {
     origin: '*'
   }
 })
 export class ActiveUsersGateway implements OnGatewayConnection, OnGatewayDisconnect {
-  activeUsers: Map<string, string> = new Map();
   @WebSocketServer()
   server: Server;
 
-  constructor(private usersService: UserPersistenceService, private roomsService: RoomsPersistenceService) { }
+  constructor(private usersService: UserPersistenceService, private roomsService: RoomsPersistenceService, private activeUsersService: ActiveUsersService) { }
   async handleConnection(client: Socket) {
     const googleId = client.handshake.query.googleId as string;
     const dbUser = await this.usersService.findOneByGoogleId(googleId);
     const user = User.create({ googleId: GoogleId.create({ id: dbUser.googleId }) }, dbUser._id.toString());
+    this.activeUsersService.addUser(googleId, client.id);
     await this.joinRooms(client, user.id);
-    this.activeUsers.set(client.id, googleId);
-    client.broadcast.emit('usersList', Array.from(this.activeUsers.values()));
+    client.broadcast.emit('usersList', this.activeUsersService.activeUsers);
   }
 
   handleDisconnect(client: Socket) {
-    const id = client.handshake.query.id as string;
-    if (id) {
-      this.activeUsers.delete(client.id);
-      client.broadcast.emit('usersList', Array.from(this.activeUsers.values()));
+    const googleId = client.handshake.query.googleId as string;
+    if (googleId) {
+      this.activeUsersService.removeUser(googleId);
+      client.broadcast.emit('usersList', this.activeUsersService.activeUsers);
     }
   }
   private async joinRooms(client: Socket, userId: string) {

@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
-import { CreateUserDto } from './user.dto';
+import { UserDto } from './user.dto';
 import { User, UserDocument } from './user.schema';
 @Injectable()
 export class UserPersistenceService {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) { }
 
-  async create(createUserDto: CreateUserDto): Promise<User> {
+  async create(createUserDto: UserDto): Promise<User> {
 
     const createdUser = new this.userModel({ ...createUserDto, _id: new Types.ObjectId() });
     return createdUser.save();
@@ -16,7 +16,13 @@ export class UserPersistenceService {
   async findAll(): Promise<User[]> {
     return await this.userModel.find().exec();
   }
+  async findByGoogleId(googleIds: string[]): Promise<User[]> {
+    return await this.userModel.find({ googleId: { $in: googleIds } }).exec();
+  }
   async findOneByGoogleId(googleId: string): Promise<User | null> {
     return await this.userModel.findOne({ googleId }).exec();
+  }
+  async upsert(createUserDto: UserDto) {
+    await this.userModel.updateOne({ googleId: createUserDto.googleId }, { ...createUserDto }, { upsert: true });
   }
 }

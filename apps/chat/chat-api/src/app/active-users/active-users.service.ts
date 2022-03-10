@@ -1,27 +1,29 @@
 import { Injectable } from "@nestjs/common";
-import { GoogleId } from "@oursocial/domain";
 import { BehaviorSubject } from "rxjs";
 type SocketId = string;
 
 @Injectable()
 export class ActiveUsersService {
 
-  private _activeUsers$: BehaviorSubject<Map<GoogleId, SocketId>> = new BehaviorSubject(new Map());
+  private _activeUsers$: BehaviorSubject<Map<string, SocketId>> = new BehaviorSubject(new Map());
   public activeUsers$ = this._activeUsers$.asObservable();
-  get activeUsers() {
+  get activeUsersMap() {
     return this._activeUsers$.getValue();
   }
-  addUser(googleId: GoogleId, socketId: SocketId) {
-    this._activeUsers$.next(this.activeUsers.set(googleId, socketId));
+  get activeUsers() {
+    return Array.from(this._activeUsers$.getValue().keys());
   }
-  removeUser(googleId: GoogleId) {
-    const activeUsers = this.activeUsers;
+  addUser(googleId: string, socketId: SocketId) {
+    this._activeUsers$.next(this.activeUsersMap.set(googleId, socketId));
+  }
+  removeUser(googleId: string) {
+    const activeUsers = this.activeUsersMap;
     activeUsers.delete(googleId);
     this._activeUsers$.next(activeUsers);
   }
-  findSocket(googleIds: GoogleId[]): SocketId[] {
+  findSockets(googleIds: string[]): SocketId[] {
     const socketIds = [];
-    for (let [googleId, socketId] of this.activeUsers) {
+    for (let [googleId, socketId] of this.activeUsersMap) {
       if (googleIds.includes(googleId)) socketIds.push(socketId);
     }
     return socketIds;

@@ -1,4 +1,4 @@
-export interface UserDto {
+export interface AuthDto {
   googleId: string;
   name: string;
 }

@@ -5,9 +5,9 @@ import { User } from "../users/user.schema";
 export type RoomDocument = Room & Document;
 @Schema()
 export class Room extends BaseDbEntity {
-    @Prop({ required: true })
-    name: string;
-    @Prop({ type: [Types.ObjectId], ref: 'User' })
-    users: User[];
+  @Prop({ required: true })
+  name: string;
+  @Prop([{ type: Types.ObjectId, ref: User.name }])
+  users: Types.ObjectId[];
 }
-export const RoomsSchema = SchemaFactory.createForClass(Room);
+export const RoomSchema = SchemaFactory.createForClass(Room);

@@ -1,9 +1,8 @@
-import { Room } from "@oursocial/domain";
+import { RoomDto } from "../rooms/room.dto";
 
-export class CreateMessageDto {
-    sender: string;
-    receiver: string;
-    content: string;
-    timestamp: string;
-    room: Room;
+export class MessageDto {
+  sender: string;
+  content: string;
+  timestamp: string;
+  room: RoomDto;
 }

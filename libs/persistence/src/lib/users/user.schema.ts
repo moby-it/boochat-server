@@ -7,6 +7,7 @@ export type UserDocument = User & Document;
 export class User extends BaseDbEntity {
   @Prop({ required: true })
   googleId: string;
-
+  @Prop({ required: true })
+  name: string;
 }
 export const UserSchema = SchemaFactory.createForClass(User);
