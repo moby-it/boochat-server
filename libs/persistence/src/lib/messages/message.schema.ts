@@ -6,10 +6,8 @@ export type MessageDocument = Message & Document;
 
 @Schema()
 export class Message extends BaseDbEntity {
-  @Prop()
-  sender: string;
-  @Prop()
-  receiver: string;
+  @Prop({ type: Types.ObjectId, name: Room.name })
+  sender: Types.ObjectId;
   @Prop()
   content: string;
   @Prop({ type: Types.ObjectId, name: Room.name })

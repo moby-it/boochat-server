@@ -7,21 +7,20 @@ import { Room, RoomDocument } from "./room.schema";
 @Injectable()
 export class RoomsPersistenceService {
   constructor(@InjectModel(Room.name) private roomsModel: Model<RoomDocument>) { }
-  async findOne(_id: string): Promise<Room> {
+  async findOne(_id: string): Promise<RoomDocument> {
     return await this.roomsModel.findOne({ _id: new Types.ObjectId(_id) }).exec();
   }
-  async createRoom(createRoomDto: RoomDto): Promise<Room> {
+  async createRoom(createRoomDto: RoomDto): Promise<RoomDocument> {
     const createdRoom = new this.roomsModel({
       ...createRoomDto, users: createRoomDto
-        .users.map(id => new Types.ObjectId(id)),
-      _id: new Types.ObjectId()
+        .userIds.map(id => new Types.ObjectId(id))
     });
     return createdRoom.save();
   }
-  async findByUserId(userId: string): Promise<Room[]> {
+  async findByUserId(userId: string): Promise<RoomDocument[]> {
     return await this.roomsModel.find({ users: new Types.ObjectId(userId) }).exec();
   }
-  async findAll(): Promise<Room[]> {
+  async findAll(): Promise<RoomDocument[]> {
     return this.roomsModel.find().exec();
   }
 }

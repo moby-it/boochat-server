@@ -9,17 +9,20 @@ export class UserPersistenceService {
 
   async create(createUserDto: UserDto): Promise<User> {
 
-    const createdUser = new this.userModel({ ...createUserDto, _id: new Types.ObjectId() });
+    const createdUser = new this.userModel({ ...createUserDto });
     return createdUser.save();
   }
 
-  async findAll(): Promise<User[]> {
+  async findAll(): Promise<UserDocument[]> {
     return await this.userModel.find().exec();
   }
-  async findByGoogleId(googleIds: string[]): Promise<User[]> {
+  async findById(id: string): Promise<UserDocument> {
+    return await this.userModel.findOne({ _id: new Types.ObjectId(id) }).exec();
+  }
+  async findByGoogleId(googleIds: string[]): Promise<UserDocument[]> {
     return await this.userModel.find({ googleId: { $in: googleIds } }).exec();
   }
-  async findOneByGoogleId(googleId: string): Promise<User | null> {
+  async findOneByGoogleId(googleId: string): Promise<UserDocument | null> {
     return await this.userModel.findOne({ googleId }).exec();
   }
   async upsert(createUserDto: UserDto) {

@@ -8,12 +8,12 @@ import { Message, MessageDocument } from './message.schema';
 export class MessagePersistenceService {
   constructor(@InjectModel(Message.name) private messageModel: Model<MessageDocument>) { }
 
-  async create(createMessageDto: MessageDto): Promise<Message> {
+  async create({ content, sender, room }: MessageDto): Promise<MessageDocument> {
     const createdMessage = new this.messageModel(
       {
-        ...createMessageDto,
-        room: new Types.ObjectId(createMessageDto.room.id),
-        _id: new Types.ObjectId()
+        sender: new Types.ObjectId(sender),
+        content,
+        room: new Types.ObjectId(room.id)
       });
     return createdMessage.save();
   }
