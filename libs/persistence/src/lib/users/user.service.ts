@@ -17,7 +17,7 @@ export class UserPersistenceService {
   async findAll(): Promise<UserDocument[]> {
     return await this.userModel.find().exec();
   }
-  async findById(id: string): Promise<UserDocument> {
+  async findById(id: string): Promise<UserDocument | null> {
     return await this.userModel.findOne({ _id: new Types.ObjectId(id) }).exec();
   }
   async findByGoogleId(googleIds: string[]): Promise<UserDocument[]> {
@@ -26,7 +26,7 @@ export class UserPersistenceService {
   async findOneByGoogleId(googleId: string): Promise<UserDocument | null> {
     return await this.userModel.findOne({ googleId }).exec();
   }
-  async upsert(createUserDto: UserDto): Promise<Result<void>> {
+  async upsert(createUserDto: UserDto): Promise<Result<null>> {
     const result = await this.userModel.updateOne({ googleId: createUserDto.googleId }, { ...createUserDto }, { upsert: true });
     return Result.create(null, result.matchedCount === 1);
   }

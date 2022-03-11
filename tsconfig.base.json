@@ -5,21 +5,36 @@
     "sourceMap": true,
     "declaration": false,
     "moduleResolution": "node",
+    "strict": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "lib": ["es2017", "dom"],
+    "lib": [
+      "es2017",
+      "dom"
+    ],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@oursocial/application": ["libs/application/src/index.ts"],
-      "@oursocial/domain": ["libs/domain/src/index.ts"],
-      "@oursocial/persistence": ["libs/persistence/src/index.ts"],
-      "@oursocial/utilities": ["libs/utilities/src/index.ts"]
+      "@oursocial/application": [
+        "libs/application/src/index.ts"
+      ],
+      "@oursocial/domain": [
+        "libs/domain/src/index.ts"
+      ],
+      "@oursocial/persistence": [
+        "libs/persistence/src/index.ts"
+      ],
+      "@oursocial/utilities": [
+        "libs/utilities/src/index.ts"
+      ]
     }
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
 }

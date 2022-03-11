@@ -7,7 +7,7 @@ import { Room, RoomDocument } from "./room.schema";
 @Injectable()
 export class RoomsPersistenceService {
   constructor(@InjectModel(Room.name) private roomsModel: Model<RoomDocument>) { }
-  async findOne(_id: string): Promise<RoomDocument> {
+  async findOne(_id: string): Promise<RoomDocument | null> {
     return await this.roomsModel.findOne({ _id: new Types.ObjectId(_id) }).exec();
   }
   async createRoom(createRoomDto: RoomDto): Promise<RoomDocument> {

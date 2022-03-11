@@ -1,13 +1,12 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { Document } from 'mongoose';
-import { BaseDbEntity } from "../common/base.entity";
 export type UserDocument = User & Document;
 
 @Schema({ timestamps: true })
-export class User extends BaseDbEntity {
+export class User {
   @Prop({ required: true })
-  googleId: string;
+  googleId!: string;
   @Prop({ required: true })
-  name: string;
+  name!: string;
 }
 export const UserSchema = SchemaFactory.createForClass(User);

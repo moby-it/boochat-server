@@ -10,28 +10,29 @@ import { ActiveUsersService } from "../active-users/active-users.service";
 })
 export class MessageGateway {
   @WebSocketServer()
-  server: Server;
+  server!: Server;
   constructor(
     private roomServices: RoomsPersistenceService,
     private messageService: MessagePersistenceService,
     private activeUsersService: ActiveUsersService
   ) { }
   @SubscribeMessage('sendMessage')
-  async onNewMessage(@MessageBody() messageDto: MessageDto) {
-    let roomId: string = messageDto.room.id;
-    if (!roomId) {
+  async onNewMessage(@MessageBody() newMessage: MessageDto) {
+    let roomId = newMessage.room.id ?? '';
+    if (newMessage.belongsOnANewRoom()) {
       const createRoomDto: RoomDto = {
-        name: messageDto.room.name,
-        userIds: messageDto.room.userIds
+        name: newMessage.room.name,
+        userIds: newMessage.room.userIds
       };
       const room = await this.roomServices.createRoom(createRoomDto);
-      roomId = room._id.toString();
+      const roomId = room._id.toString() as string;
       const allSockets = await this.server.fetchSockets();
-      const participantsSocketIds = this.activeUsersService.findSockets(messageDto.room.userIds);
+      const participantsSocketIds = this.activeUsersService.findSockets(newMessage.room.userIds);
       const sockets = allSockets.filter(socket => participantsSocketIds.includes(socket.id));
       sockets.forEach(socket => socket.join(roomId));
     }
-    const message = await this.messageService.create(messageDto);
+
+    const message = await this.messageService.create(newMessage);
     this.server.to(roomId).emit('receiveMessage', message);
   }
 }
