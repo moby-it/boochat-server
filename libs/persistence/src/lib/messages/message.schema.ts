@@ -4,7 +4,7 @@ import { BaseDbEntity } from "../common/base.entity";
 import { Room } from "../rooms/room.schema";
 export type MessageDocument = Message & Document;
 
-@Schema()
+@Schema({ timestamps: true })
 export class Message extends BaseDbEntity {
   @Prop({ type: Types.ObjectId, name: Room.name })
   sender: Types.ObjectId;

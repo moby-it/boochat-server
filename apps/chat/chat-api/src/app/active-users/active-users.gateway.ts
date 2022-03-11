@@ -16,9 +16,9 @@ export class ActiveUsersGateway implements OnGatewayConnection, OnGatewayDisconn
   async handleConnection(client: Socket) {
     const googleId = client.handshake.query.googleId as string;
     const dbUser = await this.usersService.findOneByGoogleId(googleId);
-    const user = User.create({ googleId: GoogleId.create({ id: dbUser.googleId }) }, dbUser._id.toString());
-    this.activeUsersService.addUser(googleId, client.id);
-    await this.joinRooms(client, user.id);
+    const userId: string = dbUser._id.toString();
+    this.activeUsersService.addUser(userId, client.id);
+    await this.joinRooms(client, userId);
     client.broadcast.emit('usersList', this.activeUsersService.activeUsers);
   }
 

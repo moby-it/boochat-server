@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import { Result } from '@oursocial/domain';
 import { Model, Types } from 'mongoose';
 import { UserDto } from './user.dto';
 import { User, UserDocument } from './user.schema';
@@ -25,7 +26,8 @@ export class UserPersistenceService {
   async findOneByGoogleId(googleId: string): Promise<UserDocument | null> {
     return await this.userModel.findOne({ googleId }).exec();
   }
-  async upsert(createUserDto: UserDto) {
-    await this.userModel.updateOne({ googleId: createUserDto.googleId }, { ...createUserDto }, { upsert: true });
+  async upsert(createUserDto: UserDto): Promise<Result<void>> {
+    const result = await this.userModel.updateOne({ googleId: createUserDto.googleId }, { ...createUserDto }, { upsert: true });
+    return Result.create(null, result.matchedCount === 1);
   }
 }

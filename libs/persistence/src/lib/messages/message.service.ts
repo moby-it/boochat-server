@@ -15,7 +15,7 @@ export class MessagePersistenceService {
         content,
         room: new Types.ObjectId(room.id)
       });
-    return createdMessage.save();
+    return (await createdMessage.save()).populate('room');
   }
 
   async findAll(): Promise<Message[]> {

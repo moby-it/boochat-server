@@ -13,18 +13,18 @@ export class ActiveUsersService {
   get activeUsers() {
     return Array.from(this._activeUsers$.getValue().keys());
   }
-  addUser(googleId: string, socketId: SocketId) {
-    this._activeUsers$.next(this.activeUsersMap.set(googleId, socketId));
+  addUser(userId: string, socketId: SocketId) {
+    this._activeUsers$.next(this.activeUsersMap.set(userId, socketId));
   }
-  removeUser(googleId: string) {
+  removeUser(userId: string) {
     const activeUsers = this.activeUsersMap;
-    activeUsers.delete(googleId);
+    activeUsers.delete(userId);
     this._activeUsers$.next(activeUsers);
   }
-  findSockets(googleIds: string[]): SocketId[] {
+  findSockets(userIds: string[]): SocketId[] {
     const socketIds = [];
-    for (let [googleId, socketId] of this.activeUsersMap) {
-      if (googleIds.includes(googleId)) socketIds.push(socketId);
+    for (let [userId, socketId] of this.activeUsersMap) {
+      if (userIds.includes(userId)) socketIds.push(socketId);
     }
     return socketIds;
   }
