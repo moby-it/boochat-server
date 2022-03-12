@@ -21,12 +21,16 @@ export class ActiveUsersGateway implements OnGatewayConnection, OnGatewayDisconn
       .execute<AddUserToStoreCommand, AddUserToStoreCommandResult>(new AddUserToStoreCommand(googleId, client));
 
     if (addUserToStoreResult.failed) {
-      throw addUserToStoreResult.error;
+      client.disconnect();
+      console.error(addUserToStoreResult.error);
+      return;
     }
     const userJoinsRoomResult = await this.commandBus
       .execute<UserJoinsRoomCommand, UserJoinsRoomCommandResult>(new UserJoinsRoomCommand(client, addUserToStoreResult.props!.userId));
     if (userJoinsRoomResult.failed) {
-      throw new Error('failed to connect user to its respective rooms.');
+      client.disconnect();
+      console.error(userJoinsRoomResult.error);
+      return;
     }
     client.broadcast.emit('usersList', this.activeUsersStore.activeUsers);
 
