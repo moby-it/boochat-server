@@ -1,12 +1,18 @@
 export class Result<T> {
   private readonly _props: T;
+  private readonly _error: unknown;
   private readonly _isSuccessful: boolean;
-  private constructor(props: T, isSuccessful: boolean) {
+  private constructor(props: T, isSuccessful: boolean, error?: unknown) {
     this._props = props;
     this._isSuccessful = isSuccessful;
+    this._error = error;
   }
   get props() {
+    if (!this._isSuccessful) throw new Error('cannot get props of failed result');
     return this._props;
+  }
+  get error() {
+    return this._error;
   }
   get failed() {
     return !this._isSuccessful;
@@ -14,13 +20,10 @@ export class Result<T> {
   get succeded() {
     return this._isSuccessful;
   }
-  static create<T>(props: T, success: boolean) {
-    return new Result(props, success);
-  }
-  static success<T>(props: T) {
+  static success<T>(props?: T) {
     return new Result(props, true);
   }
-  static fail<T>(props: T) {
-    return new Result(props, false);
+  static fail(error?: unknown) {
+    return new Result(undefined, false, error);
   }
 }

@@ -1,4 +1,4 @@
-import { v4 as uuid } from 'uuid';
+import { Expose } from 'class-transformer';
 import { Entity, Guard } from "../common";
 import { GoogleId } from './googleId';
 interface UserProps {
@@ -7,19 +7,25 @@ interface UserProps {
 }
 export class User extends Entity<UserProps> {
 
+
+  @Expose()
   get id() {
     return this._id;
   }
+
+  @Expose()
   get googleId() {
-    return this.props.googleId;
+    return this._props.googleId.value;
   }
+
+  @Expose()
   get name() {
-    return this.props.name;
+    return this._props.name;
   }
   private constructor(props: UserProps, id: string) {
     super(props, id);
   }
-  public static create(props: UserProps, id = uuid()) {
+  public static create(props: UserProps, id: string) {
     Guard.AgainstNullOrUndefined([{ propName: 'googleId', value: props.googleId }]);
     return new User(props, id);
   }

@@ -1,10 +1,12 @@
+import { Expose } from "class-transformer";
 import { Guard, ValueObject } from "../common";
 interface GoogleIdProps {
   id: string;
 }
 export class GoogleId extends ValueObject<GoogleIdProps> {
+  @Expose()
   get value() {
-    return this.props.id;
+    return this._props.id;
   }
   private constructor(props: GoogleIdProps) {
     super(props);

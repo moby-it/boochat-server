@@ -1,7 +1,12 @@
-import { ConnectedSocket, MessageBody, SubscribeMessage, WebSocketGateway, WebSocketServer } from "@nestjs/websockets";
-import { MessageDto, MessagePersistenceService, RoomDto, RoomsPersistenceService, UserPersistenceService } from "@oursocial/persistence";
-import { Server, Socket } from "socket.io";
-import { ActiveUsersService } from "../active-users/active-users.service";
+import { CommandBus } from "@nestjs/cqrs";
+import { MessageBody, SubscribeMessage, WebSocketGateway, WebSocketServer } from "@nestjs/websockets";
+import { MessageDto } from "@oursocial/persistence";
+import { instanceToPlain } from "class-transformer";
+import { shouldCreateRoom } from "libs/persistence/src/lib/chat";
+import { Server } from "socket.io";
+import { ConnectUsersToNewRoomCommand, ConnectUsersToNewRoomResult } from "./commands/connect-users-to-new-room.command";
+import { CreaterMessageCommand } from "./commands/create-message.command";
+import { CreateRoomCommand, CreateRoomCommandResponse } from "./commands/create-room.command";
 
 @WebSocketGateway({
   cors: {
@@ -12,27 +17,33 @@ export class MessageGateway {
   @WebSocketServer()
   server!: Server;
   constructor(
-    private roomServices: RoomsPersistenceService,
-    private messageService: MessagePersistenceService,
-    private activeUsersService: ActiveUsersService
+    private commandBus: CommandBus,
+
   ) { }
   @SubscribeMessage('sendMessage')
   async onNewMessage(@MessageBody() newMessage: MessageDto) {
     let roomId = newMessage.room.id ?? '';
-    if (newMessage.belongsOnANewRoom()) {
-      const createRoomDto: RoomDto = {
-        name: newMessage.room.name,
-        userIds: newMessage.room.userIds
-      };
-      const room = await this.roomServices.createRoom(createRoomDto);
-      const roomId = room._id.toString() as string;
-      const allSockets = await this.server.fetchSockets();
-      const participantsSocketIds = this.activeUsersService.findSockets(newMessage.room.userIds);
-      const sockets = allSockets.filter(socket => participantsSocketIds.includes(socket.id));
-      sockets.forEach(socket => socket.join(roomId));
+    if (shouldCreateRoom(newMessage)) {
+      const createRoomResult = await this.commandBus
+        .execute<CreateRoomCommand, CreateRoomCommandResponse>(new CreateRoomCommand(newMessage.room));
+      if (createRoomResult.failed)
+        throw (createRoomResult.error);
+
+      // typescript does not recognise that props is always defined at this state of the program
+      roomId = createRoomResult.props!.roomId;
+
+      const connectUsersToNewRoomResult = await this.commandBus.
+        execute<ConnectUsersToNewRoomCommand, ConnectUsersToNewRoomResult>(new ConnectUsersToNewRoomCommand(this.server, newMessage.room.userIds, roomId));
+
+      if (connectUsersToNewRoomResult.failed)
+        throw connectUsersToNewRoomResult.error;
     }
 
-    const message = await this.messageService.create(newMessage);
-    this.server.to(roomId).emit('receiveMessage', message);
+    const createMesageResult = await this.commandBus.
+      execute<CreaterMessageCommand, CreateRoomCommandResponse>(new CreaterMessageCommand(newMessage));
+    if (createMesageResult.failed)
+      throw createMesageResult.error;
+    const response = instanceToPlain(createMesageResult.props, { excludePrefixes: ['_'] });
+    this.server.to(roomId).emit('receiveMessage', response);
   }
 }

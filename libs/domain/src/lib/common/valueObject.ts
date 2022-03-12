@@ -7,19 +7,19 @@ import { shallowEqual } from "shallow-equal-object";
  */
 
 export abstract class ValueObject<T> {
-  public readonly props: T;
+  protected readonly _props: T;
 
   constructor(props: T) {
-    this.props = Object.freeze(props);
+    this._props = Object.freeze(props);
   }
 
   public equals(vo?: ValueObject<T>): boolean {
     if (vo === null || vo === undefined) {
       return false;
     }
-    if (vo.props === undefined) {
+    if (vo._props === undefined) {
       return false;
     }
-    return shallowEqual(this.props, vo.props);
+    return shallowEqual(this._props, vo._props);
   }
 }

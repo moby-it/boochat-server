@@ -1,10 +1,13 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { Document, Types } from 'mongoose';
-import { Room } from "../rooms/room.schema";
+import { BaseEntity } from "../../common";
+import { UserDocument } from "../../users";
+import { Room, RoomDocument } from "../rooms/room.schema";
 export type MessageDocument = Message & Document;
+export type PopulatedMessageDocument = Omit<MessageDocument, 'sender' | 'room'> & { sender: UserDocument, room: RoomDocument; };
 
 @Schema({ timestamps: true })
-export class Message {
+export class Message extends BaseEntity {
   @Prop({ type: Types.ObjectId, name: Room.name })
   sender!: Types.ObjectId;
   @Prop()

@@ -1,9 +1,10 @@
 
+
 const isEntity = (v: unknown): v is Entity<unknown> => {
   return v instanceof Entity;
 };
 export abstract class Entity<T> {
-  constructor(protected props: T, protected readonly _id: string) {
+  constructor(protected _props: T, protected readonly _id: string) {
 
   }
   public equals(object?: Entity<T>): boolean {

@@ -1,11 +1,12 @@
 import { Injectable } from "@nestjs/common";
+import { SocketId, UserId } from "@oursocial/domain";
 import { BehaviorSubject } from "rxjs";
-type SocketId = string;
 
+export type ActiveUsersMap = Map<UserId, SocketId>;
 @Injectable()
-export class ActiveUsersService {
+export class ActiveUsersStore {
 
-  private _activeUsers$: BehaviorSubject<Map<string, SocketId>> = new BehaviorSubject(new Map());
+  private _activeUsers$: BehaviorSubject<ActiveUsersMap> = new BehaviorSubject(new Map());
   public activeUsers$ = this._activeUsers$.asObservable();
   get activeUsersMap() {
     return this._activeUsers$.getValue();

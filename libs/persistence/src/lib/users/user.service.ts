@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Result } from '@oursocial/domain';
+import { Result, UserId } from '@oursocial/domain';
 import { Model, Types } from 'mongoose';
 import { UserDto } from './user.dto';
 import { User, UserDocument } from './user.schema';
@@ -8,7 +8,7 @@ import { User, UserDocument } from './user.schema';
 export class UserPersistenceService {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) { }
 
-  async create(createUserDto: UserDto): Promise<User> {
+  async create(createUserDto: UserDto): Promise<UserDocument> {
 
     const createdUser = new this.userModel({ ...createUserDto });
     return createdUser.save();
@@ -26,8 +26,10 @@ export class UserPersistenceService {
   async findOneByGoogleId(googleId: string): Promise<UserDocument | null> {
     return await this.userModel.findOne({ googleId }).exec();
   }
-  async upsert(createUserDto: UserDto): Promise<Result<null>> {
+  async upsert(createUserDto: UserDto): Promise<Result<UserId | undefined>> {
     const result = await this.userModel.updateOne({ googleId: createUserDto.googleId }, { ...createUserDto }, { upsert: true });
-    return Result.create(null, result.matchedCount === 1);
+    if (result.matchedCount === 1) return Result.success();
+    if (result.matchedCount === 0) return Result.success(result.upsertedId.toString());
+    return Result.fail('incorect sum of matched documents for upsert user');
   }
 }
