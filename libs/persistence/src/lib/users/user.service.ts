@@ -26,10 +26,15 @@ export class UserPersistenceService {
   async findOneByGoogleId(googleId: string): Promise<UserDocument | null> {
     return await this.userModel.findOne({ googleId }).exec();
   }
-  async upsert(createUserDto: UserDto): Promise<Result<UserId | undefined>> {
-    const result = await this.userModel.updateOne({ googleId: createUserDto.googleId }, { ...createUserDto }, { upsert: true });
-    if (result.matchedCount === 1) return Result.success();
-    if (result.matchedCount === 0) return Result.success(result.upsertedId.toString());
-    return Result.fail('incorect sum of matched documents for upsert user');
+  async update(id: string, userDto: UserDto): Promise<Result<undefined>> {
+    try {
+      const result = await this.userModel.updateOne({ _id: new Types.ObjectId(id) }, { ...userDto });
+      if (result.matchedCount === 1) return Result.success();
+      return Result.fail('Failed to update');
+    } catch (e) {
+      return Result.fail(e);
+    }
+
+
   }
 }

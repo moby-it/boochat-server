@@ -1,13 +1,13 @@
-import { BadRequestException, Body, ClassSerializerInterceptor, Controller, InternalServerErrorException, Post, UseInterceptors } from '@nestjs/common';
+import { BadRequestException, Body, ClassSerializerInterceptor, Controller, HttpCode, HttpStatus, InternalServerErrorException, Param, Post, Put, Res, UseInterceptors } from '@nestjs/common';
 import { GoogleId, User } from '@oursocial/domain';
 import { UserPersistenceService } from '@oursocial/persistence';
 import { UserDto } from 'libs/persistence/src/lib/users/user.dto';
+import { identity } from 'rxjs';
 
 @Controller('auth')
 export class AuthController {
   constructor(private userService: UserPersistenceService) { }
 
-  @UseInterceptors(ClassSerializerInterceptor)
   @Post('')
   async authenticate(@Body() userDto: UserDto): Promise<User> {
     try {
@@ -21,5 +21,10 @@ export class AuthController {
     }
 
   }
-
+  @Put('update/:id')
+  async updateUser(@Param() id: string, @Body() userDto: UserDto): Promise<void> {
+    const result = await this.userService.update(id, userDto);
+    if (result.succeded) return;
+    throw new InternalServerErrorException(result.error);
+  }
 }
