@@ -30,6 +30,7 @@ export class MessageGateway {
         throw (createRoomResult.error);
 
       // typescript does not recognise that props is always defined at this state of the program
+      newMessage.room = { ...newMessage.room, id: createRoomResult.props!.roomId };
       roomId = createRoomResult.props!.roomId;
 
       const connectUsersToNewRoomResult = await this.commandBus.

@@ -25,6 +25,9 @@ export class MessagePersistenceService {
   async populateMessage(message: MessageDocument): Promise<PopulatedMessageDocument> {
     return await message.populate([this.populateRoomOptions, this.populateUserOptions]);
   }
+  async findByRoomId(roomId: string): Promise<MessageDocument[]> {
+    return await this.messageModel.find({ room: new Types.ObjectId(roomId) });
+  }
   async findAll(): Promise<Message[]> {
     return this.messageModel.find().exec();
   }

@@ -8,11 +8,11 @@ export type PopulatedMessageDocument = Omit<MessageDocument, 'sender' | 'room'> 
 
 @Schema({ timestamps: true })
 export class Message extends BaseEntity {
-  @Prop({ type: Types.ObjectId, name: Room.name })
+  @Prop({ type: Types.ObjectId, ref: Room.name })
   sender!: Types.ObjectId;
   @Prop()
   content!: string;
-  @Prop({ type: Types.ObjectId, name: Room.name })
+  @Prop({ type: Types.ObjectId, ref: Room.name })
   room!: Types.ObjectId;
 }
 export const MessageSchema = SchemaFactory.createForClass(Message);

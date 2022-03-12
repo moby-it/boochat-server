@@ -22,11 +22,11 @@ export class User extends Entity<UserProps> {
   get name() {
     return this._props.name;
   }
-  private constructor(props: UserProps, id: string) {
-    super(props, id);
+  private constructor(props: UserProps) {
+    super(props, props.googleId.value);
   }
-  public static create(props: UserProps, id: string) {
+  public static create(props: UserProps) {
     Guard.AgainstNullOrUndefined([{ propName: 'googleId', value: props.googleId }]);
-    return new User(props, id);
+    return new User(props);
   }
 }

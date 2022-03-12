@@ -3,10 +3,10 @@ import { Room } from '../room';
 import { User } from "../user";
 import { Expose } from 'class-transformer';
 interface MessageProps {
-  readonly sender: User;
+  readonly sender: Partial<User>;
   readonly content: string;
   readonly dateSent: Date;
-  readonly room: Room;
+  readonly room: Partial<Room>;
 }
 export class Message extends Entity<MessageProps>{
 
@@ -35,9 +35,9 @@ export class Message extends Entity<MessageProps>{
 
   public static create(props: MessageProps, id: string) {
     Guard.AgainstNullOrUndefined([
-      { propName: 'sender', value: props.sender },
+      { propName: 'sender.id', value: props.sender.id },
       { propName: 'content', value: props.content },
-      { propName: 'room', value: props.room },
+      { propName: 'room.id', value: props.room.id },
     ]);
     return new Message({ ...props }, id);
   }
