@@ -10,13 +10,13 @@ export class RoomsController {
 
   @Get(':id')
   async roomById(@Param() roomId: string): Promise<Room> {
-    const result = await this.queryBus.execute<FindRoomByIdQuery, FindRoomByIdQueryResult>(new FindRoomByIdQuery(roomId));
+    const result = await this.queryBus.execute(new FindRoomByIdQuery(roomId)) as FindRoomByIdQueryResult;
     if (result.failed || !result.props) throw new BadRequestException(result.error);
     return result.props;
   }
   @Get('getByUserId/:id')
   async roomsByUserId(@Param() userId: string): Promise<Room[]> {
-    const result = await this.queryBus.execute<FindRoomsByUserIdQuery, FindRoomsByUserIdQueryResult>(new FindRoomsByUserIdQuery(userId));
+    const result = await this.queryBus.execute(new FindRoomsByUserIdQuery(userId)) as FindRoomsByUserIdQueryResult;
     if (result.failed || !result.props) throw new BadRequestException(result.error);
     return result.props;
   }

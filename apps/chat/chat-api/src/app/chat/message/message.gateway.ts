@@ -25,7 +25,7 @@ export class MessageGateway {
     let roomId = newMessage.room.id ?? '';
     if (shouldCreateRoom(newMessage)) {
       const createRoomResult = await this.commandBus
-        .execute<CreateRoomCommand, CreateRoomCommandResult>(new CreateRoomCommand(newMessage.room));
+        .execute(new CreateRoomCommand(newMessage.room)) as CreateRoomCommandResult;
       if (createRoomResult.failed)
         throw (createRoomResult.error);
 
@@ -33,15 +33,15 @@ export class MessageGateway {
       newMessage.room = { ...newMessage.room, id: createRoomResult.props!.roomId };
       roomId = createRoomResult.props!.roomId;
 
-      const connectUsersToNewRoomResult = await this.commandBus.
-        execute<ConnectUsersToRoomCommand, ConnectUsersToRoomResult>(new ConnectUsersToRoomCommand(this.server, newMessage.room.userIds, roomId));
+      const connectUsersToNewRoomResult = await this.commandBus
+        .execute(new ConnectUsersToRoomCommand(this.server, newMessage.room.userIds, roomId)) as ConnectUsersToRoomResult;
 
       if (connectUsersToNewRoomResult.failed)
         throw connectUsersToNewRoomResult.error;
     }
 
     const createMesageResult = await this.commandBus.
-      execute<CreaterMessageCommand, CreateRoomCommandResult>(new CreaterMessageCommand(newMessage));
+      execute(new CreaterMessageCommand(newMessage)) as CreateRoomCommandResult;
     if (createMesageResult.failed)
       throw createMesageResult.error;
     const response = instanceToPlain(createMesageResult.props, { excludePrefixes: ['_'] });

@@ -1,4 +1,4 @@
-import { BadRequestException, NotFoundException } from "@nestjs/common";
+import { NotFoundException } from "@nestjs/common";
 import { IQuery, IQueryHandler, QueryHandler } from "@nestjs/cqrs";
 import { Result, Room } from "@oursocial/domain";
 import { MessagePersistenceService, RoomsPersistenceService } from "@oursocial/persistence";
