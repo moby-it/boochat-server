@@ -7,10 +7,12 @@ import { ActiveUsersStore } from './active-users/active-users.store';
 import { ActiveUsersCommandHandlers } from './active-users/commands';
 import { AuthController } from './auth/auth.controller';
 import { ChatCommandHandlers, MessageGateway, RoomsController } from './chat';
+import { FindRoomByIdQueryHandler, FindRoomByUserIdQueryHandler } from './chat/queries';
 import { RoomsGateway } from './chat/rooms/rooms.gateway';
 
 const CommandHandlers = [...ActiveUsersCommandHandlers, ...ChatCommandHandlers];
 const Gateways = [ActiveUsersGateway, MessageGateway, RoomsGateway];
+const QueryHandlers = [FindRoomByUserIdQueryHandler, FindRoomByIdQueryHandler];
 @Module({
   controllers: [AuthController, RoomsController],
   imports: [
@@ -23,7 +25,8 @@ const Gateways = [ActiveUsersGateway, MessageGateway, RoomsGateway];
   providers: [
     ActiveUsersStore,
     ...Gateways,
-    ...CommandHandlers
+    ...CommandHandlers,
+    ...QueryHandlers
   ],
 })
 export class AppModule {
