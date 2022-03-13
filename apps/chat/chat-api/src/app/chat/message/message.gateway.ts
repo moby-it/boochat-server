@@ -4,7 +4,7 @@ import { MessageDto } from "@oursocial/persistence";
 import { instanceToPlain } from "class-transformer";
 import { shouldCreateRoom } from "libs/persistence/src/lib/chat";
 import { Server } from "socket.io";
-import { ConnectUsersToRoomCommand, ConnectUsersToRoomResult } from "../commands/connect-users-to-new-room.command";
+import { ConnectUsersToRoomCommand, ConnectUsersToRoomResult } from "../commands/connect-users-to-room.command";
 import { CreaterMessageCommand } from "../commands/create-message.command";
 import { CreateRoomCommand, CreateRoomCommandResult } from "../commands/create-room.command";
 

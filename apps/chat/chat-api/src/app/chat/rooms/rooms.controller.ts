@@ -23,16 +23,5 @@ export class RoomsController {
     const rooms = dbRooms.map(dbRoom => dbRoomToRoom(dbRoom, [dbRoom.lastMessage]));
     return rooms;
   }
-  @Post('addUserToRoom')
-  async addUserToRoom(@Query('userId') userId: string, @Query('roomId') roomId: string): Promise<void> {
-    const addUserResult = await this.roomsService.addUserToRoom(userId, roomId);
-    if (addUserResult.failed) throw new InternalServerErrorException(addUserResult.error);
-    // const connectResult = await this.commandBus.execute<ConnectUsersToRoomCommand, ConnectUsersToRoomResult>(new ConnectUsersToRoomCommand([userId], roomId));
-    // if (connectResult.failed) throw new InternalServerErrorException(addUserResult.error);
-  }
-  @Post('removeUserFromRoom')
-  async removeUserFromRoom(@Query('userId') userId: string, @Query('roomId') roomId: string) {
-    const result = await this.roomsService.removeUserFromRoom(userId, roomId);
-    if (result.failed) throw new InternalServerErrorException(result.error);
-  }
+
 }

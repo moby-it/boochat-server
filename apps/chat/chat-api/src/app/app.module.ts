@@ -7,8 +7,10 @@ import { ActiveUsersStore } from './active-users/active-users.store';
 import { ActiveUsersCommandHandlers } from './active-users/commands';
 import { AuthController } from './auth/auth.controller';
 import { ChatCommandHandlers, MessageGateway, RoomsController } from './chat';
+import { RoomsGateway } from './chat/rooms/rooms.gateway';
 
 const CommandHandlers = [...ActiveUsersCommandHandlers, ...ChatCommandHandlers];
+const Gateways = [ActiveUsersGateway, MessageGateway, RoomsGateway];
 @Module({
   controllers: [AuthController, RoomsController],
   imports: [
@@ -19,9 +21,7 @@ const CommandHandlers = [...ActiveUsersCommandHandlers, ...ChatCommandHandlers];
     CqrsModule
   ],
   providers: [
-    ActiveUsersGateway,
-    MessageGateway,
-    ActiveUsersStore,
+    ...Gateways,
     ...CommandHandlers
   ],
 })
