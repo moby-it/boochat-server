@@ -16,7 +16,9 @@ export class RoomsController {
   }
   @Get('getByUserId/:id')
   async roomsByUserId(@Param() userId: string): Promise<Room[]> {
-    throw new NotImplementedException();
+    const dbRooms = await this.roomsService.findByUserId(userId);
+    const rooms = dbRooms.map(dbRoom => dbRoomToRoom(dbRoom, []));
+    return rooms;
   }
   @Post('addUser')
   async addUserToRoom(@Query() userId: string, @Query() roomId: string): Promise<void> {

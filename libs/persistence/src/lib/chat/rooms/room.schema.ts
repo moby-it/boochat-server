@@ -1,6 +1,5 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { User } from "@oursocial/domain";
-import { Type } from "class-transformer";
 import { Document, Types } from 'mongoose';
 import { BaseEntity } from "../../common";
 import { MessageDocument } from "../messages";
@@ -12,7 +11,6 @@ export class Room extends BaseEntity {
   name!: string;
 
   @Prop([{ type: Types.ObjectId, ref: User.name }])
-  @Type(() => User)
-  users!: User[];
+  users!: Types.ObjectId[];
 }
 export const RoomSchema = SchemaFactory.createForClass(Room);
