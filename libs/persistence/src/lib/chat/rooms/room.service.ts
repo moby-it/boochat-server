@@ -59,7 +59,7 @@ export class RoomsPersistenceService {
       if (!dbRoom) return Result.fail('Room not found');
       await dbRoom.updateOne({
         $push: {
-          users: new Types.ObjectId(userId)
+          users: { userId: new Types.ObjectId(userId) }
         }
       }).exec();
       return Result.success();
@@ -75,7 +75,7 @@ export class RoomsPersistenceService {
       if (!dbRoom) return Result.fail('Room not found');
       await dbRoom.updateOne({
         $pull: {
-          users: new Types.ObjectId(userId)
+          users: { userId: new Types.ObjectId(userId) }
         }
       }).exec();
       return Result.success();

@@ -15,7 +15,7 @@ export class UserJoinsRoomCommandHandler implements ICommandHandler<UserJoinsRoo
   async execute({ socket, userId }: UserJoinsRoomCommand): Promise<UserJoinsRoomCommandResult> {
     try {
       const rooms = await this.roomsService.findByUserId(userId);
-      rooms.forEach(room => socket.join(room.id));
+      rooms.map(room => room._id.toString()).forEach(id => socket.join(id));
       return Result.success();
     } catch (e) {
       return Result.fail('failed to connect user to its respective rooms.');
