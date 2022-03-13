@@ -4,7 +4,7 @@ import { User } from "../user";
 import { Expose } from 'class-transformer';
 interface RoomProps {
   name: string;
-  users: Partial<User & { lastVisited: Date; }>[];
+  users: Partial<User>[];
   messages: Message[];
 }
 export class Room extends Entity<RoomProps>{

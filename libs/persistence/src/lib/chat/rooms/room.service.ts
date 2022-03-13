@@ -2,7 +2,6 @@ import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Result, RoomId, UserId } from "@oursocial/domain";
 import { Model, Types } from 'mongoose';
-import { Message, MessageDocument } from "../messages";
 import { RoomDto } from "./room.dto";
 import { Room, RoomDocument, RoomDocumentWithLastMessage } from "./room.schema";
 
@@ -15,14 +14,14 @@ export class RoomsPersistenceService {
   async createRoom(createRoomDto: RoomDto): Promise<RoomDocument> {
     const createdRoom = new this.roomsModel({
       ...createRoomDto, users: createRoomDto
-        .userIds.map(id => ({ userId: new Types.ObjectId(id) }))
+        .userIds.map(id => new Types.ObjectId(id))
     });
     return createdRoom.save();
   }
   async findByUserId(userId: UserId): Promise<RoomDocumentWithLastMessage[]> {
     const rooms = await this.roomsModel.aggregate<RoomDocumentWithLastMessage>([
       {
-        $match: { users: { userId: new Types.ObjectId(userId) } }
+        $match: { users: new Types.ObjectId(userId) }
       },
       {
         $lookup: {
@@ -59,7 +58,7 @@ export class RoomsPersistenceService {
       if (!dbRoom) return Result.fail('Room not found');
       await dbRoom.updateOne({
         $push: {
-          users: { userId: new Types.ObjectId(userId) }
+          users: new Types.ObjectId(userId)
         }
       }).exec();
       return Result.success();
@@ -75,7 +74,7 @@ export class RoomsPersistenceService {
       if (!dbRoom) return Result.fail('Room not found');
       await dbRoom.updateOne({
         $pull: {
-          users: { userId: new Types.ObjectId(userId) }
+          users: new Types.ObjectId(userId)
         }
       }).exec();
       return Result.success();
