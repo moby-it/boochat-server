@@ -20,7 +20,7 @@ export class RoomsController {
   @Get('getByUserId/:id')
   async roomsByUserId(@Param() userId: string): Promise<Room[]> {
     const dbRooms = await this.roomsService.findByUserId(userId);
-    const rooms = dbRooms.map(dbRoom => dbRoomToRoom(dbRoom, []));
+    const rooms = dbRooms.map(dbRoom => dbRoomToRoom(dbRoom, [dbRoom.lastMessage]));
     return rooms;
   }
   @Post('addUserToRoom')

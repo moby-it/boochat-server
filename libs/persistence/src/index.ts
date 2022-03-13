@@ -4,5 +4,5 @@ import { UserDto, UserPersistenceService, UserDocument } from './lib/users';
 export * from './lib/persistence.module';
 
 export { UserPersistenceService, RoomsPersistenceService, MessagePersistenceService };
-export { MessageDto, RoomDto, UserDto };
+export { MessageDto, RoomDto as RoomDto, UserDto };
 export { MessageDocument, RoomDocument, UserDocument, PopulatedMessageDocument, PopulatedRoomDocument };

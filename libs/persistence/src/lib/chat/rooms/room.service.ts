@@ -2,8 +2,9 @@ import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Result, RoomId, UserId } from "@oursocial/domain";
 import { Model, Types } from 'mongoose';
+import { Message, MessageDocument } from "../messages";
 import { RoomDto } from "./room.dto";
-import { Room, RoomDocument } from "./room.schema";
+import { Room, RoomDocument, RoomDocumentWithLastMessage } from "./room.schema";
 
 @Injectable()
 export class RoomsPersistenceService {
@@ -14,12 +15,40 @@ export class RoomsPersistenceService {
   async createRoom(createRoomDto: RoomDto): Promise<RoomDocument> {
     const createdRoom = new this.roomsModel({
       ...createRoomDto, users: createRoomDto
-        .userIds.map(id => new Types.ObjectId(id))
+        .userIds.map(id => ({ userId: new Types.ObjectId(id) }))
     });
     return createdRoom.save();
   }
-  async findByUserId(userId: UserId): Promise<RoomDocument[]> {
-    return await this.roomsModel.find({ users: new Types.ObjectId(userId) }).exec();
+  async findByUserId(userId: UserId): Promise<RoomDocumentWithLastMessage[]> {
+    const rooms = await this.roomsModel.aggregate<RoomDocumentWithLastMessage>([
+      {
+        $match: { users: { userId: new Types.ObjectId(userId) } }
+      },
+      {
+        $lookup: {
+          from: 'messages',
+          localField: '_id',
+          foreignField: 'room',
+          as: 'messages',
+        }
+      },
+      { $unwind: '$messages' },
+
+      { $sort: { "messages.createdAt": -1 } },
+      { $limit: 1 },
+      {
+        $addFields: {
+          lastMessage: "$messages"
+        }
+      },
+      {
+        $project: {
+          messages: 0
+        }
+      }
+
+    ]);
+    return rooms;
   }
   async findAll(): Promise<RoomDocument[]> {
     return this.roomsModel.find().exec();
