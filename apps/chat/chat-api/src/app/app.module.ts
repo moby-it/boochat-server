@@ -6,11 +6,9 @@ import { ActiveUsersGateway } from "./active-users/active-users.gateway";
 import { ActiveUsersStore } from './active-users/active-users.store';
 import { ActiveUsersCommandHandlers } from './active-users/commands';
 import { AuthController } from './auth/auth.controller';
-import { MessageCommandHandlers } from './message/commands';
-import { MessageGateway } from './message/message.gateway';
-import { RoomsController } from './rooms/rooms.controller';
+import { ChatCommandHandlers, MessageGateway, RoomsController } from './chat';
 
-const CommandHandlers = [...ActiveUsersCommandHandlers, ...MessageCommandHandlers];
+const CommandHandlers = [...ActiveUsersCommandHandlers, ...ChatCommandHandlers];
 @Module({
   controllers: [AuthController, RoomsController],
   imports: [

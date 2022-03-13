@@ -3,14 +3,15 @@ import { Result, RoomId, UserId } from "@oursocial/domain";
 import { Server } from "socket.io";
 import { ActiveUsersStore } from "../../active-users/active-users.store";
 
-export class ConnectUsersToNewRoomCommand {
+export class ConnectUsersToRoomCommand {
   constructor(public readonly server: Server, public readonly userIds: UserId[], public readonly roomId: RoomId) { }
 }
-export type ConnectUsersToNewRoomResult = Result<undefined>;
-@CommandHandler(ConnectUsersToNewRoomCommand)
-export class ConnectUsersToNewRoomCommandHandler implements ICommandHandler<ConnectUsersToNewRoomCommand> {
+export type ConnectUsersToRoomResult = Result<undefined>;
+@CommandHandler(ConnectUsersToRoomCommand)
+export class ConnectUsersToRoomCommandHandler implements ICommandHandler<ConnectUsersToRoomCommand> {
+
   constructor(private activeUsersStore: ActiveUsersStore) { }
-  async execute(command: ConnectUsersToNewRoomCommand): Promise<ConnectUsersToNewRoomResult> {
+  async execute(command: ConnectUsersToRoomCommand): Promise<ConnectUsersToRoomResult> {
     const { server, userIds, roomId } = command;
     try {
       const allSockets = await server.fetchSockets();

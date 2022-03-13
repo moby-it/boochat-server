@@ -7,7 +7,7 @@ export class CreaterMessageCommand {
 }
 export type CreateMessageCommandResult = Result<Message | undefined>;
 @CommandHandler(CreaterMessageCommand)
-export class CreaterMessageCommandHandler implements ICommandHandler<CreaterMessageCommand> {
+export class CreateMessageCommandHandler implements ICommandHandler<CreaterMessageCommand> {
   constructor(private messageService: MessagePersistenceService) { }
   async execute(command: CreaterMessageCommand): Promise<CreateMessageCommandResult> {
     try {

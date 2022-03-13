@@ -4,9 +4,9 @@ import { MessageDto } from "@oursocial/persistence";
 import { instanceToPlain } from "class-transformer";
 import { shouldCreateRoom } from "libs/persistence/src/lib/chat";
 import { Server } from "socket.io";
-import { ConnectUsersToNewRoomCommand, ConnectUsersToNewRoomResult } from "./commands/connect-users-to-new-room.command";
-import { CreaterMessageCommand } from "./commands/create-message.command";
-import { CreateRoomCommand, CreateRoomCommandResponse } from "./commands/create-room.command";
+import { ConnectUsersToRoomCommand, ConnectUsersToRoomResult } from "../commands/connect-users-to-new-room.command";
+import { CreaterMessageCommand } from "../commands/create-message.command";
+import { CreateRoomCommand, CreateRoomCommandResult } from "../commands/create-room.command";
 
 @WebSocketGateway({
   cors: {
@@ -25,7 +25,7 @@ export class MessageGateway {
     let roomId = newMessage.room.id ?? '';
     if (shouldCreateRoom(newMessage)) {
       const createRoomResult = await this.commandBus
-        .execute<CreateRoomCommand, CreateRoomCommandResponse>(new CreateRoomCommand(newMessage.room));
+        .execute<CreateRoomCommand, CreateRoomCommandResult>(new CreateRoomCommand(newMessage.room));
       if (createRoomResult.failed)
         throw (createRoomResult.error);
 
@@ -34,14 +34,14 @@ export class MessageGateway {
       roomId = createRoomResult.props!.roomId;
 
       const connectUsersToNewRoomResult = await this.commandBus.
-        execute<ConnectUsersToNewRoomCommand, ConnectUsersToNewRoomResult>(new ConnectUsersToNewRoomCommand(this.server, newMessage.room.userIds, roomId));
+        execute<ConnectUsersToRoomCommand, ConnectUsersToRoomResult>(new ConnectUsersToRoomCommand(this.server, newMessage.room.userIds, roomId));
 
       if (connectUsersToNewRoomResult.failed)
         throw connectUsersToNewRoomResult.error;
     }
 
     const createMesageResult = await this.commandBus.
-      execute<CreaterMessageCommand, CreateRoomCommandResponse>(new CreaterMessageCommand(newMessage));
+      execute<CreaterMessageCommand, CreateRoomCommandResult>(new CreaterMessageCommand(newMessage));
     if (createMesageResult.failed)
       throw createMesageResult.error;
     const response = instanceToPlain(createMesageResult.props, { excludePrefixes: ['_'] });

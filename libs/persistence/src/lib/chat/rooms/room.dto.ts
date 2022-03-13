@@ -1,5 +1,7 @@
+import { RoomId } from "@oursocial/domain";
+
 export interface RoomDto {
-  id?: string;
+  id?: RoomId;
   name: string;
   userIds: string[];
 }
