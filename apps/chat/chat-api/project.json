@@ -5,12 +5,16 @@
   "targets": {
     "build": {
       "executor": "@nrwl/node:build",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/apps/chat/chat-api",
         "main": "apps/chat/chat-api/src/main.ts",
         "tsConfig": "apps/chat/chat-api/tsconfig.app.json",
-        "assets": ["apps/chat/chat-api/src/assets"]
+        "assets": [
+          "apps/chat/chat-api/src/assets"
+        ]
       },
       "configurations": {
         "production": {
@@ -34,19 +38,27 @@
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
+      "outputs": [
+        "{options.outputFile}"
+      ],
       "options": {
-        "lintFilePatterns": ["apps/chat/chat-api/**/*.ts"]
+        "lintFilePatterns": [
+          "apps/chat/chat-api/**/*.ts"
+        ]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/chat-api"],
+      "outputs": [
+        "coverage/apps/chat-api"
+      ],
       "options": {
         "jestConfig": "apps/chat/chat-api/jest.config.js",
         "passWithNoTests": true
       }
     }
   },
-  "tags": ["app"]
+  "tags": [
+    "scope:application"
+  ]
 }

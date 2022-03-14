@@ -13,6 +13,7 @@ export class RoomsPersistenceService {
   }
   async createRoom(createRoomDto: RoomDto): Promise<RoomDocument> {
     const createdRoom = new this.roomsModel({
+      _id: new Types.ObjectId(),
       ...createRoomDto, users: createRoomDto
         .userIds.map(id => new Types.ObjectId(id))
     });
@@ -37,7 +38,8 @@ export class RoomsPersistenceService {
       { $limit: 1 },
       {
         $addFields: {
-          lastMessage: "$messages"
+          lastMessage: "$messages",
+          unreadMessages: ""
         }
       },
       {
@@ -52,7 +54,7 @@ export class RoomsPersistenceService {
   async findAll(): Promise<RoomDocument[]> {
     return this.roomsModel.find().exec();
   }
-  async addUserToRoom(userId: UserId, roomId: RoomId): Promise<Result<undefined>> {
+  async addUserToRoom(userId: UserId, roomId: RoomId): Promise<Result> {
     try {
       const dbRoom = await this.roomsModel.findOne({ _id: new Types.ObjectId(roomId) });
       if (!dbRoom) return Result.fail('Room not found');

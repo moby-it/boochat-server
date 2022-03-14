@@ -8,7 +8,7 @@ export class UserJoinsRoomCommand {
 
   }
 }
-export type UserJoinsRoomCommandResult = Result<undefined>;
+export type UserJoinsRoomCommandResult = Result;
 @CommandHandler(UserJoinsRoomCommand)
 export class UserJoinsRoomCommandHandler implements ICommandHandler<UserJoinsRoomCommand>{
   constructor(private roomsService: RoomsPersistenceService) { }

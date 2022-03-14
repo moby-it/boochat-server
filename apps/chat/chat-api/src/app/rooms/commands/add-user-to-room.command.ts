@@ -5,7 +5,7 @@ import { RoomsPersistenceService } from "@oursocial/persistence";
 export class AddUserToRoomCommand {
   constructor(public readonly userId: string, public readonly roomId: string) { }
 }
-export type AddUserToRoomCommandResult = Result<undefined>;
+export type AddUserToRoomCommandResult = Result;
 
 @CommandHandler(AddUserToRoomCommand)
 export class AddUserToRoomCommandHandler implements ICommandHandler<AddUserToRoomCommand> {

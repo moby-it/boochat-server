@@ -13,8 +13,9 @@ export class CreateMessageCommandHandler implements ICommandHandler<CreaterMessa
     try {
       const { newMessage } = command;
       const dbMessage = await this.messageService.create(newMessage);
-      const populatedMessage = await this.messageService.populateMessage(dbMessage);
-      const message = dbMessageToMessage(populatedMessage);
+      const result = await this.messageService.populateMessage(dbMessage);
+      if (result.failed) throw result.error;
+      const message = dbMessageToMessage(result.props!);
       return Result.success(message);
     } catch (e) {
       return Result.fail(e);

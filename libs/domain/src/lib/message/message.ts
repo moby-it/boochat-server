@@ -9,7 +9,10 @@ interface MessageProps {
   readonly room: Partial<Room>;
 }
 export class Message extends Entity<MessageProps>{
-
+  @Expose()
+  get id() {
+    return this._id;
+  }
   @Expose()
   get sender() {
     return this._props.sender;

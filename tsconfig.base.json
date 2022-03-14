@@ -19,17 +19,11 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@oursocial/application": [
-        "libs/application/src/index.ts"
-      ],
       "@oursocial/domain": [
         "libs/domain/src/index.ts"
       ],
       "@oursocial/persistence": [
         "libs/persistence/src/index.ts"
-      ],
-      "@oursocial/utilities": [
-        "libs/utilities/src/index.ts"
       ]
     }
   },

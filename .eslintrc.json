@@ -22,9 +22,21 @@
             "allow": [],
             "depConstraints": [
               {
-                "sourceTag": "*",
+                "sourceTag": "scope:application",
                 "onlyDependOnLibsWithTags": [
                   "*"
+                ]
+              },
+              {
+                "sourceTag": "scope:persistence",
+                "onlyDependOnLibsWithTags": [
+                  "scope:domain"
+                ]
+              },
+              {
+                "sourceTag": "scope:domain",
+                "onlyDependOnLibsWithTags": [
+                  "scope:utils"
                 ]
               }
             ]

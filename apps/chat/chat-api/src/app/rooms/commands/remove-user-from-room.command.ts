@@ -5,7 +5,7 @@ import { RoomsPersistenceService } from "@oursocial/persistence";
 export class RemoveUserFromRoomCommand {
   constructor(public readonly userId: string, public readonly roomId: string) { }
 }
-export type RemoveUserFromRoomCommandResult = Result<undefined>;
+export type RemoveUserFromRoomCommandResult = Result;
 
 @CommandHandler(RemoveUserFromRoomCommand)
 export class RemoveUserFromRoomCommandHandler implements ICommandHandler<RemoveUserFromRoomCommand> {

@@ -1,6 +1,7 @@
 import { GoogleId, Message, Room, User } from '@oursocial/domain';
-import { MessageDocument, PopulatedMessageDocument } from '@oursocial/persistence';
-export function dbMessageToMessage(dbMessage: PopulatedMessageDocument): Message {
+import { DbMessage } from '@oursocial/persistence';
+import { PopulatedMessage } from 'libs/persistence/src/lib/chat';
+export function dbMessageToMessage(dbMessage: PopulatedMessage): Message {
   const message = Message.create({
     content: dbMessage.content,
     dateSent: dbMessage.createdAt,
@@ -16,7 +17,7 @@ export function dbMessageToMessage(dbMessage: PopulatedMessageDocument): Message
   }, dbMessage.id);
   return message;
 }
-export function dbMessageDocumentToMessage(dbMessage: MessageDocument): Message {
+export function dbMessageDocumentToMessage(dbMessage: DbMessage): Message {
   const message = Message.create({
     content: dbMessage.content,
     dateSent: dbMessage.createdAt,

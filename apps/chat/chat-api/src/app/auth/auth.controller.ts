@@ -10,9 +10,9 @@ export class AuthController {
   @Post('')
   async authenticate(@Body() userDto: UserDto): Promise<User> {
     try {
-      let user = await this.userService.findOneByGoogleId(userDto.googleId);
-      if (!user) {
-        user = await this.userService.create(userDto);
+      let result = await this.userService.findOneByGoogleId(userDto.googleId);
+      if (result.succeded && result.props) {
+        await this.userService.create(userDto);
       }
       return User.create({ googleId: GoogleId.create({ id: userDto.googleId }), name: userDto.name });
     } catch (e) {

@@ -1,4 +1,4 @@
-export class Result<T> {
+export class Result<T = undefined> {
   private readonly _props: T;
   private readonly _error: unknown;
   private readonly _isSuccessful: boolean;

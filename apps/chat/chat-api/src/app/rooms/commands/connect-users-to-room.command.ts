@@ -5,7 +5,7 @@ import { ActiveUsersStore } from "@oursocial/persistence";
 export class ConnectUsersToRoomCommand {
   constructor(public readonly server: Server, public readonly userIds: UserId[], public readonly roomId: RoomId) { }
 }
-export type ConnectUsersToRoomResult = Result<undefined>;
+export type ConnectUsersToRoomResult = Result;
 @CommandHandler(ConnectUsersToRoomCommand)
 export class ConnectUsersToRoomCommandHandler implements ICommandHandler<ConnectUsersToRoomCommand> {
 

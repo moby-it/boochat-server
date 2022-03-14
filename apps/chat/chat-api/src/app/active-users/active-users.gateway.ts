@@ -1,7 +1,7 @@
 import { CommandBus } from '@nestjs/cqrs';
 import { OnGatewayConnection, OnGatewayDisconnect, WebSocketGateway, WebSocketServer } from "@nestjs/websockets";
 import { Server, Socket } from 'socket.io';
-import { ActiveUsersStore } from "@oursocial/persistence";
+import { ActiveUsersStore } from "libs/persistence/src";
 import { AddUserToStoreCommand, AddUserToStoreCommandResult } from "./commands/add-user-to-store.command";
 import { UserJoinsRoomCommand, UserJoinsRoomCommandResult } from "./commands/user-joins-rooms.command";
 @WebSocketGateway({
