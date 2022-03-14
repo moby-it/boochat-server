@@ -35,4 +35,8 @@ export class RoomsGateway implements OnGatewayDisconnect {
     const disconnectUsersResult = await this.commandBus.execute<DisconnectUsersFromRoomCommand, DisconnectUsersFromRoomResult>(new DisconnectUsersFromRoomCommand(this.server, [userId], roomId));
     if (disconnectUsersResult.failed) console.error(disconnectUsersResult.error);
   }
+  @SubscribeMessage('userClosedRoom')
+  async userClosedRoom(@MessageBody('roomId') roomId: string) {
+
+  }
 }

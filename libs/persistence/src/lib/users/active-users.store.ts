@@ -24,7 +24,7 @@ export class ActiveUsersStore {
   }
   findSockets(userIds: string[]): SocketId[] {
     const socketIds = [];
-    for (let [userId, socketId] of this.activeUsersMap) {
+    for (const [userId, socketId] of this.activeUsersMap) {
       if (userIds.includes(userId)) socketIds.push(socketId);
     }
     return socketIds;

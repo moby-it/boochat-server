@@ -6,3 +6,4 @@ export * from './lib/persistence.module';
 export { UserPersistenceService, RoomsPersistenceService, MessagePersistenceService };
 export { MessageDto, RoomDto as RoomDto, UserDto };
 export { MessageDocument, RoomDocument, UserDocument, PopulatedMessageDocument, PopulatedRoomDocument };
+export { ActiveUsersStore } from './lib/users';

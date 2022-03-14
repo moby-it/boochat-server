@@ -1,8 +1,7 @@
 import { CommandHandler, ICommandHandler } from "@nestjs/cqrs";
 import { Result, RoomId, UserId } from "@oursocial/domain";
 import { Server } from "socket.io";
-import { ActiveUsersStore } from "../../active-users/active-users.store";
-
+import { ActiveUsersStore } from "@oursocial/persistence";
 export class ConnectUsersToRoomCommand {
   constructor(public readonly server: Server, public readonly userIds: UserId[], public readonly roomId: RoomId) { }
 }

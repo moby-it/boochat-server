@@ -15,5 +15,5 @@
   ],
   "include": [
     "**/*.ts"
-  ]
+, "../../../libs/persistence/src/lib/users/active-users.store.ts"  ]
 }

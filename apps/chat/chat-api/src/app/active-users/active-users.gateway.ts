@@ -1,10 +1,9 @@
+import { CommandBus } from '@nestjs/cqrs';
 import { OnGatewayConnection, OnGatewayDisconnect, WebSocketGateway, WebSocketServer } from "@nestjs/websockets";
 import { Server, Socket } from 'socket.io';
-import { CommandBus } from '@nestjs/cqrs';
+import { ActiveUsersStore } from "@oursocial/persistence";
 import { AddUserToStoreCommand, AddUserToStoreCommandResult } from "./commands/add-user-to-store.command";
-import { Result } from "@oursocial/domain";
 import { UserJoinsRoomCommand, UserJoinsRoomCommandResult } from "./commands/user-joins-rooms.command";
-import { ActiveUsersStore } from "./active-users.store";
 @WebSocketGateway({
   cors: {
     origin: '*'

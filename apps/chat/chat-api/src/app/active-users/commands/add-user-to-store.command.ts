@@ -1,8 +1,7 @@
 import { CommandHandler, ICommandHandler } from "@nestjs/cqrs";
 import { Result, UserId } from "@oursocial/domain";
-import { UserPersistenceService } from "@oursocial/persistence";
+import { UserPersistenceService, ActiveUsersStore } from "@oursocial/persistence";
 import { Socket } from "socket.io";
-import { ActiveUsersStore } from "../active-users.store";
 
 export class AddUserToStoreCommand {
   constructor(public readonly googleId: string, public readonly socket: Socket) {

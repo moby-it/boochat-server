@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { CqrsModule } from '@nestjs/cqrs';
-import { PersistenceModule } from '@oursocial/persistence';
-import { ActiveUsersCommandHandlers, ActiveUsersGateway, ActiveUsersStore } from './active-users';
+import { ActiveUsersStore, PersistenceModule } from '@oursocial/persistence';
+import { ActiveUsersCommandHandlers, ActiveUsersGateway } from './active-users';
 import { AuthController } from './auth/auth.controller';
 import { MessageCommandHandlers, MessageGateway } from './message';
 import { RoomCommandHandlers, RoomsGateway, FindRoomByUserIdQueryHandler, FindRoomByIdQueryHandler, RoomsController } from './rooms';
