@@ -1,10 +1,10 @@
 import { CommandBus } from "@nestjs/cqrs";
 import { MessageBody, OnGatewayDisconnect, SubscribeMessage, WebSocketGateway, WebSocketServer } from "@nestjs/websockets";
 import { Server, Socket } from "socket.io";
-import { ConnectUsersToRoomCommand, ConnectUsersToRoomResult } from "../commands";
-import { AddUserToRoomCommand, AddUserToRoomCommandResult } from "../commands/add-user-to-room.command";
-import { DisconnectUsersFromRoomCommand, DisconnectUsersFromRoomResult } from "../commands/disconnect-users-from-room.command";
-import { RemoveUserFromRoomCommand, RemoveUserFromRoomCommandResult } from "../commands/remove-user-from-room.command";
+import { AddUserToRoomCommand, AddUserToRoomCommandResult } from "./commands/add-user-to-room.command";
+import { ConnectUsersToRoomCommand, ConnectUsersToRoomResult } from "./commands/connect-users-to-room.command";
+import { DisconnectUsersFromRoomCommand, DisconnectUsersFromRoomResult } from "./commands/disconnect-users-from-room.command";
+import { RemoveUserFromRoomCommand, RemoveUserFromRoomCommandResult } from "./commands/remove-user-from-room.command";
 
 @WebSocketGateway({
   cors: {

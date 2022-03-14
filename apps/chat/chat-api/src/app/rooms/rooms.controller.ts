@@ -1,7 +1,7 @@
 import { BadRequestException, Controller, Get, Param } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { Room } from '@oursocial/domain';
-import { FindRoomsByUserIdQueryResult, FindRoomByIdQuery, FindRoomByIdQueryResult, FindRoomsByUserIdQuery } from '../queries';
+import { FindRoomByIdQuery, FindRoomByIdQueryResult, FindRoomsByUserIdQuery, FindRoomsByUserIdQueryResult } from './queries';
 
 @Controller('rooms')
 export class RoomsController {

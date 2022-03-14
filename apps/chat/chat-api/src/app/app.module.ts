@@ -2,15 +2,12 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { CqrsModule } from '@nestjs/cqrs';
 import { PersistenceModule } from '@oursocial/persistence';
-import { ActiveUsersGateway } from "./active-users/active-users.gateway";
-import { ActiveUsersStore } from './active-users/active-users.store';
-import { ActiveUsersCommandHandlers } from './active-users/commands';
+import { ActiveUsersCommandHandlers, ActiveUsersGateway, ActiveUsersStore } from './active-users';
 import { AuthController } from './auth/auth.controller';
-import { ChatCommandHandlers, MessageGateway, RoomsController } from './chat';
-import { FindRoomByIdQueryHandler, FindRoomByUserIdQueryHandler } from './chat/queries';
-import { RoomsGateway } from './chat/rooms/rooms.gateway';
+import { MessageCommandHandlers, MessageGateway } from './message';
+import { RoomCommandHandlers, RoomsGateway, FindRoomByUserIdQueryHandler, FindRoomByIdQueryHandler, RoomsController } from './rooms';
 
-const CommandHandlers = [...ActiveUsersCommandHandlers, ...ChatCommandHandlers];
+const CommandHandlers = [...ActiveUsersCommandHandlers, ...RoomCommandHandlers, ...MessageCommandHandlers];
 const Gateways = [ActiveUsersGateway, MessageGateway, RoomsGateway];
 const QueryHandlers = [FindRoomByUserIdQueryHandler, FindRoomByIdQueryHandler];
 @Module({
