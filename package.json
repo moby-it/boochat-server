@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
+    "watch:ts": "tsc -p tsconfig.base.json --watch --noEmit",
     "start:client": "nx serve client",
     "start:chat-ui": "nx serve chat-ui",
     "start:events": "nx serve events-ui",
@@ -56,8 +57,7 @@
     "webpack-merge": "^5.8.0"
   },
   "dependencies": {
-    "-": "^0.0.1",
-    "@angular-architects/module-federation": "^13.0.1",
+    "@angular-architects/module-federation": "^14.2.1",
     "@angular/animations": "~13.2.0",
     "@angular/common": "~13.2.0",
     "@angular/compiler": "~13.2.0",
