@@ -1,8 +1,7 @@
 import { CommandBus } from "@nestjs/cqrs";
 import { MessageBody, SubscribeMessage, WebSocketGateway, WebSocketServer } from "@nestjs/websockets";
-import { MessageDto } from "@oursocial/persistence";
+import { MessageDto, shouldCreateRoom } from "@oursocial/persistence";
 import { instanceToPlain } from "class-transformer";
-import { shouldCreateRoom } from "libs/persistence/src/lib/chat";
 import { Server } from "socket.io";
 import { ConnectUsersToRoomCommand, ConnectUsersToRoomResult } from "../rooms/commands/connect-users-to-room.command";
 import { CreateRoomCommand, CreateRoomCommandResult } from "../rooms/commands/create-room.command";

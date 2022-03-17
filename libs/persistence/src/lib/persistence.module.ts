@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { MessagePersistenceService, MessagesPersistenceModule, RoomsPersistenceModule, RoomsPersistenceService } from './chat';
+import { MessagePersistenceService, MessagesPersistenceModule } from './messages';
+import { RoomsPersistenceModule, RoomsPersistenceService } from './rooms';
 import { UserRoomVisitPersistenceModule, UserRoomVisitPersistenceService } from './userRoomVisit';
 import { UserPersistenceModule, UserPersistenceService } from './users';
 

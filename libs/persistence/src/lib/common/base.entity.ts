@@ -1,6 +1,6 @@
 import { Prop } from "@nestjs/mongoose";
 import { Types } from 'mongoose';
-export abstract class BaseEntity {
+export abstract class MongoEntity {
   @Prop({ auto: true })
   _id!: Types.ObjectId;
   @Prop()

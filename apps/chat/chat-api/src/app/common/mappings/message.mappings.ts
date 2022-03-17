@@ -1,6 +1,5 @@
 import { GoogleId, Message, Room, User } from '@oursocial/domain';
-import { DbMessage } from '@oursocial/persistence';
-import { PopulatedMessage } from 'libs/persistence/src/lib/chat';
+import { DbMessage, PopulatedMessage } from '@oursocial/persistence';
 export function dbMessageToMessage(dbMessage: PopulatedMessage): Message {
   const message = Message.create({
     content: dbMessage.content,
