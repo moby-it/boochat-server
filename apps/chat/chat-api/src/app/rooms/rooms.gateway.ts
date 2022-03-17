@@ -1,7 +1,7 @@
-import { NotImplementedException } from "@nestjs/common";
 import { CommandBus } from "@nestjs/cqrs";
-import { ConnectedSocket, MessageBody, OnGatewayDisconnect, SubscribeMessage, WebSocketGateway, WebSocketServer } from "@nestjs/websockets";
+import { MessageBody, OnGatewayDisconnect, SubscribeMessage, WebSocketGateway, WebSocketServer } from "@nestjs/websockets";
 import { Result } from "@oursocial/domain";
+import { LastRoomVisitDto, RoomDto } from "@oursocial/persistence";
 import { Server, Socket } from "socket.io";
 import { AddUserToRoomCommand, AddUserToRoomCommandResult } from "./commands/add-user-to-room.command";
 import { ConnectUsersToRoomCommand, ConnectUsersToRoomResult } from "./commands/connect-users-to-room.command";
@@ -18,9 +18,11 @@ export class RoomsGateway implements OnGatewayDisconnect {
   @WebSocketServer()
   server!: Server;
   constructor(private commandBus: CommandBus) { }
-  handleDisconnect(client: Socket) {
-    console.log('Client Data');
-    console.log(client.data);
+  async handleDisconnect(client: Socket) {
+    const lastVisitedRoom = client.data.lastVisitedRoom as LastRoomVisitDto;
+    const { roomId, userId, timestamp } = lastVisitedRoom;
+    const result = await this.commandBus.execute(new SaveUserLastRoomVisitCommand(roomId, userId, timestamp)) as Result;
+    if (result.failed) { console.error(result.error); };
   }
   @SubscribeMessage('addUserToRoom')
   async addUserToRoom(@MessageBody('userId') userId: string, @MessageBody('roomId') roomId: string): Promise<void> {
