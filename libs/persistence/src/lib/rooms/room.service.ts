@@ -20,6 +20,36 @@ export class RoomsPersistenceService {
     return createdRoom.save();
   }
   async findByUserId(userId: UserId): Promise<RoomDocumentWithLastMessage[]> {
+    const _rooms = await this.roomsModel.aggregate<RoomDocumentWithLastMessage>([
+      {
+        $match: { users: new Types.ObjectId(userId) }
+      },
+      {
+        $lookup: {
+          from: 'messages',
+          localField: '_id',
+          foreignField: 'room',
+          as: 'messages',
+        }
+      },
+
+      {
+        $lookup: {
+          from: 'userroomvisits',
+          localField: '_id',
+          foreignField: 'room',
+          as: 'lastVisits'
+        }
+      },
+      {
+        $unwind: {
+          path: "$lastVisits",
+          preserveNullAndEmptyArrays: true
+        }
+      },
+      { $sort: { "lastVisits.timestamp": -1 } },
+      { $group: { "_id": "$_id", "name": { $first: "$name" }, messages: { $first: "$messages" }, "lastVisit": { $first: "$lastVisits" } } },
+    ]);
     const rooms = await this.roomsModel.aggregate<RoomDocumentWithLastMessage>([
       {
         $match: { users: new Types.ObjectId(userId) }
@@ -47,9 +77,9 @@ export class RoomsPersistenceService {
           messages: 0
         }
       }
-
     ]);
     return rooms;
+
   }
   async findAll(): Promise<RoomDocument[]> {
     return this.roomsModel.find().exec();

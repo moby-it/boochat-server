@@ -8,7 +8,7 @@ export class UserRoomVisitPersistenceService {
   constructor(@InjectModel(UserRoomVisit.name) private model: Model<UserRoomVisitDocument>) { }
   async logVisit(roomId: string, userId: string, timestamp: Date): Promise<Result> {
     try {
-      if (roomId || userId) throw new Error('Cannot log visit with no roomId or userId');
+      if (!roomId || !userId) throw new Error('Cannot log visit with no roomId or userId');
       const userRoomVisit = new this.model({
         _id: new Types.ObjectId(),
         room: new Types.ObjectId(roomId),

@@ -1,7 +1,7 @@
 import { CommandBus } from "@nestjs/cqrs";
 import { MessageBody, OnGatewayDisconnect, SubscribeMessage, WebSocketGateway, WebSocketServer } from "@nestjs/websockets";
 import { Result } from "@oursocial/domain";
-import { LastRoomVisitDto, RoomDto } from "@oursocial/persistence";
+import { LastRoomVisitDto } from "@oursocial/persistence";
 import { Server, Socket } from "socket.io";
 import { AddUserToRoomCommand, AddUserToRoomCommandResult } from "./commands/add-user-to-room.command";
 import { ConnectUsersToRoomCommand, ConnectUsersToRoomResult } from "./commands/connect-users-to-room.command";
@@ -20,9 +20,12 @@ export class RoomsGateway implements OnGatewayDisconnect {
   constructor(private commandBus: CommandBus) { }
   async handleDisconnect(client: Socket) {
     const lastVisitedRoom = client.data.lastVisitedRoom as LastRoomVisitDto;
-    const { roomId, userId, timestamp } = lastVisitedRoom;
-    const result = await this.commandBus.execute(new SaveUserLastRoomVisitCommand(roomId, userId, timestamp)) as Result;
-    if (result.failed) { console.error(result.error); };
+    if (lastVisitedRoom?.roomId && lastVisitedRoom?.timestamp && lastVisitedRoom?.userId) {
+      const { roomId, userId, timestamp } = lastVisitedRoom;
+      const result = await this.commandBus.execute(new SaveUserLastRoomVisitCommand(roomId, userId, timestamp)) as Result;
+      if (result.failed) { console.error(result.error); };
+    }
+    console.log('invalid last visited room on disconnect');
   }
   @SubscribeMessage('addUserToRoom')
   async addUserToRoom(@MessageBody('userId') userId: string, @MessageBody('roomId') roomId: string): Promise<void> {
@@ -41,7 +44,8 @@ export class RoomsGateway implements OnGatewayDisconnect {
     if (disconnectUsersResult.failed) console.error(disconnectUsersResult.error);
   }
   @SubscribeMessage('userClosedRoom')
-  async userClosedRoom(@MessageBody('roomId') roomId: string, @MessageBody('userId') userId: string, @MessageBody('timestamp') timestamp: Date) {
+  async userClosedRoom(@MessageBody() roomDto: LastRoomVisitDto) {
+    const { roomId, userId, timestamp } = roomDto;
     const result = await this.commandBus.execute(new SaveUserLastRoomVisitCommand(roomId, userId, timestamp)) as Result;
     if (result.failed) { console.error(result.error); };
   }

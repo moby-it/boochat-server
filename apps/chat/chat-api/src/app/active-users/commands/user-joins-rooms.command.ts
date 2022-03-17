@@ -18,6 +18,7 @@ export class UserJoinsRoomCommandHandler implements ICommandHandler<UserJoinsRoo
       rooms.map(room => room._id.toString()).forEach(id => socket.join(id));
       return Result.success();
     } catch (e) {
+      console.error(e);
       return Result.fail('failed to connect user to its respective rooms.');
     }
 
