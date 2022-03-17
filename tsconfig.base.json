@@ -7,7 +7,7 @@
     "strict": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "composite": true,
+    "declaration": false,
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",

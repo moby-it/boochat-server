@@ -2,10 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Result } from '@oursocial/domain';
 import { Model, Types } from 'mongoose';
-import { User } from '../users/user.schema';
 import { Room } from '../rooms/room.schema';
-import { MessageDto, PopulatedMessage } from './message.dto';
-import { Message, MessageDocument } from './message.schema';
+import { User } from '../users/user.schema';
+import { MessageDto } from './message.dto';
+import { Message, MessageDocument, PopulatedMessage } from './message.schema';
 
 @Injectable()
 export class MessagePersistenceService {
