@@ -1,6 +1,6 @@
 import { CommandBus } from "@nestjs/cqrs";
 import { MessageBody, SubscribeMessage, WebSocketGateway, WebSocketServer } from "@nestjs/websockets";
-import { MessageDto, shouldCreateRoom } from "@oursocial/persistence";
+import { MessageDto, MessageWithRoomDto, shouldCreateRoom } from "@oursocial/persistence";
 import { instanceToPlain } from "class-transformer";
 import { Server } from "socket.io";
 import { ConnectUsersToRoomCommand, ConnectUsersToRoomResult } from "../rooms/commands/connect-users-to-room.command";
@@ -20,8 +20,8 @@ export class MessageGateway {
 
   ) { }
   @SubscribeMessage('sendMessage')
-  async onNewMessage(@MessageBody() newMessage: MessageDto) {
-    let roomId = newMessage.room.id ?? '';
+  async onNewMessage(@MessageBody() newMessage: MessageDto | MessageWithRoomDto) {
+    let roomId = newMessage.roomId ?? '';
     if (shouldCreateRoom(newMessage)) {
       const createRoomResult = await this.commandBus
         .execute(new CreateRoomCommand(newMessage.room)) as CreateRoomCommandResult;

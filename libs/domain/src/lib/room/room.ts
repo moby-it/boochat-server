@@ -6,6 +6,7 @@ interface RoomProps {
   name: string;
   users: Partial<User>[];
   messages: Message[];
+  unreadMessages?: number;
 }
 export class Room extends Entity<RoomProps>{
   @Expose()
@@ -23,6 +24,10 @@ export class Room extends Entity<RoomProps>{
   @Expose()
   get users() {
     return this._props.users;
+  }
+  @Expose()
+  get unreadMessages() {
+    return this._props.unreadMessages;
   }
   private constructor(props: RoomProps, id: string) {
     super(props, id);

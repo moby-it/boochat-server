@@ -1,0 +1,60 @@
+use('OurSocial')
+const query = [
+  {
+    $match: {
+      users: ObjectId("622bb315409925be7d1018fe")
+    }
+  },
+        {
+        $lookup: {
+          from: 'userroomvisits',
+          localField: '_id',
+          foreignField: 'room',
+          as: 'lastVisits'
+        }
+      },
+        {
+        $lookup: {
+          from: 'messages',
+          localField: '_id',
+          foreignField: 'room',
+          as: 'messages'
+        }
+      },
+      {
+      $project: {
+        name:1,
+        lastMessage:{
+          $first: {
+            $filter: {
+              input: "$messages",
+              cond:{$eq:["$$this.createdAt",{$max:"$messages.createdAt"}]}
+            }
+          }
+        },
+        unreadMessages: {$size:{
+          $filter: {
+            input:"$messages",
+            cond:{$gt: ["$$this.createdAt", {$max:"$lastVisits.timestamp"}]}
+          }
+        }}
+        },
+      },
+      {
+        $project: {
+          _id:0,
+          id:{$toString: "$_id"},
+          name:1,
+          lastMessage: {
+            id:{$toString:"$lastMessage._id"},
+            content:1,
+            sender:{
+              $toString: "$lastMessage.sender"
+            },
+            createdAt:1
+          },
+          unreadMessages:1
+        }
+      }
+  ]
+db.rooms.aggregate(query)

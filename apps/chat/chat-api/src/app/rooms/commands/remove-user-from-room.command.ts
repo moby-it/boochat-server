@@ -11,9 +11,14 @@ export type RemoveUserFromRoomCommandResult = Result;
 export class RemoveUserFromRoomCommandHandler implements ICommandHandler<RemoveUserFromRoomCommand> {
   constructor(private roomsService: RoomsPersistenceService) { }
 
-  async execute(command: RemoveUserFromRoomCommand): Promise<any> {
+  async execute(command: RemoveUserFromRoomCommand): Promise<RemoveUserFromRoomCommandResult> {
     const { userId, roomId } = command;
-    return await this.roomsService.removeUserFromRoom(userId, roomId);
+    try {
+      await this.roomsService.removeUserFromRoom(userId, roomId);
+      return Result.success();
+    } catch (e) {
+      return Result.fail(e);
+    }
   }
 
 }

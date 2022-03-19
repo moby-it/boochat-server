@@ -5,7 +5,7 @@ import { Model, Types } from 'mongoose';
 import { Room } from '../rooms/room.schema';
 import { User } from '../users/user.schema';
 import { MessageDto } from './message.dto';
-import { Message, MessageDocument, PopulatedMessage } from './message.schema';
+import { Message, PopulatedMessage } from './message.schema';
 
 @Injectable()
 export class MessagePersistenceService {
@@ -13,13 +13,13 @@ export class MessagePersistenceService {
   private readonly populateUserOptions = { path: 'sender', model: User.name };
   private readonly populateRoomOptions = { path: 'room', model: Room.name };
   async create(messageDto: MessageDto): Promise<Message> {
-    const { content, sender, room } = messageDto;
+    const { content,  senderId, roomId } = messageDto;
     const createdMessage = new this.messageModel(
       {
         _id: new Types.ObjectId(),
-        sender: new Types.ObjectId(sender),
+        sender: new Types.ObjectId(senderId),
         content,
-        room: new Types.ObjectId(room.id)
+        room: new Types.ObjectId(roomId)
       });
     await createdMessage.save();
     return createdMessage;
@@ -38,7 +38,7 @@ export class MessagePersistenceService {
 
 
   }
-  async findByRoomId(roomId: string): Promise<MessageDocument[]> {
+  async findByRoomId(roomId: string): Promise<MessageDto[]> {
     return await this.messageModel.find({ room: new Types.ObjectId(roomId) });
   }
   async findAll(): Promise<Message[]> {

@@ -1,10 +1,9 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { Document, Types } from 'mongoose';
 import { MongoEntity } from "../common";
+import { MessageDocument } from "../messages";
 import { User } from "../users/user.schema";
-import { Message, MessageDocument } from "../messages";
 export type RoomDocument = Room & Document;
-export type RoomDocumentWithLastMessage = RoomDocument & { lastMessage: Message; };
 
 export type PopulatedRoomDocument = RoomDocument & { messages: MessageDocument[]; };
 @Schema({ timestamps: true })

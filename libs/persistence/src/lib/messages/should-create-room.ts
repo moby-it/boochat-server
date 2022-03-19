@@ -1,5 +1,5 @@
-import { MessageDto } from "./message.dto";
+import { MessageDto, MessageWithRoomDto } from "./message.dto";
 
-export function shouldCreateRoom(message: MessageDto): boolean {
-  return !message.room.id;
+export function shouldCreateRoom(message: MessageDto): message is MessageWithRoomDto {
+  return !message.roomId;
 }

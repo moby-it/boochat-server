@@ -1,8 +1,12 @@
-import { RoomDto } from "../rooms/room.dto";
+import { RoomDto } from "../rooms";
 
 export interface MessageDto {
-  sender: string;
+  id?: string;
+  senderId: string;
   content: string;
+  roomId: string;
+  createdAt: Date;
+}
+export interface MessageWithRoomDto extends MessageDto {
   room: RoomDto;
-
 }

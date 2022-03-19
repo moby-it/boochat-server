@@ -10,9 +10,15 @@ export type AddUserToRoomCommandResult = Result;
 @CommandHandler(AddUserToRoomCommand)
 export class AddUserToRoomCommandHandler implements ICommandHandler<AddUserToRoomCommand> {
   constructor(private roomsService: RoomsPersistenceService) { }
-  async execute(command: AddUserToRoomCommand): Promise<any> {
+  async execute(command: AddUserToRoomCommand): Promise<AddUserToRoomCommandResult> {
     const { userId, roomId } = command;
-    return await this.roomsService.addUserToRoom(userId, roomId);
+    try {
+      await this.roomsService.addUserToRoom(userId, roomId);
+      return Result.success();
+    } catch (e) {
+      return Result.fail(e);
+    }
+
   }
 
 }
