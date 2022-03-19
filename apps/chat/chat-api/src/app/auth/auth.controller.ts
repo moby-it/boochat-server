@@ -10,8 +10,8 @@ export class AuthController {
   @Post('')
   async authenticate(@Body() userDto: UserDto): Promise<User> {
     try {
-      let result = await this.userService.findOneByGoogleId(userDto.googleId);
-      if (result.succeded && result.props) {
+      let user = await this.userService.findOneByGoogleId(userDto.googleId);
+      if (user) {
         await this.userService.create(userDto);
       }
       return User.create({ googleId: GoogleId.create({ id: userDto.googleId }), name: userDto.name });
@@ -22,8 +22,10 @@ export class AuthController {
   }
   @Put('update/:id')
   async updateUser(@Param() id: string, @Body() userDto: UserDto): Promise<void> {
-    const result = await this.userService.update(id, userDto);
-    if (result.succeded) return;
-    throw new InternalServerErrorException(result.error);
+    try {
+      await this.userService.update(id, userDto);
+    } catch (e) {
+      throw new InternalServerErrorException(e);
+    }
   }
 }

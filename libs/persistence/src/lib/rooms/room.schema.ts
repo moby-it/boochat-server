@@ -11,7 +11,7 @@ export class Room extends MongoEntity {
   @Prop({ required: true })
   name!: string;
 
-  @Prop({ type: [{ type: Types.ObjectId, ref: User.name }] })
+  @Prop({ type: [{ type: Types.ObjectId, ref: User.name, required: true }] })
   users!: Types.ObjectId[];
 }
 export const RoomSchema = SchemaFactory.createForClass(Room);

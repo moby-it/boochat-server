@@ -11,6 +11,11 @@ export class SaveUserLastRoomVisitCommandHandler implements ICommandHandler<Save
   constructor(private userRoomVisitService: UserRoomVisitPersistenceService) { }
   async execute(command: SaveUserLastRoomVisitCommand): Promise<Result> {
     const { roomId, userId, timestamp } = command;
-    return await this.userRoomVisitService.logVisit(roomId, userId, timestamp);
+    try {
+      await this.userRoomVisitService.logVisit(roomId, userId, timestamp);
+      return Result.success();
+    } catch (e) {
+      return Result.fail(e);
+    }
   }
 }

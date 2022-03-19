@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
-import { RoomId, UserId } from "@oursocial/domain";
+import { Guard, RoomId, UserId } from "@oursocial/domain";
 import { Model, Types } from 'mongoose';
 import { findByUserIdQuery } from "./mongo-queries";
 import { CreateRoomDto, RoomByUserIdDto, RoomDto } from "./room.dto";
@@ -19,6 +19,7 @@ export class RoomsPersistenceService {
     };
   }
   async createRoom(createRoomDto: CreateRoomDto): Promise<RoomDocument> {
+    Guard.AgainstEmptyArray({ propName: 'usersIds', value: createRoomDto.userIds });
     const createdRoom = new this.roomsModel({
       _id: new Types.ObjectId(),
       ...createRoomDto, users: createRoomDto
@@ -40,6 +41,7 @@ export class RoomsPersistenceService {
     }));
   }
   async addUserToRoom(userId: UserId, roomId: RoomId): Promise<void> {
+    Guard.AgainstNullOrUndefined([{ propName: 'userId', value: userId }]);
     const dbRoom = await this.roomsModel.findOne({ _id: new Types.ObjectId(roomId) });
     if (!dbRoom) throw new Error('Room not found');
     await dbRoom.updateOne({
@@ -50,6 +52,7 @@ export class RoomsPersistenceService {
 
   }
   async removeUserFromRoom(userId: UserId, roomId: RoomId): Promise<void> {
+    Guard.AgainstNullOrUndefined([{ propName: 'userId', value: userId }]);
     const dbRoom = await this.roomsModel.findOne({ _id: new Types.ObjectId(roomId) });
     if (!dbRoom) throw new Error('Room not found');
     await dbRoom.updateOne({

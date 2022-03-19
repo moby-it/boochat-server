@@ -2,7 +2,7 @@ import { NotFoundException } from "@nestjs/common";
 import { IQuery, IQueryHandler, QueryHandler } from "@nestjs/cqrs";
 import { Result, Room } from "@oursocial/domain";
 import { MessagePersistenceService, RoomsPersistenceService } from "@oursocial/persistence";
-import { dbRoomToRoom } from "../../common";
+import { RoomDtoToRoom } from "../../common";
 
 export class FindRoomByIdQuery implements IQuery {
   constructor(public readonly roomId: string) { }
@@ -18,7 +18,7 @@ export class FindRoomByIdQueryHandler implements IQueryHandler<FindRoomByIdQuery
     const dbRoom = await this.roomsService.findOne(roomId);
     if (!dbRoom) return Result.fail(new NotFoundException());
     const messages = await this.messageService.findByRoomId(roomId);
-    const room = dbRoomToRoom(dbRoom, messages);
+    const room = RoomDtoToRoom(dbRoom, messages);
     return Result.success(room);
   }
 
