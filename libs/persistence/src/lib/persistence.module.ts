@@ -6,7 +6,7 @@ import { UserRoomVisitPersistenceModule, UserRoomVisitPersistenceService } from 
 import { UserPersistenceModule, UserPersistenceService } from './users';
 
 @Module({
-  imports: [MongooseModule.forRoot(process.env.CONNECTION_STRING || "mongodb://gspanos:sinpassword@localhost", {
+  imports: [MongooseModule.forRoot(process.env.DBSERVER_URL || "mongodb://gspanos:sinpassword@localhost", {
     dbName: 'OurSocial'
   }),
     UserPersistenceModule,

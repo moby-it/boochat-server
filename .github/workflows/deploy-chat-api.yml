@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - 'apps/chat/chat-api/**'
+      - 'libs/persistence/**'
 
 jobs:
   build:
