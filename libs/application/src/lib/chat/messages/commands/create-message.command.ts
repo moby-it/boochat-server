@@ -1,7 +1,7 @@
 import { CommandHandler, ICommandHandler } from "@nestjs/cqrs";
-import { MessageDtoToMessage } from "@oursocial/application";
 import { Message, Result } from "@oursocial/domain";
 import { MessageDto, MessagePersistenceService } from "@oursocial/persistence";
+import { MessageDtoToMessage } from "../message.mappings";
 export class CreaterMessageCommand {
   constructor(public newMessage: MessageDto) { };
 }

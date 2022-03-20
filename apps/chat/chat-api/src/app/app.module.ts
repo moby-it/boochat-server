@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import { ApplicationModule } from '@oursocial/application';
-import { ActiveUsersStore, PersistenceModule } from '@oursocial/persistence';
+import { PersistenceModule } from '@oursocial/persistence';
 import { ActiveUsersGateway } from './active-users';
 import { AuthController } from './auth/auth.controller';
 import { MessageGateway } from './message';

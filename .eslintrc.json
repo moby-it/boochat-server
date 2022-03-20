@@ -24,6 +24,7 @@
               {
                 "sourceTag": "type:application",
                 "onlyDependOnLibsWithTags": [
+                  "type:lib",
                   "scope:domain",
                   "scope:application"
                 ]

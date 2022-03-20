@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
-import { GoogleId, Guard, RoomId, UserId } from "@oursocial/domain";
+import { Guard, RoomId, UserId } from "@oursocial/domain";
 import { Model, Types } from 'mongoose';
 import { findByUserIdQuery } from "./mongo-queries";
 import { CreatedRoomDto, CreateRoomDto, RoomByUserIdDto, RoomDto } from "./room.dto";

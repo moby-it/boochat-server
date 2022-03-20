@@ -43,6 +43,5 @@
     "@nrwl/angular:component": {
       "style": "css"
     }
-  },
-  "defaultProject": "client"
+  }
 }

@@ -89,8 +89,8 @@
       "executor": "@nrwl/linter:eslint",
       "options": {
         "lintFilePatterns": [
-          "apps/chat-ui/src/**/*.ts",
-          "apps/chat-ui/src/**/*.html"
+          "apps/chat/chat-ui/src/**/*.ts",
+          "apps/chat/chat-ui/src/**/*.html"
         ]
       }
     },

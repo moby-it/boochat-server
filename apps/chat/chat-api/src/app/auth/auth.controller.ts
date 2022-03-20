@@ -1,7 +1,6 @@
 import { BadRequestException, Body, Controller, InternalServerErrorException, Param, Post, Put } from '@nestjs/common';
-import { GoogleId, User } from '@oursocial/domain';
-import { UserPersistenceService } from '@oursocial/persistence';
-import { UserDto } from 'libs/persistence/src/lib/users/user.dto';
+import { User } from '@oursocial/domain';
+import { UserDto, UserPersistenceService } from '@oursocial/persistence';
 
 @Controller('auth')
 export class AuthController {
@@ -14,7 +13,7 @@ export class AuthController {
       if (!user?.id) {
         user = await this.userService.create(userDto);
       }
-      return User.create({ googleId: userDto.googleId, name: userDto.name }, user.id!);
+      return User.create({ googleId: userDto.googleId, name: userDto.name }, user.id as string);
     } catch (e) {
       throw new BadRequestException(e);
     }

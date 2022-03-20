@@ -1,6 +1,5 @@
 import { Expose } from 'class-transformer';
-import { Server, Socket } from 'socket.io';
-import { Room } from '../chat';
+import { Socket } from 'socket.io';
 import { AggregateRootEntity, Guard, RoomId } from "../common";
 import { CreateRoomEvent, SendMessageEvent, UserConnectedEvent, UserDisconnectedEvent } from './events';
 interface UserProps {

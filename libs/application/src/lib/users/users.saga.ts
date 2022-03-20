@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { CommandBus, ICommand, IEvent, ofType, Saga } from "@nestjs/cqrs";
 import { UserConnectedEvent, UserDisconnectedEvent } from "@oursocial/domain";
 import { ActiveUsersStore } from "@oursocial/persistence";
-import { catchError, EMPTY, map, Observable, switchMap, tap, throwError } from "rxjs";
+import { catchError, EMPTY, map, Observable, switchMap, tap } from "rxjs";
 import { Socket } from "socket.io";
 import { AddUserToStoreCommand, AddUserToStoreCommandResult } from "./commands/add-user-to-store.command";
 import { RemoveUserFromStoreCommand } from "./commands/remove-user-from-store.command";

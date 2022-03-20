@@ -24,8 +24,8 @@ export class RoomsController {
   @Post('create')
   async createRoom(@Body() roomdto: CreateRoomDto): Promise<Room> {
     const result = await this.commandBus.execute(new CreateRoomCommand(roomdto)) as CreateRoomCommandResult;
-    if (result.failed) throw new BadRequestException(result.error);
-    const room = result.props!;
+    if (result.failed || !result.props) throw new BadRequestException(result.error);
+    const room = result.props;
     return RoomDtoToRoom(room);
   }
 }

@@ -1,9 +1,8 @@
 import { CommandBus } from "@nestjs/cqrs";
-import { MessageBody, SubscribeMessage, WebSocketGateway, WebSocketServer } from "@nestjs/websockets";
-import { ConnectUsersToRoomCommand, ConnectUsersToRoomResult, CreaterMessageCommand, CreateRoomCommand, CreateRoomCommandResult, WsServer } from "@oursocial/application";
-import { MessageDto, MessageWithRoomDto, shouldCreateRoom } from "@oursocial/persistence";
+import { MessageBody, SubscribeMessage, WebSocketGateway } from "@nestjs/websockets";
+import { CreaterMessageCommand, CreateRoomCommandResult, WsServer } from "@oursocial/application";
+import { MessageDto } from "@oursocial/persistence";
 import { instanceToPlain } from "class-transformer";
-import { Server } from "socket.io";
 
 @WebSocketGateway({
   cors: {
@@ -11,11 +10,7 @@ import { Server } from "socket.io";
   }
 })
 export class MessageGateway {
-  constructor(
-    private commandBus: CommandBus,
-
-  ) {
-  }
+  constructor(private commandBus: CommandBus) { }
   @SubscribeMessage('sendMessage')
   async onNewMessage(@MessageBody() newMessage: MessageDto) {
     const createMesageResult = await this.commandBus.
