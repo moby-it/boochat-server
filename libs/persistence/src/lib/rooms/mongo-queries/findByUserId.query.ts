@@ -7,7 +7,7 @@ export const findByUserIdQuery = (userId: string) => [
   },
   {
     $lookup: {
-      from: 'userroomvisits',
+      from: 'eventlogs',
       localField: '_id',
       foreignField: 'room',
       as: 'lastVisits'
