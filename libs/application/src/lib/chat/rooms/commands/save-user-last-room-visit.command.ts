@@ -15,6 +15,7 @@ export class SaveUserLastRoomVisitCommandHandler implements ICommandHandler<Save
       await this.eventLogService.logVisit(roomId, userId, timestamp);
       return Result.success();
     } catch (e) {
+      console.error(e);
       return Result.fail(e);
     }
   }

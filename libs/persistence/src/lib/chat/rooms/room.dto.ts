@@ -15,7 +15,6 @@ export interface CreatedRoomDto extends RoomDto {
 export interface LastRoomVisitDto {
   roomId: string;
   userId: string;
-  timestamp: Date;
 }
 export interface RoomByUserIdDto extends RoomDto {
   id: string;

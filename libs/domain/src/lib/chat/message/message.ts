@@ -3,10 +3,10 @@ import { Room } from '../room';
 import { User } from "../../user";
 import { Expose } from 'class-transformer';
 interface MessageProps {
-  readonly sender: Partial<User>;
+  readonly sender: Partial<User> & Pick<User, 'id'>;
   readonly content: string;
   readonly dateSent: Date;
-  readonly room: Partial<Room>;
+  readonly room: Partial<Room> & Pick<Room, 'id'>;
 }
 export class Message extends Entity<MessageProps>{
   @Expose()

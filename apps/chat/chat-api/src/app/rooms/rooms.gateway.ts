@@ -1,7 +1,7 @@
-import { CommandBus } from "@nestjs/cqrs";
+import { QueryBus } from "@nestjs/cqrs";
 import { MessageBody, OnGatewayDisconnect, SubscribeMessage, WebSocketGateway, WebSocketServer } from "@nestjs/websockets";
-import { AddUserToRoomCommand, AddUserToRoomCommandResult, ConnectUsersToRoomCommand, ConnectUsersToRoomResult, DisconnectUsersFromRoomCommand, DisconnectUsersFromRoomResult, RemoveUserFromRoomCommand, RemoveUserFromRoomCommandResult, SaveUserLastRoomVisitCommand } from "@oursocial/application";
-import { Result } from "@oursocial/domain";
+import { FindRoomByIdQuery, FindRoomByIdQueryResult, GetUserByIdQuery, GetUserByIdQueryResult } from "@oursocial/application";
+import { RoomId, User, UserId } from "@oursocial/domain";
 import { LastRoomVisitDto } from "@oursocial/persistence";
 import { Server, Socket } from "socket.io";
 @WebSocketGateway({
@@ -12,33 +12,38 @@ import { Server, Socket } from "socket.io";
 export class RoomsGateway implements OnGatewayDisconnect {
   @WebSocketServer()
   server!: Server;
-  constructor(private commandBus: CommandBus) { }
+  constructor(private queryBus: QueryBus) { }
   async handleDisconnect(client: Socket) {
     const lastVisitedRoom = client.data.lastVisitedRoom as LastRoomVisitDto;
-    if (lastVisitedRoom?.roomId && lastVisitedRoom?.timestamp && lastVisitedRoom?.userId) {
-      const { roomId, userId, timestamp } = lastVisitedRoom;
-      const result = await this.commandBus.execute(new SaveUserLastRoomVisitCommand(roomId, userId, timestamp)) as Result;
-      if (result.failed) { console.error(result.error); };
+    if (lastVisitedRoom?.roomId && lastVisitedRoom?.userId) {
+      const { roomId, userId } = lastVisitedRoom;
+      const user = await this.getUser(userId);
+      if (user) {
+        user.logRoomVisit(roomId, userId, new Date());
+        user.commit();
+        return;
+      }
+      return;
     }
-    console.log('invalid last visited room on disconnect');
+    console.warn('Failed to log last room visit');
   }
   @SubscribeMessage('addUserToRoom')
   async addUserToRoom(@MessageBody('userId') userId: string, @MessageBody('roomId') roomId: string): Promise<void> {
-    // should be event
-    const addUserResult = await this.commandBus.execute(new AddUserToRoomCommand(userId, roomId)) as AddUserToRoomCommandResult;
-    if (addUserResult.failed) console.error(addUserResult.error);
-
-    const connectUsersResult = await this.commandBus.execute<ConnectUsersToRoomCommand, ConnectUsersToRoomResult>(new ConnectUsersToRoomCommand([userId], roomId));
-    if (connectUsersResult.failed) console.error(connectUsersResult.error);
+    const user = await this.getUser(userId);
+    const roomExists = await this.roomExists(roomId);
+    if (user && roomExists) {
+      user.inviteUserToRoom(userId, roomId);
+      user.commit();
+    }
   }
   @SubscribeMessage('removeUserFromRoom')
   async removeUserFromRoom(@MessageBody('userId') userId: string, @MessageBody('roomId') roomId: string) {
-    // should be event
-    const result = await this.commandBus.execute(new RemoveUserFromRoomCommand(userId, roomId)) as RemoveUserFromRoomCommandResult;
-    if (result.failed) console.error(result.error);
-
-    const disconnectUsersResult = await this.commandBus.execute<DisconnectUsersFromRoomCommand, DisconnectUsersFromRoomResult>(new DisconnectUsersFromRoomCommand(this.server, [userId], roomId));
-    if (disconnectUsersResult.failed) console.error(disconnectUsersResult.error);
+    const user = await this.getUser(userId);
+    const roomExists = await this.roomExists(roomId);
+    if (user && roomExists) {
+      user.leaveRoom(roomId);
+      user.commit();
+    }
   }
   @SubscribeMessage('userClosedRoom')
   async userClosedRoom(
@@ -46,7 +51,20 @@ export class RoomsGateway implements OnGatewayDisconnect {
     @MessageBody('userId') userId: string,
   ) {
     // should be event
-    const result = await this.commandBus.execute(new SaveUserLastRoomVisitCommand(roomId, userId, new Date())) as Result;
-    if (result.failed) { console.error(result.error); };
+    const user = await this.getUser(userId);
+    const roomExists = await this.roomExists(roomId);
+    if (user && roomExists) {
+      user.logRoomVisit(roomId, userId, new Date());
+      user.commit();
+    }
+  }
+  private async getUser(userId: UserId): Promise<User | undefined> {
+    const result = await this.queryBus.execute(new GetUserByIdQuery(userId)) as GetUserByIdQueryResult;
+    if (result.failed) console.error(result.error);
+    return result.props;
+  }
+  private async roomExists(roomId: RoomId): Promise<boolean> {
+    const result = await this.queryBus.execute(new FindRoomByIdQuery(roomId)) as FindRoomByIdQueryResult;
+    return result.succeded;
   }
 }

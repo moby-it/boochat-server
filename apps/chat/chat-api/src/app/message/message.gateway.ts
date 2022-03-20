@@ -1,8 +1,8 @@
-import { CommandBus } from "@nestjs/cqrs";
+import { QueryBus } from "@nestjs/cqrs";
 import { MessageBody, SubscribeMessage, WebSocketGateway } from "@nestjs/websockets";
-import { CreaterMessageCommand, CreateRoomCommandResult, WsServer } from "@oursocial/application";
+import { GetUserByIdQuery, GetUserByIdQueryResult } from "@oursocial/application";
+import { User } from "@oursocial/domain";
 import { MessageDto } from "@oursocial/persistence";
-import { instanceToPlain } from "class-transformer";
 
 @WebSocketGateway({
   cors: {
@@ -10,14 +10,14 @@ import { instanceToPlain } from "class-transformer";
   }
 })
 export class MessageGateway {
-  constructor(private commandBus: CommandBus) { }
+  constructor( private queryBus: QueryBus) { }
   @SubscribeMessage('sendMessage')
   async onNewMessage(@MessageBody() newMessage: MessageDto) {
-    const createMesageResult = await this.commandBus.
-      execute(new CreaterMessageCommand(newMessage)) as CreateRoomCommandResult;
-    if (createMesageResult.failed)
-      throw createMesageResult.error;
-    const response = instanceToPlain(createMesageResult.props, { excludePrefixes: ['_'] });
-    WsServer.instance.to(newMessage.roomId).emit('receiveMessage', response);
+    const result = await this.queryBus.execute(new GetUserByIdQuery(newMessage.senderId)) as GetUserByIdQueryResult;
+    if (result.failed) throw new Error(`Failed to get user with id ${newMessage.senderId}`);
+    const user = result.props as User;
+    const { content, senderId, roomId, createdAt } = newMessage;
+    user.sendsMessage(content, senderId, roomId, createdAt);
+    user.commit();
   }
 }

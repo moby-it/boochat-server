@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import { CommandBus, ICommand, IEvent, ofType, Saga } from "@nestjs/cqrs";
-import { SendMessageEvent } from "@oursocial/domain";
-import { map, Observable } from "rxjs";
-import { CreaterMessageCommand } from "./commands";
+import { Message, SendMessageEvent } from "@oursocial/domain";
+import { catchError, EMPTY, map, Observable, switchMap } from "rxjs";
+import { CreateMessageCommand, CreateMessageCommandResult, EmitMessageCommand } from "./commands";
 
 @Injectable()
 export class MessagesSaga {
@@ -10,7 +10,18 @@ export class MessagesSaga {
   @Saga()
   newMessage = (event$: Observable<IEvent>): Observable<ICommand> => event$.pipe(
     ofType(SendMessageEvent),
-    map(({ content, senderId, roomId, timestamp }) =>
-      new CreaterMessageCommand({ content, createdAt: timestamp, roomId, senderId }))
+    switchMap(async ({ content, senderId, roomId, timestamp }) =>
+      await this.commandBus.execute(new CreateMessageCommand({ content, createdAt: timestamp, roomId, senderId })) as CreateMessageCommandResult),
+    map(result => {
+      if (result.succeded) {
+        const message = result.props as Message;
+        return new EmitMessageCommand(message);
+      }
+      throw result.error;
+    }),
+    catchError(error => {
+      console.error(error);
+      return EMPTY;
+    })
   );
 }

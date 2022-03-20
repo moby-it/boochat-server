@@ -2,14 +2,14 @@ import { CommandHandler, ICommandHandler } from "@nestjs/cqrs";
 import { Message, Result } from "@oursocial/domain";
 import { MessageDto, MessagePersistenceService } from "@oursocial/persistence";
 import { MessageDtoToMessage } from "../message.mappings";
-export class CreaterMessageCommand {
+export class CreateMessageCommand {
   constructor(public newMessage: MessageDto) { };
 }
 export type CreateMessageCommandResult = Result<Message | undefined>;
-@CommandHandler(CreaterMessageCommand)
-export class CreateMessageCommandHandler implements ICommandHandler<CreaterMessageCommand> {
+@CommandHandler(CreateMessageCommand)
+export class CreateMessageCommandHandler implements ICommandHandler<CreateMessageCommand> {
   constructor(private messageService: MessagePersistenceService) { }
-  async execute(command: CreaterMessageCommand): Promise<CreateMessageCommandResult> {
+  async execute(command: CreateMessageCommand): Promise<CreateMessageCommandResult> {
     try {
       const { newMessage } = command;
       const dbMessage = await this.messageService.create(newMessage);

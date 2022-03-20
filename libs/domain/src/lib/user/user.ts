@@ -1,7 +1,7 @@
 import { Expose } from 'class-transformer';
 import { Socket } from 'socket.io';
-import { AggregateRootEntity, Guard, RoomId } from "../common";
-import { CreateRoomEvent, SendMessageEvent, UserConnectedEvent, UserDisconnectedEvent } from './events';
+import { AggregateRootEntity, Guard, RoomId, UserId } from "../common";
+import { CreateRoomEvent, InviteUserToRoomEvent, LeaveRoomEvent, LogVisitEvent, SendMessageEvent, UserConnectedEvent, UserDisconnectedEvent } from './events';
 interface UserProps {
   name: string;
   googleId: string;
@@ -42,13 +42,13 @@ export class User extends AggregateRootEntity<UserProps> {
   createRoom(name: string, userIds: string[]) {
     this.apply(new CreateRoomEvent(name, userIds));
   }
-  // inviteUserToRoom() {
-
-  // }
-  // userLeavesRoom() {
-
-  // }
-  // logRoomVisit() {
-
-  // }
+  inviteUserToRoom(userId: UserId, roomId: RoomId) {
+    this.apply(new InviteUserToRoomEvent(userId, roomId));
+  }
+  leaveRoom(roomId: RoomId) {
+    this.apply(new LeaveRoomEvent(roomId, this.id));
+  }
+  logRoomVisit(roomId: RoomId, userId: UserId, timestamp: Date) {
+    this.apply(new LogVisitEvent(roomId, userId, timestamp));
+  }
 }
