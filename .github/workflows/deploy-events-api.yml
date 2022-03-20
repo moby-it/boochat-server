@@ -1,0 +1,27 @@
+name: Deploy Events Api
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'apps/events/events-api/**'
+      - 'libs/persistence/**'
+      - 'libs/domain/**'
+      - 'libs/application/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: azure/docker-login@v1
+        with:
+          login-server: oursocial.azurecr.io
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
+
+      - run: |
+          docker build -f docker/events-api.dockerfile . -t oursocial.azurecr.io/events-api:latest
+          docker push oursocial.azurecr.io/events-api:latest
