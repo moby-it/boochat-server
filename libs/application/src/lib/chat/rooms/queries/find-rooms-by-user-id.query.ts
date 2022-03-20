@@ -1,8 +1,8 @@
 import { BadRequestException } from "@nestjs/common";
 import { IQueryHandler, QueryHandler } from "@nestjs/cqrs";
+import { RoomDtoToRoom } from "@oursocial/application";
 import { Result, Room } from "@oursocial/domain";
 import { RoomsPersistenceService } from "@oursocial/persistence";
-import { RoomDtoToRoom } from "../../common";
 
 export class FindRoomsByUserIdQuery {
   constructor(public readonly userId: string) { }

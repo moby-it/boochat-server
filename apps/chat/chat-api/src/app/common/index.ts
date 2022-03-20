@@ -1,1 +1,1 @@
-export * from './mappings';
+export * from '../../../../../../libs/application/src/lib/chat/mappings';

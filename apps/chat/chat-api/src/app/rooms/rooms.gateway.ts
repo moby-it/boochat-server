@@ -3,12 +3,6 @@ import { MessageBody, OnGatewayDisconnect, SubscribeMessage, WebSocketGateway, W
 import { Result } from "@oursocial/domain";
 import { LastRoomVisitDto } from "@oursocial/persistence";
 import { Server, Socket } from "socket.io";
-import { AddUserToRoomCommand, AddUserToRoomCommandResult } from "./commands/add-user-to-room.command";
-import { ConnectUsersToRoomCommand, ConnectUsersToRoomResult } from "./commands/connect-users-to-room.command";
-import { DisconnectUsersFromRoomCommand, DisconnectUsersFromRoomResult } from "./commands/disconnect-users-from-room.command";
-import { RemoveUserFromRoomCommand, RemoveUserFromRoomCommandResult } from "./commands/remove-user-from-room.command";
-import { SaveUserLastRoomVisitCommand } from "./commands/save-user-last-room-visit.command";
-
 @WebSocketGateway({
   cors: {
     origin: '*'

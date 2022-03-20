@@ -1,6 +1,6 @@
 import { Room } from "@oursocial/domain";
 import { MessageDto, RoomDto } from "@oursocial/persistence";
-import { MessageDtoToMessage } from "./message.mappings";
+import { MessageDtoToMessage } from "../messages/message.mappings";
 
 export function RoomDtoToRoom(dbRoom: RoomDto, messages: MessageDto[] = []): Room {
   if (!dbRoom.id) throw new Error('cannot convert dbRoom to room with no id');

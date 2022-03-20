@@ -15,8 +15,8 @@ export class AddUserToStoreCommandHandler implements ICommandHandler<AddUserToSt
   async execute({ googleId, socket }: AddUserToStoreCommand): Promise<AddUserToStoreCommandResult> {
     try {
       const userDto = await this.usersService.findOneByGoogleId(googleId);
-      if (!userDto) throw new Error(`There is no user for googleId:${googleId}`);
-      const userId = userDto.id!;
+      if (!userDto?.id) throw new Error(`There is no user for googleId:${googleId}`);
+      const userId = userDto.id;
       this.activeUsersStore.addUser(userId, socket.id);
       return Result.success({ userId });
     } catch (e) {

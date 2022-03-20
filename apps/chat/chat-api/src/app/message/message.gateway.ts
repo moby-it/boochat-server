@@ -3,9 +3,6 @@ import { MessageBody, SubscribeMessage, WebSocketGateway, WebSocketServer } from
 import { MessageDto, MessageWithRoomDto, shouldCreateRoom } from "@oursocial/persistence";
 import { instanceToPlain } from "class-transformer";
 import { Server } from "socket.io";
-import { ConnectUsersToRoomCommand, ConnectUsersToRoomResult } from "../rooms/commands/connect-users-to-room.command";
-import { CreateRoomCommand, CreateRoomCommandResult } from "../rooms/commands/create-room.command";
-import { CreaterMessageCommand } from "./commands";
 
 @WebSocketGateway({
   cors: {

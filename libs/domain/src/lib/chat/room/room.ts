@@ -1,6 +1,6 @@
-import { Entity, Guard } from "../common";
+import { Entity, Guard } from "../../common";
 import { Message } from "../message";
-import { User } from "../user";
+import { User } from "../../user";
 import { Expose } from 'class-transformer';
 interface RoomProps {
   name: string;

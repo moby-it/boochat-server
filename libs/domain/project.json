@@ -26,6 +26,7 @@
     }
   },
   "tags": [
+    "type:lib",
     "scope:domain"
   ]
 }

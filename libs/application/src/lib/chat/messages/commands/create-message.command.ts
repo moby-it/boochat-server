@@ -1,7 +1,7 @@
 import { CommandHandler, ICommandHandler } from "@nestjs/cqrs";
+import { MessageDtoToMessage } from "@oursocial/application";
 import { Message, Result } from "@oursocial/domain";
 import { MessageDto, MessagePersistenceService } from "@oursocial/persistence";
-import { MessageDtoToMessage } from "../../common";
 export class CreaterMessageCommand {
   constructor(public newMessage: MessageDto) { };
 }
@@ -14,8 +14,8 @@ export class CreateMessageCommandHandler implements ICommandHandler<CreaterMessa
       const { newMessage } = command;
       const dbMessage = await this.messageService.create(newMessage);
       const result = await this.messageService.populateMessage(dbMessage);
-      if (result.failed) throw result.error;
-      const message = MessageDtoToMessage(result.props!);
+      if (result.failed || !result.props) throw result.error;
+      const message = MessageDtoToMessage(result.props);
       return Result.success(message);
     } catch (e) {
       return Result.fail(e);

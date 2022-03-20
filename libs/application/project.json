@@ -5,19 +5,28 @@
   "targets": {
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
+      "outputs": [
+        "{options.outputFile}"
+      ],
       "options": {
-        "lintFilePatterns": ["libs/application/**/*.ts"]
+        "lintFilePatterns": [
+          "libs/application/**/*.ts"
+        ]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/application"],
+      "outputs": [
+        "coverage/libs/application"
+      ],
       "options": {
         "jestConfig": "libs/application/jest.config.js",
         "passWithNoTests": true
       }
     }
   },
-  "tags": []
+  "tags": [
+    "type:library",
+    "scope:application"
+  ]
 }

@@ -59,6 +59,6 @@
     }
   },
   "tags": [
-    "scope:application"
+    "type:application"
   ]
 }

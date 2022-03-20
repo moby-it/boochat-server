@@ -2,12 +2,12 @@ import { NotFoundException } from "@nestjs/common";
 import { IQuery, IQueryHandler, QueryHandler } from "@nestjs/cqrs";
 import { Result, Room } from "@oursocial/domain";
 import { MessagePersistenceService, RoomsPersistenceService } from "@oursocial/persistence";
-import { RoomDtoToRoom } from "../../common";
+import { RoomDtoToRoom } from "@oursocial/application";
 
 export class FindRoomByIdQuery implements IQuery {
   constructor(public readonly roomId: string) { }
 }
-export type FindRoomByIdQueryResult = Result<Room | undefined>
+export type FindRoomByIdQueryResult = Result<Room | undefined>;
 
 @QueryHandler(FindRoomByIdQuery)
 export class FindRoomByIdQueryHandler implements IQueryHandler<FindRoomByIdQuery> {
