@@ -9,5 +9,7 @@ export class User extends MongoEntity {
   googleId!: string;
   @Prop({ required: true })
   name!: string;
+  @Prop({ required: true })
+  imageUrl!: string;
 }
 export const UserSchema = SchemaFactory.createForClass(User);

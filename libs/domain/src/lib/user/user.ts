@@ -5,6 +5,7 @@ import { CreateRoomEvent, InviteUserToRoomEvent, LeaveRoomEvent, LogVisitEvent, 
 interface UserProps {
   name: string;
   googleId: string;
+  imageUrl: string;
 }
 export class User extends AggregateRootEntity<UserProps> {
 
@@ -51,4 +52,10 @@ export class User extends AggregateRootEntity<UserProps> {
   logRoomVisit(roomId: RoomId, userId: UserId, timestamp: Date) {
     this.apply(new LogVisitEvent(roomId, userId, timestamp));
   }
+  // createsEvent(){
+
+  // }
+  // modifiesEvent() {
+
+  // }
 }

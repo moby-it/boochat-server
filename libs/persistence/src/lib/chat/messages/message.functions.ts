@@ -14,7 +14,8 @@ export function populatedMessageToMessageDto(populatedMessage: PopulatedDbMessag
     sender: {
       googleId: populatedMessage.sender.googleId,
       name: populatedMessage.sender.name,
-      id: populatedMessage.sender._id.toString()
+      id: populatedMessage.sender._id.toString(),
+      imageUrl: populatedMessage.sender.imageUrl
     },
     roomId: populatedMessage.room._id.toString(),
     senderId: populatedMessage.sender._id.toString()

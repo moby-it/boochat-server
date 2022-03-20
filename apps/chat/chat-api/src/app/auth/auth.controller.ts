@@ -13,7 +13,7 @@ export class AuthController {
       if (!user?.id) {
         user = await this.userService.create(userDto);
       }
-      return User.create({ googleId: userDto.googleId, name: userDto.name }, user.id as string);
+      return User.create({ googleId: userDto.googleId, name: userDto.name, imageUrl: userDto.imageUrl }, user.id as string);
     } catch (e) {
       throw new BadRequestException(e);
     }

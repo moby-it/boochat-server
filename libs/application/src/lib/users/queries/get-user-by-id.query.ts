@@ -16,7 +16,8 @@ export class GetUserByIdQueryHandler implements IQueryHandler<GetUserByIdQuery> 
     if (!userDto?.id) return Result.fail(`User for GoogleId: ${query.userId} not found`);
     const user = this.publisher.mergeObjectContext(User.create({
       googleId: userDto.googleId,
-      name: userDto.name
+      name: userDto.name,
+      imageUrl: userDto.imageUrl
     }, userDto.id));
     return Result.success(user);
   }

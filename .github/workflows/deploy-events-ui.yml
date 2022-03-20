@@ -1,4 +1,4 @@
-name: Build and Deploy Chat UI
+name: Build and Deploy Events UI
 
 permissions:
   id-token: write
@@ -8,7 +8,7 @@ on:
     branches:
       - main
     paths:
-      - 'apps/chat/chat-ui/**'
+      - 'apps/events/events-ui/**'
 
 jobs:
   build:
@@ -20,18 +20,18 @@ jobs:
           node-version: '16'
           cache: 'npm'
       - run: npm install
-      - run: npm run build chat-ui
+      - run: npm run build events-ui
       - uses: actions/upload-artifact@v2
         with:
-          name: dist-chat
-          path: dist/apps/chat/chat-ui
+          name: dist-events
+          path: dist/apps/events/events-ui
   deploy:
     needs: build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v2
         with:
-          name: dist-chat-ui
+          name: dist-events-ui
       - name: Azure Login
         uses: azure/login@v1
         with:
@@ -42,9 +42,9 @@ jobs:
         run: |
           az storage blob delete-batch \
           --account-name ${{ secrets.STORAGE_ACCOUNT_NAME }} --account-key ${{ secrets.STORAGE_ACCOUNT_KEY }} \
-          --source chat
-      - name: Upload Chat UI dist
+          --source events
+      - name: Upload Events UI dist
         run: |
           az storage blob upload-batch \
           --account-name ${{ secrets.STORAGE_ACCOUNT_NAME }} --account-key ${{ secrets.STORAGE_ACCOUNT_KEY }} \
-          --destination chat --source .
+          --destination events --source .
