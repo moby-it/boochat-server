@@ -1,14 +1,19 @@
 import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
-import { MessageCommandHandlers, FindRoomByIdQueryHandler, FindRoomByUserIdQueryHandler, RoomCommandHandlers } from './chat';
-import { ActiveUsersCommandHandlers } from './users';
+import { PersistenceModule } from '@oursocial/persistence';
+import { MessageCommandHandlers, MessagesSaga, RoomCommandHandlers, RoomQueryHandlers } from './chat';
+import { RoomsSaga } from './chat/rooms/rooms.saga';
+import { ActiveUserQueryHandlers, ActiveUsersCommandHandlers } from './users';
+import { UsersSaga } from './users/users.saga';
 const CommandHandlers = [...ActiveUsersCommandHandlers, ...RoomCommandHandlers, ...MessageCommandHandlers];
-const QueryHandlers = [FindRoomByUserIdQueryHandler, FindRoomByIdQueryHandler];
+const QueryHandlers = [...RoomQueryHandlers, ...ActiveUserQueryHandlers];
+const Sagas = [UsersSaga, MessagesSaga, RoomsSaga];
 @Module({
-  imports: [CqrsModule],
+  imports: [CqrsModule, PersistenceModule],
   providers: [
     ...CommandHandlers,
-    ...QueryHandlers],
+    ...QueryHandlers,
+    ...Sagas],
   exports: [],
 })
 export class ApplicationModule { }

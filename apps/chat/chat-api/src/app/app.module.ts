@@ -18,7 +18,6 @@ const Gateways = [ActiveUsersGateway, MessageGateway, RoomsGateway];
     CqrsModule
   ],
   providers: [
-    ActiveUsersStore,
     ...Gateways,
   ],
 })

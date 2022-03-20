@@ -1,9 +1,9 @@
-import { CommandBus } from '@nestjs/cqrs';
+import { QueryBus } from '@nestjs/cqrs';
 import { OnGatewayConnection, OnGatewayDisconnect, WebSocketGateway, WebSocketServer } from "@nestjs/websockets";
 import { Server, Socket } from 'socket.io';
-import { ActiveUsersStore } from "libs/persistence/src";
-import { AddUserToStoreCommand, AddUserToStoreCommandResult } from "./commands/add-user-to-store.command";
-import { UserJoinsRoomCommand, UserJoinsRoomCommandResult } from "./commands/user-joins-rooms.command";
+import { ActiveUsersStore } from '@oursocial/persistence';
+import { GetUserByGoogleIdQuery, GetUserByGoogleIdQueryResult } from '@oursocial/application';
+import { SendMessageEvent } from '@oursocial/domain';
 @WebSocketGateway({
   cors: {
     origin: '*'
@@ -13,33 +13,25 @@ export class ActiveUsersGateway implements OnGatewayConnection, OnGatewayDisconn
   @WebSocketServer()
   server!: Server;
 
-  constructor(private commandBus: CommandBus, private activeUsersStore: ActiveUsersStore) { }
-  async handleConnection(client: Socket) {
-    const googleId = client.handshake.query.googleId as string;
-    const addUserToStoreResult = await this.commandBus
-      .execute<AddUserToStoreCommand, AddUserToStoreCommandResult>(new AddUserToStoreCommand(googleId, client));
+  constructor(private queryBus: QueryBus, private activeUsersStore: ActiveUsersStore) { }
+  async handleConnection(socket: Socket) {
 
-    if (addUserToStoreResult.failed) {
-      client.disconnect();
-      console.error(addUserToStoreResult.error);
-      return;
+    const googleId = socket.handshake.query.googleId as string;
+    const result = await this.queryBus.execute(new GetUserByGoogleIdQuery(googleId)) as GetUserByGoogleIdQueryResult;
+    if (result.succeded) {
+      const user = result.props!;
+      user.cameOnline(user, socket);
+      user.commit();
     }
-    const userJoinsRoomResult = await this.commandBus
-      .execute<UserJoinsRoomCommand, UserJoinsRoomCommandResult>(new UserJoinsRoomCommand(client, addUserToStoreResult.props!.userId));
-    if (userJoinsRoomResult.failed) {
-      client.disconnect();
-      console.error(userJoinsRoomResult.error);
-      return;
-    }
-    client.broadcast.emit('usersList', this.activeUsersStore.activeUsers);
-
   }
 
-  handleDisconnect(client: Socket) {
-    const googleId = client.handshake.query.googleId as string;
-    if (googleId) {
-      this.activeUsersStore.removeUser(googleId);
-      client.broadcast.emit('usersList', this.activeUsersStore.activeUsers);
+  async handleDisconnect(socket: Socket) {
+    const googleId = socket.handshake.query.googleId as string;
+    const result = await this.queryBus.execute(new GetUserByGoogleIdQuery(googleId)) as GetUserByGoogleIdQueryResult;
+    if (result.succeded) {
+      const user = result.props!;
+      user.cameOffline(user, socket);
+      user.commit();
     }
   }
 }

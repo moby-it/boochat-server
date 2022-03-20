@@ -1,5 +1,5 @@
 import { CommandHandler, ICommandHandler } from "@nestjs/cqrs";
-import { Result, UserId } from "@oursocial/domain";
+import { GoogleId, Result, UserId } from "@oursocial/domain";
 import { RoomsPersistenceService } from "@oursocial/persistence";
 import { Socket } from "socket.io";
 

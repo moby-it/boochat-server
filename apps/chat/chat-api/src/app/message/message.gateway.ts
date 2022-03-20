@@ -1,5 +1,6 @@
 import { CommandBus } from "@nestjs/cqrs";
 import { MessageBody, SubscribeMessage, WebSocketGateway, WebSocketServer } from "@nestjs/websockets";
+import { ConnectUsersToRoomCommand, ConnectUsersToRoomResult, CreaterMessageCommand, CreateRoomCommand, CreateRoomCommandResult } from "@oursocial/application";
 import { MessageDto, MessageWithRoomDto, shouldCreateRoom } from "@oursocial/persistence";
 import { instanceToPlain } from "class-transformer";
 import { Server } from "socket.io";

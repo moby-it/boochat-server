@@ -1,5 +1,6 @@
 import { CommandBus } from "@nestjs/cqrs";
 import { MessageBody, OnGatewayDisconnect, SubscribeMessage, WebSocketGateway, WebSocketServer } from "@nestjs/websockets";
+import { AddUserToRoomCommand, AddUserToRoomCommandResult, ConnectUsersToRoomCommand, ConnectUsersToRoomResult, DisconnectUsersFromRoomCommand, DisconnectUsersFromRoomResult, RemoveUserFromRoomCommand, RemoveUserFromRoomCommandResult, SaveUserLastRoomVisitCommand } from "@oursocial/application";
 import { Result } from "@oursocial/domain";
 import { LastRoomVisitDto } from "@oursocial/persistence";
 import { Server, Socket } from "socket.io";
@@ -13,6 +14,7 @@ export class RoomsGateway implements OnGatewayDisconnect {
   server!: Server;
   constructor(private commandBus: CommandBus) { }
   async handleDisconnect(client: Socket) {
+    // should be event
     const lastVisitedRoom = client.data.lastVisitedRoom as LastRoomVisitDto;
     if (lastVisitedRoom?.roomId && lastVisitedRoom?.timestamp && lastVisitedRoom?.userId) {
       const { roomId, userId, timestamp } = lastVisitedRoom;
@@ -23,6 +25,7 @@ export class RoomsGateway implements OnGatewayDisconnect {
   }
   @SubscribeMessage('addUserToRoom')
   async addUserToRoom(@MessageBody('userId') userId: string, @MessageBody('roomId') roomId: string): Promise<void> {
+        // should be event
     const addUserResult = await this.commandBus.execute(new AddUserToRoomCommand(userId, roomId)) as AddUserToRoomCommandResult;
     if (addUserResult.failed) console.error(addUserResult.error);
 
@@ -31,6 +34,7 @@ export class RoomsGateway implements OnGatewayDisconnect {
   }
   @SubscribeMessage('removeUserFromRoom')
   async removeUserFromRoom(@MessageBody('userId') userId: string, @MessageBody('roomId') roomId: string) {
+        // should be event
     const result = await this.commandBus.execute(new RemoveUserFromRoomCommand(userId, roomId)) as RemoveUserFromRoomCommandResult;
     if (result.failed) console.error(result.error);
 
@@ -38,8 +42,12 @@ export class RoomsGateway implements OnGatewayDisconnect {
     if (disconnectUsersResult.failed) console.error(disconnectUsersResult.error);
   }
   @SubscribeMessage('userClosedRoom')
-  async userClosedRoom(@MessageBody() roomDto: LastRoomVisitDto) {
-    const { roomId, userId, timestamp } = roomDto;
+  async userClosedRoom(
+    @MessageBody('roomId') roomId: string,
+    @MessageBody('userId') userId: string,
+    @MessageBody('timestamp') timestamp: Date
+  ) {
+        // should be event
     const result = await this.commandBus.execute(new SaveUserLastRoomVisitCommand(roomId, userId, timestamp)) as Result;
     if (result.failed) { console.error(result.error); };
   }

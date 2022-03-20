@@ -29,6 +29,13 @@
                 ]
               },
               {
+                "sourceTag": "scope:application",
+                "onlyDependOnLibsWithTags": [
+                  "scope:domain",
+                  "scope:persistence"
+                ]
+              },
+              {
                 "sourceTag": "scope:persistence",
                 "onlyDependOnLibsWithTags": [
                   "scope:domain"

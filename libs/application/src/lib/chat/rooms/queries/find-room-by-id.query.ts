@@ -2,7 +2,7 @@ import { NotFoundException } from "@nestjs/common";
 import { IQuery, IQueryHandler, QueryHandler } from "@nestjs/cqrs";
 import { Result, Room } from "@oursocial/domain";
 import { MessagePersistenceService, RoomsPersistenceService } from "@oursocial/persistence";
-import { RoomDtoToRoom } from "@oursocial/application";
+import { RoomDtoToRoom } from "../room.mappings";
 
 export class FindRoomByIdQuery implements IQuery {
   constructor(public readonly roomId: string) { }

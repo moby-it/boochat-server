@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
-import { Guard, RoomId, UserId } from "@oursocial/domain";
+import { GoogleId, Guard, RoomId, UserId } from "@oursocial/domain";
 import { Model, Types } from 'mongoose';
 import { findByUserIdQuery } from "./mongo-queries";
 import { CreateRoomDto, RoomByUserIdDto, RoomDto } from "./room.dto";
@@ -45,7 +45,7 @@ export class RoomsPersistenceService {
     const dbRoom = await this.roomsModel.findOne({ _id: new Types.ObjectId(roomId) });
     if (!dbRoom) throw new Error('Room not found');
     await dbRoom.updateOne({
-      $push: {
+      $addToSet: {
         users: new Types.ObjectId(userId)
       }
     }).exec();

@@ -5,6 +5,12 @@ import { DisconnectUsersFromRoomCommandHandler } from "./disconnect-users-from-r
 import { RemoveUserFromRoomCommandHandler } from "./remove-user-from-room.command";
 import { SaveUserLastRoomVisitCommandHandler } from "./save-user-last-room-visit.command";
 
+export * from "./add-user-to-room.command";
+export * from "./connect-users-to-room.command";
+export * from "./create-room.command";
+export * from "./disconnect-users-from-room.command";
+export * from "./remove-user-from-room.command";
+export * from "./save-user-last-room-visit.command";
 export const RoomCommandHandlers = [
   AddUserToRoomCommandHandler,
   ConnectUsersToRoomCommandHandler,

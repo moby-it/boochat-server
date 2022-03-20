@@ -11,10 +11,10 @@ export class AuthController {
   async authenticate(@Body() userDto: UserDto): Promise<User> {
     try {
       let user = await this.userService.findOneByGoogleId(userDto.googleId);
-      if (user) {
-        await this.userService.create(userDto);
+      if (!user?.id) {
+        user = await this.userService.create(userDto);
       }
-      return User.create({ googleId: GoogleId.create({ id: userDto.googleId }), name: userDto.name });
+      return User.create({ googleId: userDto.googleId, name: userDto.name }, user.id!);
     } catch (e) {
       throw new BadRequestException(e);
     }
