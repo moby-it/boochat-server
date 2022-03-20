@@ -4,11 +4,11 @@ import { Guard, RoomId, UserId } from "@oursocial/domain";
 import { Model, Types } from 'mongoose';
 import { findByUserIdQuery } from "./mongo-queries";
 import { CreatedRoomDto, CreateRoomDto, RoomByUserIdDto, RoomDto } from "./room.dto";
-import { DbRoom, RoomDocument } from "./room.schema";
+import { Room, RoomDocument } from "./room.schema";
 
 @Injectable()
 export class RoomsPersistenceService {
-  constructor(@InjectModel(DbRoom.name) private roomsModel: Model<RoomDocument>) { }
+  constructor(@InjectModel(Room.name) private roomsModel: Model<RoomDocument>) { }
   async findOne(_id: RoomId): Promise<RoomDto | undefined> {
     const dbRoom = await this.roomsModel.findOne({ _id: new Types.ObjectId(_id) }).exec();
     if (!dbRoom) return;

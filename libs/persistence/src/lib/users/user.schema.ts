@@ -4,7 +4,7 @@ import { MongoEntity } from "../common";
 export type UserDocument = User & Document;
 
 @Schema({ timestamps: true })
-class User extends MongoEntity {
+export class User extends MongoEntity {
   @Prop({ required: true })
   googleId!: string;
   @Prop({ required: true })
@@ -13,4 +13,3 @@ class User extends MongoEntity {
   imageUrl!: string;
 }
 export const UserSchema = SchemaFactory.createForClass(User);
-export { User as DbUser };

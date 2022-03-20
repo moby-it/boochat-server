@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { Types } from 'mongoose';
-import { DbUser } from "../users";
+import { User } from "../users";
 import { EventsEnum } from "./events.enum";
 
 export type EventLogDocument = EventLog & Document;
@@ -9,7 +9,7 @@ export type EventLogDocument = EventLog & Document;
 export class EventLog {
   @Prop({ type: Number, required: true })
   type!: EventsEnum;
-  @Prop({ required: true, type: Types.ObjectId, ref: DbUser.name })
+  @Prop({ required: true, type: Types.ObjectId, ref: User.name })
   user!: Types.ObjectId;
 
   @Prop({ required: true })

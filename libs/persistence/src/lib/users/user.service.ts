@@ -2,10 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { CreateUserDto, UserDto } from './user.dto';
-import { DbUser, UserDocument } from './user.schema';
+import { User, UserDocument } from './user.schema';
 @Injectable()
 export class UserPersistenceService {
-  constructor(@InjectModel(DbUser.name) private userModel: Model<UserDocument>) { }
+  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) { }
 
   async create(createUserDto: CreateUserDto): Promise<UserDto> {
 

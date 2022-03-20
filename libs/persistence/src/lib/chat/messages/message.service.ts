@@ -2,17 +2,17 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Guard, Result } from '@oursocial/domain';
 import { Model, Types } from 'mongoose';
-import { DbUser } from '../../users';
-import { DbRoom } from '../rooms/room.schema';
+import { User } from '../../users';
+import { Room } from '../rooms/room.schema';
 import { CreateMessageDto, MessageDto, PopulatedMessageDto } from './message.dto';
 import { populatedMessageToMessageDto } from './message.functions';
-import { DbMessage, PopulatedDbMessage } from './message.schema';
+import { Message, PopulatedDbMessage } from './message.schema';
 
 @Injectable()
 export class MessagePersistenceService {
-  constructor(@InjectModel(DbMessage.name) private messageModel: Model<DbMessage>) { }
-  private readonly populateUserOptions = { path: 'sender', model: DbUser.name };
-  private readonly populateRoomOptions = { path: 'room', model: DbRoom.name };
+  constructor(@InjectModel(Message.name) private messageModel: Model<Message>) { }
+  private readonly populateUserOptions = { path: 'sender', model: User.name };
+  private readonly populateRoomOptions = { path: 'room', model: Room.name };
   async create(messageDto: CreateMessageDto): Promise<MessageDto> {
     const { content, senderId, roomId } = messageDto;
     Guard.AgainstNullOrUndefined([{ propName: 'senderId', value: senderId }]);
@@ -50,7 +50,7 @@ export class MessagePersistenceService {
   async findByRoomId(roomId: string): Promise<MessageDto[]> {
     return await this.messageModel.find({ room: new Types.ObjectId(roomId) });
   }
-  async findAll(): Promise<DbMessage[]> {
+  async findAll(): Promise<Message[]> {
     return this.messageModel.find().exec();
   }
 }
