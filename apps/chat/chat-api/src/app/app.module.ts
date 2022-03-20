@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
 import { CqrsModule } from '@nestjs/cqrs';
 import { ActiveUsersStore, PersistenceModule } from '@oursocial/persistence';
 import { ActiveUsersCommandHandlers, ActiveUsersGateway } from './active-users';
@@ -13,9 +12,6 @@ const QueryHandlers = [FindRoomByUserIdQueryHandler, FindRoomByIdQueryHandler];
 @Module({
   controllers: [AuthController, RoomsController],
   imports: [
-    ConfigModule.forRoot({
-      envFilePath: ['.chat.env'],
-    }),
     PersistenceModule,
     CqrsModule
   ],
