@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { Document, Types } from 'mongoose';
 import { MongoEntity } from "../../common";
-import { User } from "../../users";
+import { DbUser } from "../../users";
 import { DbRoom } from "../rooms/room.schema";
 
 export type MessageDocument = Message & Document;
@@ -16,7 +16,7 @@ class Message extends MongoEntity {
   room!: Types.ObjectId;
 }
 export interface PopulatedDbMessage extends Omit<Message, 'sender' | 'room'> {
-  sender: User;
+  sender: DbUser;
   room: DbRoom;
 }
 

@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { RoomsPersistenceModule, RoomsPersistenceService, MessagePersistenceService, MessagesPersistenceModule } from './chat';
 import { EventLogPersistenceModule, EventLogPersistenceService } from './event-log';
+import { EventsPersistenceModule, EventPersistenceService } from './events';
 import { ActiveUsersStore, UserPersistenceModule, UserPersistenceService } from './users';
 
 @Module({
@@ -11,9 +12,10 @@ import { ActiveUsersStore, UserPersistenceModule, UserPersistenceService } from 
     UserPersistenceModule,
     MessagesPersistenceModule,
     RoomsPersistenceModule,
-    EventLogPersistenceModule
+    EventLogPersistenceModule,
+    EventsPersistenceModule
   ],
-  providers: [UserPersistenceService, MessagePersistenceService, RoomsPersistenceService, EventLogPersistenceService, ActiveUsersStore],
-  exports: [UserPersistenceService, RoomsPersistenceService, MessagePersistenceService, EventLogPersistenceService, ActiveUsersStore]
+  providers: [UserPersistenceService, MessagePersistenceService, RoomsPersistenceService, EventLogPersistenceService, EventPersistenceService, ActiveUsersStore],
+  exports: [UserPersistenceService, RoomsPersistenceService, MessagePersistenceService, EventLogPersistenceService, EventPersistenceService, ActiveUsersStore]
 })
 export class PersistenceModule { }

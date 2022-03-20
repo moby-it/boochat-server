@@ -5,5 +5,5 @@ export * from './lib/event-log';
 export * from './lib/users';
 export * from './lib/persistence.module';
 export { DbMessage, DbRoom } from './lib/chat';
-export { User as DbUser } from './lib/users/user.schema';
+export { DbUser } from './lib/users';
 

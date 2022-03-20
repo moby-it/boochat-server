@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Guard, Result } from '@oursocial/domain';
 import { Model, Types } from 'mongoose';
-import { User } from '../../users';
+import { DbUser } from '../../users';
 import { DbRoom } from '../rooms/room.schema';
 import { CreateMessageDto, MessageDto, PopulatedMessageDto } from './message.dto';
 import { populatedMessageToMessageDto } from './message.functions';
@@ -11,7 +11,7 @@ import { DbMessage, PopulatedDbMessage } from './message.schema';
 @Injectable()
 export class MessagePersistenceService {
   constructor(@InjectModel(DbMessage.name) private messageModel: Model<DbMessage>) { }
-  private readonly populateUserOptions = { path: 'sender', model: User.name };
+  private readonly populateUserOptions = { path: 'sender', model: DbUser.name };
   private readonly populateRoomOptions = { path: 'room', model: DbRoom.name };
   async create(messageDto: CreateMessageDto): Promise<MessageDto> {
     const { content, senderId, roomId } = messageDto;

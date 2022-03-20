@@ -1,4 +1,5 @@
 import { Types } from 'mongoose';
+import { EventsEnum } from '../../../event-log/events.enum';
 export const findByUserIdQuery = (userId: string) => [
   {
     $match: {
@@ -13,8 +14,10 @@ export const findByUserIdQuery = (userId: string) => [
         {
           $match: {
             $and:
-              [{ $expr: { $eq: ["$$id", "$payload.room"] } },
-              { $expr: { $eq: [new Types.ObjectId(userId), "$user"] } },
+              [
+                { $expr: { $eq: ["$$type", EventsEnum.USER_DISCONNECTED_FROM_ROOM] } },
+                { $expr: { $eq: ["$$id", "$payload.room"] } },
+                { $expr: { $eq: [new Types.ObjectId(userId), "$user"] } },
               ]
 
           }
