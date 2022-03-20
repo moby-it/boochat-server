@@ -1,7 +1,7 @@
 import { PopulatedMessageDto } from "./message.dto";
-import { PopulatedMessage } from "./message.schema";
+import { PopulatedDbMessage } from "./message.schema";
 
-export function populatedMessageToMessageDto(populatedMessage: PopulatedMessage): PopulatedMessageDto {
+export function populatedMessageToMessageDto(populatedMessage: PopulatedDbMessage): PopulatedMessageDto {
   return {
     content: populatedMessage.content,
     createdAt: populatedMessage.createdAt,

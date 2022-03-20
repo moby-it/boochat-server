@@ -1,5 +1,5 @@
-import { RoomDto } from "../rooms";
-import { UserDto } from "../users";
+import { UserDto } from "../../users";
+import { RoomDto } from "../rooms/room.dto";
 
 export interface MessageDto {
   id?: string;
