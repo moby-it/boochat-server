@@ -9,6 +9,9 @@ export interface RoomDto {
 
 }
 export interface CreateRoomDto extends RoomDto { }
+export interface CreatedRoomDto extends RoomDto {
+  id: RoomId;
+}
 export interface LastRoomVisitDto {
   roomId: string;
   userId: string;

@@ -3,7 +3,7 @@ import { InjectModel } from "@nestjs/mongoose";
 import { GoogleId, Guard, RoomId, UserId } from "@oursocial/domain";
 import { Model, Types } from 'mongoose';
 import { findByUserIdQuery } from "./mongo-queries";
-import { CreateRoomDto, RoomByUserIdDto, RoomDto } from "./room.dto";
+import { CreatedRoomDto, CreateRoomDto, RoomByUserIdDto, RoomDto } from "./room.dto";
 import { DbRoom, RoomDocument } from "./room.schema";
 
 @Injectable()
@@ -18,14 +18,19 @@ export class RoomsPersistenceService {
       id: dbRoom.id
     };
   }
-  async createRoom(createRoomDto: CreateRoomDto): Promise<RoomDocument> {
+  async createRoom(createRoomDto: CreateRoomDto): Promise<CreatedRoomDto> {
     Guard.AgainstEmptyArray({ propName: 'usersIds', value: createRoomDto.userIds });
     const createdRoom = new this.roomsModel({
       _id: new Types.ObjectId(),
       ...createRoomDto, users: createRoomDto
         .userIds.map(id => new Types.ObjectId(id))
     });
-    return createdRoom.save();
+    createdRoom.save();
+    return {
+      name: createdRoom.name,
+      userIds: createdRoom.users.map(u => u._id.toString()),
+      id: createdRoom._id.toString()
+    };
   }
   async findByUserId(userId: UserId): Promise<RoomByUserIdDto[]> {
     const rooms = await this.roomsModel.aggregate<RoomByUserIdDto>(findByUserIdQuery(userId));

@@ -2,7 +2,7 @@ use('OurSocial')
 db.rooms.aggregate([
   {
     $match: {
-      users: ObjectId("622bb315409925be7d1018fe")
+      users: ObjectId("623747ea42ca43656b97b15a")
     }
   },
   {
@@ -15,7 +15,7 @@ db.rooms.aggregate([
             $expr: {
               $and: {
                  $eq: ["$$id","$payload.room"],
-                 $eq: [ObjectId("622bb315409925be7d1018fe"),"$user"],
+                 $eq: [ObjectId("623747ea42ca43656b97b15a"),"$user"],
               }
 
             }
@@ -54,6 +54,11 @@ db.rooms.aggregate([
       },
       users: 1
     },
+  },
+  {
+    $match: {
+      lastMessage: {$ne:null}
+    }
   },
   {
     $project: {

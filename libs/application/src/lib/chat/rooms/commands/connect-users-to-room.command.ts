@@ -1,9 +1,9 @@
 import { CommandHandler, ICommandHandler } from "@nestjs/cqrs";
 import { Result, RoomId, UserId } from "@oursocial/domain";
-import { Server } from "socket.io";
 import { ActiveUsersStore } from "@oursocial/persistence";
+import { WsServer } from "../../../common";
 export class ConnectUsersToRoomCommand {
-  constructor(public readonly server: Server, public readonly userIds: UserId[], public readonly roomId: RoomId) { }
+  constructor(public readonly userIds: UserId[], public readonly roomId: RoomId) { }
 }
 export type ConnectUsersToRoomResult = Result;
 @CommandHandler(ConnectUsersToRoomCommand)
@@ -11,7 +11,8 @@ export class ConnectUsersToRoomCommandHandler implements ICommandHandler<Connect
 
   constructor(private activeUsersStore: ActiveUsersStore) { }
   async execute(command: ConnectUsersToRoomCommand): Promise<ConnectUsersToRoomResult> {
-    const { server, userIds, roomId } = command;
+    const server = WsServer.instance;
+    const { userIds, roomId } = command;
     try {
       const allSockets = await server.fetchSockets();
       const participantsSocketIds = this.activeUsersStore.findSockets(userIds);

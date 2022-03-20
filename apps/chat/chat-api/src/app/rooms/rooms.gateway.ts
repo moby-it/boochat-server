@@ -14,7 +14,6 @@ export class RoomsGateway implements OnGatewayDisconnect {
   server!: Server;
   constructor(private commandBus: CommandBus) { }
   async handleDisconnect(client: Socket) {
-    // should be event
     const lastVisitedRoom = client.data.lastVisitedRoom as LastRoomVisitDto;
     if (lastVisitedRoom?.roomId && lastVisitedRoom?.timestamp && lastVisitedRoom?.userId) {
       const { roomId, userId, timestamp } = lastVisitedRoom;
@@ -25,16 +24,16 @@ export class RoomsGateway implements OnGatewayDisconnect {
   }
   @SubscribeMessage('addUserToRoom')
   async addUserToRoom(@MessageBody('userId') userId: string, @MessageBody('roomId') roomId: string): Promise<void> {
-        // should be event
+    // should be event
     const addUserResult = await this.commandBus.execute(new AddUserToRoomCommand(userId, roomId)) as AddUserToRoomCommandResult;
     if (addUserResult.failed) console.error(addUserResult.error);
 
-    const connectUsersResult = await this.commandBus.execute<ConnectUsersToRoomCommand, ConnectUsersToRoomResult>(new ConnectUsersToRoomCommand(this.server, [userId], roomId));
+    const connectUsersResult = await this.commandBus.execute<ConnectUsersToRoomCommand, ConnectUsersToRoomResult>(new ConnectUsersToRoomCommand([userId], roomId));
     if (connectUsersResult.failed) console.error(connectUsersResult.error);
   }
   @SubscribeMessage('removeUserFromRoom')
   async removeUserFromRoom(@MessageBody('userId') userId: string, @MessageBody('roomId') roomId: string) {
-        // should be event
+    // should be event
     const result = await this.commandBus.execute(new RemoveUserFromRoomCommand(userId, roomId)) as RemoveUserFromRoomCommandResult;
     if (result.failed) console.error(result.error);
 
@@ -45,10 +44,9 @@ export class RoomsGateway implements OnGatewayDisconnect {
   async userClosedRoom(
     @MessageBody('roomId') roomId: string,
     @MessageBody('userId') userId: string,
-    @MessageBody('timestamp') timestamp: Date
   ) {
-        // should be event
-    const result = await this.commandBus.execute(new SaveUserLastRoomVisitCommand(roomId, userId, timestamp)) as Result;
+    // should be event
+    const result = await this.commandBus.execute(new SaveUserLastRoomVisitCommand(roomId, userId, new Date())) as Result;
     if (result.failed) { console.error(result.error); };
   }
 }

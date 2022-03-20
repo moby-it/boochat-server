@@ -8,8 +8,18 @@ export const findByUserIdQuery = (userId: string) => [
   {
     $lookup: {
       from: 'eventlogs',
-      localField: '_id',
-      foreignField: 'room',
+      let: { id: "$_id" },
+      pipeline: [
+        {
+          $match: {
+            $and:
+              [{ $expr: { $eq: ["$$id", "$payload.room"] } },
+              { $expr: { $eq: [new Types.ObjectId(userId), "$user"] } },
+              ]
+
+          }
+        }
+      ],
       as: 'lastVisits'
     }
   },
@@ -42,6 +52,11 @@ export const findByUserIdQuery = (userId: string) => [
       },
       users: 1
     },
+  },
+  {
+    $match: {
+      lastMessage: { $ne: null }
+    }
   },
   {
     $project: {
