@@ -1,16 +1,16 @@
 {
-  "root": "apps/events/events-api",
-  "sourceRoot": "apps/events/events-api/src",
+  "root": "apps/meetups/meetups-api",
+  "sourceRoot": "apps/meetups/meetups-api/src",
   "projectType": "application",
   "targets": {
     "build": {
       "executor": "@nrwl/node:build",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/apps/events/events-api",
-        "main": "apps/events/events-api/src/main.ts",
-        "tsConfig": "apps/events/events-api/tsconfig.app.json",
-        "assets": ["apps/events/events-api/src/assets"]
+        "outputPath": "dist/apps/meetups/meetups-api",
+        "main": "apps/meetups/meetups-api/src/main.ts",
+        "tsConfig": "apps/meetups/meetups-api/tsconfig.app.json",
+        "assets": ["apps/meetups/meetups-api/src/assets"]
       },
       "configurations": {
         "production": {
@@ -19,8 +19,8 @@
           "inspect": false,
           "fileReplacements": [
             {
-              "replace": "apps/events/events-api/src/environments/environment.ts",
-              "with": "apps/events/events-api/src/environments/environment.prod.ts"
+              "replace": "apps/meetups/meetups-api/src/environments/environment.ts",
+              "with": "apps/meetups/meetups-api/src/environments/environment.prod.ts"
             }
           ]
         }
@@ -29,21 +29,21 @@
     "serve": {
       "executor": "@nrwl/node:execute",
       "options": {
-        "buildTarget": "events-api:build"
+        "buildTarget": "meetups-api:build"
       }
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["apps/events-api/**/*.ts"]
+        "lintFilePatterns": ["apps/meetups-api/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/events-api"],
+      "outputs": ["coverage/apps/meetups-api"],
       "options": {
-        "jestConfig": "apps/events/events-api/jest.config.js",
+        "jestConfig": "apps/meetups/meetups-api/jest.config.js",
         "passWithNoTests": true
       }
     }

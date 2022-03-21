@@ -1,7 +1,7 @@
 {
   "projectType": "application",
-  "root": "apps/events/events-ui",
-  "sourceRoot": "apps/events/events-ui/src",
+  "root": "apps/meetups/meetups-ui",
+  "sourceRoot": "apps/meetups/meetups-ui/src",
   "prefix": "oursocial",
   "targets": {
     "build": {
@@ -10,21 +10,21 @@
         "{options.outputPath}"
       ],
       "options": {
-        "outputPath": "dist/apps/events/events-ui",
-        "index": "apps/events/events-ui/src/index.html",
-        "main": "apps/events/events-ui/src/main.ts",
-        "polyfills": "apps/events/events-ui/src/polyfills.ts",
-        "tsConfig": "apps/events/events-ui/tsconfig.app.json",
+        "outputPath": "dist/apps/meetups/meetups-ui",
+        "index": "apps/meetups/meetups-ui/src/index.html",
+        "main": "apps/meetups/meetups-ui/src/main.ts",
+        "polyfills": "apps/meetups/meetups-ui/src/polyfills.ts",
+        "tsConfig": "apps/meetups/meetups-ui/tsconfig.app.json",
         "assets": [
-          "apps/events/events-ui/src/favicon.ico",
-          "apps/events/events-ui/src/assets"
+          "apps/meetups/meetups-ui/src/favicon.ico",
+          "apps/meetups/meetups-ui/src/assets"
         ],
         "styles": [
-          "apps/events/events-ui/src/styles.css"
+          "apps/meetups/meetups-ui/src/styles.css"
         ],
         "scripts": [],
         "customWebpackConfig": {
-          "path": "apps/events/events-ui/webpack.config.js"
+          "path": "apps/meetups/meetups-ui/webpack.config.js"
         }
       },
       "configurations": {
@@ -43,13 +43,13 @@
           ],
           "fileReplacements": [
             {
-              "replace": "apps/events/events-ui/src/environments/environment.ts",
-              "with": "apps/events/events-ui/src/environments/environment.prod.ts"
+              "replace": "apps/meetups/meetups-ui/src/environments/environment.ts",
+              "with": "apps/meetups/meetups-ui/src/environments/environment.prod.ts"
             }
           ],
           "outputHashing": "none",
           "customWebpackConfig": {
-            "path": "apps/events/events-ui/webpack.prod.config.js"
+            "path": "apps/meetups/meetups-ui/webpack.prod.config.js"
           }
         },
         "development": {
@@ -67,10 +67,10 @@
       "executor": "@nrwl/angular:webpack-server",
       "configurations": {
         "production": {
-          "browserTarget": "events-ui:build:production"
+          "browserTarget": "meetups-ui:build:production"
         },
         "development": {
-          "browserTarget": "events-ui:build:development"
+          "browserTarget": "meetups-ui:build:development"
         }
       },
       "defaultConfiguration": "development",
@@ -82,25 +82,25 @@
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
-        "browserTarget": "events-ui:build"
+        "browserTarget": "meetups-ui:build"
       }
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "options": {
         "lintFilePatterns": [
-          "apps/events-ui/src/**/*.ts",
-          "apps/events-ui/src/**/*.html"
+          "apps/meetups-ui/src/**/*.ts",
+          "apps/meetups-ui/src/**/*.html"
         ]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
       "outputs": [
-        "coverage/apps/events-ui"
+        "coverage/apps/meetups-ui"
       ],
       "options": {
-        "jestConfig": "apps/events/events-ui/jest.config.js",
+        "jestConfig": "apps/meetups/meetups-ui/jest.config.js",
         "passWithNoTests": true
       }
     }

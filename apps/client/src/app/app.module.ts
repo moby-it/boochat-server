@@ -1,20 +1,20 @@
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from "@angular/forms";
 import { BrowserModule } from '@angular/platform-browser';
-
-import { AppComponent } from './app.component';
-import { ChatDirective, EventsDirective } from "./directives";
-import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
-import { LandingPageComponent } from './landing-page/landing-page.component';
-import { AuthGuard } from "./guards/auth.guard";
-import { AppRoutingModule } from "./app.routing.module";
+import { ReactiveComponentModule } from "@ngrx/component";
 import { GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from 'angularx-social-login';
 import { environment } from "../environments/environment";
-import { ReactiveFormsModule } from "@angular/forms";
+import { AppComponent } from './app.component';
+import { AppRoutingModule } from "./app.routing.module";
+import { ChatDirective, MeetupsDirective } from "./directives";
+import { AuthGuard } from "./guards/auth.guard";
 import { HeaderComponent } from './header/header.component';
-import { ReactiveComponentModule } from "@ngrx/component";
+import { LandingPageComponent } from './landing-page/landing-page.component';
+import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
+
 
 @NgModule({
-  declarations: [AppComponent, ChatDirective, EventsDirective, UnauthorizedComponent, LandingPageComponent, HeaderComponent],
+  declarations: [AppComponent, ChatDirective, MeetupsDirective, UnauthorizedComponent, LandingPageComponent, HeaderComponent],
   imports: [BrowserModule, AppRoutingModule, ReactiveFormsModule, SocialLoginModule, ReactiveComponentModule,],
   providers: [AuthGuard, {
     provide: 'SocialAuthServiceConfig',

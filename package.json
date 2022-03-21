@@ -6,7 +6,7 @@
     "watch:ts": "tsc -p tsconfig.base.json --watch --noEmit",
     "start:client": "nx serve client",
     "start:chat-ui": "nx serve chat-ui",
-    "start:events": "nx serve events-ui",
+    "start:meetups": "nx serve meetups-ui",
     "start:chat-api": "nx serve chat-api",
     "start:dev": "concurrently --names \"client,chat-ui,chat-api\" -c \"green,red,yellow\" \"npm run start:client \" \"npm run start:chat-ui\" \"npm run start:chat-api\"",
     "build": "nx build",

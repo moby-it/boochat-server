@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'apps/events/events-api/**'
+      - 'apps/meetups/meetups-api/**'
       - 'libs/persistence/**'
       - 'libs/domain/**'
       - 'libs/application/**'
@@ -23,5 +23,5 @@ jobs:
           password: ${{ secrets.ACR_PASSWORD }}
 
       - run: |
-          docker build -f docker/events-api.dockerfile . -t oursocial.azurecr.io/events-api:latest
-          docker push oursocial.azurecr.io/events-api:latest
+          docker build -f docker/meetups-api.dockerfile . -t oursocial.azurecr.io/meetups-api:latest
+          docker push oursocial.azurecr.io/meetups-api:latest

@@ -1,2 +1,2 @@
 export * from './chat.directive';
-export * from './events.directive';
+export * from './meetups.directive';

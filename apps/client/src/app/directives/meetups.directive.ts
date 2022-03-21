@@ -1,8 +1,8 @@
 import { Directive, ViewContainerRef } from '@angular/core';
 
 @Directive({
-  selector: '[oursocialEvents]',
+  selector: '[oursocialMeetups]',
 })
-export class EventsDirective {
+export class MeetupsDirective {
   constructor(public viewContainerRef: ViewContainerRef) { }
 }

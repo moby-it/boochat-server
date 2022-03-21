@@ -50,7 +50,6 @@ export class RoomsGateway implements OnGatewayDisconnect {
     @MessageBody('roomId') roomId: string,
     @MessageBody('userId') userId: string,
   ) {
-    // should be event
     const user = await this.getUser(userId);
     const roomExists = await this.roomExists(roomId);
     if (user && roomExists) {

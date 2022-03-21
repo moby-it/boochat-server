@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { RoomsPersistenceModule, RoomsPersistenceService, MessagePersistenceService, MessagesPersistenceModule } from './chat';
 import { EventLogPersistenceModule, EventLogPersistenceService } from './event-log';
-import { EventsPersistenceModule, EventPersistenceService } from './events';
+import { MeetupsPersistenceModule, MeetupPersistenceService } from './meetups';
 import { ActiveUsersStore, UserPersistenceModule, UserPersistenceService } from './users';
 
 @Module({
@@ -13,9 +13,9 @@ import { ActiveUsersStore, UserPersistenceModule, UserPersistenceService } from 
     MessagesPersistenceModule,
     RoomsPersistenceModule,
     EventLogPersistenceModule,
-    EventsPersistenceModule
+    MeetupsPersistenceModule
   ],
-  providers: [UserPersistenceService, MessagePersistenceService, RoomsPersistenceService, EventLogPersistenceService, EventPersistenceService, ActiveUsersStore],
-  exports: [UserPersistenceService, RoomsPersistenceService, MessagePersistenceService, EventLogPersistenceService, EventPersistenceService, ActiveUsersStore]
+  providers: [UserPersistenceService, MessagePersistenceService, RoomsPersistenceService, EventLogPersistenceService, MeetupPersistenceService, ActiveUsersStore],
+  exports: [UserPersistenceService, RoomsPersistenceService, MessagePersistenceService, EventLogPersistenceService, MeetupPersistenceService, ActiveUsersStore]
 })
 export class PersistenceModule { }

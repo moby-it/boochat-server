@@ -8,7 +8,7 @@ on:
     branches:
       - main
     paths:
-      - 'apps/events/events-ui/**'
+      - 'apps/meetups/meetups-ui/**'
 
 jobs:
   build:
@@ -20,18 +20,18 @@ jobs:
           node-version: '16'
           cache: 'npm'
       - run: npm install
-      - run: npm run build events-ui
+      - run: npm run build meetups-ui
       - uses: actions/upload-artifact@v2
         with:
-          name: dist-events
-          path: dist/apps/events/events-ui
+          name: dist-meetups
+          path: dist/apps/meetups/meetups-ui
   deploy:
     needs: build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v2
         with:
-          name: dist-events-ui
+          name: dist-meetups-ui
       - name: Azure Login
         uses: azure/login@v1
         with:
@@ -42,9 +42,9 @@ jobs:
         run: |
           az storage blob delete-batch \
           --account-name ${{ secrets.STORAGE_ACCOUNT_NAME }} --account-key ${{ secrets.STORAGE_ACCOUNT_KEY }} \
-          --source events
+          --source meetups
       - name: Upload Events UI dist
         run: |
           az storage blob upload-batch \
           --account-name ${{ secrets.STORAGE_ACCOUNT_NAME }} --account-key ${{ secrets.STORAGE_ACCOUNT_KEY }} \
-          --destination events --source .
+          --destination meetups --source .

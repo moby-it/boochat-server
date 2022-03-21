@@ -3,10 +3,10 @@ import { Document, Types } from 'mongoose';
 import { Room } from "../chat";
 import { MongoEntity } from "../common";
 import { User } from "../users";
-export type EventDocument = Event & Document;
+export type MeetupDocument = Meetup & Document;
 
 @Schema({ timestamps: true })
-export class Event extends MongoEntity {
+export class Meetup extends MongoEntity {
   @Prop({ required: true })
   name!: string;
   @Prop({ type: Types.ObjectId, ref: User.name, required: true })
@@ -19,4 +19,4 @@ export class Event extends MongoEntity {
   @Prop({ type: Types.ObjectId, ref: Room.name, required: true })
   room!: Types.ObjectId;
 }
-export const EventSchema = SchemaFactory.createForClass(Event);
+export const MeetupSchema = SchemaFactory.createForClass(Meetup);

@@ -1,2 +1,2 @@
 declare module 'chat/Component'
-declare module 'events/Component'
+declare module 'meetups/Component'

@@ -2,7 +2,7 @@ import { loadRemoteModule } from "@angular-architects/module-federation";
 import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { BehaviorSubject } from "rxjs";
 import { environment } from "../../environments/environment";
-import { ChatDirective, EventsDirective } from "../directives";
+import { ChatDirective, MeetupsDirective } from "../directives";
 
 @Component({
   selector: 'oursocial-landing-page',
@@ -13,7 +13,7 @@ import { ChatDirective, EventsDirective } from "../directives";
 export class LandingPageComponent implements OnInit, OnDestroy {
   loading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   @ViewChild(ChatDirective, { static: true }) chatHost!: ChatDirective;
-  @ViewChild(EventsDirective, { static: true }) eventsHost!: EventsDirective;
+  @ViewChild(MeetupsDirective, { static: true }) eventsHost!: MeetupsDirective;
 
   async ngOnInit() {
     this.loading$.next(true);
@@ -25,13 +25,13 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   private async initializeEvents() {
     const viewContainerRef = this.eventsHost.viewContainerRef;
     viewContainerRef.clear();
-    const { EventsComponent } = await loadRemoteModule({
-      remoteEntry: environment.remotes.events,
-      remoteName: 'events',
+    const { MeetUpsComponent } = await loadRemoteModule({
+      remoteEntry: environment.remotes.meetups,
+      remoteName: 'meetups',
       exposedModule: './Component'
     });
-    console.log(EventsComponent);
-    viewContainerRef.createComponent(EventsComponent);
+    console.log(MeetUpsComponent);
+    viewContainerRef.createComponent(MeetUpsComponent);
 
   }
 

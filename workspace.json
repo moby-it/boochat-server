@@ -6,8 +6,8 @@
     "chat-ui": "apps/chat/chat-ui",
     "client": "apps/client",
     "domain": "libs/domain",
-    "events-api": "apps/events/events-api",
-    "events-ui": "apps/events/events-ui",
+    "meetups-api": "apps/meetups/meetups-api",
+    "meetups-ui": "apps/meetups/meetups-ui",
     "persistence": "libs/persistence"
   }
 }
