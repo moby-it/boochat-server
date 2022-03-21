@@ -14,7 +14,7 @@ Implement Event entity Service
 
 ## Roadmap
 Implement events, commands and queries for event entity
-REMAME EVENT ENTITIES TO OCCASIONS
+REMAME EVENT ENTITIES TO MEETUPS
 
 ### Docker notes
 
