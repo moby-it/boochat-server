@@ -23,7 +23,7 @@ jobs:
       - run: npm run build meetups-ui
       - uses: actions/upload-artifact@v2
         with:
-          name: dist-meetups
+          name: dist-meetups-ui
           path: dist/apps/meetups/meetups-ui
   deploy:
     needs: build
