@@ -1,4 +1,4 @@
-name: Deploy Events Api
+name: Deploy Meetups Api
 
 on:
   push:

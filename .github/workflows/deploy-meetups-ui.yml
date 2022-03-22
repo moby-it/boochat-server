@@ -1,4 +1,4 @@
-name: Build and Deploy Events UI
+name: Build and Deploy Meetups UI
 
 permissions:
   id-token: write
