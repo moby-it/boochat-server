@@ -9,11 +9,11 @@ The project uses https://nx.dev/, https://nestjs.com/ with https://www.mongodb.c
 
 ## Persistence
 ### Create event stores for Event Sourcing
-1. Rename EventLogs collection to RoomsEventStore
-2. Aside from the enum, **always add event name to an EventStore**
-3. Create a MeetupsEventStore
-4. Consider implementing a redis service for creating snapshots of Rooms and Meetups
-  1. This would imply that you could even maybe drop Meetups and Rooms Collections
+1. Create entity event stores
+2. Implement the command logic that writes to the event stores.
+3. After writing to the event, the app should update the read dbs (rooms,users,meetups etc)
+4. After updating read dbs probably emit notification.
+
 
 ### Docker notes
 
