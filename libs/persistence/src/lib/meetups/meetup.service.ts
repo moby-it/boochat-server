@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model, Types } from 'mongoose';
+import { Attendee, AttendeeDtoToAttendee } from "./attendee";
 import { CreateMeetupDto, MeetupDto, UpdateMeetupDto, validateCreateDto, validateUpdateDto } from "./meetup.dto";
 import { Meetup } from "./meetup.schema";
 @Injectable()
@@ -13,7 +14,7 @@ export class MeetupPersistenceService {
       name,
       organizer: new Types.ObjectId(organizer),
       takesPlaceOn,
-      attendees: attendees.map(a => new Types.ObjectId(a)),
+      attendees: AttendeeDtoToAttendee(attendees),
       room: new Types.ObjectId(meetupDto.room),
     });
     await createdMeetup.save();
@@ -25,7 +26,7 @@ export class MeetupPersistenceService {
   async updateOne(meetupDto: UpdateMeetupDto): Promise<string> {
     validateUpdateDto(meetupDto);
     const { name, takesPlaceOn, id } = meetupDto;
-    const attendees = meetupDto.attendees?.map(a => new Types.ObjectId(a));
+    const attendees = AttendeeDtoToAttendee(meetupDto.attendees);
     const organizer = new Types.ObjectId(meetupDto.organizer);
     const room = new Types.ObjectId(meetupDto.room);
     const result = await this.meetupModel.updateOne({ _id: new Types.ObjectId(id) }, { name, attendees, organizer, takesPlaceOn, room });

@@ -1,10 +1,15 @@
 import { Guard } from "@oursocial/domain";
+import { RsvpEnum } from "./attendee";
 
+export interface AttendeeDto {
+  user: string;
+  rsvp: RsvpEnum;
+}
 export interface MeetupDto {
   id?: string;
   name: string;
   organizer: string;
-  attendees: string[];
+  attendees: AttendeeDto[];
   takesPlaceOn: Date;
   room: string;
 }
