@@ -15,7 +15,19 @@ import { ActiveUsersStore, UserPersistenceModule, UserPersistenceService } from 
     EventLogPersistenceModule,
     MeetupsPersistenceModule
   ],
-  providers: [UserPersistenceService, MessagePersistenceService, RoomsPersistenceService, EventLogPersistenceService, MeetupPersistenceService, ActiveUsersStore],
-  exports: [UserPersistenceService, RoomsPersistenceService, MessagePersistenceService, EventLogPersistenceService, MeetupPersistenceService, ActiveUsersStore]
+  providers: [
+    UserPersistenceService,
+    MessagePersistenceService,
+    RoomsPersistenceService,
+    EventLogPersistenceService,
+    MeetupPersistenceService,
+    ActiveUsersStore],
+  exports: [
+    UserPersistenceService,
+    RoomsPersistenceService,
+    MessagePersistenceService,
+    EventLogPersistenceService,
+    MeetupPersistenceService,
+    ActiveUsersStore]
 })
 export class PersistenceModule { }

@@ -13,7 +13,7 @@ export class Meetup extends MongoEntity {
   organizer!: Types.ObjectId;
 
   @Prop({ type: [{ type: Types.ObjectId, ref: User.name, required: true }] })
-  attendants!: Types.ObjectId[];
+  attendees!: Types.ObjectId[];
   @Prop({ required: true })
   takesPlaceOn!: Date;
   @Prop({ type: Types.ObjectId, ref: Room.name, required: true })
