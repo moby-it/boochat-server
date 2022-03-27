@@ -8,13 +8,12 @@ The project uses https://nx.dev/, https://nestjs.com/ with https://www.mongodb.c
 # TODO
 
 ## Persistence
-
-Implement Event entity DTO
-Implement Event entity Service
-
-## Roadmap
-Implement events, commands and queries for event entity
-REMAME EVENT ENTITIES TO MEETUPS
+### Create event stores for Event Sourcing
+1. Rename EventLogs collection to RoomsEventStore
+2. Aside from the enum, **always add event name to an EventStore**
+3. Create a MeetupsEventStore
+4. Consider implementing a redis service for creating snapshots of Rooms and Meetups
+  1. This would imply that you could even maybe drop Meetups and Rooms Collections
 
 ### Docker notes
 
