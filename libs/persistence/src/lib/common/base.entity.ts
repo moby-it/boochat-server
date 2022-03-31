@@ -1,13 +1,7 @@
 import { Prop } from "@nestjs/mongoose";
-import { Types } from 'mongoose';
 export abstract class MongoEntity {
-  @Prop({ auto: true })
-  _id!: Types.ObjectId;
-  @Prop()
+  @Prop({ required: true })
+  id!: string;
+  @Prop({ required: true })
   createdAt!: Date;
-  @Prop()
-  updatedAt!: Date;
-  get id() {
-    return this._id.toString();
-  }
 }

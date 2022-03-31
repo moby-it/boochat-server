@@ -1,18 +1,7 @@
 services:
-  mongodb:
-    image: mongo
-    restart: always
-    env_file: ./.chat.env
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: my-rabbitmq
+    hostname: my-rabbitmq
     ports:
-      - 30000:27017
-    volumes:
-      - data:/data/db
-  chat-api:
-    depends_on:
-      - mongodb
-    image: oursocial.azurecr.io/chat-api
-    env_file: ./.chat.env
-    ports:
-      - 3333:3333
-volumes:
-  data:
+      - "9000:5672"
