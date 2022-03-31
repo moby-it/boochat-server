@@ -1,7 +1,6 @@
 import { QueryBus } from '@nestjs/cqrs';
 import { OnGatewayConnection, OnGatewayDisconnect, WebSocketGateway, WebSocketServer } from "@nestjs/websockets";
 import { GetUserByGoogleIdQuery, GetUserByGoogleIdQueryResult, WsServer } from '@oursocial/application';
-import { ActiveUsersStore } from '@oursocial/persistence';
 import { Server, Socket } from 'socket.io';
 @WebSocketGateway({
   cors: {
@@ -12,7 +11,7 @@ export class ActiveUsersGateway implements OnGatewayConnection, OnGatewayDisconn
   @WebSocketServer()
   server!: Server;
 
-  constructor(private queryBus: QueryBus, private activeUsersStore: ActiveUsersStore) { }
+  constructor(private queryBus: QueryBus) { }
   async handleConnection(socket: Socket) {
     WsServer.instance = this.server;
     const googleId = socket.handshake.query.googleId as string;

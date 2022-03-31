@@ -8,7 +8,9 @@ export interface RoomDto {
   unreadMessages?: number;
 
 }
-export interface CreateRoomDto extends RoomDto { }
+export interface CreateRoomDto extends RoomDto {
+  userId: string;
+}
 export interface CreatedRoomDto extends RoomDto {
   id: RoomId;
 }

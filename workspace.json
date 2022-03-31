@@ -8,6 +8,7 @@
     "domain": "libs/domain",
     "meetups-api": "apps/meetups/meetups-api",
     "meetups-ui": "apps/meetups/meetups-ui",
-    "persistence": "libs/persistence"
+    "persistence": "libs/persistence",
+    "web-api": "apps/web-api"
   }
 }
