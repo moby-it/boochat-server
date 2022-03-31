@@ -2,7 +2,6 @@ import { QueryBus } from "@nestjs/cqrs";
 import { MessageBody, SubscribeMessage, WebSocketGateway } from "@nestjs/websockets";
 import { GetUserByIdQuery, GetUserByIdQueryResult } from "@oursocial/application";
 import { User, UserId } from "@oursocial/domain";
-import { MessageDto } from "@oursocial/persistence";
 
 @WebSocketGateway({
   cors: {
@@ -12,7 +11,7 @@ import { MessageDto } from "@oursocial/persistence";
 export class MessageGateway {
   constructor(private queryBus: QueryBus) { }
   @SubscribeMessage('sendMessage')
-  async onNewMessage(@MessageBody() newMessage: MessageDto) {
+  async onNewMessage(@MessageBody() newMessageEvent: any) {
     const user = await this.getUser(newMessage.senderId);
     if (!user) throw new Error(`Failed to get user with id ${newMessage.senderId}`);
     const { content, senderId, roomId, createdAt } = newMessage;

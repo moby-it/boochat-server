@@ -7,12 +7,8 @@ The project uses https://nx.dev/, https://nestjs.com/ with https://www.mongodb.c
 
 # TODO
 
-## Persistence
-### Create event stores for Event Sourcing
-1. Create entity event stores
-2. Implement the command logic that writes to the event stores.
-3. After writing to the event, the app should update the read dbs (rooms,users,meetups etc)
-4. After updating read dbs probably emit notification.
+1. Move event base dto  to domain
+2. 
 
 
 ### Docker notes

@@ -8,5 +8,5 @@
     "target": "es6"
   },
   "exclude": ["**/*.spec.ts", "**/*.test.ts"],
-  "include": ["**/*.ts"]
+  "include": ["**/*.ts", "../domain/src/lib/meetups/meetup-events.types.ts", "../domain/src/lib/chat/room-events.types.ts"]
 }
