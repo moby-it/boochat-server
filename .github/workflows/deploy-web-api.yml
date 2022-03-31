@@ -1,11 +1,11 @@
-name: Deploy Chat Api
+name: Deploy Web Api
 
 on:
   push:
     branches:
       - main
     paths:
-      - 'apps/chat/chat-api/**'
+      - 'apps/web-api/**'
       - 'libs/persistence/**'
       - 'libs/domain/**'
       - 'libs/application/**'
@@ -23,5 +23,5 @@ jobs:
           password: ${{ secrets.ACR_PASSWORD }}
 
       - run: |
-          docker build -f docker/chat-api.dockerfile . -t oursocial.azurecr.io/chat-api:latest
-          docker push oursocial.azurecr.io/chat-api:latest
+          docker build -f docker/web-api.dockerfile . -t oursocial.azurecr.io/web-api:latest
+          docker push oursocial.azurecr.io/web-api:latest
