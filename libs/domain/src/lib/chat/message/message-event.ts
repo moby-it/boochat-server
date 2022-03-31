@@ -1,6 +1,6 @@
 import { BaseEvent } from "../../common";
 
-export interface MessageEvent extends BaseEvent {
+export interface CreateMessageEvent extends BaseEvent {
   senderId: string;
   roomId: string;
   dateSent: Date;

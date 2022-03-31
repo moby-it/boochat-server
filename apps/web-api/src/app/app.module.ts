@@ -13,9 +13,9 @@ const Gateways = [ActiveUsersGateway, MessageGateway, RoomsGateway];
 @Module({
   controllers: [AuthController],
   imports: [
-    PersistenceModule,
+    CqrsModule,
     ApplicationModule,
-    CqrsModule
+    PersistenceModule,
   ],
   providers: [
     ...Gateways,

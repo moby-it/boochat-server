@@ -4,4 +4,5 @@ services:
     container_name: my-rabbitmq
     hostname: my-rabbitmq
     ports:
-      - "9000:5672"
+      - 9000:5672
+      - 8080:15672

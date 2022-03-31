@@ -1,7 +1,7 @@
 import { QueryBus } from "@nestjs/cqrs";
 import { MessageBody, OnGatewayDisconnect, SubscribeMessage, WebSocketGateway, WebSocketServer, WsException } from "@nestjs/websockets";
 import { GetUserByIdQuery, GetUserByIdQueryResult } from "@oursocial/application";
-import { RoomEvent, RoomId, User, UserId } from "@oursocial/domain";
+import { CreateRoomEventDto, User, UserId } from "@oursocial/domain";
 import { Server, Socket } from "socket.io";
 @WebSocketGateway({
   cors: {
@@ -54,10 +54,10 @@ export class RoomsGateway implements OnGatewayDisconnect {
     }
   }
   @SubscribeMessage('createRoom')
-  async createRoom(@MessageBody() createRoomEvent: RoomEvent): Promise<void> {
-    const user = await this.getUser(createRoomEvent.userId);
+  async createRoom(@MessageBody() createCreateRoomEventDto: CreateRoomEventDto): Promise<void> {
+    const user = await this.getUser(createCreateRoomEventDto.userId);
     if (user) {
-      user.createRoom(user.id, createRoomEvent.roomName, createRoomEvent.userIds);
+      user.createRoom(createCreateRoomEventDto.roomName, createCreateRoomEventDto.userIds);
       user.commit();
     } else {
       throw new WsException('Cannot create Room. User does not exists');

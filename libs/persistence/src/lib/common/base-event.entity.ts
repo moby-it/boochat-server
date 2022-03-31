@@ -1,10 +1,10 @@
 import { Prop } from "@nestjs/mongoose";
 import { MongoEntity } from "./base.entity";
-export class BaseEvent<T> extends MongoEntity {
+export abstract class BaseEvent extends MongoEntity {
   @Prop({ required: true })
   userId!: string;
   @Prop({ required: true })
   type!: number;
   @Prop({ required: true })
-  name!: T;
+  name!: string;
 }

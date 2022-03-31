@@ -1,4 +1,4 @@
-import { QueryBus } from '@nestjs/cqrs';
+import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { OnGatewayConnection, OnGatewayDisconnect, WebSocketGateway, WebSocketServer } from "@nestjs/websockets";
 import { GetUserByGoogleIdQuery, GetUserByGoogleIdQueryResult, WsServer } from '@oursocial/application';
 import { Server, Socket } from 'socket.io';
@@ -11,7 +11,7 @@ export class ActiveUsersGateway implements OnGatewayConnection, OnGatewayDisconn
   @WebSocketServer()
   server!: Server;
 
-  constructor(private queryBus: QueryBus) { }
+  constructor(private queryBus: QueryBus, private commandBus: CommandBus) { }
   async handleConnection(socket: Socket) {
     WsServer.instance = this.server;
     const googleId = socket.handshake.query.googleId as string;

@@ -1,6 +1,6 @@
 import { BaseEvent } from "../../common";
 
-export interface RoomEvent extends BaseEvent {
+export interface CreateRoomEventDto extends BaseEvent {
   roomName: string;
   userIds: string[];
 }
