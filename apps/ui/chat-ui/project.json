@@ -1,7 +1,7 @@
 {
   "projectType": "application",
-  "root": "apps/chat/chat-ui",
-  "sourceRoot": "apps/chat/chat-ui/src",
+  "root": "apps/ui/chat-ui",
+  "sourceRoot": "apps/ui/chat-ui/src",
   "prefix": "oursocial",
   "targets": {
     "build": {
@@ -10,21 +10,21 @@
         "{options.outputPath}"
       ],
       "options": {
-        "outputPath": "dist/apps/chat/chat-ui",
-        "index": "apps/chat/chat-ui/src/index.html",
-        "main": "apps/chat/chat-ui/src/main.ts",
-        "polyfills": "apps/chat/chat-ui/src/polyfills.ts",
-        "tsConfig": "apps/chat/chat-ui/tsconfig.app.json",
+        "outputPath": "dist/apps/ui/chat-ui",
+        "index": "apps/ui/chat-ui/src/index.html",
+        "main": "apps/ui/chat-ui/src/main.ts",
+        "polyfills": "apps/ui/chat-ui/src/polyfills.ts",
+        "tsConfig": "apps/ui/chat-ui/tsconfig.app.json",
         "assets": [
-          "apps/chat/chat-ui/src/favicon.ico",
-          "apps/chat/chat-ui/src/assets"
+          "apps/ui/chat-ui/src/favicon.ico",
+          "apps/ui/chat-ui/src/assets"
         ],
         "styles": [
-          "apps/chat/chat-ui/src/styles.css"
+          "apps/ui/chat-ui/src/styles.css"
         ],
         "scripts": [],
         "customWebpackConfig": {
-          "path": "apps/chat/chat-ui/webpack.config.js"
+          "path": "apps/ui/chat-ui/webpack.config.js"
         }
       },
       "configurations": {
@@ -43,13 +43,13 @@
           ],
           "fileReplacements": [
             {
-              "replace": "apps/chat/chat-ui/src/environments/environment.ts",
-              "with": "apps/chat/chat-ui/src/environments/environment.prod.ts"
+              "replace": "apps/ui/chat-ui/src/environments/environment.ts",
+              "with": "apps/ui/chat-ui/src/environments/environment.prod.ts"
             }
           ],
           "outputHashing": "none",
           "customWebpackConfig": {
-            "path": "apps/chat/chat-ui/webpack.prod.config.js"
+            "path": "apps/ui/chat-ui/webpack.prod.config.js"
           }
         },
         "development": {
@@ -89,8 +89,8 @@
       "executor": "@nrwl/linter:eslint",
       "options": {
         "lintFilePatterns": [
-          "apps/chat/chat-ui/src/**/*.ts",
-          "apps/chat/chat-ui/src/**/*.html"
+          "apps/ui/chat-ui/src/**/*.ts",
+          "apps/ui/chat-ui/src/**/*.html"
         ]
       }
     },

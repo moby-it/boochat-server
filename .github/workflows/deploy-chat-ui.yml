@@ -8,7 +8,7 @@ on:
     branches:
       - main
     paths:
-      - 'apps/chat/chat-ui/**'
+      - 'apps/ui/chat-ui/**'
 
 jobs:
   build:
@@ -24,7 +24,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: dist-chat
-          path: dist/apps/chat/chat-ui
+          path: dist/apps/ui/chat-ui
   deploy:
     needs: build
     runs-on: ubuntu-latest

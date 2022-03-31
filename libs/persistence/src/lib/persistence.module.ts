@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { MeetupEventStoreModule, MeetupEventStoreService } from './meetup-events-store';
 import { RoomsEventStoreModule, RoomsEventStoreService } from './rooms-events-store';
-import { ActiveUsersStore, UserPersistenceModule, UserPersistenceService } from './users';
+import { UserPersistenceModule, UserPersistenceService } from './users';
 
 @Module({
   imports: [MongooseModule.forRoot(process.env.DBSERVER_URL || "mongodb://gspanos:sinpassword@localhost", {
@@ -14,13 +14,11 @@ import { ActiveUsersStore, UserPersistenceModule, UserPersistenceService } from 
   ],
   providers: [
     UserPersistenceService,
-    ActiveUsersStore,
     RoomsEventStoreService,
     MeetupEventStoreService
   ],
   exports: [
     UserPersistenceService,
-    ActiveUsersStore,
     RoomsEventStoreService,
     MeetupEventStoreService
   ]

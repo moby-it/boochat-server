@@ -27,8 +27,9 @@ sharedMappings.register(
 );
 
 module.exports = {
+  mode:"development",
   output: {
-    uniqueName: 'meetups',
+    uniqueName: 'chat',
     publicPath: 'auto',
     scriptType: 'text/javascript'
   },
@@ -45,10 +46,10 @@ module.exports = {
   },
   plugins: [
     new ModuleFederationPlugin({
-      name: 'meetups',
+      name: 'chat',
       filename: 'remoteEntry.js',
       exposes: {
-        './Component': 'apps/meetups/meetups-ui/src/app/meetups.component.ts',
+        './Component': 'apps/ui/chat-ui/src/app/chat-box/chat-box.component.ts',
       },
       shared: share({
         '@angular/core': {

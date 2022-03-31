@@ -6,10 +6,11 @@ The project uses https://nx.dev/, https://nestjs.com/ with https://www.mongodb.c
 
 
 # TODO
-
-1. Move event base dto  to domain
-2. 
-
+## CQRS, Event Sourcing Logic
+1. Web Api is essentialy the way the FE creates commands.
+2. Command Handlers contain business logic and raise events.
+3. Event handlers write to store.
+4. There should be a base event handlers that writes to db and after that emits to rmq
 
 ### Docker notes
 

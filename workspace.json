@@ -2,12 +2,10 @@
   "version": 2,
   "projects": {
     "application": "libs/application",
-    "chat-api": "apps/chat/chat-api",
-    "chat-ui": "apps/chat/chat-ui",
-    "client": "apps/client",
+    "chat-ui": "apps/ui/chat-ui",
+    "client": "apps/ui/client",
     "domain": "libs/domain",
-    "meetups-api": "apps/meetups/meetups-api",
-    "meetups-ui": "apps/meetups/meetups-ui",
+    "meetups-ui": "apps/ui/meetups-ui",
     "persistence": "libs/persistence",
     "web-api": "apps/web-api"
   }

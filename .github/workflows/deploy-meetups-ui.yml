@@ -8,7 +8,7 @@ on:
     branches:
       - main
     paths:
-      - 'apps/meetups/meetups-ui/**'
+      - 'apps/ui/meetups-ui/**'
 
 jobs:
   build:
@@ -24,7 +24,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: dist-meetups-ui
-          path: dist/apps/meetups/meetups-ui
+          path: dist/apps/ui/meetups-ui
   deploy:
     needs: build
     runs-on: ubuntu-latest
