@@ -14,18 +14,11 @@
             "depConstraints": [
               {
                 "sourceTag": "type:application",
-                "onlyDependOnLibsWithTags": [
-                  "type:lib",
-                  "scope:domain",
-                  "scope:application"
-                ]
+                "onlyDependOnLibsWithTags": ["type:lib", "scope:domain", "scope:application"]
               },
               {
                 "sourceTag": "scope:application",
-                "onlyDependOnLibsWithTags": [
-                  "scope:domain",
-                  "scope:persistence"
-                ]
+                "onlyDependOnLibsWithTags": ["scope:domain", "scope:persistence"]
               },
               {
                 "sourceTag": "scope:persistence",

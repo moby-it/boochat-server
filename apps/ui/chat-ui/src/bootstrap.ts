@@ -10,6 +10,6 @@ if (environment.production) {
 
 platformBrowserDynamic()
   .bootstrapModule(ChatComponentModule, {
-    defaultEncapsulation: ViewEncapsulation.Emulated,
+    defaultEncapsulation: ViewEncapsulation.Emulated
   })
   .catch((err) => console.error(err));

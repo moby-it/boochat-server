@@ -3,6 +3,6 @@ export enum RoomEventEnum {
   USER_INVITED_ROOM,
   USER_LEFT_ROOM,
   USER_CLOSED_ROOM,
-  USER_SENT_MESSAGE,
+  USER_SENT_MESSAGE
 }
 export type RoomEventType = keyof typeof RoomEventEnum;

@@ -2,11 +2,7 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveComponentModule } from '@ngrx/component';
-import {
-  GoogleLoginProvider,
-  SocialAuthServiceConfig,
-  SocialLoginModule,
-} from 'angularx-social-login';
+import { GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from 'angularx-social-login';
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing.module';
@@ -23,15 +19,9 @@ import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
     MeetupsDirective,
     UnauthorizedComponent,
     LandingPageComponent,
-    HeaderComponent,
+    HeaderComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    ReactiveFormsModule,
-    SocialLoginModule,
-    ReactiveComponentModule,
-  ],
+  imports: [BrowserModule, AppRoutingModule, ReactiveFormsModule, SocialLoginModule, ReactiveComponentModule],
   providers: [
     AuthGuard,
     {
@@ -41,16 +31,16 @@ import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
         providers: [
           {
             id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider(environment.GoogleClientId),
-          },
+            provider: new GoogleLoginProvider(environment.GoogleClientId)
+          }
         ],
         onError: (error) => {
           console.error('Failed to login');
           console.error(error);
-        },
-      } as SocialAuthServiceConfig,
-    },
+        }
+      } as SocialAuthServiceConfig
+    }
   ],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent]
 })
 export class AppModule {}

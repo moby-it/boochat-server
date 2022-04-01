@@ -13,10 +13,7 @@
         "main": "apps/ui/meetups-ui/src/main.ts",
         "polyfills": "apps/ui/meetups-ui/src/polyfills.ts",
         "tsConfig": "apps/ui/meetups-ui/tsconfig.app.json",
-        "assets": [
-          "apps/ui/meetups-ui/src/favicon.ico",
-          "apps/ui/meetups-ui/src/assets"
-        ],
+        "assets": ["apps/ui/meetups-ui/src/favicon.ico", "apps/ui/meetups-ui/src/assets"],
         "styles": ["apps/ui/meetups-ui/src/styles.css"],
         "scripts": [],
         "customWebpackConfig": {
@@ -84,10 +81,7 @@
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "options": {
-        "lintFilePatterns": [
-          "apps/meetups-ui/src/**/*.ts",
-          "apps/meetups-ui/src/**/*.html"
-        ]
+        "lintFilePatterns": ["apps/meetups-ui/src/**/*.ts", "apps/meetups-ui/src/**/*.html"]
       }
     },
     "test": {

@@ -12,9 +12,7 @@ const share = mf.share;
  * This NX_TSCONFIG_PATH environment variable is set by the @nrwl/angular:webpack-browser and it contains
  * the location of the generated temporary tsconfig file.
  */
-const tsConfigPath =
-  process.env.NX_TSCONFIG_PATH ??
-  path.join(__dirname, '../../../tsconfig.base.json');
+const tsConfigPath = process.env.NX_TSCONFIG_PATH ?? path.join(__dirname, '../../../tsconfig.base.json');
 
 const workspaceRootPath = path.join(__dirname, '../../../');
 const sharedMappings = new mf.SharedMappings();
@@ -30,60 +28,60 @@ module.exports = {
   output: {
     uniqueName: 'meetups',
     publicPath: 'auto',
-    scriptType: 'text/javascript',
+    scriptType: 'text/javascript'
   },
   optimization: {
-    runtimeChunk: false,
+    runtimeChunk: false
   },
   experiments: {
-    outputModule: true,
+    outputModule: true
   },
   resolve: {
     alias: {
-      ...sharedMappings.getAliases(),
-    },
+      ...sharedMappings.getAliases()
+    }
   },
   plugins: [
     new ModuleFederationPlugin({
       name: 'meetups',
       filename: 'remoteEntry.js',
       exposes: {
-        './Component': 'apps/ui/meetups-ui/src/app/meetups.component.ts',
+        './Component': 'apps/ui/meetups-ui/src/app/meetups.component.ts'
       },
       shared: share({
         '@angular/core': {
           singleton: true,
           strictVersion: true,
           requiredVersion: 'auto',
-          includeSecondaries: true,
+          includeSecondaries: true
         },
         '@angular/common': {
           singleton: true,
           strictVersion: true,
           requiredVersion: 'auto',
-          includeSecondaries: true,
+          includeSecondaries: true
         },
         '@angular/common/http': {
           singleton: true,
           strictVersion: true,
           requiredVersion: 'auto',
-          includeSecondaries: true,
+          includeSecondaries: true
         },
         '@angular/router': {
           singleton: true,
           strictVersion: true,
           requiredVersion: 'auto',
-          includeSecondaries: true,
+          includeSecondaries: true
         },
         rxjs: {
           singleton: true,
           strictVersion: true,
           requiredVersion: 'auto',
-          includeSecondaries: true,
+          includeSecondaries: true
         },
-        ...sharedMappings.getDescriptors(),
-      }),
+        ...sharedMappings.getDescriptors()
+      })
     }),
-    sharedMappings.getPlugin(),
-  ],
+    sharedMappings.getPlugin()
+  ]
 };

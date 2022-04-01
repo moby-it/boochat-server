@@ -8,7 +8,7 @@ async function bootstrap() {
   const port = process.env.PORT || 3333;
   app.useGlobalInterceptors(
     new ClassSerializerInterceptor(app.get(Reflector), {
-      excludePrefixes: ['_'],
+      excludePrefixes: ['_']
     })
   );
 

@@ -1,14 +1,6 @@
 import { User } from '@boochat/domain';
 import { UserDto, UserPersistenceService } from '@boochat/persistence';
-import {
-  BadRequestException,
-  Body,
-  Controller,
-  InternalServerErrorException,
-  Param,
-  Post,
-  Put,
-} from '@nestjs/common';
+import { BadRequestException, Body, Controller, InternalServerErrorException, Param, Post, Put } from '@nestjs/common';
 
 @Controller('auth')
 export class AuthController {
@@ -25,7 +17,7 @@ export class AuthController {
         {
           googleId: userDto.googleId,
           name: userDto.name,
-          imageUrl: userDto.imageUrl,
+          imageUrl: userDto.imageUrl
         },
         user.id as string
       );
@@ -34,10 +26,7 @@ export class AuthController {
     }
   }
   @Put('update/:id')
-  async updateUser(
-    @Param() id: string,
-    @Body() userDto: UserDto
-  ): Promise<void> {
+  async updateUser(@Param() id: string, @Body() userDto: UserDto): Promise<void> {
     try {
       await this.userService.update(id, userDto);
     } catch (e) {

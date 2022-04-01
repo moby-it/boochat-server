@@ -13,11 +13,7 @@
         "main": "apps/client/src/main.ts",
         "polyfills": "apps/client/src/polyfills.ts",
         "tsConfig": "apps/client/tsconfig.app.json",
-        "assets": [
-          "apps/client/src/favicon.ico",
-          "apps/client/src/assets",
-          "apps/client/src/web.config"
-        ],
+        "assets": ["apps/client/src/favicon.ico", "apps/client/src/assets", "apps/client/src/web.config"],
         "styles": ["apps/client/src/styles.css"],
         "scripts": [],
         "customWebpackConfig": {
@@ -72,10 +68,7 @@
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "options": {
-        "lintFilePatterns": [
-          "apps/client/src/**/*.ts",
-          "apps/client/src/**/*.html"
-        ]
+        "lintFilePatterns": ["apps/client/src/**/*.ts", "apps/client/src/**/*.html"]
       }
     },
     "test": {
@@ -89,11 +82,7 @@
     "serve-mfe": {
       "executor": "@nrwl/workspace:run-commands",
       "options": {
-        "commands": [
-          "nx serve events-ui",
-          "nx serve chat-ui",
-          "nx serve client"
-        ]
+        "commands": ["nx serve events-ui", "nx serve chat-ui", "nx serve client"]
       }
     }
   },

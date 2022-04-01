@@ -13,10 +13,7 @@
         "main": "apps/ui/chat-ui/src/main.ts",
         "polyfills": "apps/ui/chat-ui/src/polyfills.ts",
         "tsConfig": "apps/ui/chat-ui/tsconfig.app.json",
-        "assets": [
-          "apps/ui/chat-ui/src/favicon.ico",
-          "apps/ui/chat-ui/src/assets"
-        ],
+        "assets": ["apps/ui/chat-ui/src/favicon.ico", "apps/ui/chat-ui/src/assets"],
         "styles": ["apps/ui/chat-ui/src/styles.css"],
         "scripts": [],
         "customWebpackConfig": {
@@ -84,10 +81,7 @@
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "options": {
-        "lintFilePatterns": [
-          "apps/ui/chat-ui/src/**/*.ts",
-          "apps/ui/chat-ui/src/**/*.html"
-        ]
+        "lintFilePatterns": ["apps/ui/chat-ui/src/**/*.ts", "apps/ui/chat-ui/src/**/*.html"]
       }
     },
     "test": {

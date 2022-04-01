@@ -1,11 +1,5 @@
 import { loadRemoteModule } from '@angular-architects/module-federation';
-import {
-  Component,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-  ViewEncapsulation,
-} from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { ChatDirective, MeetupsDirective } from '../directives';
@@ -14,7 +8,7 @@ import { ChatDirective, MeetupsDirective } from '../directives';
   selector: 'boochat-landing-page',
   templateUrl: './landing-page.component.html',
   styleUrls: ['./landing-page.component.css'],
-  encapsulation: ViewEncapsulation.Emulated,
+  encapsulation: ViewEncapsulation.Emulated
 })
 export class LandingPageComponent implements OnInit, OnDestroy {
   loading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
@@ -34,7 +28,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
     const { MeetUpsComponent } = await loadRemoteModule({
       remoteEntry: environment.remotes.meetups,
       remoteName: 'meetups',
-      exposedModule: './Component',
+      exposedModule: './Component'
     });
     console.log(MeetUpsComponent);
     viewContainerRef.createComponent(MeetUpsComponent);
@@ -46,7 +40,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
     const { ChatBoxComponent } = await loadRemoteModule({
       remoteEntry: environment.remotes.chat,
       remoteName: 'chat',
-      exposedModule: './Component',
+      exposedModule: './Component'
     });
     console.log(ChatBoxComponent);
     viewContainerRef.createComponent(ChatBoxComponent);

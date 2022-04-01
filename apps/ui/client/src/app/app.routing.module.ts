@@ -8,20 +8,20 @@ const routes: Route[] = [
   {
     path: 'home',
     component: LandingPageComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard]
   },
   {
     path: 'unauthorized',
-    component: UnauthorizedComponent,
+    component: UnauthorizedComponent
   },
   {
     path: '**',
-    redirectTo: '/home',
-  },
+    redirectTo: '/home'
+  }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
 export class AppRoutingModule {}

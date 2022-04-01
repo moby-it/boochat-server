@@ -13,6 +13,6 @@ import { MeetupsComponent } from './meetups.component';
   declarations: [AppComponent, MeetupsComponent],
   imports: [BrowserModule],
   providers: [],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent]
 })
 export class AppModule {}

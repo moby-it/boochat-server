@@ -4,9 +4,7 @@ interface NameProps {
   value: string;
 }
 export class Email extends ValueObject<NameProps> {
-  private static validationRegex = new RegExp(
-    /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(.\w{2,3})+$/
-  );
+  private static validationRegex = new RegExp(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(.\w{2,3})+$/);
   get value() {
     return this._props.value;
   }
