@@ -5,7 +5,7 @@ import { PersistenceModule } from '@boochat/persistence';
 import { ApplicationEventBusProvider, MeetupEventBusProvider, RoomEventBusProvider } from './event-bus.providers';
 import { EventBusService } from './event-bus/event-bus.service';
 import { RoomEventHandlers } from './rooms/event-handlers';
-import { ActiveUserQueryHandlers } from './users';
+import { ActiveUserQueryHandlers, UserEventHandlers } from './users';
 import { MeetupEventHandlers } from './meetups';
 
 @Module({
@@ -17,7 +17,8 @@ import { MeetupEventHandlers } from './meetups';
     EventBusService,
     ...ActiveUserQueryHandlers,
     ...RoomEventHandlers,
-    ...MeetupEventHandlers
+    ...MeetupEventHandlers,
+    ...UserEventHandlers
   ],
   exports: []
 })
