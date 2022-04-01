@@ -8,7 +8,8 @@ export class Result<T = undefined> {
     this._error = error;
   }
   get props() {
-    if (!this._isSuccessful) throw new Error('cannot get props of failed result');
+    if (!this._isSuccessful)
+      throw new Error('cannot get props of failed result');
     return this._props;
   }
   get error() {

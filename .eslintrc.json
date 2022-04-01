@@ -1,19 +1,10 @@
 {
   "root": true,
-  "ignorePatterns": [
-    "**/*"
-  ],
-  "plugins": [
-    "@nrwl/nx"
-  ],
+  "ignorePatterns": ["**/*"],
+  "plugins": ["@nrwl/nx"],
   "overrides": [
     {
-      "files": [
-        "*.ts",
-        "*.tsx",
-        "*.js",
-        "*.jsx"
-      ],
+      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
       "rules": {
         "@nrwl/nx/enforce-module-boundaries": [
           "error",
@@ -38,15 +29,11 @@
               },
               {
                 "sourceTag": "scope:persistence",
-                "onlyDependOnLibsWithTags": [
-                  "scope:domain"
-                ]
+                "onlyDependOnLibsWithTags": ["scope:domain"]
               },
               {
                 "sourceTag": "scope:domain",
-                "onlyDependOnLibsWithTags": [
-                  ""
-                ]
+                "onlyDependOnLibsWithTags": [""]
               }
             ]
           }
@@ -54,26 +41,18 @@
       }
     },
     {
-      "files": [
-        "*.ts",
-        "*.tsx"
-      ],
-      "extends": [
-        "plugin:@nrwl/nx/typescript"
-      ],
+      "files": ["*.ts", "*.tsx"],
+      "extends": ["plugin:@nrwl/nx/typescript"],
       "rules": {
         "@typescript-eslint/no-empty-interface": "off"
       }
     },
     {
-      "files": [
-        "*.js",
-        "*.jsx"
-      ],
-      "extends": [
-        "plugin:@nrwl/nx/javascript"
-      ],
-      "rules": {}
+      "files": ["*.js", "*.jsx"],
+      "extends": ["plugin:@nrwl/nx/javascript"],
+      "rules": {
+        "prettier/prettier": ["error"]
+      }
     }
   ]
 }

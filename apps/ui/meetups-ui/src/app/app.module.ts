@@ -7,7 +7,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
-import { MeetupsComponent } from "./meetups.component";
+import { MeetupsComponent } from './meetups.component';
 
 @NgModule({
   declarations: [AppComponent, MeetupsComponent],
@@ -15,4 +15,4 @@ import { MeetupsComponent } from "./meetups.component";
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

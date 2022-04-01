@@ -30,7 +30,7 @@ module.exports = {
   output: {
     uniqueName: 'meetups',
     publicPath: 'auto',
-    scriptType: 'text/javascript'
+    scriptType: 'text/javascript',
   },
   optimization: {
     runtimeChunk: false,
@@ -82,7 +82,7 @@ module.exports = {
           includeSecondaries: true,
         },
         ...sharedMappings.getDescriptors(),
-      })
+      }),
     }),
     sharedMappings.getPlugin(),
   ],

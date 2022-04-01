@@ -1,7 +1,7 @@
-import { Expose } from "class-transformer";
-import { Room } from "../chat";
-import { AggregateRootEntity } from "../common";
-import { User } from "../user";
+import { Expose } from 'class-transformer';
+import { Room } from '../chat';
+import { AggregateRootEntity } from '../common';
+import { User } from '../user';
 interface MeetupProps {
   name: string;
   organizer: Partial<User> & Pick<User, 'id'>;
@@ -34,7 +34,6 @@ export class Meetup extends AggregateRootEntity<MeetupProps> {
     super(props, id);
   }
   public static create(props: MeetupProps, id: string) {
-
     return new Meetup(props, id);
   }
 }

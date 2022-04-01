@@ -1,6 +1,6 @@
-import { Entity, Guard } from "../../common";
-import { Message } from "../message";
-import { User } from "../../user";
+import { Entity, Guard } from '../../common';
+import { Message } from '../message';
+import { User } from '../../user';
 import { Expose } from 'class-transformer';
 interface RoomProps {
   name: string;
@@ -8,7 +8,7 @@ interface RoomProps {
   messages: Message[];
   unreadMessages?: number;
 }
-export class Room extends Entity<RoomProps>{
+export class Room extends Entity<RoomProps> {
   @Expose()
   get id() {
     return this._id;
@@ -33,9 +33,7 @@ export class Room extends Entity<RoomProps>{
     super(props, id);
   }
   public static create(props: RoomProps, id: string) {
-    Guard.AgainstNullOrUndefined([
-      { propName: 'name', value: props.name },
-    ]);
+    Guard.AgainstNullOrUndefined([{ propName: 'name', value: props.name }]);
     return new Room(props, id);
   }
 }

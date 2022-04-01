@@ -1,11 +1,20 @@
-import { Module } from "@nestjs/common";
-import { MongooseModule } from "@nestjs/mongoose";
-import { MeetupEventSchema, MEETUP_EVENTS_COLLECTION_NAME } from "./meetup-events.schema";
+import { Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
+import {
+  MeetupEventSchema,
+  MEETUP_EVENTS_COLLECTION_NAME,
+} from './meetup-events.schema';
 
 @Module({
-  imports: [MongooseModule.forFeature([{ name: MEETUP_EVENTS_COLLECTION_NAME, schema: MeetupEventSchema, collection: MEETUP_EVENTS_COLLECTION_NAME }])],
-  exports: [MongooseModule]
+  imports: [
+    MongooseModule.forFeature([
+      {
+        name: MEETUP_EVENTS_COLLECTION_NAME,
+        schema: MeetupEventSchema,
+        collection: MEETUP_EVENTS_COLLECTION_NAME,
+      },
+    ]),
+  ],
+  exports: [MongooseModule],
 })
-export class MeetupEventStoreModule {
-
-}
+export class MeetupEventStoreModule {}

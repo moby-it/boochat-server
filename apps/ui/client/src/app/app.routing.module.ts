@@ -1,8 +1,8 @@
-import { Route, RouterModule } from "@angular/router";
-import { LandingPageComponent } from "./landing-page/landing-page.component";
-import { AuthGuard } from "./guards/auth.guard";
-import { UnauthorizedComponent } from "./unauthorized/unauthorized.component";
-import { NgModule } from "@angular/core";
+import { Route, RouterModule } from '@angular/router';
+import { LandingPageComponent } from './landing-page/landing-page.component';
+import { AuthGuard } from './guards/auth.guard';
+import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
+import { NgModule } from '@angular/core';
 
 const routes: Route[] = [
   {
@@ -12,17 +12,16 @@ const routes: Route[] = [
   },
   {
     path: 'unauthorized',
-    component: UnauthorizedComponent
+    component: UnauthorizedComponent,
   },
   {
     path: '**',
-    redirectTo: '/home'
-  }
+    redirectTo: '/home',
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule {
-}
+export class AppRoutingModule {}

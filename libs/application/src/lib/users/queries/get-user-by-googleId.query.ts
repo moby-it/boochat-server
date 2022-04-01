@@ -1,25 +1,42 @@
-import { EventPublisher, IQuery, IQueryHandler, QueryHandler } from "@nestjs/cqrs";
-import { GoogleId, Result, User } from "@boochat/domain";
-import { UserPersistenceService } from "@boochat/persistence";
+import {
+  EventPublisher,
+  IQuery,
+  IQueryHandler,
+  QueryHandler,
+} from '@nestjs/cqrs';
+import { GoogleId, Result, User } from '@boochat/domain';
+import { UserPersistenceService } from '@boochat/persistence';
 
 export class GetUserByGoogleIdQuery implements IQuery {
-  constructor(public readonly googleId: GoogleId) { }
+  constructor(public readonly googleId: GoogleId) {}
 }
 
 export type GetUserByGoogleIdQueryResult = Result<User | undefined>;
 
 @QueryHandler(GetUserByGoogleIdQuery)
-export class GetUserByGoogleIdQueryHandler implements IQueryHandler<GetUserByGoogleIdQuery> {
-  constructor(private usersService: UserPersistenceService, private publisher: EventPublisher) { }
-  async execute(query: GetUserByGoogleIdQuery): Promise<GetUserByGoogleIdQueryResult> {
+export class GetUserByGoogleIdQueryHandler
+  implements IQueryHandler<GetUserByGoogleIdQuery>
+{
+  constructor(
+    private usersService: UserPersistenceService,
+    private publisher: EventPublisher
+  ) {}
+  async execute(
+    query: GetUserByGoogleIdQuery
+  ): Promise<GetUserByGoogleIdQueryResult> {
     const userDto = await this.usersService.findOneByGoogleId(query.googleId);
-    if (!userDto?.id) return Result.fail(`User for GoogleId: ${query.googleId} not found`);
-    const user = this.publisher.mergeObjectContext(User.create({
-      googleId: userDto.googleId,
-      name: userDto.name,
-      imageUrl: userDto.imageUrl
-    }, userDto.id));
+    if (!userDto?.id)
+      return Result.fail(`User for GoogleId: ${query.googleId} not found`);
+    const user = this.publisher.mergeObjectContext(
+      User.create(
+        {
+          googleId: userDto.googleId,
+          name: userDto.name,
+          imageUrl: userDto.imageUrl,
+        },
+        userDto.id
+      )
+    );
     return Result.success(user);
   }
-
 }

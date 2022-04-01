@@ -3,4 +3,4 @@ export * from './guard';
 export * from './valueObject';
 export * from './result';
 export * from './types';
-export * from './base-event'
+export * from './base-event';

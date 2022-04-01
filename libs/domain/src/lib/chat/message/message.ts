@@ -1,6 +1,6 @@
-import { Entity, Guard } from "../../common";
+import { Entity, Guard } from '../../common';
 import { Room } from '../room';
-import { User } from "../../user";
+import { User } from '../../user';
 import { Expose } from 'class-transformer';
 interface MessageProps {
   readonly sender: Partial<User> & Pick<User, 'id'>;
@@ -8,7 +8,7 @@ interface MessageProps {
   readonly dateSent: Date;
   readonly room: Partial<Room> & Pick<Room, 'id'>;
 }
-export class Message extends Entity<MessageProps>{
+export class Message extends Entity<MessageProps> {
   @Expose()
   get id() {
     return this._id;

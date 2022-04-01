@@ -30,7 +30,7 @@ module.exports = {
   output: {
     uniqueName: 'client',
     publicPath: 'auto',
-    scriptType: 'text/javascript'
+    scriptType: 'text/javascript',
   },
   optimization: {
     runtimeChunk: false,

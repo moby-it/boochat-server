@@ -1,6 +1,9 @@
-import { ConfigService } from "@nestjs/config";
-import { ClientProxyFactory, Transport } from "@nestjs/microservices";
-import { ROOM_EVENTS_QUEUE, MEETUP_EVENTS_QUEUE } from "./event-bus/event-bus.constants";
+import { ConfigService } from '@nestjs/config';
+import { ClientProxyFactory, Transport } from '@nestjs/microservices';
+import {
+  ROOM_EVENTS_QUEUE,
+  MEETUP_EVENTS_QUEUE,
+} from './event-bus/event-bus.constants';
 
 export const RoomEventBusProvider = {
   provide: ROOM_EVENTS_QUEUE,
@@ -13,9 +16,9 @@ export const RoomEventBusProvider = {
         urls: [eventBusUrl],
         queue: roomEventQueueName,
         queueOptions: {
-          durable: true
-        }
-      }
+          durable: true,
+        },
+      },
     });
   },
   inject: [ConfigService],
@@ -31,9 +34,9 @@ export const MeetupEventBusProvider = {
         urls: [eventBusUrl],
         queue: meetupEventQueueName,
         queueOptions: {
-          durable: true
-        }
-      }
+          durable: true,
+        },
+      },
     });
   },
   inject: [ConfigService],

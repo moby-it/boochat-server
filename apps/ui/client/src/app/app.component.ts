@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { SocialAuthService } from "angularx-social-login";
-import { Observable } from "rxjs";
+import { SocialAuthService } from 'angularx-social-login';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'boochat-root',
@@ -10,8 +10,7 @@ import { Observable } from "rxjs";
 export class AppComponent implements OnInit {
   authStateReady$!: Observable<boolean>;
 
-  constructor(private authService: SocialAuthService) {
-  }
+  constructor(private authService: SocialAuthService) {}
 
   public ngOnInit() {
     this.authStateReady$ = this.authService.initState;

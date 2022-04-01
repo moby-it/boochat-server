@@ -8,8 +8,8 @@ export abstract class EventsStoreService<T extends Document> {
   async create(dto: BaseEvent) {
     const storeEntry = new this.storeModel({
       _id: uuid(),
-      ...dto
+      ...dto,
     });
     await storeEntry.save();
   }
-};
+}

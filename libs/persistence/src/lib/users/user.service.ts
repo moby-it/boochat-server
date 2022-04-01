@@ -6,11 +6,14 @@ import { User, UserDocument } from './user.schema';
 import { v4 as uuid } from 'uuid';
 @Injectable()
 export class UserPersistenceService {
-  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) { }
+  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
   async create(createUserDto: CreateUserDto): Promise<UserDto> {
-
-    const createdUser = new this.userModel({ _id: uuid(), ...createUserDto, createdAt: new Date() });
+    const createdUser = new this.userModel({
+      _id: uuid(),
+      ...createUserDto,
+      createdAt: new Date(),
+    });
     return createdUser.save();
   }
 
@@ -24,10 +27,12 @@ export class UserPersistenceService {
     return await this.userModel.find({ googleId: { $in: googleIds } }).exec();
   }
   async findOneByGoogleId(googleId: string): Promise<UserDto | undefined> {
-    return await this.userModel.findOne({ googleId }).exec() as UserDocument;
-
+    return (await this.userModel.findOne({ googleId }).exec()) as UserDocument;
   }
   async update(id: string, userDto: UserDto): Promise<void> {
-    await this.userModel.updateOne({ _id: new Types.ObjectId(id) }, { ...userDto });
+    await this.userModel.updateOne(
+      { _id: new Types.ObjectId(id) },
+      { ...userDto }
+    );
   }
 }

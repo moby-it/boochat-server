@@ -1,4 +1,4 @@
-import { BaseEvent } from "../../common";
+import { BaseEvent } from '../../common';
 
 export interface CreateMessageEvent extends BaseEvent {
   senderId: string;

@@ -1,4 +1,4 @@
-import { Server } from "socket.io";
+import { Server } from 'socket.io';
 
 export class WsServer {
   private static _instance: Server;

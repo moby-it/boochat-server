@@ -4,9 +4,10 @@ Wanting to learn more about WebSockets, CQRS and Event Driven architectures, I t
 
 The project uses https://nx.dev/, https://nestjs.com/ with https://www.mongodb.com/ and https://angular.io/ .
 
-
 # TODO
+
 ## CQRS, Event Sourcing Logic
+
 1. Web Api is essentialy the way the FE creates commands.
 2. Command Handlers contain business logic and raise events.
 3. Event handlers write to store.

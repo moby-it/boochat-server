@@ -10,20 +10,14 @@ import { RoomsGateway } from './rooms';
 
 const Gateways = [ActiveUsersGateway, MessageGateway, RoomsGateway];
 
-
 @Module({
   controllers: [AuthController],
   imports: [
-    ConfigModule.forRoot({
-      isGlobal: true
-    }),
+    ConfigModule.forRoot({ isGlobal: true }),
     CqrsModule,
     ApplicationModule,
     PersistenceModule,
   ],
-  providers: [
-    ...Gateways,
-  ],
+  providers: [...Gateways],
 })
-export class AppModule {
-}
+export class AppModule {}

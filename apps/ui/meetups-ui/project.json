@@ -6,9 +6,7 @@
   "targets": {
     "build": {
       "executor": "@nrwl/angular:webpack-browser",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/apps/ui/meetups-ui",
         "index": "apps/ui/meetups-ui/src/index.html",
@@ -19,9 +17,7 @@
           "apps/ui/meetups-ui/src/favicon.ico",
           "apps/ui/meetups-ui/src/assets"
         ],
-        "styles": [
-          "apps/ui/meetups-ui/src/styles.css"
-        ],
+        "styles": ["apps/ui/meetups-ui/src/styles.css"],
         "scripts": [],
         "customWebpackConfig": {
           "path": "apps/ui/meetups-ui/webpack.config.js"
@@ -96,16 +92,12 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": [
-        "coverage/apps/meetups-ui"
-      ],
+      "outputs": ["coverage/apps/meetups-ui"],
       "options": {
         "jestConfig": "apps/ui/meetups-ui/jest.config.js",
         "passWithNoTests": true
       }
     }
   },
-  "tags": [
-    "app"
-  ]
+  "tags": ["app"]
 }

@@ -1,22 +1,28 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { Router } from "@angular/router";
-import { GoogleLoginProvider, SocialAuthService, SocialUser } from "angularx-social-login";
+import { Router } from '@angular/router';
+import {
+  GoogleLoginProvider,
+  SocialAuthService,
+  SocialUser,
+} from 'angularx-social-login';
 
 @Component({
   selector: 'boochat-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
-  encapsulation: ViewEncapsulation.Emulated
+  encapsulation: ViewEncapsulation.Emulated,
 })
 export class HeaderComponent implements OnInit {
   socialUser: SocialUser | undefined;
   isLoggedIn = false;
 
-  constructor(private socialAuthService: SocialAuthService, private router: Router) {
-  }
+  constructor(
+    private socialAuthService: SocialAuthService,
+    private router: Router
+  ) {}
 
   public ngOnInit() {
-    this.socialAuthService.authState.subscribe(user => {
+    this.socialAuthService.authState.subscribe((user) => {
       console.log(user);
       if (user) {
         this.socialUser = user;

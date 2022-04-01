@@ -27,11 +27,11 @@ sharedMappings.register(
 );
 
 module.exports = {
-  mode:"development",
+  mode: 'development',
   output: {
     uniqueName: 'chat',
     publicPath: 'auto',
-    scriptType: 'text/javascript'
+    scriptType: 'text/javascript',
   },
   optimization: {
     runtimeChunk: false,
@@ -83,7 +83,7 @@ module.exports = {
           includeSecondaries: true,
         },
         ...sharedMappings.getDescriptors(),
-      })
+      }),
     }),
     sharedMappings.getPlugin(),
   ],

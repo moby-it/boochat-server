@@ -1,5 +1,4 @@
-import { shallowEqual } from "shallow-equal-object";
-
+import { shallowEqual } from 'shallow-equal-object';
 
 /**
  * @desc ValueObjects are objects that we determine their

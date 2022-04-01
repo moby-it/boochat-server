@@ -1,13 +1,12 @@
-import { AggregateRoot } from "@nestjs/cqrs";
+import { AggregateRoot } from '@nestjs/cqrs';
 
-
-const isEntity = (v: unknown): v is Entity<unknown> | AggregateRootEntity<unknown> => {
+const isEntity = (
+  v: unknown
+): v is Entity<unknown> | AggregateRootEntity<unknown> => {
   return v instanceof Entity || v instanceof AggregateRootEntity;
 };
 export abstract class Entity<T> {
-  constructor(protected _props: T, protected readonly _id: string) {
-
-  }
+  constructor(protected _props: T, protected readonly _id: string) {}
   public equals(object?: Entity<T>): boolean {
     if (object == null || object == undefined) {
       return false;

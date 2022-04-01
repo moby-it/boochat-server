@@ -1,5 +1,5 @@
-import { environment as environmentBase } from "./environment.base";
+import { environment as environmentBase } from './environment.base';
 
 export const environment = {
-  ...environmentBase
+  ...environmentBase,
 };

@@ -4,6 +4,4 @@ export interface UserDto {
   name: string;
   imageUrl: string;
 }
-export interface CreateUserDto extends UserDto {
-
-}
+export interface CreateUserDto extends UserDto {}

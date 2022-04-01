@@ -5,16 +5,12 @@
   "targets": {
     "build": {
       "executor": "@nrwl/node:build",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/apps/web-api",
         "main": "apps/web-api/src/main.ts",
         "tsConfig": "apps/web-api/tsconfig.app.json",
-        "assets": [
-          "apps/web-api/src/assets"
-        ]
+        "assets": ["apps/web-api/src/assets"]
       },
       "configurations": {
         "production": {
@@ -49,27 +45,19 @@
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": [
-        "{options.outputFile}"
-      ],
+      "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": [
-          "apps/web-api/**/*.ts"
-        ]
+        "lintFilePatterns": ["apps/web-api/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": [
-        "coverage/apps/web-api"
-      ],
+      "outputs": ["coverage/apps/web-api"],
       "options": {
         "jestConfig": "apps/web-api/jest.config.js",
         "passWithNoTests": true
       }
     }
   },
-  "tags": [
-    "type:application"
-  ]
+  "tags": ["type:application"]
 }

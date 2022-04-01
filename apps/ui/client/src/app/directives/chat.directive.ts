@@ -4,5 +4,5 @@ import { Directive, ViewContainerRef } from '@angular/core';
   selector: '[boochatChat]',
 })
 export class ChatDirective {
-  constructor(public viewContainerRef: ViewContainerRef) { }
+  constructor(public viewContainerRef: ViewContainerRef) {}
 }

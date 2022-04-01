@@ -6,14 +6,14 @@ import { AppModule } from './app/app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const port = process.env.PORT || 3333;
-  app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector), {
-    excludePrefixes: ["_"]
-  }));
+  app.useGlobalInterceptors(
+    new ClassSerializerInterceptor(app.get(Reflector), {
+      excludePrefixes: ['_'],
+    })
+  );
 
   await app.listen(port);
-  Logger.log(
-    `🚀 Web Api is running on: http://localhost:${port}`
-  );
+  Logger.log(`🚀 Web Api is running on: http://localhost:${port}`);
 }
 
 bootstrap();

@@ -1,5 +1,3 @@
-import { CreateRoomEventHandler } from "./create-room.event-handler";
+import { CreateRoomEventHandler } from './create-room.event-handler';
 
-export const RoomEventHandlers = [
-  CreateRoomEventHandler
-];
+export const RoomEventHandlers = [CreateRoomEventHandler];
