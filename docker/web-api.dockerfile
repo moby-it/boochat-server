@@ -1,6 +1,6 @@
-FROM boochat.azurecr.io/boochat-dependencies:latest
+FROM boochat.azurecr.io/dependencies:latest
+WORKDIR /usr/src/app
 COPY . .
 RUN npm run build web-api
-WORKDIR /dist/apps/web-api
 EXPOSE 3333
-CMD ["node", "main.js"]
+CMD ["node", "dist/apps/web-api/main.js"]

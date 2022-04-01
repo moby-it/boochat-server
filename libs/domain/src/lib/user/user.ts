@@ -1,3 +1,4 @@
+import { SerializeOptions } from '@nestjs/common';
 import { Expose } from 'class-transformer';
 import { Socket } from 'socket.io';
 import { AggregateRootEntity, Guard, RoomId, UserId } from "../common";
@@ -7,6 +8,9 @@ interface UserProps {
   googleId: string;
   imageUrl: string;
 }
+@SerializeOptions({
+  excludePrefixes: ['_']
+})
 export class User extends AggregateRootEntity<UserProps> {
 
 
@@ -23,6 +27,10 @@ export class User extends AggregateRootEntity<UserProps> {
   @Expose()
   get name() {
     return this._props.name;
+  }
+  @Expose()
+  get imageUrl() {
+    return this._props.imageUrl;
   }
   private constructor(props: UserProps, _id: string) {
     super(props, _id);

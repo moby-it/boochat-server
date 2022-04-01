@@ -1,4 +1,3 @@
-
 services:
   rabbitmq:
     image: rabbitmq:3-management
@@ -20,6 +19,8 @@ services:
     build:
       context: .
       dockerfile: docker/web-api.dockerfile
+    env_file:
+      - .env
     container_name: web-api
     ports:
       - 3333:3333

@@ -3,7 +3,7 @@ import { Document } from 'mongoose';
 import { MongoEntity } from "../common";
 export type UserDocument = User & Document;
 
-@Schema({ timestamps: true })
+@Schema()
 export class User extends MongoEntity {
   @Prop({ required: true })
   googleId!: string;

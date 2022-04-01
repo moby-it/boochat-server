@@ -3,13 +3,14 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { CreateUserDto, UserDto } from './user.dto';
 import { User, UserDocument } from './user.schema';
+import { v4 as uuid } from 'uuid';
 @Injectable()
 export class UserPersistenceService {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) { }
 
   async create(createUserDto: CreateUserDto): Promise<UserDto> {
 
-    const createdUser = new this.userModel({ _id: new Types.ObjectId(), ...createUserDto });
+    const createdUser = new this.userModel({ _id: uuid(), ...createUserDto, createdAt: new Date() });
     return createdUser.save();
   }
 

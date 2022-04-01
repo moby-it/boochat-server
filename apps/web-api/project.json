@@ -5,22 +5,31 @@
   "targets": {
     "build": {
       "executor": "@nrwl/node:build",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/apps/web-api",
         "main": "apps/web-api/src/main.ts",
         "tsConfig": "apps/web-api/tsconfig.app.json",
-        "assets": ["apps/web-api/src/assets"]
+        "assets": [
+          "apps/web-api/src/assets"
+        ]
       },
       "configurations": {
         "production": {
           "optimization": true,
           "extractLicenses": true,
+          "inspect": false
+        },
+        "development": {
+          "optimization": true,
+          "extractLicenses": true,
           "inspect": false,
           "fileReplacements": [
             {
-              "replace": "apps/web-api/src/environments/environment.ts",
-              "with": "apps/web-api/src/environments/environment.prod.ts"
+              "replace": ".env",
+              "with": ".local.env"
             }
           ]
         }
@@ -30,18 +39,30 @@
       "executor": "@nrwl/node:execute",
       "options": {
         "buildTarget": "web-api:build"
-      }
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "web-api:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
+      "outputs": [
+        "{options.outputFile}"
+      ],
       "options": {
-        "lintFilePatterns": ["apps/web-api/**/*.ts"]
+        "lintFilePatterns": [
+          "apps/web-api/**/*.ts"
+        ]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/web-api"],
+      "outputs": [
+        "coverage/apps/web-api"
+      ],
       "options": {
         "jestConfig": "apps/web-api/jest.config.js",
         "passWithNoTests": true

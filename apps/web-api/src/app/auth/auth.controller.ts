@@ -1,6 +1,6 @@
-import { BadRequestException, Body, Controller, InternalServerErrorException, Param, Post, Put } from '@nestjs/common';
 import { User } from '@boochat/domain';
 import { UserDto, UserPersistenceService } from '@boochat/persistence';
+import { BadRequestException, Body, Controller, InternalServerErrorException, Param, Post, Put } from '@nestjs/common';
 
 @Controller('auth')
 export class AuthController {

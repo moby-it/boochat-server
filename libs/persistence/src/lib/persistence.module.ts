@@ -12,10 +12,14 @@ import { UserPersistenceModule, UserPersistenceService } from './users';
     RoomsEventStoreModule,
     MeetupEventStoreModule,
     MongooseModule.forRootAsync({
-      useFactory: (config: ConfigService) => ({
-        uri: config.get('DBSERVER_URL'),
-        dbName: 'Boochat'
-      }),
+      useFactory: (config: ConfigService) => {
+        const dbServerUrl = config.get('DBSERVER_URL');
+        if (!dbServerUrl) throw new Error('Cannot start the app. No server Url Provided.');
+        return {
+          uri: dbServerUrl,
+          dbName: 'Boochat'
+        };
+      },
       inject: [ConfigService]
     }),
   ],
