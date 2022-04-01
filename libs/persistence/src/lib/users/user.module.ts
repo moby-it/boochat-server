@@ -1,11 +1,14 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { User, UserSchema } from './user.schema';
+import { SHARED_DB_CONNECTION_NAME } from '../common';
+import { User, UserSchema, USERS_COLLECTION_NAME } from './user.schema';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
-  ],
-  exports: [MongooseModule],
+    MongooseModule.forFeature(
+      [{ name: User.name, schema: UserSchema, collection: USERS_COLLECTION_NAME }],
+      SHARED_DB_CONNECTION_NAME
+    )
+  ]
 })
 export class UserPersistenceModule {}

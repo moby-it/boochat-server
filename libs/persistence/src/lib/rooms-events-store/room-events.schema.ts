@@ -8,4 +8,4 @@ export class RoomEvent extends BaseEvent {}
 
 export const RoomEventSchema = SchemaFactory.createForClass(RoomEvent);
 
-export const ROOM_EVENTS_COLLECTION_NAME = 'RoomsEventStore';
+export const ROOM_EVENTS_COLLECTION_NAME = 'RoomEventsStore';

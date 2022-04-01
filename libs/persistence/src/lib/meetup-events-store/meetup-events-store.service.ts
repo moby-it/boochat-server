@@ -1,18 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { InjectConnection } from '@nestjs/mongoose';
+import { Connection } from 'mongoose';
+import { EVENTS_STORE_DB_CONNECTION_NAME } from '../common';
 import { EventsStoreService } from '../common/events-store.service';
-import {
-  MeetupEventDocument,
-  MEETUP_EVENTS_COLLECTION_NAME,
-} from './meetup-events.schema';
+import { MeetupEvent, MeetupEventDocument } from './meetup-events.schema';
 
 @Injectable()
 export class MeetupEventStoreService extends EventsStoreService<MeetupEventDocument> {
-  constructor(
-    @InjectModel(MEETUP_EVENTS_COLLECTION_NAME)
-    protected override storeModel: Model<MeetupEventDocument>
-  ) {
-    super();
+  constructor(@InjectConnection(EVENTS_STORE_DB_CONNECTION_NAME) connection: Connection) {
+    super(connection, MeetupEvent.name);
   }
 }

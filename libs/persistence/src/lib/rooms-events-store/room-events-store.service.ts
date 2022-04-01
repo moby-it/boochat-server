@@ -1,18 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { InjectConnection } from '@nestjs/mongoose';
+import { Connection } from 'mongoose';
+import { EVENTS_STORE_DB_CONNECTION_NAME } from '../common';
 import { EventsStoreService } from '../common/events-store.service';
-import {
-  RoomEventDocument,
-  ROOM_EVENTS_COLLECTION_NAME,
-} from './room-events.schema';
+import { RoomEvent, RoomEventDocument } from './room-events.schema';
 
 @Injectable()
 export class RoomEventsStoreService extends EventsStoreService<RoomEventDocument> {
-  constructor(
-    @InjectModel(ROOM_EVENTS_COLLECTION_NAME)
-    protected override storeModel: Model<RoomEventDocument>
-  ) {
-    super();
+  constructor(@InjectConnection(EVENTS_STORE_DB_CONNECTION_NAME) connection: Connection) {
+    super(connection, RoomEvent.name);
   }
 }

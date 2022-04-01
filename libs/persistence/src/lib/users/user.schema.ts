@@ -14,4 +14,4 @@ export class User extends MongoEntity {
 }
 export const UserSchema = SchemaFactory.createForClass(User);
 
-export const USERS_COLLECTION_NAME = 'USERS';
+export const USERS_COLLECTION_NAME = 'Users';

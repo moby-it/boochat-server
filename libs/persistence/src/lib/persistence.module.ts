@@ -1,28 +1,25 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
+import { EVENTS_STORE_DB_CONNECTION_NAME, SHARED_DB_CONNECTION_NAME } from './common';
 import { MeetupEventStoreModule, MeetupEventStoreService } from './meetup-events-store';
-import { RoomsEventStoreModule, RoomEventsStoreService } from './rooms-events-store';
+import { RoomEventsStoreService, RoomsEventStoreModule } from './rooms-events-store';
 import { UserPersistenceModule, UserPersistenceService } from './users';
 
 @Module({
   imports: [
     ConfigModule,
+    MongooseModule.forRoot(process.env['DBSERVER_URL'] as string, {
+      connectionName: EVENTS_STORE_DB_CONNECTION_NAME,
+      dbName: process.env['EVENTS_STORE_DB_NAME']
+    }),
+    MongooseModule.forRoot(process.env['DBSERVER_URL'] as string, {
+      connectionName: SHARED_DB_CONNECTION_NAME,
+      dbName: process.env['SHARED_DB_NAME']
+    }),
     UserPersistenceModule,
     RoomsEventStoreModule,
-    MeetupEventStoreModule,
-    MongooseModule.forRootAsync({
-      useFactory: (config: ConfigService) => {
-        const dbServerUrl = config.get<string>('DBSERVER_URL');
-        const dbName = config.get<string>('DB_NAME');
-        if (!dbServerUrl || !dbName) throw new Error('Cannot start the app. No server Url Provided.');
-        return {
-          uri: dbServerUrl,
-          dbName: dbName
-        };
-      },
-      inject: [ConfigService]
-    })
+    MeetupEventStoreModule
   ],
   providers: [UserPersistenceService, RoomEventsStoreService, MeetupEventStoreService],
   exports: [UserPersistenceService, RoomEventsStoreService, MeetupEventStoreService]
