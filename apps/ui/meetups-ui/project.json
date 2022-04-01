@@ -2,7 +2,7 @@
   "projectType": "application",
   "root": "apps/ui/meetups-ui",
   "sourceRoot": "apps/ui/meetups-ui/src",
-  "prefix": "oursocial",
+  "prefix": "boochat",
   "targets": {
     "build": {
       "executor": "@nrwl/angular:webpack-browser",

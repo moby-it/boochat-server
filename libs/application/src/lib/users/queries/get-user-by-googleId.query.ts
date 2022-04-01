@@ -1,6 +1,6 @@
 import { EventPublisher, IQuery, IQueryHandler, QueryHandler } from "@nestjs/cqrs";
-import { GoogleId, Result, User } from "@oursocial/domain";
-import { UserPersistenceService } from "@oursocial/persistence";
+import { GoogleId, Result, User } from "@boochat/domain";
+import { UserPersistenceService } from "@boochat/persistence";
 
 export class GetUserByGoogleIdQuery implements IQuery {
   constructor(public readonly googleId: GoogleId) { }

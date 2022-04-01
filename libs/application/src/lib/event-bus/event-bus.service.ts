@@ -1,6 +1,6 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { ClientRMQ } from "@nestjs/microservices";
-import { BaseEvent } from "@oursocial/domain";
+import { BaseEvent } from "@boochat/domain";
 import { MEETUPS_EVENTS_QUEUE, ROOMS_EVENTS_QUEUE } from "./event-bus.constants";
 
 @Injectable()

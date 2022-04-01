@@ -1,7 +1,7 @@
 import { QueryBus } from "@nestjs/cqrs";
 import { MessageBody, SubscribeMessage, WebSocketGateway } from "@nestjs/websockets";
-import { GetUserByIdQuery, GetUserByIdQueryResult } from "@oursocial/application";
-import { User, UserId, CreateMessageEvent } from "@oursocial/domain";
+import { GetUserByIdQuery, GetUserByIdQueryResult } from "@boochat/application";
+import { User, UserId, CreateMessageEvent } from "@boochat/domain";
 
 @WebSocketGateway({
   cors: {

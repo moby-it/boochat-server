@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'oursocial-root',
+  selector: 'boochat-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })

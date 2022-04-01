@@ -15,5 +15,5 @@ The project uses https://nx.dev/, https://nestjs.com/ with https://www.mongodb.c
 ### Docker notes
 
 Build dependencies
-docker build . -f docker/oursocial-dependencies.dockerfile -t oursocial.azurecr.io/oursocial-dependencies:latest
-docker push oursocial.azurecr.io/oursocial-dependencies:latest
+docker build . -f docker/boochat-dependencies.dockerfile -t boochat.azurecr.io/boochat-dependencies:latest
+docker push boochat.azurecr.io/boochat-dependencies:latest

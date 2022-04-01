@@ -3,7 +3,7 @@ import { Router } from "@angular/router";
 import { GoogleLoginProvider, SocialAuthService, SocialUser } from "angularx-social-login";
 
 @Component({
-  selector: 'oursocial-header',
+  selector: 'boochat-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
   encapsulation: ViewEncapsulation.Emulated

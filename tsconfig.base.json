@@ -16,9 +16,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@oursocial/application": ["libs/application/src/index.ts"],
-      "@oursocial/domain": ["libs/domain/src/index.ts"],
-      "@oursocial/persistence": ["libs/persistence/src/index.ts"]
+      "@boochat/application": ["libs/application/src/index.ts"],
+      "@boochat/domain": ["libs/domain/src/index.ts"],
+      "@boochat/persistence": ["libs/persistence/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

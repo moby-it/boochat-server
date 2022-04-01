@@ -1,6 +1,6 @@
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { OnGatewayConnection, OnGatewayDisconnect, WebSocketGateway, WebSocketServer } from "@nestjs/websockets";
-import { GetUserByGoogleIdQuery, GetUserByGoogleIdQueryResult, WsServer } from '@oursocial/application';
+import { GetUserByGoogleIdQuery, GetUserByGoogleIdQueryResult, WsServer } from '@boochat/application';
 import { Server, Socket } from 'socket.io';
 @WebSocketGateway({
   cors: {

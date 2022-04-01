@@ -1,6 +1,6 @@
 import { EventPublisher, IQuery, IQueryHandler, QueryHandler } from "@nestjs/cqrs";
-import { Result, User, UserId } from "@oursocial/domain";
-import { UserPersistenceService } from "@oursocial/persistence";
+import { Result, User, UserId } from "@boochat/domain";
+import { UserPersistenceService } from "@boochat/persistence";
 
 export class GetUserByIdQuery implements IQuery {
   constructor(public readonly userId: UserId) { }

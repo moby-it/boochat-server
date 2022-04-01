@@ -19,7 +19,7 @@
           "error",
           {
             "type": "attribute",
-            "prefix": "oursocial",
+            "prefix": "boochat",
             "style": "camelCase"
           }
         ],
@@ -27,7 +27,7 @@
           "error",
           {
             "type": "element",
-            "prefix": "oursocial",
+            "prefix": "boochat",
             "style": "kebab-case"
           }
         ]

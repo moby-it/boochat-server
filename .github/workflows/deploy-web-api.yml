@@ -18,10 +18,10 @@ jobs:
 
       - uses: azure/docker-login@v1
         with:
-          login-server: oursocial.azurecr.io
+          login-server: boochat.azurecr.io
           username: ${{ secrets.ACR_USERNAME }}
           password: ${{ secrets.ACR_PASSWORD }}
 
       - run: |
-          docker build -f docker/web-api.dockerfile . -t oursocial.azurecr.io/web-api:latest
-          docker push oursocial.azurecr.io/web-api:latest
+          docker build -f docker/web-api.dockerfile . -t boochat.azurecr.io/web-api:latest
+          docker push boochat.azurecr.io/web-api:latest

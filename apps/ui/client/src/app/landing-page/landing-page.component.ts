@@ -5,7 +5,7 @@ import { environment } from "../../environments/environment";
 import { ChatDirective, MeetupsDirective } from "../directives";
 
 @Component({
-  selector: 'oursocial-landing-page',
+  selector: 'boochat-landing-page',
   templateUrl: './landing-page.component.html',
   styleUrls: ['./landing-page.component.css'],
   encapsulation: ViewEncapsulation.Emulated

@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { CqrsModule } from '@nestjs/cqrs';
-import { PersistenceModule } from '@oursocial/persistence';
+import { PersistenceModule } from '@boochat/persistence';
 import { MeetupEventBusProvider, RoomEventBusProvider } from './event-bus.providers';
 import { EventBusService } from './event-bus/event-bus.service';
 import { RoomEventHandlers } from './rooms/event-handlers';

@@ -1,7 +1,7 @@
 import { QueryBus } from "@nestjs/cqrs";
 import { MessageBody, OnGatewayDisconnect, SubscribeMessage, WebSocketGateway, WebSocketServer, WsException } from "@nestjs/websockets";
-import { GetUserByIdQuery, GetUserByIdQueryResult } from "@oursocial/application";
-import { CreateRoomEventDto, User, UserId } from "@oursocial/domain";
+import { GetUserByIdQuery, GetUserByIdQueryResult } from "@boochat/application";
+import { CreateRoomEventDto, User, UserId } from "@boochat/domain";
 import { Server, Socket } from "socket.io";
 @WebSocketGateway({
   cors: {

@@ -3,7 +3,7 @@ import { SocialAuthService } from "angularx-social-login";
 import { Observable } from "rxjs";
 
 @Component({
-  selector: 'oursocial-root',
+  selector: 'boochat-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })

@@ -2,7 +2,7 @@
   "projectType": "application",
   "root": "apps/ui/chat-ui",
   "sourceRoot": "apps/ui/chat-ui/src",
-  "prefix": "oursocial",
+  "prefix": "boochat",
   "targets": {
     "build": {
       "executor": "@nrwl/angular:webpack-browser",
