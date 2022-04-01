@@ -1,6 +1,11 @@
-import { IEvent } from '@nestjs/cqrs';
-import { RoomId, UserId } from '../../common';
+import { RoomEventEnum } from '../../chat';
+import { BaseEvent, RoomId, UserId } from '../../common';
 
-export class LeaveRoomEvent implements IEvent {
-  constructor(public readonly roomId: RoomId, public readonly userId: UserId) {}
+export class LeaveRoomEvent implements BaseEvent {
+  type: number;
+  createdAt: Date;
+  constructor(public readonly userId: UserId, public readonly roomId: RoomId) {
+    this.type = RoomEventEnum.USER_LEFT_ROOM;
+    this.createdAt = new Date();
+  }
 }

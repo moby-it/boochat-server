@@ -6,8 +6,8 @@ import {
   CreateRoomEvent,
   InviteUserToRoomEvent,
   LeaveRoomEvent,
-  LogVisitEvent,
-  SendMessageEvent,
+  UserClosedRoomEvent,
+  MessageSentEvent,
   UserConnectedEvent,
   UserDisconnectedEvent,
 } from './events';
@@ -42,36 +42,29 @@ export class User extends AggregateRootEntity<UserProps> {
     super(props, _id);
   }
   public static create(props: UserProps, _id: string) {
-    Guard.AgainstNullOrUndefined([
-      { propName: 'googleId', value: props.googleId },
-    ]);
+    Guard.AgainstNullOrUndefined([{ propName: 'googleId', value: props.googleId }]);
     return new User(props, _id);
   }
-  cameOnline(user: User, socket: Socket) {
-    this.apply(new UserConnectedEvent(user, socket));
+  cameOnline(user: User) {
+    this.apply(new UserConnectedEvent(user));
   }
-  cameOffline(user: User, socket: Socket) {
-    this.apply(new UserDisconnectedEvent(user, socket));
+  cameOffline(user: User) {
+    this.apply(new UserDisconnectedEvent(user));
   }
-  sendsMessage(
-    content: string,
-    senderId: string,
-    roomId: RoomId,
-    timestamp: Date
-  ) {
-    this.apply(new SendMessageEvent(content, senderId, roomId, timestamp));
+  sendsMessage(content: string, senderId: string, roomId: RoomId, timestamp: Date) {
+    this.apply(new MessageSentEvent(content, senderId, roomId, timestamp));
   }
   createRoom(roomName: string, userIds: string[]) {
     this.apply(new CreateRoomEvent(this.id, roomName, userIds));
   }
-  inviteUserToRoom(userId: UserId, roomId: RoomId) {
-    this.apply(new InviteUserToRoomEvent(userId, roomId));
+  inviteUserToRoom(inviteeId: UserId, roomId: RoomId) {
+    this.apply(new InviteUserToRoomEvent(this.id, inviteeId, roomId));
   }
   leaveRoom(roomId: RoomId) {
-    this.apply(new LeaveRoomEvent(roomId, this.id));
+    this.apply(new LeaveRoomEvent(this.id, roomId));
   }
-  logRoomVisit(roomId: RoomId, userId: UserId, timestamp: Date) {
-    this.apply(new LogVisitEvent(roomId, userId, timestamp));
+  closedRoom(userId: UserId, roomId: RoomId, timestamp: Date) {
+    this.apply(new UserClosedRoomEvent(userId, roomId, timestamp));
   }
   // createsEvent(){
 

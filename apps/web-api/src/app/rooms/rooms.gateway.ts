@@ -25,7 +25,7 @@ export class RoomsGateway implements OnGatewayDisconnect {
       const { roomId, userId } = lastVisitedRoom;
       const user = await this.getUser(userId);
       if (user) {
-        user.logRoomVisit(roomId, userId, new Date());
+        user.closedRoom(userId, roomId, new Date());
         user.commit();
         return;
       }
@@ -34,10 +34,7 @@ export class RoomsGateway implements OnGatewayDisconnect {
     console.warn('Failed to log last room visit');
   }
   @SubscribeMessage('addUserToRoom')
-  async addUserToRoom(
-    @MessageBody('userId') userId: string,
-    @MessageBody('roomId') roomId: string
-  ): Promise<void> {
+  async addUserToRoom(@MessageBody('userId') userId: string, @MessageBody('roomId') roomId: string): Promise<void> {
     const user = await this.getUser(userId);
     if (user) {
       user.inviteUserToRoom(userId, roomId);
@@ -45,10 +42,7 @@ export class RoomsGateway implements OnGatewayDisconnect {
     }
   }
   @SubscribeMessage('removeUserFromRoom')
-  async removeUserFromRoom(
-    @MessageBody('userId') userId: string,
-    @MessageBody('roomId') roomId: string
-  ) {
+  async removeUserFromRoom(@MessageBody('userId') userId: string, @MessageBody('roomId') roomId: string) {
     const user = await this.getUser(userId);
     if (user) {
       user.leaveRoom(roomId);
@@ -56,35 +50,25 @@ export class RoomsGateway implements OnGatewayDisconnect {
     }
   }
   @SubscribeMessage('userClosedRoom')
-  async userClosedRoom(
-    @MessageBody('roomId') roomId: string,
-    @MessageBody('userId') userId: string
-  ) {
+  async userClosedRoom(@MessageBody('roomId') roomId: string, @MessageBody('userId') userId: string) {
     const user = await this.getUser(userId);
     if (user) {
-      user.logRoomVisit(roomId, userId, new Date());
+      user.closedRoom(userId, roomId, new Date());
       user.commit();
     }
   }
   @SubscribeMessage('createRoom')
-  async createRoom(
-    @MessageBody() createCreateRoomEventDto: CreateRoomEventDto
-  ): Promise<void> {
+  async createRoom(@MessageBody() createCreateRoomEventDto: CreateRoomEventDto): Promise<void> {
     const user = await this.getUser(createCreateRoomEventDto.userId);
     if (user) {
-      user.createRoom(
-        createCreateRoomEventDto.roomName,
-        createCreateRoomEventDto.userIds
-      );
+      user.createRoom(createCreateRoomEventDto.roomName, createCreateRoomEventDto.userIds);
       user.commit();
     } else {
       throw new WsException('Cannot create Room. User does not exists');
     }
   }
   private async getUser(userId: UserId): Promise<User | undefined> {
-    const result = (await this.queryBus.execute(
-      new GetUserByIdQuery(userId)
-    )) as GetUserByIdQueryResult;
+    const result = (await this.queryBus.execute(new GetUserByIdQuery(userId))) as GetUserByIdQueryResult;
     if (result.failed) console.error(result.error);
     return result.props;
   }

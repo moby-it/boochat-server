@@ -1,4 +1,4 @@
-import { BaseEvent } from '@boochat/domain';
+import { BaseEvent, MeetupEventEnum, RoomEventEnum } from '@boochat/domain';
 import { Inject, Injectable } from '@nestjs/common';
 import { ClientRMQ } from '@nestjs/microservices';
 import { firstValueFrom } from 'rxjs';
@@ -10,10 +10,10 @@ export class EventBusService {
     @Inject(ROOM_EVENTS_QUEUE) private roomClient: ClientRMQ,
     @Inject(MEETUP_EVENTS_QUEUE) private meetupClient: ClientRMQ
   ) {}
-  async sendRoomEvent(event: BaseEvent) {
-    await firstValueFrom(this.roomClient.emit(event.name, event));
+  async emitRoomEvent(event: BaseEvent) {
+    await firstValueFrom(this.roomClient.emit(RoomEventEnum[event.type], event));
   }
-  async sendMeetupEvent(event: BaseEvent) {
-    await firstValueFrom(this.meetupClient.emit(event.name, event));
+  async emitMeetupEvent(event: BaseEvent) {
+    await firstValueFrom(this.meetupClient.emit(MeetupEventEnum[event.type], event));
   }
 }

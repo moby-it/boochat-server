@@ -1,9 +1,8 @@
 import { RoomEventEnum } from '../../chat';
 import { BaseEvent, RoomId, UserId } from '../../common';
 
-export class SendMessageEvent implements BaseEvent {
+export class MessageSentEvent implements BaseEvent {
   type: number;
-  name: string;
   userId: string;
   createdAt: Date;
   constructor(
@@ -13,7 +12,6 @@ export class SendMessageEvent implements BaseEvent {
     public readonly timestamp: Date
   ) {
     this.type = RoomEventEnum.USER_SENT_MESSAGE;
-    this.name = RoomEventEnum[RoomEventEnum.USER_SENT_MESSAGE];
     this.userId = senderId;
     this.createdAt = timestamp;
   }

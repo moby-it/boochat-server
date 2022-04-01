@@ -8,10 +8,10 @@ The project uses https://nx.dev/, https://nestjs.com/ with https://www.mongodb.c
 
 ## CQRS, Event Sourcing Logic
 
-1. Web Api is essentialy the way the FE creates commands.
-2. Command Handlers contain business logic and raise events.
-3. Event handlers write to store.
-4. There should be a base event handlers that writes to db and after that emits to rmq
+1. Transfer Users Collection to SharedDB.
+2. Create application_events queue in rmq
+3. Create adapter
+4. Consider either creating application events store
 
 ### Docker notes
 

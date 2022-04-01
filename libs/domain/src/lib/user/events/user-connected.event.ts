@@ -1,7 +1,13 @@
-import { IEvent } from '@nestjs/cqrs';
-import { Socket } from 'socket.io';
+import { BaseEvent } from '../../common';
 import { User } from '../user';
 
-export class UserConnectedEvent implements IEvent {
-  constructor(public readonly user: User, public readonly socket: Socket) {}
+export class UserConnectedEvent implements BaseEvent {
+  type: number;
+  userId: string;
+  createdAt: Date;
+  constructor(public readonly user: User) {
+    this.type = 66;
+    this.userId = user.id;
+    this.createdAt = new Date();
+  }
 }
