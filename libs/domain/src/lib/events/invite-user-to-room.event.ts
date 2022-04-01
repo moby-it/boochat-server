@@ -1,5 +1,5 @@
-import { RoomEventEnum } from '../../chat';
-import { BaseEvent, RoomId, UserId } from '../../common';
+import { RoomEventEnum } from '../room';
+import { BaseEvent, RoomId, UserId } from '../common';
 
 export class InviteUserToRoomEvent implements BaseEvent {
   type: number;

@@ -5,3 +5,6 @@ export * from './create-room.event';
 export * from './invite-user-to-room.event';
 export * from './leaves-room.event';
 export * from './user-closed-room.event';
+export * from './create-meetup.event';
+export * from './user-changed-rsvp.event';
+export * from './user-created-poll.event';

@@ -1,7 +1,7 @@
-import { Entity, Guard } from '../../common';
 import { Message } from '../message';
-import { User } from '../../user';
 import { Expose } from 'class-transformer';
+import { Entity, Guard } from '../common';
+import { User } from '../user';
 interface RoomProps {
   name: string;
   users: Partial<User>[] & Pick<User, 'id'>[];

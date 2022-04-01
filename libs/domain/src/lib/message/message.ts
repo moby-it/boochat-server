@@ -1,6 +1,6 @@
-import { Entity, Guard } from '../../common';
+import { Entity, Guard } from '../common';
 import { Room } from '../room';
-import { User } from '../../user';
+import { User } from '../user';
 import { Expose } from 'class-transformer';
 interface MessageProps {
   readonly sender: Partial<User> & Pick<User, 'id'>;
@@ -40,7 +40,7 @@ export class Message extends Entity<MessageProps> {
     Guard.AgainstNullOrUndefined([
       { propName: 'sender.id', value: props.sender.id },
       { propName: 'content', value: props.content },
-      { propName: 'room.id', value: props.room.id },
+      { propName: 'room.id', value: props.room.id }
     ]);
     return new Message({ ...props }, id);
   }

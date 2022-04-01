@@ -1,23 +1,22 @@
 import { SerializeOptions } from '@nestjs/common';
 import { Expose } from 'class-transformer';
-import { Socket } from 'socket.io';
 import { AggregateRootEntity, Guard, RoomId, UserId } from '../common';
 import {
   CreateRoomEvent,
   InviteUserToRoomEvent,
   LeaveRoomEvent,
-  UserClosedRoomEvent,
   MessageSentEvent,
+  UserClosedRoomEvent,
   UserConnectedEvent,
-  UserDisconnectedEvent,
-} from './events';
+  UserDisconnectedEvent
+} from '../events';
 interface UserProps {
   name: string;
   googleId: string;
   imageUrl: string;
 }
 @SerializeOptions({
-  excludePrefixes: ['_'],
+  excludePrefixes: ['_']
 })
 export class User extends AggregateRootEntity<UserProps> {
   @Expose()

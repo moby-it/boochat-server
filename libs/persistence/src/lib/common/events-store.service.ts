@@ -8,10 +8,10 @@ export abstract class EventsStoreService<T extends Document> {
   constructor(connection: Connection, modelName: string) {
     this.storeModel = connection.model(modelName);
   }
-  async create(dto: BaseEvent) {
+  async create(event: BaseEvent) {
     const storeEntry = new this.storeModel({
       _id: uuid(),
-      ...dto
+      ...event
     });
     await storeEntry.save();
   }

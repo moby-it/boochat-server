@@ -1,3 +1,3 @@
 export * from './email';
 export * from './user';
-export * from './events';
+export * from '../application-events.type';

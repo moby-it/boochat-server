@@ -1,5 +1,5 @@
 import { Expose } from 'class-transformer';
-import { Room } from '../chat';
+import { Room } from '../room';
 import { AggregateRootEntity } from '../common';
 import { User } from '../user';
 interface MeetupProps {

@@ -1,9 +1,6 @@
 import { ConfigService } from '@nestjs/config';
 import { ClientProxyFactory, Transport } from '@nestjs/microservices';
-import {
-  ROOM_EVENTS_QUEUE,
-  MEETUP_EVENTS_QUEUE,
-} from './event-bus/event-bus.constants';
+import { ROOM_EVENTS_QUEUE, MEETUP_EVENTS_QUEUE, APPLICATION_EVENTS_QUEUE } from './event-bus/event-bus.constants';
 
 export const RoomEventBusProvider = {
   provide: ROOM_EVENTS_QUEUE,
@@ -16,12 +13,12 @@ export const RoomEventBusProvider = {
         urls: [eventBusUrl],
         queue: roomEventQueueName,
         queueOptions: {
-          durable: true,
-        },
-      },
+          durable: true
+        }
+      }
     });
   },
-  inject: [ConfigService],
+  inject: [ConfigService]
 };
 export const MeetupEventBusProvider = {
   provide: MEETUP_EVENTS_QUEUE,
@@ -34,10 +31,28 @@ export const MeetupEventBusProvider = {
         urls: [eventBusUrl],
         queue: meetupEventQueueName,
         queueOptions: {
-          durable: true,
-        },
-      },
+          durable: true
+        }
+      }
     });
   },
-  inject: [ConfigService],
+  inject: [ConfigService]
+};
+export const ApplicationEventBusProvider = {
+  provide: APPLICATION_EVENTS_QUEUE,
+  useFactory: (configService: ConfigService) => {
+    const applicationEventQueueName = configService.get('APPLICATION_EVENTS_QUEUE');
+    const eventBusUrl = configService.get('RABBITMQ_URL');
+    return ClientProxyFactory.create({
+      transport: Transport.RMQ,
+      options: {
+        urls: [eventBusUrl],
+        queue: applicationEventQueueName,
+        queueOptions: {
+          durable: true
+        }
+      }
+    });
+  },
+  inject: [ConfigService]
 };
