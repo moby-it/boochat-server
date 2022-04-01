@@ -1,13 +1,13 @@
-import { CreateRoomEventHandler } from './create-room.event-handler';
-import { InviteUserToRoomEventHandler } from './invite-user-to-room.event-handler';
-import { MessageSentEventHandler } from './message-sent.event-handler';
+import { UserCreatedRoomEventHandler } from './user-created-room.event-handler';
+import { UserInvitedToRoomEventHandler } from './user-invited-to-room.event-handler';
+import { UserSentMessageEventHandler } from './user-sent-message.event-handler';
 import { UserClosedRoomEventHandler } from './user-closed-room.event-handler';
 import { UserLeftRoomEventHandler } from './user-left-room.event-handler';
 
 export const RoomEventHandlers = [
-  CreateRoomEventHandler,
-  InviteUserToRoomEventHandler,
-  MessageSentEventHandler,
+  UserCreatedRoomEventHandler,
+  UserInvitedToRoomEventHandler,
+  UserSentMessageEventHandler,
   UserClosedRoomEventHandler,
   UserLeftRoomEventHandler
 ];

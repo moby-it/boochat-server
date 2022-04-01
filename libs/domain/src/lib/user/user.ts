@@ -2,10 +2,10 @@ import { SerializeOptions } from '@nestjs/common';
 import { Expose } from 'class-transformer';
 import { AggregateRootEntity, Guard, RoomId, UserId } from '../common';
 import {
-  CreateRoomEvent,
-  InviteUserToRoomEvent,
-  LeaveRoomEvent,
-  MessageSentEvent,
+  UserCreatedRoomEvent,
+  UserInvitedToRoomEvent,
+  UserLeftRoomEvent,
+  UserSentMessageEvent,
   UserClosedRoomEvent,
   UserConnectedEvent,
   UserDisconnectedEvent
@@ -51,16 +51,16 @@ export class User extends AggregateRootEntity<UserProps> {
     this.apply(new UserDisconnectedEvent(user));
   }
   sendsMessage(content: string, senderId: string, roomId: RoomId, timestamp: Date) {
-    this.apply(new MessageSentEvent(content, senderId, roomId, timestamp));
+    this.apply(new UserSentMessageEvent(content, senderId, roomId, timestamp));
   }
   createRoom(roomName: string, userIds: string[]) {
-    this.apply(new CreateRoomEvent(this.id, roomName, userIds));
+    this.apply(new UserCreatedRoomEvent(this.id, roomName, userIds));
   }
   inviteUserToRoom(inviteeId: UserId, roomId: RoomId) {
-    this.apply(new InviteUserToRoomEvent(this.id, inviteeId, roomId));
+    this.apply(new UserInvitedToRoomEvent(this.id, inviteeId, roomId));
   }
   leaveRoom(roomId: RoomId) {
-    this.apply(new LeaveRoomEvent(this.id, roomId));
+    this.apply(new UserLeftRoomEvent(this.id, roomId));
   }
   closedRoom(userId: UserId, roomId: RoomId, timestamp: Date) {
     this.apply(new UserClosedRoomEvent(userId, roomId, timestamp));

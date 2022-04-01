@@ -1,7 +1,7 @@
 import { BaseEvent } from '../common';
 import { MeetupEventEnum } from '../meetups';
 
-export class CreateMeetupEvent implements BaseEvent {
+export class UserCreatedMeetupEvent implements BaseEvent {
   type: number;
   createdAt: Date;
   organizer: string;

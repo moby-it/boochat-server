@@ -1,7 +1,7 @@
 import { RoomEventEnum } from '../room';
 import { BaseEvent, RoomId, UserId } from '../common';
 
-export class LeaveRoomEvent implements BaseEvent {
+export class UserLeftRoomEvent implements BaseEvent {
   type: number;
   createdAt: Date;
   constructor(public readonly userId: UserId, public readonly roomId: RoomId) {
