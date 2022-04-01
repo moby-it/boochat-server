@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
+import { ConfigModule } from '@nestjs/config';
 import { ApplicationModule } from '@oursocial/application';
 import { PersistenceModule } from '@oursocial/persistence';
 import { ActiveUsersGateway } from './active-users';
@@ -13,6 +14,9 @@ const Gateways = [ActiveUsersGateway, MessageGateway, RoomsGateway];
 @Module({
   controllers: [AuthController],
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true
+    }),
     CqrsModule,
     ApplicationModule,
     PersistenceModule,

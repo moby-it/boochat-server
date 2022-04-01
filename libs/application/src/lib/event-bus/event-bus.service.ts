@@ -13,6 +13,6 @@ export class EventBusService {
     this.roomClient.emit(event.name, event);
   }
   sendMeetupEvent(event: BaseEvent) {
-    this.roomClient.emit(event.name, event);
+    this.meetupClient.emit(event.name, event);
   }
 }

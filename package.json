@@ -78,6 +78,8 @@
     "@nestjs/websockets": "^8.2.6",
     "@ngrx/component": "^13.0.2",
     "@types/cache-manager": "^3.4.2",
+    "amqp-connection-manager": "^4.1.1",
+    "amqplib": "^0.8.0",
     "angularx-social-login": "^4.0.1",
     "cache-manager": "^3.6.0",
     "cache-manager-redis-store": "^2.0.0",
