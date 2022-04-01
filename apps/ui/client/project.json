@@ -18,7 +18,8 @@
         "scripts": [],
         "customWebpackConfig": {
           "path": "apps/client/webpack.config.js"
-        }
+        },
+        "buildLibsFromSource": false
       },
       "configurations": {
         "production": {

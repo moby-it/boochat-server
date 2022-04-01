@@ -18,7 +18,8 @@
         "scripts": [],
         "customWebpackConfig": {
           "path": "apps/ui/meetups-ui/webpack.config.js"
-        }
+        },
+        "buildLibsFromSource": false
       },
       "configurations": {
         "production": {

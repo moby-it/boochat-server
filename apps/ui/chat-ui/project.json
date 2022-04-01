@@ -18,7 +18,8 @@
         "scripts": [],
         "customWebpackConfig": {
           "path": "apps/ui/chat-ui/webpack.config.js"
-        }
+        },
+        "buildLibsFromSource": false
       },
       "configurations": {
         "production": {
