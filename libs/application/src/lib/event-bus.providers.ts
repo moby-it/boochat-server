@@ -11,10 +11,7 @@ export const RoomEventBusProvider = {
       transport: Transport.RMQ,
       options: {
         urls: [eventBusUrl],
-        queue: roomEventQueueName,
-        queueOptions: {
-          durable: true
-        }
+        queue: roomEventQueueName
       }
     });
   },
@@ -29,10 +26,7 @@ export const MeetupEventBusProvider = {
       transport: Transport.RMQ,
       options: {
         urls: [eventBusUrl],
-        queue: meetupEventQueueName,
-        queueOptions: {
-          durable: true
-        }
+        queue: meetupEventQueueName
       }
     });
   },
@@ -47,10 +41,7 @@ export const ApplicationEventBusProvider = {
       transport: Transport.RMQ,
       options: {
         urls: [eventBusUrl],
-        queue: applicationEventQueueName,
-        queueOptions: {
-          durable: true
-        }
+        queue: applicationEventQueueName
       }
     });
   },
