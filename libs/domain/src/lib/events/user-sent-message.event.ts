@@ -1,7 +1,7 @@
 import { RoomEventEnum } from '../room';
 import { BaseEvent, RoomId, UserId } from '../common';
 
-export class UserSentMessageEvent implements BaseEvent {
+export class UserSentMessageEvent extends BaseEvent {
   type: number;
   userId: string;
   createdAt: Date;
@@ -11,6 +11,7 @@ export class UserSentMessageEvent implements BaseEvent {
     public readonly roomId: RoomId,
     public readonly timestamp: Date
   ) {
+    super();
     this.type = RoomEventEnum.USER_SENT_MESSAGE;
     this.userId = senderId;
     this.createdAt = timestamp;

@@ -1,7 +1,7 @@
 import { BaseEvent } from '../common';
 import { MeetupEventEnum } from '../meetups';
 
-export class UserCreatedPollEvent implements BaseEvent {
+export class UserCreatedPollEvent extends BaseEvent {
   type: number;
   createdAt: Date;
   constructor(
@@ -10,6 +10,7 @@ export class UserCreatedPollEvent implements BaseEvent {
     public readonly description: string,
     public readonly pollChoices: string[]
   ) {
+    super();
     this.type = MeetupEventEnum.USER_CHANGED_RSVP;
     this.createdAt = new Date();
   }

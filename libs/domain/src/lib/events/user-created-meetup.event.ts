@@ -1,7 +1,7 @@
 import { BaseEvent } from '../common';
 import { MeetupEventEnum } from '../meetups';
 
-export class UserCreatedMeetupEvent implements BaseEvent {
+export class UserCreatedMeetupEvent extends BaseEvent {
   type: number;
   createdAt: Date;
   organizer: string;
@@ -11,6 +11,7 @@ export class UserCreatedMeetupEvent implements BaseEvent {
     public readonly attendees: string[],
     public readonly takesPlaceOn: Date
   ) {
+    super();
     this.type = MeetupEventEnum.MEETUP_CREATED;
     this.organizer = this.userId;
     this.createdAt = new Date();
