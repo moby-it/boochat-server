@@ -1,7 +1,6 @@
 import { BaseEvent } from '@boochat/domain';
 import { Injectable } from '@nestjs/common';
 import { Connection, Document, Model } from 'mongoose';
-import { v4 as uuid } from 'uuid';
 @Injectable()
 export abstract class EventsStoreService<T extends Document> {
   protected storeModel: Model<T>;
@@ -10,7 +9,6 @@ export abstract class EventsStoreService<T extends Document> {
   }
   async create(event: BaseEvent) {
     const storeEntry = new this.storeModel({
-      _id: uuid(),
       ...event
     });
     await storeEntry.save();

@@ -57,16 +57,6 @@ export class RoomsGateway implements OnGatewayDisconnect {
       user.commit();
     }
   }
-  @SubscribeMessage('createRoom')
-  async createRoom(@MessageBody() createCreateRoomEventDto: CreateRoomEventDto): Promise<void> {
-    const user = await this.getUser(createCreateRoomEventDto.userId);
-    if (user) {
-      user.createRoom(createCreateRoomEventDto.roomName, createCreateRoomEventDto.userIds);
-      user.commit();
-    } else {
-      throw new WsException('Cannot create Room. User does not exists');
-    }
-  }
   private async getUser(userId: UserId): Promise<User | undefined> {
     const result = (await this.queryBus.execute(new GetUserByIdQuery(userId))) as GetUserByIdQueryResult;
     if (result.failed) console.error(result.error);

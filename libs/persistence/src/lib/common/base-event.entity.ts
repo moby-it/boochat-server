@@ -7,4 +7,6 @@ export abstract class BaseEvent extends MongoEntity {
   type!: number;
   @Prop({ required: true })
   name!: string;
+  @Prop({ required: true })
+  correlationId!: string;
 }

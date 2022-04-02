@@ -18,7 +18,7 @@ export class ActiveUsersGateway implements OnGatewayConnection, OnGatewayDisconn
     const result = (await this.queryBus.execute(new GetUserByGoogleIdQuery(googleId))) as GetUserByGoogleIdQueryResult;
     if (result.succeded && result.props) {
       const user = result.props;
-      user.cameOnline(user);
+      user.cameOnline();
       user.commit();
     }
   }
@@ -28,7 +28,7 @@ export class ActiveUsersGateway implements OnGatewayConnection, OnGatewayDisconn
     const result = (await this.queryBus.execute(new GetUserByGoogleIdQuery(googleId))) as GetUserByGoogleIdQueryResult;
     if (result.succeded && result.props) {
       const user = result.props;
-      user.cameOffline(user);
+      user.cameOffline();
       user.commit();
     }
   }
