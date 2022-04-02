@@ -1,3 +1,5 @@
+import { GetUserByIdQuery, GetUserByIdQueryResult } from '@boochat/application';
+import { CreateRoomEventDto, User, UserId } from '@boochat/domain';
 import { QueryBus } from '@nestjs/cqrs';
 import {
   MessageBody,
@@ -7,8 +9,6 @@ import {
   WebSocketServer,
   WsException
 } from '@nestjs/websockets';
-import { GetUserByIdQuery, GetUserByIdQueryResult } from '@boochat/application';
-import { CreateRoomEventDto, User, UserId } from '@boochat/domain';
 import { Server, Socket } from 'socket.io';
 @WebSocketGateway({
   cors: {

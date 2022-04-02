@@ -8,8 +8,13 @@ import {
   UserSentMessageEvent,
   UserClosedRoomEvent,
   UserConnectedEvent,
-  UserDisconnectedEvent
+  UserDisconnectedEvent,
+  UserCreatedMeetupEvent,
+  UserChangedRsvpEvent,
+  UserCreatedPollEvent
 } from '../events';
+import { UserCastPollVoteEvent } from '../events/user-cast-poll-vote.event';
+import { Rsvp } from '../meetups/rsvp.enum';
 interface UserProps {
   name: string;
   googleId: string;
@@ -65,10 +70,16 @@ export class User extends AggregateRootEntity<UserProps> {
   closedRoom(userId: UserId, roomId: RoomId, timestamp: Date) {
     this.apply(new UserClosedRoomEvent(userId, roomId, timestamp));
   }
-  // createsEvent(){
-
-  // }
-  // modifiesEvent() {
-
-  // }
+  createMeetup(name: string, attendeeIds: string[], takesPlaceOn: Date) {
+    this.apply(new UserCreatedMeetupEvent(this.id, name, attendeeIds, takesPlaceOn));
+  }
+  changeRsvp(meetupId: string, rsvp: Rsvp) {
+    this.apply(new UserChangedRsvpEvent(this.id, meetupId, rsvp));
+  }
+  createPoll(meetupId: string, description: string, pollChoices: string[]) {
+    this.apply(new UserCreatedPollEvent(this.id, meetupId, description, pollChoices));
+  }
+  voteOnPoll(pollId: string, pollChoiceIndex: number) {
+    this.apply(new UserCastPollVoteEvent(this.id, pollId, pollChoiceIndex));
+  }
 }

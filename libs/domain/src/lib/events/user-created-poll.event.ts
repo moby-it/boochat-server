@@ -6,6 +6,7 @@ export class UserCreatedPollEvent implements BaseEvent {
   createdAt: Date;
   constructor(
     public readonly userId: string,
+    public readonly meetupId: string,
     public readonly description: string,
     public readonly pollChoices: string[]
   ) {
