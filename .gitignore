@@ -41,3 +41,5 @@ Thumbs.db
 .angular
 *.env
 !.example.env
+# docker persistence folders
+data

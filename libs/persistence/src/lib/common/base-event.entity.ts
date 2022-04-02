@@ -5,8 +5,4 @@ export abstract class BaseEvent extends MongoEntity {
   userId!: string;
   @Prop({ required: true })
   type!: number;
-  @Prop({ required: true })
-  name!: string;
-  @Prop({ required: true })
-  correlationId!: string;
 }

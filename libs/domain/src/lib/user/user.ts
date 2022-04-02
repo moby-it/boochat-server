@@ -54,8 +54,8 @@ export class User extends AggregateRootEntity<UserProps> {
   cameOffline() {
     this.apply(new UserDisconnectedEvent(this));
   }
-  sendsMessage(content: string, senderId: string, roomId: RoomId, timestamp: Date) {
-    this.apply(new UserSentMessageEvent(content, senderId, roomId, timestamp));
+  sendsMessage(content: string, senderId: string, roomId: RoomId) {
+    this.apply(new UserSentMessageEvent(content, senderId, roomId));
   }
   inviteUserToRoom(inviteeId: UserId, roomId: RoomId) {
     this.apply(new UserInvitedToRoomEvent(this.id, inviteeId, roomId));
@@ -66,8 +66,8 @@ export class User extends AggregateRootEntity<UserProps> {
   closedRoom(userId: UserId, roomId: RoomId, timestamp: Date) {
     this.apply(new UserClosedRoomEvent(userId, roomId, timestamp));
   }
-  createMeetup(name: string, attendeeIds: string[], takesPlaceOn: Date) {
-    this.apply(new UserCreatedMeetupEvent(this.id, name, attendeeIds, takesPlaceOn));
+  createMeetup(name: string, attendeeIds: string[], organizerId: string, takesPlaceOn: Date) {
+    this.apply(new UserCreatedMeetupEvent(this.id, name, attendeeIds, organizerId, takesPlaceOn));
   }
   changeRsvp(meetupId: string, rsvp: Rsvp) {
     this.apply(new UserChangedRsvpEvent(this.id, meetupId, rsvp));

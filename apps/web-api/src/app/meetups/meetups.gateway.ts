@@ -12,9 +12,9 @@ export class MeetupsGateway {
   constructor(private queryBus: QueryBus) {}
   @SubscribeMessage('createMeetup')
   async createMeetup(@MessageBody() createMeetupEvent: CreateMeetupDto) {
-    const user = await this.getUser(createMeetupEvent.organizer);
-    const { name, attendeeIds, takesPlaceOn } = createMeetupEvent;
-    user.createMeetup(name, attendeeIds, takesPlaceOn);
+    const user = await this.getUser(createMeetupEvent.organizerId);
+    const { name, attendeeIds, organizerId, takesPlaceOn } = createMeetupEvent;
+    user.createMeetup(name, attendeeIds, organizerId, takesPlaceOn);
     user.commit();
   }
   @SubscribeMessage('changeRsvp')

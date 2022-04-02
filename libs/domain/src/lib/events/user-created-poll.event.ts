@@ -11,7 +11,7 @@ export class UserCreatedPollEvent extends BaseEvent {
     public readonly pollChoices: string[]
   ) {
     super();
-    this.type = MeetupEventEnum.USER_CHANGED_RSVP;
+    this.type = MeetupEventEnum.USER_CREATED_POLL;
     this.createdAt = new Date();
   }
 }

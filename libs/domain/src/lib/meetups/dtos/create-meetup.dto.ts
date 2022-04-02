@@ -1,7 +1,6 @@
 export interface CreateMeetupDto {
-  id: string;
   name: string;
   attendeeIds: string[];
-  organizer: string;
+  organizerId: string;
   takesPlaceOn: Date;
 }

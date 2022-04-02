@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectConnection } from '@nestjs/mongoose';
-import { Types, Connection, Model } from 'mongoose';
+import { Connection, Model } from 'mongoose';
 import { v4 as uuid } from 'uuid';
 import { SHARED_DB_CONNECTION_NAME } from '../common';
 import { CreateUserDto, UserDto } from './user.dto';
@@ -25,7 +25,7 @@ export class UserPersistenceService {
     return await this.userModel.find().exec();
   }
   async findById(id: string): Promise<UserDto | null> {
-    return await this.userModel.findOne({ _id: new Types.ObjectId(id) }).exec();
+    return await this.userModel.findOne({ _id: id }).exec();
   }
   async findByGoogleId(googleIds: string[]): Promise<UserDto[]> {
     return await this.userModel.find({ googleId: { $in: googleIds } }).exec();
@@ -34,6 +34,6 @@ export class UserPersistenceService {
     return (await this.userModel.findOne({ googleId }).exec()) as UserDocument;
   }
   async update(id: string, userDto: UserDto): Promise<void> {
-    await this.userModel.updateOne({ _id: new Types.ObjectId(id) }, { ...userDto });
+    await this.userModel.updateOne({ _id: id }, { ...userDto });
   }
 }

@@ -1,7 +1,7 @@
+import { GetUserByIdQuery, GetUserByIdQueryResult } from '@boochat/application';
+import { CreateMessageDto, User, UserId } from '@boochat/domain';
 import { QueryBus } from '@nestjs/cqrs';
 import { MessageBody, SubscribeMessage, WebSocketGateway } from '@nestjs/websockets';
-import { GetUserByIdQuery, GetUserByIdQueryResult } from '@boochat/application';
-import { User, UserId, CreateMessageEvent } from '@boochat/domain';
 
 @WebSocketGateway({
   cors: {
@@ -11,11 +11,11 @@ import { User, UserId, CreateMessageEvent } from '@boochat/domain';
 export class MessageGateway {
   constructor(private queryBus: QueryBus) {}
   @SubscribeMessage('sendMessage')
-  async onNewMessage(@MessageBody() newMessageEvent: CreateMessageEvent) {
+  async onNewMessage(@MessageBody() newMessageEvent: CreateMessageDto) {
     const user = await this.getUser(newMessageEvent.senderId);
     if (!user) throw new Error(`Failed to get user with id ${newMessageEvent.senderId}`);
-    const { content, senderId, roomId, createdAt } = newMessageEvent;
-    user.sendsMessage(content, senderId, roomId, createdAt);
+    const { content, senderId, roomId } = newMessageEvent;
+    user.sendsMessage(content, senderId, roomId);
     user.commit();
   }
   private async getUser(userId: UserId): Promise<User | undefined> {

@@ -3,7 +3,9 @@ import { Document } from 'mongoose';
 import { BaseEvent } from '../common/base-event.entity';
 export type MeetupEventDocument = MeetupEvent & Document;
 
-@Schema()
+@Schema({
+  strict: false
+})
 export class MeetupEvent extends BaseEvent {}
 export const MeetupEventSchema = SchemaFactory.createForClass(MeetupEvent);
 

@@ -7,3 +7,4 @@ export * from './user-closed-room.event';
 export * from './user-created-meetup.event';
 export * from './user-changed-rsvp.event';
 export * from './user-created-poll.event';
+export * from './user-cast-poll-vote.event';
