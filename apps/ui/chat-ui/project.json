@@ -87,9 +87,9 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/chat-ui"],
+      "outputs": ["coverage/apps/ui/chat-ui/src"],
       "options": {
-        "jestConfig": "apps/chat-ui/jest.config.js",
+        "jestConfig": "apps/ui/chat-ui/src/jest.config.js",
         "passWithNoTests": true
       }
     }

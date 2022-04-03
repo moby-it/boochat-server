@@ -18,11 +18,11 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   async ngOnInit() {
     this.loading$.next(true);
     await this.initializeChat();
-    // await this.initializeEvents();
+    // await this.initializeMeetups();
     this.loading$.next(false);
   }
 
-  private async initializeEvents() {
+  private async initializeMeetups() {
     const viewContainerRef = this.eventsHost.viewContainerRef;
     viewContainerRef.clear();
     const { MeetUpsComponent } = await loadRemoteModule({

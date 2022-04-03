@@ -82,12 +82,12 @@
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "options": {
-        "lintFilePatterns": ["apps/meetups-ui/src/**/*.ts", "apps/meetups-ui/src/**/*.html"]
+        "lintFilePatterns": ["apps/ui/meetups-ui/src/src/**/*.ts", "apps/ui/meetups-ui/src/src/**/*.html"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/meetups-ui"],
+      "outputs": ["coverage/apps/ui/meetups-ui/src"],
       "options": {
         "jestConfig": "apps/ui/meetups-ui/jest.config.js",
         "passWithNoTests": true
