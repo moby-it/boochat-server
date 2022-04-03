@@ -1,13 +1,12 @@
 import { GetUserByIdQuery, GetUserByIdQueryResult } from '@boochat/application';
-import { CreateRoomEventDto, User, UserId } from '@boochat/domain';
+import { User, UserId } from '@boochat/domain';
 import { QueryBus } from '@nestjs/cqrs';
 import {
   MessageBody,
   OnGatewayDisconnect,
   SubscribeMessage,
   WebSocketGateway,
-  WebSocketServer,
-  WsException
+  WebSocketServer
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 @WebSocketGateway({
@@ -26,6 +25,7 @@ export class RoomsGateway implements OnGatewayDisconnect {
       const user = await this.getUser(userId);
       if (user) {
         user.closedRoom(userId, roomId, new Date());
+        user.cameOffline();
         user.commit();
         return;
       }
