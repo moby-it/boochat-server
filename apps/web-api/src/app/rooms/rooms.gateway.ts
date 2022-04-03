@@ -35,10 +35,14 @@ export class RoomsGateway implements OnGatewayDisconnect {
     console.warn('Failed to log last room visit');
   }
   @SubscribeMessage('addUserToRoom')
-  async addUserToRoom(@MessageBody('userId') userId: string, @MessageBody('roomId') roomId: string): Promise<void> {
+  async addUserToRoom(
+    @MessageBody('userId') userId: string,
+    @MessageBody('inviteeId') inviteeId: string,
+    @MessageBody('roomId') roomId: string
+  ): Promise<void> {
     const user = await this.getUser(userId);
     if (user) {
-      user.inviteUserToRoom(userId, roomId);
+      user.inviteUserToRoom(inviteeId, roomId);
       user.commit();
     }
   }
