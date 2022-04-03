@@ -1,5 +1,5 @@
 module.exports = {
-  displayName: 'web-api',
+  displayName: 'command-api',
   preset: '../../jest.preset.js',
   globals: {
     'ts-jest': {
@@ -11,5 +11,5 @@ module.exports = {
     '^.+\\.[tj]s$': 'ts-jest'
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
-  coverageDirectory: '../../coverage/apps/web-api'
+  coverageDirectory: '../../coverage/apps/command-api'
 };

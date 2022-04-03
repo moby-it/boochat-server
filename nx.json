@@ -44,5 +44,5 @@
       "style": "css"
     }
   },
-  "defaultProject": "web-api"
+  "defaultProject": "command-api"
 }

@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'apps/web-api/**'
+      - 'apps/command-api/**'
       - 'libs/persistence/**'
       - 'libs/domain/**'
       - 'libs/application/**'
@@ -23,5 +23,5 @@ jobs:
           password: ${{ secrets.ACR_PASSWORD }}
 
       - run: |
-          docker build -f docker/web-api.dockerfile . -t boochat.azurecr.io/web-api:latest
-          docker push boochat.azurecr.io/web-api:latest
+          docker build -f docker/command-api.dockerfile . -t boochat.azurecr.io/command-api:latest
+          docker push boochat.azurecr.io/command-api:latest

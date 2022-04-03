@@ -1,16 +1,16 @@
 {
-  "root": "apps/web-api",
-  "sourceRoot": "apps/web-api/src",
+  "root": "apps/command-api",
+  "sourceRoot": "apps/command-api/src",
   "projectType": "application",
   "targets": {
     "build": {
       "executor": "@nrwl/node:webpack",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/apps/web-api",
-        "main": "apps/web-api/src/main.ts",
-        "tsConfig": "apps/web-api/tsconfig.app.json",
-        "assets": ["apps/web-api/src/assets"]
+        "outputPath": "dist/apps/command-api",
+        "main": "apps/command-api/src/main.ts",
+        "tsConfig": "apps/command-api/tsconfig.app.json",
+        "assets": ["apps/command-api/src/assets"]
       },
       "configurations": {
         "production": {
@@ -34,11 +34,11 @@
     "serve": {
       "executor": "@nrwl/node:node",
       "options": {
-        "buildTarget": "web-api:build"
+        "buildTarget": "command-api:build"
       },
       "configurations": {
         "development": {
-          "buildTarget": "web-api:build:development"
+          "buildTarget": "command-api:build:development"
         }
       },
       "defaultConfiguration": "development"
@@ -47,14 +47,14 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["apps/web-api/**/*.ts"]
+        "lintFilePatterns": ["apps/command-api/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/web-api"],
+      "outputs": ["coverage/apps/command-api"],
       "options": {
-        "jestConfig": "apps/web-api/jest.config.js",
+        "jestConfig": "apps/command-api/jest.config.js",
         "passWithNoTests": true
       }
     }
