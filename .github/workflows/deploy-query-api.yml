@@ -23,5 +23,5 @@ jobs:
           password: ${{ secrets.ACR_PASSWORD }}
 
       - run: |
-          docker build -f docker/command-api.dockerfile . -t boochat.azurecr.io/command-api:latest
-          docker push boochat.azurecr.io/command-api:latest
+          docker build -f docker/query-api.dockerfile . -t boochat.azurecr.io/query-api:latest
+          docker push boochat.azurecr.io/query-api:latest
