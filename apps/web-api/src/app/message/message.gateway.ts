@@ -13,7 +13,7 @@ export class MessageGateway {
   @SubscribeMessage('sendMessage')
   async onNewMessage(@MessageBody() newMessageEvent: CreateMessageDto) {
     const user = await this.getUser(newMessageEvent.senderId);
-    if (!user) throw new Error(`Failed to get user with id ${newMessageEvent.senderId}`);
+    if (!user) throw new Error(`onNewMessage: Failed to get user with id ${newMessageEvent.senderId}`);
     const { content, senderId, roomId } = newMessageEvent;
     user.sendsMessage(content, senderId, roomId);
     user.commit();
