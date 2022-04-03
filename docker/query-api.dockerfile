@@ -2,5 +2,5 @@ FROM boochat.azurecr.io/dependencies:latest
 WORKDIR /usr/src/app
 COPY . .
 RUN npm run build query-api
-EXPOSE 3333
+EXPOSE 4444
 CMD ["node", "dist/apps/query-api/main.js"]
