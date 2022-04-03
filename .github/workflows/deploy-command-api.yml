@@ -1,4 +1,4 @@
-name: Deploy Web Api
+name: Deploy Command Api
 
 on:
   push:

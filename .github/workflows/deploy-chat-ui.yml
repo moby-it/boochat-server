@@ -23,7 +23,7 @@ jobs:
       - run: npm run build chat-ui
       - uses: actions/upload-artifact@v2
         with:
-          name: dist-chat
+          name: dist-chat-ui
           path: dist/apps/ui/chat-ui
   deploy:
     needs: build
