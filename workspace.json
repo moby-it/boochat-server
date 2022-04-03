@@ -4,9 +4,10 @@
     "application": "libs/application",
     "chat-ui": "apps/ui/chat-ui",
     "client": "apps/ui/client",
+    "command-api": "apps/command-api",
     "domain": "libs/domain",
     "meetups-ui": "apps/ui/meetups-ui",
     "persistence": "libs/persistence",
-    "command-api": "apps/command-api"
+    "query-api": "apps/query-api"
   }
 }
