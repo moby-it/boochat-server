@@ -2,6 +2,7 @@ import { SerializeOptions } from '@nestjs/common';
 import { Expose } from 'class-transformer';
 import { AggregateRootEntity, Guard, RoomId, UserId } from '../common';
 import {
+  UserCreatedRoomEvent,
   UserInvitedToRoomEvent,
   UserLeftRoomEvent,
   UserSentMessageEvent,
@@ -56,6 +57,9 @@ export class User extends AggregateRootEntity<UserProps> {
   }
   sendsMessage(content: string, senderId: string, roomId: RoomId) {
     this.apply(new UserSentMessageEvent(content, senderId, roomId));
+  }
+  createRoom(roomName: string, userIds: string[]) {
+    this.apply(new UserCreatedRoomEvent(this.id, roomName, userIds));
   }
   inviteUserToRoom(inviteeId: UserId, roomId: RoomId) {
     this.apply(new UserInvitedToRoomEvent(this.id, inviteeId, roomId));

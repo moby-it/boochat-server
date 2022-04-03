@@ -1,12 +1,13 @@
 import { GetUserByIdQuery, GetUserByIdQueryResult } from '@boochat/application';
-import { User, UserId } from '@boochat/domain';
+import { CreateRoomEventDto, User, UserId } from '@boochat/domain';
 import { QueryBus } from '@nestjs/cqrs';
 import {
   MessageBody,
   OnGatewayDisconnect,
   SubscribeMessage,
   WebSocketGateway,
-  WebSocketServer
+  WebSocketServer,
+  WsException
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 @WebSocketGateway({
@@ -55,6 +56,16 @@ export class RoomsGateway implements OnGatewayDisconnect {
     if (user) {
       user.closedRoom(userId, roomId, new Date());
       user.commit();
+    }
+  }
+  @SubscribeMessage('createRoom')
+  async createRoom(@MessageBody() createCreateRoomEventDto: CreateRoomEventDto): Promise<void> {
+    const user = await this.getUser(createCreateRoomEventDto.userId);
+    if (user) {
+      user.createRoom(createCreateRoomEventDto.roomName, createCreateRoomEventDto.userIds);
+      user.commit();
+    } else {
+      throw new WsException('Cannot create Room. User does not exists');
     }
   }
   private async getUser(userId: UserId): Promise<User | undefined> {

@@ -1,5 +1,5 @@
-import { ApplicationEventEnum } from '../application-events.type';
 import { BaseEvent } from '../common';
+import { ApplicationEventEnum } from '../application-events.type';
 import { User } from '../user';
 
 export class UserConnectedEvent extends BaseEvent {
