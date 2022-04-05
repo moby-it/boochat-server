@@ -82,7 +82,16 @@ A **Meetup** describes a gathering to take place on a specific Date by specific 
 
 ## _Events_
 
-Every _Event_ is dispatched by a **User**. Every so every _Event_ is a _User Event_. Below is a list of all the _Events_ and their payloads For
+Every _Event_ is dispatched by a **User**. Every so every _Event_ is a _User Event_. 
+
+Every *Event* has a ```userId``` property and a ```type``` property. The ```type`` property is a enum lookup.
+
+Events are seperated into three categories: 
+1. Room Events
+2. Meetup Events
+3. Application Events
+
+ ### _Room Events_ Table
 
 | A User (Event Name) | Payload |
 | ------------------------- | ------------------------------- |
@@ -90,7 +99,51 @@ Every _Event_ is dispatched by a **User**. Every so every _Event_ is a _User Eve
 | *invites a **User** to a **Room***| [Invite User To Room Payload](#Invite-User-To-Room-Payload) |
 | *leaves a **Room*** | [User Left Room Paylod](#User-Left-Room-Payload) |
 | *created a **Room*** | [User Created Room Payload](#User-Created-Room-Payload) |
+| *closed **Room*** | [User Closed Room Payload](#user-closed-room-payload) |
 
+#### Room Events Enum
+```typescript
+enum RoomEventEnum {
+  ROOM_CREATED = 1,
+  USER_INVITED_ROOM = 2,
+  USER_LEFT_ROOM = 3,
+  USER_CLOSED_ROOM = 4,
+  USER_SENT_MESSAGE = 5
+}
+```
+
+### _Meetup Events_ Table
+
+| A User (Event Name) | Payload |
+| ------------------------- | ------------------------------- |
+|*created a **Meetup***|[User Created Meetup Payload](#user-created-meetup-payload)|
+|*changed rsvp* | [User Changed Rsvp Payload](#user-changed-rsvp-payload)|
+|*created Poll* | [User Created Poll Payload](#user-created-poll-payload)|
+|*cast Poll vote* | [User Cast Poll Vote Payload](#user-cast-poll-vote-payload)|
+
+#### Meetup Events Enum
+```typescript
+enum MeetupEventEnum {
+  MEETUP_CREATED = 1,
+  USER_CHANGED_RSVP = 2,
+  USER_CREATED_POLL = 3,
+  USER_VOTED_ON_POLL = 4
+}
+```
+
+### _Application Events_ Table
+
+| A User (Event Name) | Payload |
+| ------------------------- | ------------------------------- |
+| *connected* | [User Connected Payload](#user-connected-payload) |
+| *disconnected* | [User Connected Payload](#user-disconnected-payload) |
+
+```typescript
+enum ApplicationEventEnum {
+  USER_CONNECTED = 1,
+  USER_DISCONNECTED = 2
+}
+```
 ### Payloads
 
 #### Send Message Payload
@@ -112,3 +165,32 @@ Every _Event_ is dispatched by a **User**. Every so every _Event_ is a _User Eve
   - userId: string;
   - roomName: string;
   - userIds: string[];
+#### User Closed Room Payload
+  - userId: string
+  - roomId: string
+  - timestamp: Date
+#### User Connected Payload
+  - userId: string
+#### User Disconnected Payload
+  - userId: string
+#### User Created Meetup Payload
+  - userId: string
+  - name: string
+  - attendees: string array
+  - location: string
+  - organizerId: string
+  - takesPlaceOn: Date
+
+#### User Changed Rsvp Payload
+  - userId: string
+  - meetupId: string
+  - rsvp: number
+#### User Created Poll Payload
+  - userId: string,
+  - meetupId: string,
+  - description: string,
+  - pollChoices: string[]
+#### User Cast Poll Vote Payload
+  - userId: string
+  - pollId: string
+  - pollChoiceIndex: number
