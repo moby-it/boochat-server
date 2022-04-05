@@ -70,8 +70,15 @@ export class User extends AggregateRootEntity<UserProps> {
   closedRoom(userId: UserId, roomId: RoomId, timestamp: Date) {
     this.apply(new UserClosedRoomEvent(userId, roomId, timestamp));
   }
-  createMeetup(name: string, attendeeIds: string[], location: string, organizerId: string, takesPlaceOn: Date) {
-    this.apply(new UserCreatedMeetupEvent(this.id, name, attendeeIds, location, organizerId, takesPlaceOn));
+  createMeetup(
+    name: string,
+    attendeeIds: string[],
+    location: string,
+    organizerId: string,
+    takesPlaceOn: Date,
+    roomId: RoomId
+  ) {
+    this.apply(new UserCreatedMeetupEvent(this.id, name, attendeeIds, location, organizerId, takesPlaceOn, roomId));
   }
   changeRsvp(meetupId: string, rsvp: Rsvp) {
     this.apply(new UserChangedRsvpEvent(this.id, meetupId, rsvp));

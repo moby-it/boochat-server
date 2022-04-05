@@ -10,7 +10,8 @@ export class UserCreatedMeetupEvent extends BaseEvent {
     public readonly attendees: string[],
     public readonly location: string,
     public readonly organizerId: string,
-    public readonly takesPlaceOn: Date
+    public readonly takesPlaceOn: Date,
+    public readonly roomId: string
   ) {
     super();
     this.type = MeetupEventEnum.MEETUP_CREATED;

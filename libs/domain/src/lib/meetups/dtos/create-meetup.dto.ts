@@ -4,4 +4,5 @@ export interface CreateMeetupDto {
   location: string;
   organizerId: string;
   takesPlaceOn: Date;
+  roomId: string;
 }

@@ -13,8 +13,8 @@ export class MeetupsGateway {
   @SubscribeMessage('createMeetup')
   async createMeetup(@MessageBody() createMeetupEvent: CreateMeetupDto) {
     const user = await this.getUser(createMeetupEvent.organizerId);
-    const { name, attendeeIds, location, organizerId, takesPlaceOn } = createMeetupEvent;
-    user.createMeetup(name, attendeeIds, location, organizerId, takesPlaceOn);
+    const { name, attendeeIds, location, organizerId, takesPlaceOn, roomId } = createMeetupEvent;
+    user.createMeetup(name, attendeeIds, location, organizerId, takesPlaceOn, roomId);
     user.commit();
   }
   @SubscribeMessage('changeRsvp')
