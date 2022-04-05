@@ -14,8 +14,8 @@ services:
     restart: always
     container_name: boochat-mongo
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=gspanos
-      - MONGO_INITDB_ROOT_PASSWORD=37Axlad1a
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=someverys3ecretspassw0rd
     ports:
       - 35000:27017
     volumes:

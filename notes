@@ -1,0 +1,5 @@
+### Docker notes
+
+Build dependencies
+docker build . -f docker/boochat-dependencies.dockerfile -t boochat.azurecr.io/boochat-dependencies:latest
+docker push boochat.azurecr.io/boochat-dependencies:latest
