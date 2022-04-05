@@ -60,7 +60,7 @@ The room is the actual chat room in which people exchange **Messages**. A room h
 
 This is probably the most business important entity of the system even though it's contents are self-explained.
 
-#### Properties:
+#### Message Properties:
 
 - sender: **User**
 - content: string
@@ -69,4 +69,46 @@ This is probably the most business important entity of the system even though it
 
 ### Meetup
 
-A **Meetup** is the
+A **Meetup** describes a gathering to take place on a specific Date by specific attendees at a specific location. A **Meetup** is always related with a **Room**.
+
+#### Meetup Properties:
+
+- name :string
+- organizer: **User**
+- location: string
+- attendants: **User** Array
+- takesPlaceOn: Date
+- room: **Room**
+
+## _Events_
+
+Every _Event_ is dispatched by a **User**. Every so every _Event_ is a _User Event_. Below is a list of all the _Events_ and their payloads For
+
+| A User (Event Name) | Payload |
+| ------------------------- | ------------------------------- |
+|*sends a **Message*** | [Send Message Payload](#Send-Message-Payload) |
+| *invites a **User** to a **Room***| [Invite User To Room Payload](#Invite-User-To-Room-Payload) |
+| *leaves a **Room*** | [User Left Room Paylod](#User-Left-Room-Payload) |
+| *created a **Room*** | [User Created Room Payload](#User-Created-Room-Payload) |
+
+### Payloads
+
+#### Send Message Payload
+
+- senderId: string
+- roomId: string
+- content: string
+
+#### Invite User To Room Payload
+
+- userId: string;
+- inviteeId: string;
+- roomId: string;
+#### User left Room Payload
+
+- userId: string;
+- roomId: string;
+#### User Created Room Payload
+  - userId: string;
+  - roomName: string;
+  - userIds: string[];

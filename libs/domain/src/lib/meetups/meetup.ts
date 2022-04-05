@@ -5,6 +5,7 @@ import { User } from '../user';
 interface MeetupProps {
   name: string;
   organizer: Partial<User> & Pick<User, 'id'>;
+  location: string;
   attendants: Array<Partial<User> & Pick<User, 'id'>>;
   takesPlaceOn: Date;
   room: Partial<Room> & Pick<Room, 'id'>;
@@ -29,6 +30,10 @@ export class Meetup extends AggregateRootEntity<MeetupProps> {
   @Expose()
   get room() {
     return this._props.room;
+  }
+  @Expose()
+  get location() {
+    return this._props.location;
   }
   private constructor(props: MeetupProps, id: string) {
     super(props, id);
