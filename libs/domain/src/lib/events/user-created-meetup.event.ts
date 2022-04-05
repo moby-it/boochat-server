@@ -8,6 +8,7 @@ export class UserCreatedMeetupEvent extends BaseEvent {
     public readonly userId: string,
     public readonly name: string,
     public readonly attendees: string[],
+    public readonly location: string,
     public readonly organizerId: string,
     public readonly takesPlaceOn: Date
   ) {
