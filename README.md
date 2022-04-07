@@ -13,17 +13,22 @@ The project is inspired by ideas from [Event-driven Architecture](https://en.wik
 
 You should a working local version of the whole stack.
 
-## Technology Stack
+# Technology Stack
 
-### Backend
+
+
+## Backend
 
 1.  [NestJs](https://docs.nestjs.com/) - Opinionated Node.js framework for building server-side applications.
-2.  [MongoDB](https://www.mongodb.com/) - for storing events.
-3.  [RabbitMQ](https://www.rabbitmq.com/) - as the Event/Message Broker.
+2.  [MongoDB](https://www.mongodb.com/) - Classified as a NoSQL database program, MongoDB uses JSON-like documents with optional schemas.
+3.  [RabbitMQ](https://www.rabbitmq.com/) - RabbitMQ is the most widely deployed open source message broker.
 
-### FrontEnd
+## FrontEnd
 
 React or Angular (still haven't decided)
+# Workflow
+
+![workflow Diagram](https://drive.google.com/uc?export=view&id=1UdTpnmhhxHcWdWybQ-ZKON46af0hZitI)
 
 # Domain structure
 
