@@ -18,8 +18,8 @@ You should a working local version of the whole stack.
 ### Backend
 
 1.  [NestJs](https://docs.nestjs.com/) - Opinionated Node.js framework for building server-side applications.
-2.  [MongoDB](https://www.mongodb.com/) for storing events.
-3.  [RabbitMQ](https://www.rabbitmq.com/) as the Event/Message Broker.
+2.  [MongoDB](https://www.mongodb.com/) - for storing events.
+3.  [RabbitMQ](https://www.rabbitmq.com/) - as the Event/Message Broker.
 
 ### FrontEnd
 
