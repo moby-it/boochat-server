@@ -14,7 +14,6 @@ async function bootstrap() {
 
   const port = process.env.PORT || 3333;
   await app.listen(port);
-  console.log('ENV VARIABLES', process.env);
   Logger.log(`🚀 Web Api is running on: http://localhost:${port}`);
 }
 

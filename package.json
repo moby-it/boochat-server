@@ -8,7 +8,8 @@
     "start:chat-ui": "nx serve chat-ui",
     "start:meetups-ui": "nx serve meetups-ui",
     "start:dev-ui": "concurrently --names \"client,chat-ui,meetups-ui\" -c \"green,red,yellow\" \"npm run start:client \" \"npm run start:chat-ui\" \"npm run start:meetups-ui\"",
-    "start:dev-api": "nx serve command-api",
+    "start:command-api": "nx serve command-api",
+    "start:query-api": "nx serve query-api",
     "build": "nx build",
     "test": "nx test",
     "postinstall": "ngcc --properties es2015 browser module main"
