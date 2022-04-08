@@ -28,7 +28,7 @@ You should a working local version of the whole stack.
 React or Angular (still haven't decided)
 # Workflow
 
-![workflow Diagram](https://drive.google.com/uc?export=view&id=1q62mHldFfE58FSGk1AmAc2_ivdUsDYws)
+![workflow Diagram](https://drive.google.com/uc?export=view&id=1LOzgDAK10uzPIDHcg2A315tLqm6ID12W)
 
 # Domain structure
 
