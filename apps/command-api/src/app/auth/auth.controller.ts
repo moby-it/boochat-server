@@ -1,5 +1,5 @@
 import { User } from '@boochat/domain';
-import { UserDto, UserPersistenceService } from '@boochat/persistence';
+import { UserDto, UserPersistenceService } from '@boochat/persistence/shared-db';
 import { BadRequestException, Body, Controller, InternalServerErrorException, Param, Post, Put } from '@nestjs/common';
 
 @Controller('auth')

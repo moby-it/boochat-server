@@ -11,15 +11,36 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "lib": ["es2017", "dom"],
+    "lib": [
+      "es2017",
+      "dom"
+    ],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@boochat/application": ["libs/application/src/index.ts"],
-      "@boochat/domain": ["libs/domain/src/index.ts"],
-      "@boochat/persistence": ["libs/persistence/src/index.ts"]
+      "@boochat/application": [
+        "libs/application/src/index.ts"
+      ],
+      "@boochat/domain": [
+        "libs/domain/src/index.ts"
+      ],
+      "@boochat/persistence": [
+        "libs/persistence/src/index.ts"
+      ],
+      "@boochat/persistence/events-store": [
+        "libs/persistence/events-store/src/index.ts"
+      ],
+      "@boochat/persistence/read-db": [
+        "libs/persistence/read-db/src/index.ts"
+      ],
+      "@boochat/persistence/shared-db": [
+        "libs/persistence/shared-db/src/index.ts"
+      ]
     }
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
 }

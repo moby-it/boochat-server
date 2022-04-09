@@ -1,0 +1,22 @@
+{
+  "root": "libs/persistence/read-db",
+  "sourceRoot": "libs/persistence/read-db/src",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/persistence/read-db/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/persistence/read-db"],
+      "options": {
+        "jestConfig": "libs/persistence/read-db/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["scope:persistence"]
+}

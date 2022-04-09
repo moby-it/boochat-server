@@ -1,6 +1,6 @@
 import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { UserCreatedRoomEvent } from '@boochat/domain';
-import { RoomEventsStoreService } from '@boochat/persistence';
+import { RoomEventsStoreService } from '@boochat/persistence/events-store';
 import { EventBusService } from '../../event-bus/event-bus.service';
 
 @EventsHandler(UserCreatedRoomEvent)

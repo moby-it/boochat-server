@@ -1,5 +1,5 @@
 import { UserInvitedToRoomEvent } from '@boochat/domain';
-import { RoomEventsStoreService } from '@boochat/persistence';
+import { RoomEventsStoreService } from '@boochat/persistence/events-store';
 import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { EventBusService } from '../../event-bus/event-bus.service';
 

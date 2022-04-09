@@ -1,0 +1,22 @@
+{
+  "root": "libs/persistence/events-store",
+  "sourceRoot": "libs/persistence/events-store/src",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/persistence/events-store/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/persistence/events-store"],
+      "options": {
+        "jestConfig": "libs/persistence/events-store/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["scope:persistence"]
+}
