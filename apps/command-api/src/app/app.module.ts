@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import { ConfigModule } from '@nestjs/config';
-import { CommandApiApplicationModule } from '@boochat/application';
+import { CommandApplicationModule } from '@boochat/application';
 import { ActiveUsersGateway } from './active-users';
 import { AuthController } from './auth/auth.controller';
 import { MessageGateway } from './message';
@@ -12,7 +12,7 @@ const Gateways = [ActiveUsersGateway, MessageGateway, RoomsGateway, MeetupsGatew
 
 @Module({
   controllers: [AuthController],
-  imports: [ConfigModule.forRoot({ isGlobal: true }), CqrsModule, CommandApiApplicationModule],
+  imports: [ConfigModule.forRoot({ isGlobal: true }), CqrsModule, CommandApplicationModule],
   providers: [...Gateways]
 })
 export class AppModule {}

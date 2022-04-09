@@ -6,4 +6,4 @@ import { Module } from '@nestjs/common';
   providers: [],
   exports: []
 })
-export class QueryApiApplicationModule {}
+export class QueryApplicationModule {}

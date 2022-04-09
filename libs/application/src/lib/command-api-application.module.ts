@@ -23,4 +23,4 @@ import { PersistenceSharedDbModule } from '@boochat/persistence/shared-db';
   ],
   exports: []
 })
-export class CommandApiApplicationModule {}
+export class CommandApplicationModule {}
