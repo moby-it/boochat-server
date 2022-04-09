@@ -1,15 +1,15 @@
-import { ApplicationEventEnum } from '@boochat/domain';
+import { ApplicationEventEnum, UserConnectedEvent, UserDisconnectedEvent } from '@boochat/domain';
 import { Controller } from '@nestjs/common';
 import { EventPattern, Transport } from '@nestjs/microservices';
 
 @Controller()
 export class ApplicationEventsController {
   @EventPattern(ApplicationEventEnum[ApplicationEventEnum.USER_CONNECTED], Transport.RMQ)
-  async userConnected(data: any) {
-    console.log(data);
+  async userConnected(event: UserConnectedEvent) {
+    console.log(event);
   }
   @EventPattern(ApplicationEventEnum[ApplicationEventEnum.USER_DISCONNECTED], Transport.RMQ)
-  async userDisconnected(data: any) {
-    console.log(data);
+  async userDisconnected(event: UserDisconnectedEvent) {
+    console.log(event);
   }
 }
