@@ -28,7 +28,7 @@ services:
       - SA_PASSWORD=Someverys3ecretsp@ssw0rd
       - ACCEPT_EULA=Y
     volumes:
-      - sql-data-volume:/var/lib/mysql
+      - sql-data-volume:/var/opt/mssql
   command-api:
     build:
       context: .
