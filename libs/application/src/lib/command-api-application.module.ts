@@ -8,6 +8,7 @@ import { ActiveUserQueryHandlers, UserEventHandlers } from './users';
 import { MeetupEventHandlers } from './meetups';
 import { PersistenceEventStoreModule } from '@boochat/persistence/events-store';
 import { PersistenceSharedDbModule } from '@boochat/persistence/shared-db';
+
 @Module({
   imports: [CqrsModule, ConfigModule, PersistenceEventStoreModule, PersistenceSharedDbModule],
   providers: [
@@ -22,4 +23,4 @@ import { PersistenceSharedDbModule } from '@boochat/persistence/shared-db';
   ],
   exports: []
 })
-export class ApplicationModule {}
+export class CommandApiApplicationModule {}

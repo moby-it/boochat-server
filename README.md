@@ -25,7 +25,7 @@ You should a working local version of the whole stack.
 
 ## FrontEnd
 
-React or Angular (still haven't decided)
+React
 # Workflow
 
 [Workflow diagram](https://drive.google.com/file/d/1q62mHldFfE58FSGk1AmAc2_ivdUsDYws/view?usp=sharing)

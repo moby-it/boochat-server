@@ -1,25 +1,24 @@
 {
-  "projectType": "application",
   "root": "apps/ui/client",
   "sourceRoot": "apps/ui/client/src",
-  "prefix": "boochat",
+  "projectType": "application",
   "targets": {
     "build": {
-      "executor": "@nrwl/angular:webpack-browser",
+      "executor": "@nrwl/web:webpack",
       "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
       "options": {
+        "compiler": "babel",
         "outputPath": "dist/apps/ui/client",
         "index": "apps/ui/client/src/index.html",
-        "main": "apps/ui/client/src/main.ts",
+        "baseHref": "/",
+        "main": "apps/ui/client/src/main.tsx",
         "polyfills": "apps/ui/client/src/polyfills.ts",
         "tsConfig": "apps/ui/client/tsconfig.app.json",
-        "assets": ["apps/ui/client/src/favicon.ico", "apps/ui/client/src/assets", "apps/ui/client/src/web.config"],
+        "assets": ["apps/ui/client/src/favicon.ico", "apps/ui/client/src/assets"],
         "styles": ["apps/ui/client/src/styles.css"],
         "scripts": [],
-        "customWebpackConfig": {
-          "path": "apps/ui/client/webpack.config.js"
-        },
-        "buildLibsFromSource": false
+        "webpackConfig": "@nrwl/react/plugins/webpack"
       },
       "configurations": {
         "production": {
@@ -29,47 +28,33 @@
               "with": "apps/ui/client/src/environments/environment.prod.ts"
             }
           ],
-          "outputHashing": "none",
-          "customWebpackConfig": {
-            "path": "apps/ui/client/webpack.prod.config.js"
-          }
-        },
-        "development": {
-          "buildOptimizer": false,
-          "optimization": false,
-          "vendorChunk": true,
-          "extractLicenses": false,
-          "sourceMap": true
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
         }
-      },
-      "defaultConfiguration": "production"
-    },
-    "serve": {
-      "executor": "@nrwl/angular:webpack-server",
-      "configurations": {
-        "production": {
-          "browserTarget": "client:build:production"
-        },
-        "development": {
-          "browserTarget": "client:build:development"
-        }
-      },
-      "defaultConfiguration": "development",
-      "options": {
-        "port": 5000,
-        "publicHost": "http://localhost:5000"
       }
     },
-    "extract-i18n": {
-      "executor": "@angular-devkit/build-angular:extract-i18n",
+    "serve": {
+      "executor": "@nrwl/web:dev-server",
       "options": {
-        "browserTarget": "client:build"
+        "buildTarget": "ui-client:build",
+        "hmr": true
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "ui-client:build:production",
+          "hmr": false
+        }
       }
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["apps/ui/client/src/**/*.ts", "apps/ui/client/src/**/*.html"]
+        "lintFilePatterns": ["apps/ui/client/**/*.{ts,tsx,js,jsx}"]
       }
     },
     "test": {
@@ -79,13 +64,7 @@
         "jestConfig": "apps/ui/client/jest.config.js",
         "passWithNoTests": true
       }
-    },
-    "serve-mfe": {
-      "executor": "@nrwl/workspace:run-commands",
-      "options": {
-        "commands": ["nx serve events-ui", "nx serve chat-ui", "nx serve client"]
-      }
     }
   },
-  "tags": ["app"]
+  "tags": ["type:application"]
 }

@@ -23,6 +23,17 @@
               "with": "apps/query-api/src/environments/environment.prod.ts"
             }
           ]
+        },
+        "development": {
+          "optimization": true,
+          "extractLicenses": true,
+          "inspect": false,
+          "fileReplacements": [
+            {
+              "replace": ".env",
+              "with": ".local.env"
+            }
+          ]
         }
       }
     },
@@ -30,7 +41,13 @@
       "executor": "@nrwl/node:node",
       "options": {
         "buildTarget": "query-api:build"
-      }
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "query-api:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",

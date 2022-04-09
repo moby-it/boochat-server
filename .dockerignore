@@ -3,6 +3,5 @@ docker
 .circleci
 .vscode
 dist
-.angular
 *.env
 data
