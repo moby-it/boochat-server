@@ -20,11 +20,8 @@ interface UserProps {
   googleId: string;
   imageUrl: string;
 }
-@SerializeOptions({
-  excludePrefixes: ['_']
-})
 export class User extends AggregateRootEntity<UserProps> {
-  @Expose()
+  // @Expose()
   get id() {
     return this._id;
   }
@@ -50,10 +47,10 @@ export class User extends AggregateRootEntity<UserProps> {
     return new User(props, _id);
   }
   cameOnline() {
-    this.apply(new UserConnectedEvent(this));
+    this.apply(new UserConnectedEvent(this.id));
   }
   cameOffline() {
-    this.apply(new UserDisconnectedEvent(this));
+    this.apply(new UserDisconnectedEvent(this.id));
   }
   sendsMessage(content: string, senderId: string, roomId: RoomId) {
     this.apply(new UserSentMessageEvent(content, senderId, roomId));

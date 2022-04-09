@@ -1,15 +1,12 @@
-import { BaseEvent } from '../common';
 import { ApplicationEventEnum } from '../application-events.type';
-import { User } from '../user';
+import { BaseEvent, UserId } from '../common';
 
 export class UserConnectedEvent extends BaseEvent {
   type: number;
-  userId: string;
   createdAt: Date;
-  constructor(public readonly user: User) {
+  constructor(public readonly userId: UserId) {
     super();
     this.type = ApplicationEventEnum.USER_CONNECTED;
-    this.userId = user.id;
     this.createdAt = new Date();
   }
 }
