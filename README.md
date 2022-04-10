@@ -28,7 +28,7 @@ You should a working local version of the whole stack.
 React
 # Workflow
 
-[Workflow diagram](https://drive.google.com/file/d/1q62mHldFfE58FSGk1AmAc2_ivdUsDYws/view?usp=sharing)
+[Workflow diagram](https://drive.google.com/file/d/1XJzlzoQUj-PqQLEX88pa8PiPA7PyO-d4/view?usp=sharing)
 
 # Domain structure
 
@@ -199,3 +199,17 @@ enum ApplicationEventEnum {
   - userId: string
   - pollId: string
   - pollChoiceIndex: number
+# Development Roadmap
+
+## Create Command Workflow
+
+1. Create Event Store 
+2. 
+
+## 1. Finalize Query Api 
+
+## 2. Create UI Prototype with React
+
+### Design Roadmap Priorities
+
+1. Provide HTML/CSS for Chat
