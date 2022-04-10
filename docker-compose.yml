@@ -12,24 +12,16 @@ services:
     restart: always
     container_name: mongo
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=admin
-      - MONGO_INITDB_ROOT_PASSWORD=someverys3ecretspassw0rd
+      - MONGO_INITDB_ROOT_USERNAME=gspanos
+      - MONGO_INITDB_ROOT_PASSWORD=37Axlad1a
     ports:
       - 35000:27017
     volumes:
       - './data/mongo:/data/db'
-  sql-server:
-    image: mcr.microsoft.com/mssql/server:2019-latest
-    container_name: sql-server
-    restart: always
-    ports:
-      - 1433:1433
-    environment:
-      - SA_PASSWORD=Someverys3ecretsp@ssw0rd
-      - ACCEPT_EULA=Y
-    volumes:
-      - sql-data-volume:/var/opt/mssql
   command-api:
+    depends_on:
+      - mongodb
+      - rabbitmq
     build:
       context: .
       dockerfile: docker/command-api.dockerfile
@@ -39,6 +31,9 @@ services:
     ports:
       - 3333:3333
   query-api:
+    depends_on:
+      - mongodb
+      - rabbitmq
     build:
       context: .
       dockerfile: docker/query-api.dockerfile
@@ -47,5 +42,3 @@ services:
     container_name: query-api
     ports:
       - 4444:4444
-volumes:
-  sql-data-volume:
