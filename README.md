@@ -202,7 +202,7 @@ enum ApplicationEventEnum {
 
 # Development Roadmap
 
-## Create Command API
+## 1. Create Command API
 
 - [x] Create Persistence Layer
   - [x] Create Event Store 
@@ -211,7 +211,7 @@ enum ApplicationEventEnum {
   - [x] Save events to Event Store
   - [x] Emit Event to Message Broker(RabbitMQ)
 
-## 1. Create Query API
+## 2. Create Query API
 
 - [x] Create Persitence Layer
   - [x] Finalize Database Entities
@@ -222,7 +222,7 @@ enum ApplicationEventEnum {
   - [ ] Emit Web Socket messages after consuming events from Message Broker
 
 
-## 2. Create Client with React
+## 3. Create Client with React
 
 ### Design Roadmap Priorities
 
