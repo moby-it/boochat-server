@@ -1,26 +1,11 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { SequelizeModule, SequelizeModuleOptions } from '@nestjs/sequelize';
-import { Room } from './model';
+import { MongooseModule } from '@nestjs/mongoose';
+import { READ_DB_CONNECTION_NAME, READ_DB_NAME, READ_SERVER_URL } from './common';
 @Module({
   imports: [
-    SequelizeModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: (config: ConfigService) => {
-        const sqlConfig: SequelizeModuleOptions = {
-          dialect: 'mssql',
-          host: config.get('SQL_HOST'),
-          port: +config.get('SQL_PORT'),
-          username: config.get('SQL_USERNAME'),
-          password: config.get('SQL_PASSWORD'),
-          database: config.get('SQL_DB_NAME'),
-          models: [Room],
-          autoLoadModels: true,
-          synchronize: true
-        };
-        return sqlConfig;
-      },
-      inject: [ConfigService]
+    MongooseModule.forRoot(process.env[READ_SERVER_URL] as string, {
+      connectionName: READ_DB_CONNECTION_NAME,
+      dbName: process.env[READ_DB_NAME]
     })
   ]
 })

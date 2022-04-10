@@ -1,0 +1,3 @@
+export const READ_DB_CONNECTION_NAME = 'READ_DB_CONNECTION';
+export const READ_DB_NAME = 'READ_DB_NAME';
+export const READ_SERVER_URL = 'READ_SERVER_URL';
