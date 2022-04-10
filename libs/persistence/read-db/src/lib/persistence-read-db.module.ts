@@ -16,9 +16,9 @@ import { Room } from './model';
           database: config.get('SQL_DB_NAME'),
           models: [Room],
           autoLoadModels: true,
-          synchronize: true
+          synchronize: true,
+          dialectOptions: {}
         };
-        console.log(sqlConfig);
         return sqlConfig;
       },
       inject: [ConfigService]
