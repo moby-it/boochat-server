@@ -66,10 +66,11 @@ export class RoomsGateway implements OnGatewayDisconnect {
     user.commit();
   }
   @SubscribeMessage('createRoom')
-  async createRoom(@MessageBody() createCreateRoomEventDto: CreateRoomDto): Promise<void> {
-    const user = await this.getUser(createCreateRoomEventDto.userId);
+  async createRoom(@MessageBody() createRoomEventDto: CreateRoomDto): Promise<void> {
+    const user = await this.getUser(createRoomEventDto.userId);
     if (!user) throw new WsException(`createRoom: UserId was not found`);
-    user.createRoom(createCreateRoomEventDto.roomName, createCreateRoomEventDto.userIds);
+    const { roomName, imageUrl, userIds } = createRoomEventDto;
+    user.createRoom(roomName, imageUrl, userIds);
     user.commit();
   }
   private async getUser(userId: UserId): Promise<User | undefined> {

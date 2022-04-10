@@ -55,8 +55,8 @@ export class User extends AggregateRootEntity<UserProps> {
   sendsMessage(content: string, senderId: string, roomId: RoomId) {
     this.apply(new UserSentMessageEvent(content, senderId, roomId));
   }
-  createRoom(roomName: string, userIds: string[]) {
-    this.apply(new UserCreatedRoomEvent(this.id, roomName, userIds));
+  createRoom(roomName: string, imageUrl: string, userIds: string[]) {
+    this.apply(new UserCreatedRoomEvent(this.id, roomName, imageUrl, userIds));
   }
   inviteUserToRoom(inviteeId: UserId, roomId: RoomId) {
     this.apply(new UserInvitedToRoomEvent(this.id, inviteeId, roomId));

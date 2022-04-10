@@ -1,8 +1,9 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "watch": true,
+    "noEmit": true,
     "rootDir": ".",
-    "sourceMap": true,
     "moduleResolution": "node",
     "strict": true,
     "emitDecoratorMetadata": true,
@@ -41,6 +42,8 @@
   },
   "exclude": [
     "node_modules",
-    "tmp"
+    "tmp",
+    "apps/client-e2e",
+    "apps/client"
   ]
 }

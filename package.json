@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "watch:ts": "tsc -p tsconfig.base.json --watch --noEmit",
+    "watch:ts": "tsc -p tsconfig.watch.json",
     "start:command-api": "nx serve command-api",
     "start:query-api": "nx serve query-api",
     "build:client": "nx build client",

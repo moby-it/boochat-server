@@ -7,6 +7,7 @@ interface RoomProps {
   users: Partial<User>[] & Pick<User, 'id'>[];
   messages: Message[];
   unreadMessages?: number;
+  imageUrl: string;
 }
 export class Room extends Entity<RoomProps> {
   @Expose()
@@ -28,6 +29,10 @@ export class Room extends Entity<RoomProps> {
   @Expose()
   get unreadMessages() {
     return this._props.unreadMessages;
+  }
+  @Expose()
+  get imageUrl() {
+    return this._props.imageUrl;
   }
   private constructor(props: RoomProps, id: string) {
     super(props, id);
