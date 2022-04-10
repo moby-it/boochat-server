@@ -8,7 +8,8 @@
     "start:query-api": "nx serve query-api",
     "build:client": "nx build client",
     "build": "nx build",
-    "test": "nx test"
+    "test": "nx test",
+    "prettify:all": "prettier --write ."
   },
   "private": true,
   "devDependencies": {

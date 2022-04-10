@@ -1,6 +1,10 @@
 import { ConfigService } from '@nestjs/config';
 import { ClientProxyFactory, Transport } from '@nestjs/microservices';
-import { ROOM_EVENTS_QUEUE, MEETUP_EVENTS_QUEUE, APPLICATION_EVENTS_QUEUE } from './event-bus/event-bus.constants';
+import {
+  ROOM_EVENTS_QUEUE,
+  MEETUP_EVENTS_QUEUE,
+  APPLICATION_EVENTS_QUEUE
+} from './event-bus/event-bus.constants';
 
 export const RoomEventBusProvider = {
   provide: ROOM_EVENTS_QUEUE,

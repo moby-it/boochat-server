@@ -1,5 +1,12 @@
 import { GetUserByIdQuery, GetUserByIdQueryResult } from '@boochat/application';
-import { CreateRoomDto, InviteUserToRoomDto, User, UserClosedRoomDto, UserId, UserLeftRoomDto } from '@boochat/domain';
+import {
+  CreateRoomDto,
+  InviteUserToRoomDto,
+  User,
+  UserClosedRoomDto,
+  UserId,
+  UserLeftRoomDto
+} from '@boochat/domain';
 import { QueryBus } from '@nestjs/cqrs';
 import {
   MessageBody,
