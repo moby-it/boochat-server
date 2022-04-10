@@ -8,6 +8,6 @@
     "persistence-read-db": "libs/persistence/read-db",
     "persistence-shared-db": "libs/persistence/shared-db",
     "query-api": "apps/query-api",
-    "ui-client": "apps/ui/client"
+    "client": "apps/ui/client"
   }
 }

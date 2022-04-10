@@ -6,6 +6,7 @@
     "watch:ts": "tsc -p tsconfig.base.json --watch --noEmit",
     "start:command-api": "nx serve command-api",
     "start:query-api": "nx serve query-api",
+    "build:client": "nx build client",
     "build": "nx build",
     "test": "nx test"
   },
