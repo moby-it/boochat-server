@@ -3,7 +3,7 @@ import { Controller } from '@nestjs/common';
 import { EventPattern, Transport } from '@nestjs/microservices';
 
 @Controller()
-export class ApplicationEventsController {
+export class AppEventsController {
   @EventPattern(ApplicationEventEnum[ApplicationEventEnum.USER_CONNECTED], Transport.RMQ)
   async userConnected(event: UserConnectedEvent) {
     console.log(event);

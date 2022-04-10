@@ -21,7 +21,7 @@ interface UserProps {
   imageUrl: string;
 }
 export class User extends AggregateRootEntity<UserProps> {
-  // @Expose()
+  @Expose()
   get id() {
     return this._id;
   }
