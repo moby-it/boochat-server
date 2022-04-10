@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import styles from './app.module.css';
 import NxWelcome from './nx-welcome';
 
@@ -6,7 +7,7 @@ import { Route, Link } from 'react-router-dom';
 export function App() {
   return (
     <>
-      <NxWelcome title="ui-client" />
+      <NxWelcome title="client" />
       <div />
 
       {/* START: routes */}

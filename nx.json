@@ -44,5 +44,6 @@
         "linter": "eslint"
       }
     }
-  }
+  },
+  "defaultProject": "client"
 }

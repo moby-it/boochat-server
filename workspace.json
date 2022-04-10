@@ -2,12 +2,13 @@
   "version": 2,
   "projects": {
     "application": "libs/application",
+    "client": "apps/client",
+    "client-e2e": "apps/client-e2e",
     "command-api": "apps/command-api",
     "domain": "libs/domain",
     "persistence-events-store": "libs/persistence/events-store",
     "persistence-read-db": "libs/persistence/read-db",
     "persistence-shared-db": "libs/persistence/shared-db",
-    "query-api": "apps/query-api",
-    "client": "apps/ui/client"
+    "query-api": "apps/query-api"
   }
 }
