@@ -1,12 +1,14 @@
-import { Message } from '../message';
 import { Expose } from 'class-transformer';
 import { Entity, Guard } from '../common';
+import { Message } from '../message';
 import { User } from '../user';
+import { RoomAlert, RoomAlertStatus } from './room-alert';
+import { RoomAnnouncement } from './room-announcement';
 interface RoomProps {
   name: string;
   users: Partial<User>[] & Pick<User, 'id'>[];
-  messages: Message[];
-  unreadMessages?: number;
+  items: Array<Message | RoomAnnouncement>;
+  alerts: RoomAlert[];
   imageUrl: string;
 }
 export class Room extends Entity<RoomProps> {
@@ -18,22 +20,28 @@ export class Room extends Entity<RoomProps> {
   get name() {
     return this._props.name;
   }
-  @Expose()
   get messages() {
-    return this._props.messages;
+    return this._props.items.filter((item) => item instanceof Message) as Message[];
+  }
+  get annoucements() {
+    return this._props.items.filter((item) => item instanceof RoomAnnouncement) as RoomAnnouncement[];
+  }
+  @Expose()
+  get items() {
+    return this._props.items;
   }
   @Expose()
   get users() {
     return this._props.users;
   }
   @Expose()
-  get unreadMessages() {
-    return this._props.unreadMessages;
-  }
-  @Expose()
   get imageUrl() {
     return this._props.imageUrl;
   }
+  get activeAlerts() {
+    return this._props.alerts.filter((alert) => alert.status === RoomAlertStatus.ACTIVE);
+  }
+
   private constructor(props: RoomProps, id: string) {
     super(props, id);
   }

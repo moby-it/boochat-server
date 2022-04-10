@@ -2,6 +2,7 @@ import { Expose } from 'class-transformer';
 import { Room } from '../room';
 import { AggregateRootEntity } from '../common';
 import { User } from '../user';
+import { Poll } from '../poll';
 interface MeetupProps {
   name: string;
   organizer: Partial<User> & Pick<User, 'id'>;
@@ -9,6 +10,7 @@ interface MeetupProps {
   attendants: Array<Partial<User> & Pick<User, 'id'>>;
   takesPlaceOn: Date;
   room: Partial<Room> & Pick<Room, 'id'>;
+  polls: Poll[];
 }
 export class Meetup extends AggregateRootEntity<MeetupProps> {
   @Expose()
@@ -34,6 +36,10 @@ export class Meetup extends AggregateRootEntity<MeetupProps> {
   @Expose()
   get location() {
     return this._props.location;
+  }
+  @Expose()
+  get polls() {
+    return this._props.polls;
   }
   private constructor(props: MeetupProps, id: string) {
     super(props, id);
