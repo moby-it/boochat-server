@@ -3,7 +3,7 @@ import { InjectConnection } from '@nestjs/mongoose';
 import { Connection, Model } from 'mongoose';
 import { v4 as uuid } from 'uuid';
 import { SHARED_DB_CONNECTION_NAME } from '../common';
-import { CreateUserDto, UserDto } from './user.dto';
+import { CreateUserDto, UserDto } from '@boochat/domain';
 import { User, UserDocument } from './user.schema';
 @Injectable()
 export class UserPersistenceService {
