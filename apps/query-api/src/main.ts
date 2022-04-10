@@ -14,12 +14,16 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const port = process.env.PORT || 4444;
   const config = app.get(ConfigService);
-  const queues = [config.get(ROOM_EVENTS_QUEUE), config.get(MEETUP_EVENTS_QUEUE), config.get(APPLICATION_EVENTS_QUEUE)];
+  const queues = [
+    getMandatoryVariable<string>(config, ROOM_EVENTS_QUEUE),
+    getMandatoryVariable<string>(config, MEETUP_EVENTS_QUEUE),
+    getMandatoryVariable<string>(config, APPLICATION_EVENTS_QUEUE)
+  ];
   for (const queue of queues) {
     app.connectMicroservice<MicroserviceOptions>({
       transport: Transport.RMQ,
       options: {
-        urls: [config.get('RABBITMQ_URL') as string],
+        urls: [getMandatoryVariable<string>(config, 'RABBITMQ_URL')],
         queue
       }
     });
@@ -30,3 +34,10 @@ async function bootstrap() {
 }
 
 bootstrap();
+
+function getMandatoryVariable<T>(config: ConfigService, variableName: string): T {
+  const configVariable = config.get(variableName);
+  if (configVariable === undefined)
+    throw new Error(`Cannot start application with ${variableName}=undefined`);
+  return configVariable;
+}
