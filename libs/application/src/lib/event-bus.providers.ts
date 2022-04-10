@@ -11,6 +11,7 @@ export const RoomEventBusProvider = {
   useFactory: (configService: ConfigService) => {
     const roomEventQueueName = configService.get('ROOM_EVENTS_QUEUE');
     const eventBusUrl = configService.get('RABBITMQ_URL');
+    if (!roomEventQueueName || !eventBusUrl) throw new Error(`Invalid configuration. Queue Env vars missing`);
     return ClientProxyFactory.create({
       transport: Transport.RMQ,
       options: {
@@ -26,6 +27,9 @@ export const MeetupEventBusProvider = {
   useFactory: (configService: ConfigService) => {
     const meetupEventQueueName = configService.get('MEETUP_EVENTS_QUEUE');
     const eventBusUrl = configService.get('RABBITMQ_URL');
+    if (!meetupEventQueueName || !eventBusUrl)
+      throw new Error(`Invalid configuration. Queue Env vars missing`);
+
     return ClientProxyFactory.create({
       transport: Transport.RMQ,
       options: {
@@ -41,6 +45,9 @@ export const ApplicationEventBusProvider = {
   useFactory: (configService: ConfigService) => {
     const applicationEventQueueName = configService.get('APPLICATION_EVENTS_QUEUE');
     const eventBusUrl = configService.get('RABBITMQ_URL');
+    if (!applicationEventQueueName || !eventBusUrl)
+      throw new Error(`Invalid configuration. Queue Env vars missing`);
+
     return ClientProxyFactory.create({
       transport: Transport.RMQ,
       options: {
