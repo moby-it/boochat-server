@@ -199,17 +199,40 @@ enum ApplicationEventEnum {
   - userId: string
   - pollId: string
   - pollChoiceIndex: number
+
 # Development Roadmap
 
-## Create Command Workflow
+## Create Command API
 
-1. Create Event Store 
-2. 
+- [x] Create Persistence Layer
+  - [x] Create Event Store 
+- [x] Create Domain Events
+- [x] Handle Domain Events in Application Layer
+  - [x] Save events to Event Store
+  - [x] Emit Event to Message Broker(RabbitMQ)
 
-## 1. Finalize Query Api 
+## 1. Create Query API
 
-## 2. Create UI Prototype with React
+- [x] Create Persitence Layer
+  - [x] Finalize Database Entities
+  - [ ] Create Database Architecture for saving denormalized events
+- [ ] Req/Res Layer
+  - [ ] Create Queries and Query Handlers
+- [ ] Web Socket Layer 
+  - [ ] Emit Web Socket messages after consuming events from Message Broker
+
+
+## 2. Create Client with React
 
 ### Design Roadmap Priorities
 
-1. Provide HTML/CSS for Chat
+Provide HTML/CSS for:
+
+1. Sidenav
+2. Room Slot
+3. SentMessage
+3. ReceivedMessage
+4. Meetup Slot
+4. Expanded Meetup Slot
+5. RoomWindow
+5. RoomList
