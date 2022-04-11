@@ -1,5 +1,5 @@
 import { BaseEvent, RoomId } from '../common';
-import { MeetupEventEnum } from '../meetups';
+import { MeetupEventEnum } from '../meetup';
 
 export class UserChangedRoomImageEvent extends BaseEvent {
   type: number;

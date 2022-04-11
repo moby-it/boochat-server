@@ -1,6 +1,6 @@
 import { BaseEvent } from '../common';
-import { MeetupEventEnum } from '../meetups';
-import { Rsvp } from '../meetups/rsvp.enum';
+import { MeetupEventEnum } from '../meetup';
+import { Rsvp } from '../meetup/rsvp.enum';
 
 export class UserChangedRsvpEvent extends BaseEvent {
   type: number;

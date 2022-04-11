@@ -1,5 +1,5 @@
 import { BaseEvent, PollId, UserId } from '../common';
-import { MeetupEventEnum } from '../meetups';
+import { MeetupEventEnum } from '../meetup';
 
 export class PollClosedEvent extends BaseEvent {
   type: number;

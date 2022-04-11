@@ -14,7 +14,7 @@ import {
   UserCreatedPollEvent
 } from '../events';
 import { UserCastPollVoteEvent } from '../events/user-cast-poll-vote.event';
-import { Rsvp } from '../meetups/rsvp.enum';
+import { Rsvp } from '../meetup/rsvp.enum';
 interface UserProps {
   name: string;
   googleId: string;

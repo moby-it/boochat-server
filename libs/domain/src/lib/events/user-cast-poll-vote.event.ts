@@ -1,5 +1,5 @@
 import { BaseEvent } from '../common';
-import { MeetupEventEnum } from '../meetups';
+import { MeetupEventEnum } from '../meetup';
 
 export class UserCastPollVoteEvent extends BaseEvent {
   type: number;
