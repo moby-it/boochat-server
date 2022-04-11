@@ -1,10 +1,10 @@
-import { Entity, MeetupId, UserId } from '../common';
-import { User } from '../user';
+import { Entity, MeetupId, UserId } from '../../common';
+import { User } from '../../user';
 import { PollVote } from './vote';
 export enum PollTypeEnum {
   GENERIC_POLL,
-  RESCHEDULE_MEETUP_POLL,
-  RELOCATE_MEETUP_POLL
+  RESCHEDULE_POLL,
+  RELOCATE_POLL
 }
 export enum PollStatusEnum {
   CLOSED,

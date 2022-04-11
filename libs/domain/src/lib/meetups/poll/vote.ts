@@ -1,4 +1,4 @@
-import { PollId, UserId, ValueObject } from '../common';
+import { PollId, UserId, ValueObject } from '../../common';
 
 interface PollVoteProps {
   userId: UserId;

@@ -6,7 +6,7 @@ import { RoomAlert, RoomAlertStatus } from './room-alert';
 import { RoomAnnouncement } from './room-announcement';
 interface RoomProps {
   name: string;
-  users: Partial<User>[] & Pick<User, 'id'>[];
+  participants: Partial<User>[] & Pick<User, 'id'>[];
   items: Array<Message | RoomAnnouncement>;
   alerts: RoomAlert[];
   imageUrl: string;
@@ -31,8 +31,8 @@ export class Room extends Entity<RoomProps> {
     return this._props.items;
   }
   @Expose()
-  get users() {
-    return this._props.users;
+  get participants() {
+    return this._props.participants;
   }
   @Expose()
   get imageUrl() {
@@ -47,6 +47,7 @@ export class Room extends Entity<RoomProps> {
   }
   public static create(props: RoomProps, id: string) {
     Guard.AgainstNullOrUndefined([{ propName: 'name', value: props.name }]);
+    Guard.AgainstEmptyArray({ propName: 'participants', value: props.participants });
     return new Room(props, id);
   }
 }

@@ -2,7 +2,7 @@ import { Expose } from 'class-transformer';
 import { Room } from '../room';
 import { AggregateRootEntity } from '../common';
 import { User } from '../user';
-import { Poll } from '../poll';
+import { Poll } from './poll';
 interface MeetupProps {
   name: string;
   organizer: Partial<User> & Pick<User, 'id'>;
