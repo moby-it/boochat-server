@@ -4,6 +4,8 @@ export abstract class MongoEntity {
   _id!: string;
   @Prop({ required: true })
   createdAt!: Date;
+  @Prop({ required: true })
+  updatedAt!: Date;
   get id() {
     return this._id;
   }

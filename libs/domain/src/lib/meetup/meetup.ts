@@ -3,6 +3,7 @@ import { Room } from '../room';
 import { AggregateRootEntity } from '../common';
 import { User } from '../user';
 import { Poll } from './poll';
+import { MeetupAlert } from './meetup-alert';
 interface MeetupProps {
   name: string;
   organizer: Partial<User> & Pick<User, 'id'>;
@@ -11,6 +12,7 @@ interface MeetupProps {
   takesPlaceOn: Date;
   room: Partial<Room> & Pick<Room, 'id'>;
   polls: Poll[];
+  alerts: MeetupAlert[];
 }
 export class Meetup extends AggregateRootEntity<MeetupProps> {
   @Expose()

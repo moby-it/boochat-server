@@ -1,14 +1,13 @@
 import { Expose } from 'class-transformer';
 import { Entity, Guard } from '../common';
-import { Message } from '../message';
+import { Message } from './message';
 import { User } from '../user';
-import { RoomAlert, RoomAlertStatus } from './room-alert';
 import { RoomAnnouncement } from './room-announcement';
+import { RoomItem } from './room-item';
 interface RoomProps {
   name: string;
   participants: Partial<User>[] & Pick<User, 'id'>[];
-  items: Array<Message | RoomAnnouncement>;
-  alerts: RoomAlert[];
+  items: RoomItem[];
   imageUrl: string;
 }
 export class Room extends Entity<RoomProps> {
@@ -37,9 +36,6 @@ export class Room extends Entity<RoomProps> {
   @Expose()
   get imageUrl() {
     return this._props.imageUrl;
-  }
-  get activeAlerts() {
-    return this._props.alerts.filter((alert) => alert.status === RoomAlertStatus.ACTIVE);
   }
 
   private constructor(props: RoomProps, id: string) {
