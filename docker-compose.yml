@@ -1,23 +1,13 @@
 services:
-  rabbitmq:
-    image: rabbitmq:3-management
-    restart: always
-    container_name: rabbitmq
-    hostname: event-bus
+  client:
+    depends_on:
+      - query-api
+      - command-api
+    build:
+      context: .
+      dockerfile: docker/client.dockerfile
     ports:
-      - 9000:5672
-      - 8080:15672
-  mongodb:
-    image: mongo
-    restart: always
-    container_name: mongo
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=gspanos
-      - MONGO_INITDB_ROOT_PASSWORD=37Axlad1a
-    ports:
-      - 35000:27017
-    volumes:
-      - './data/mongo:/data/db'
+      - 4200:80
   command-api:
     depends_on:
       - mongodb
@@ -42,3 +32,22 @@ services:
     container_name: query-api
     ports:
       - 4444:4444
+  rabbitmq:
+    image: rabbitmq:3-management
+    restart: always
+    container_name: rabbitmq
+    hostname: event-bus
+    ports:
+      - 9000:5672
+      - 8080:15672
+  mongodb:
+    image: mongo
+    restart: always
+    container_name: mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=gspanos
+      - MONGO_INITDB_ROOT_PASSWORD=37Axlad1a
+    ports:
+      - 35000:27017
+    volumes:
+      - './data/mongo:/data/db'
