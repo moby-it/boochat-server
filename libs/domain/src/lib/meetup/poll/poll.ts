@@ -28,22 +28,6 @@ export class Poll extends Entity<PollProps> {
   static create(props: PollProps, id: string) {
     return new Poll(props, id);
   }
-  static createFromDto(dto: PollDto) {
-    return new Poll(
-      {
-        creatorId: dto.creatorId,
-        dateCreated: dto.dateCreated,
-        description: dto.description,
-        meetupId: dto.meetupId,
-        participantIds: dto.participantIds,
-        pollChoices: dto.pollChoices,
-        status: dto.status,
-        type: dto.type,
-        votes: dto.votes.map((vote) => new PollVote(vote))
-      },
-      dto.id
-    );
-  }
   public get isActive() {
     return this._props.status === PollStatusEnum.ACTIVE;
   }

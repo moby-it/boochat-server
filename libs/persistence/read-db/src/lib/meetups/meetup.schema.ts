@@ -1,8 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 import { MongoEntity } from '../common';
-import { MeetupAlert } from './alerts';
-import { Poll } from './polls/poll.schema';
+import { AlertDocument } from './alerts';
+import { PollDocument } from './polls/poll.schema';
 export type MeetupDocument = Meetup & Document;
 @Schema({
   timestamps: true
@@ -21,9 +21,9 @@ export class Meetup extends MongoEntity {
   @Prop({ required: true })
   roomId!: string;
   @Prop({ type: Types.ArraySubdocument })
-  polls!: Poll[];
+  polls!: PollDocument[];
   @Prop({ type: Types.ArraySubdocument })
-  alerts!: MeetupAlert[];
+  alerts!: AlertDocument[];
 }
 
 export const MeetupSchema = SchemaFactory.createForClass(Meetup);

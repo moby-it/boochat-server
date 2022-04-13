@@ -8,7 +8,7 @@ export class AuthService {
   public async authenticate(userDto: UserDto): Promise<User> {
     try {
       let user = await this.userService.findOneByGoogleId(userDto.googleId);
-      if (!user?.id) {
+      if (!user) {
         user = await this.userService.create(userDto);
       }
       return User.create(

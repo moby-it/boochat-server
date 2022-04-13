@@ -1,7 +1,8 @@
 import { PollStatusEnum, PollTypeEnum } from '@boochat/domain';
 import { Prop, Schema } from '@nestjs/mongoose';
 import { MongoEntity } from '../../common';
-import { Types } from 'mongoose';
+import { Types, Document } from 'mongoose';
+export type PollDocument = Poll & Document;
 export interface PollVote {
   userId: string;
   choiceIndex: number;

@@ -12,7 +12,7 @@ export class UserPersistenceService {
     this.userModel = connection.model(User.name);
   }
 
-  async create(createUserDto: CreateUserDto): Promise<UserDto> {
+  async create(createUserDto: CreateUserDto): Promise<UserDocument> {
     const createdUser = new this.userModel({
       _id: uuid(),
       ...createUserDto,
