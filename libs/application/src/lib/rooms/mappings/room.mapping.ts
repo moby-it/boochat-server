@@ -24,7 +24,8 @@ function ToRoomWithLastItem(document: RoomWithLastItemDocument): Room {
       name: document.name,
       participants: document.participantIds.map((id) => ({ id })),
       imageUrl: document.imageUrl,
-      items: [toRoomItem(document.lastItem)]
+      items: [toRoomItem(document.lastItem)],
+      hasUnreadMessage: false
     },
     document.id
   );
@@ -40,7 +41,8 @@ export function ToRoomWithItems(document: RoomWithItemsDocument): Room {
       name: document.name,
       participants: document.participantIds.map((id) => ({ id })),
       imageUrl: document.imageUrl,
-      items: document.items.map(toRoomItem)
+      items: document.items.map(toRoomItem),
+      hasUnreadMessage: false
     },
     document.id
   );

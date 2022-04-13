@@ -9,6 +9,7 @@ interface RoomProps {
   participants: Partial<User>[] & Pick<User, 'id'>[];
   items: RoomItem[];
   imageUrl: string;
+  hasUnreadMessage: boolean;
 }
 export class Room extends Entity<RoomProps> {
   @Expose()
@@ -37,7 +38,10 @@ export class Room extends Entity<RoomProps> {
   get imageUrl() {
     return this._props.imageUrl;
   }
-
+  @Expose()
+  get hasUnreadMessage() {
+    return this._props.hasUnreadMessage;
+  }
   private constructor(props: RoomProps, id: string) {
     super(props, id);
   }
@@ -45,5 +49,11 @@ export class Room extends Entity<RoomProps> {
     Guard.AgainstNullOrUndefined([{ propName: 'name', value: props.name }]);
     Guard.AgainstEmptyArray({ propName: 'participants', value: props.participants });
     return new Room(props, id);
+  }
+  changeToUnread() {
+    this._props.hasUnreadMessage = true;
+  }
+  changeToRead() {
+    this._props.hasUnreadMessage = false;
   }
 }

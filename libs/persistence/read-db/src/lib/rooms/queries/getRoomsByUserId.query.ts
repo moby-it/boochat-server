@@ -25,7 +25,8 @@ export const findByUserIdQuery = (userId: string) => [
         }
       },
       participants: 1,
-      imageUrl: 1
+      imageUrl: 1,
+      lastVisits: 1
     }
   }
 ];

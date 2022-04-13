@@ -1,7 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Document, Types } from 'mongoose';
 import { MongoEntity } from '../common';
 import { RoomItemDocument } from '../room-items';
+import { LastVisit } from './lastVisits';
 export type RoomDocument = Room & Document;
 export type RoomWithLastItemDocument = RoomDocument & { lastItem: RoomItemDocument };
 export type RoomWithItemsDocument = RoomDocument & { items: RoomItemDocument[] };
@@ -15,6 +16,8 @@ export class Room extends MongoEntity {
   participantIds!: string[];
   @Prop()
   imageUrl!: string;
+  @Prop({ type: Types.Array, default: [] })
+  lastVisit!: LastVisit[];
 }
 
 export const RoomSchema = SchemaFactory.createForClass(Room);
