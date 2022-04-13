@@ -13,6 +13,7 @@ import { MeetupEventHandlers } from './meetups';
 import { PersistenceEventStoreModule } from '@boochat/persistence/events-store';
 import { PersistenceSharedDbModule } from '@boochat/persistence/shared-db';
 import { AuthService } from './users/auth.service';
+import { Mapper } from './mapper';
 
 @Module({
   imports: [CqrsModule, ConfigModule, PersistenceEventStoreModule, PersistenceSharedDbModule],
@@ -25,7 +26,8 @@ import { AuthService } from './users/auth.service';
     ...RoomEventHandlers,
     ...MeetupEventHandlers,
     ...UserEventHandlers,
-    AuthService
+    AuthService,
+    Mapper
   ],
   exports: [AuthService]
 })
