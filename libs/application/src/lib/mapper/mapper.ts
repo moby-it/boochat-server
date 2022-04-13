@@ -8,7 +8,7 @@ export class Mapper {
     fromDocumentsToUsers: UserMappings.fromDocumentsToEntities
   };
   meetups = {
-    fromDocumentToUser: MeetupsMappings.fromDocumentToEntity,
-    fromDocumentsToUsers: MeetupsMappings.fromDocumentsToEntities
+    fromDocumentToMeetup: MeetupsMappings.fromDocumentToEntity,
+    fromDocumentsToMeetups: MeetupsMappings.fromDocumentsToEntities
   };
 }

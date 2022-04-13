@@ -1,11 +1,15 @@
-import { Controller, Get, NotImplementedException } from '@nestjs/common';
+import { GetMeetupsQuery, GetMeetupsQueryResponse } from '@boochat/application';
+import { UserId } from '@boochat/domain';
+import { Controller, Get, Param } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 
-@Controller('meetup')
+@Controller('meetups')
 export class MeetupController {
   constructor(private queryBus: QueryBus) {}
-  @Get()
-  async getMeetups() {
-    throw new NotImplementedException();
+  @Get('getByUserId/:id')
+  async getMeetupsByUserId(@Param('id') userId: UserId) {
+    const result = (await this.queryBus.execute(new GetMeetupsQuery(userId))) as GetMeetupsQueryResponse;
+    if (result.succeded) return result.props;
+    return result.error;
   }
 }
