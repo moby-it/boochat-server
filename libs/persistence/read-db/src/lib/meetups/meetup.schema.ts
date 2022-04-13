@@ -11,11 +11,11 @@ export class Meetup extends MongoEntity {
   @Prop({ required: true })
   name!: string;
   @Prop({ required: true })
-  organizer!: string;
+  organizerId!: string;
   @Prop({ required: true })
   location!: string;
   @Prop({ required: true })
-  attendantIds!: string[];
+  attendeeIds!: string[];
   @Prop()
   takesPlaceOn!: Date;
   @Prop({ required: true })

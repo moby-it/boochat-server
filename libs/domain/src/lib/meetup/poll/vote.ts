@@ -5,8 +5,9 @@ interface PollVoteProps {
   choiceIndex: number;
   pollId: PollId;
 }
-export class PollVote extends ValueObject<PollVoteProps> {
+export class PollVote extends ValueObject<PollVoteProps> implements Record<string, unknown> {
   constructor(props: PollVoteProps) {
     super(props);
   }
+  [x: string]: unknown;
 }

@@ -21,16 +21,16 @@ export class UserPersistenceService {
     return createdUser.save();
   }
 
-  async findAll(): Promise<UserDto[]> {
+  async findAll(): Promise<UserDocument[]> {
     return await this.userModel.find({}).exec();
   }
-  async findById(id: string): Promise<UserDto | null> {
+  async findById(id: string): Promise<UserDocument | null> {
     return await this.userModel.findOne({ _id: id }).exec();
   }
-  async findByGoogleId(googleIds: string[]): Promise<UserDto[]> {
+  async findByGoogleId(googleIds: string[]): Promise<UserDocument[]> {
     return await this.userModel.find({ googleId: { $in: googleIds } }).exec();
   }
-  async findOneByGoogleId(googleId: string): Promise<UserDto | undefined> {
+  async findOneByGoogleId(googleId: string): Promise<UserDocument | undefined> {
     return (await this.userModel.findOne({ googleId }).exec()) as UserDocument;
   }
   async update(id: string, userDto: UserDto): Promise<void> {

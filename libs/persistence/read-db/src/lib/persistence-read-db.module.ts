@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { READ_DB_CONNECTION_NAME, READ_DB_NAME, READ_SERVER_URL } from './common';
-import { MeetupModule, MeetupService, MeetupsRepository } from './meetups';
-import { RoomItemService, RoomItemModule } from './room-items';
+import { MeetupModule, MeetupsRepository } from './meetups';
+import { RoomItemModule, RoomItemService } from './room-items';
 import { RoomModule, RoomService, RoomsRepository } from './rooms';
 @Module({
   imports: [
@@ -14,7 +14,7 @@ import { RoomModule, RoomService, RoomsRepository } from './rooms';
     RoomModule,
     MeetupModule
   ],
-  providers: [RoomItemService, RoomService, RoomsRepository, MeetupsRepository, MeetupService],
-  exports: [RoomItemService, RoomService, RoomsRepository, MeetupsRepository, MeetupService]
+  providers: [RoomItemService, RoomService, RoomsRepository, MeetupsRepository],
+  exports: [RoomItemService, RoomService, RoomsRepository, MeetupsRepository]
 })
 export class PersistenceReadDbModule {}

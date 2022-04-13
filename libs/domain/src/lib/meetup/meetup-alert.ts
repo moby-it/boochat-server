@@ -1,16 +1,16 @@
 import { ValueObject } from '../common';
 
-export enum MeetupAlertEnum {
+export enum AlertEnum {
   PENDING_POLL,
   PENDING_RESCHEDULE_POLL,
   PENDING_RELOCATION_POLL
 }
-interface MeetupAlertProps {
-  type: MeetupAlertEnum;
+interface AlertProps {
+  type: AlertEnum;
   payload: unknown;
 }
-export class MeetupAlert extends ValueObject<MeetupAlertProps> {
-  constructor(props: MeetupAlertProps) {
+export class Alert extends ValueObject<AlertProps> {
+  constructor(props: AlertProps) {
     super(props);
   }
   public get type() {

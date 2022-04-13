@@ -1,5 +1,5 @@
 import { Entity, MeetupId, UserId } from '../../common';
-import { User } from '../../user';
+import { PollDto } from '../dtos/polls';
 import { PollVote } from './vote';
 export enum PollTypeEnum {
   GENERIC_POLL,
@@ -11,7 +11,7 @@ export enum PollStatusEnum {
   ACTIVE
 }
 interface PollProps {
-  readonly participants: Array<Partial<User> & Pick<User, 'id'>>;
+  readonly participantIds: UserId[];
   readonly type: PollTypeEnum;
   readonly status: PollStatusEnum;
   readonly votes: PollVote[];
@@ -28,10 +28,26 @@ export class Poll extends Entity<PollProps> {
   static create(props: PollProps, id: string) {
     return new Poll(props, id);
   }
+  static createFromDto(dto: PollDto) {
+    return new Poll(
+      {
+        creatorId: dto.creatorId,
+        dateCreated: dto.dateCreated,
+        description: dto.description,
+        meetupId: dto.meetupId,
+        participantIds: dto.participantIds,
+        pollChoices: dto.pollChoices,
+        status: dto.status,
+        type: dto.type,
+        votes: dto.votes.map((vote) => new PollVote(vote))
+      },
+      dto.id
+    );
+  }
   public get isActive() {
     return this._props.status === PollStatusEnum.ACTIVE;
   }
   get everyoneHasVoted() {
-    return this._props.votes.length === this._props.participants.length;
+    return this._props.votes.length === this._props.participantIds.length;
   }
 }

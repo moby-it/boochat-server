@@ -9,7 +9,5 @@ export class GetUsersQueryHandler implements IQueryHandler<GetUsersQuery> {
   constructor(private usersService: UserPersistenceService) {}
   async execute(query: GetUsersQuery): Promise<User[]> {
     const users = await this.usersService.findAll();
-    console.log(users /*  */);
-    return users.map((user) => User.create(user, user.id));
   }
 }

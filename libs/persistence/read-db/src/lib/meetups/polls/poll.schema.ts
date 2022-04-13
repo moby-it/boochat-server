@@ -1,10 +1,9 @@
 import { PollStatusEnum, PollTypeEnum } from '@boochat/domain';
 import { Prop, Schema } from '@nestjs/mongoose';
 import { MongoEntity } from '../../common';
-
+import { Types } from 'mongoose';
 export interface PollVote {
   userId: string;
-  pollId: string;
   choiceIndex: number;
 }
 
@@ -14,12 +13,14 @@ export class Poll extends MongoEntity {
   type!: PollTypeEnum;
   @Prop({ type: Number })
   status!: PollStatusEnum;
-  @Prop({ default: [] })
+  @Prop({ default: [], type: Types.Array })
+  participantIds!: string[];
+  @Prop({ required: true, type: Types.Array })
   votes!: PollVote[];
-  @Prop({ required: true })
+  @Prop({ default: [], required: true })
   creatorId!: string;
   @Prop()
   description!: string;
-  @Prop({ required: true })
+  @Prop({ required: true, type: Types.Array })
   pollChoices!: string[];
 }
