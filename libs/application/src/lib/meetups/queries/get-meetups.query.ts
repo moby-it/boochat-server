@@ -13,7 +13,7 @@ export class GetMeetupsQueryHandler implements IQueryHandler<GetMeetupsQuery> {
   async execute(query: GetMeetupsQuery): Promise<GetMeetupsQueryResponse> {
     try {
       const meetupDocuments = await this.meetupsRepository.findByUserId(query.userId);
-      return Result.success(this.mapper.meetups.fromDocumentsToMeetups(meetupDocuments));
+      return Result.success(this.mapper.meetups.fromDocuments.ToMeetups(meetupDocuments));
     } catch (e) {
       return Result.fail(e);
     }

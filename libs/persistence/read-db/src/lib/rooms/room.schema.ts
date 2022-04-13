@@ -12,7 +12,7 @@ export class Room extends MongoEntity {
   @Prop()
   name!: string;
   @Prop()
-  participants!: string[];
+  participantIds!: string[];
   @Prop()
   imageUrl!: string;
 }

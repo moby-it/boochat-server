@@ -10,6 +10,6 @@ export class GetUsersQueryHandler implements IQueryHandler<GetUsersQuery> {
   constructor(private usersService: UserPersistenceService, private mapper: Mapper) {}
   async execute(query: GetUsersQuery): Promise<User[]> {
     const users = await this.usersService.findAll();
-    return this.mapper.user.fromDocumentsToUsers(users);
+    return this.mapper.user.fromDocuments.ToUsers(users);
   }
 }

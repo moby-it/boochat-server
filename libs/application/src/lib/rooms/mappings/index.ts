@@ -1,1 +1,1 @@
-export * as RoomMappigns from './room.mapping';
+export * as RoomMappings from './room.mapping';

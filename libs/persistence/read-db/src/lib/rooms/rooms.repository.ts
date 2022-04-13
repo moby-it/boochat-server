@@ -1,5 +1,5 @@
 import { RoomId, UserId } from '@boochat/domain';
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectConnection } from '@nestjs/mongoose';
 import { Connection, Model } from 'mongoose';
 import { READ_DB_CONNECTION_NAME } from '../common';
@@ -18,7 +18,9 @@ export class RoomsRepository {
   async getRoomsByUserId(userId: UserId): Promise<RoomWithLastItemDocument[]> {
     return await this.roomModel.aggregate<RoomWithLastItemDocument>(findByUserIdQuery(userId));
   }
-  async getRoom(roomId: RoomId): Promise<RoomWithItemsDocument[]> {
-    return this.roomModel.aggregate<RoomWithItemsDocument>(findRoomByIdQuery(roomId));
+  async getRoom(roomId: RoomId): Promise<RoomWithItemsDocument> {
+    const queryResult = await this.roomModel.aggregate<RoomWithItemsDocument>(findRoomByIdQuery(roomId));
+    if (queryResult.length === 1) return queryResult[0];
+    throw new InternalServerErrorException('Invalid query result length for getRoom query');
   }
 }
