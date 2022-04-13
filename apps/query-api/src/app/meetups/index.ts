@@ -1,2 +1,1 @@
-export * from './meetup-events.controller';
-export * from './meetup.controller';
+export * from './meetups.module';
