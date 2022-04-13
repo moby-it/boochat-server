@@ -22,7 +22,7 @@ export class UserPersistenceService {
   }
 
   async findAll(): Promise<UserDto[]> {
-    return await this.userModel.find().exec();
+    return await this.userModel.find({}).exec();
   }
   async findById(id: string): Promise<UserDto | null> {
     return await this.userModel.findOne({ _id: id }).exec();

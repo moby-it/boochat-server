@@ -8,7 +8,7 @@ import {
 } from './event-bus.providers';
 import { EventBusService } from './event-bus/event-bus.service';
 import { RoomEventHandlers } from './rooms/event-handlers';
-import { ActiveUserQueryHandlers, UserEventHandlers } from './users';
+import { UserQueryHandlers, UserEventHandlers } from './users';
 import { MeetupEventHandlers } from './meetups';
 import { PersistenceEventStoreModule } from '@boochat/persistence/events-store';
 import { PersistenceSharedDbModule } from '@boochat/persistence/shared-db';
@@ -21,7 +21,7 @@ import { AuthService } from './users/auth.service';
     MeetupEventBusProvider,
     ApplicationEventBusProvider,
     EventBusService,
-    ...ActiveUserQueryHandlers,
+    ...UserQueryHandlers,
     ...RoomEventHandlers,
     ...MeetupEventHandlers,
     ...UserEventHandlers,

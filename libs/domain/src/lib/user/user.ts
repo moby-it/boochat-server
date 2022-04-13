@@ -1,20 +1,20 @@
-import { SerializeOptions } from '@nestjs/common';
 import { Expose } from 'class-transformer';
 import { AggregateRootEntity, Guard, RoomId, UserId } from '../common';
 import {
-  UserCreatedRoomEvent,
-  UserInvitedToRoomEvent,
-  UserLeftRoomEvent,
-  UserSentMessageEvent,
+  UserChangedRsvpEvent,
   UserClosedRoomEvent,
   UserConnectedEvent,
-  UserDisconnectedEvent,
   UserCreatedMeetupEvent,
-  UserChangedRsvpEvent,
-  UserCreatedPollEvent
+  UserCreatedPollEvent,
+  UserCreatedRoomEvent,
+  UserDisconnectedEvent,
+  UserInvitedToRoomEvent,
+  UserLeftRoomEvent,
+  UserSentMessageEvent
 } from '../events';
 import { UserCastPollVoteEvent } from '../events/user-cast-poll-vote.event';
 import { Rsvp } from '../meetup/rsvp.enum';
+import { UserDto } from './dtos';
 interface UserProps {
   name: string;
   googleId: string;
@@ -43,7 +43,7 @@ export class User extends AggregateRootEntity<UserProps> {
     super(props, _id);
   }
   public static create(props: UserProps, _id: string) {
-    Guard.AgainstNullOrUndefined([{ propName: 'googleId', value: props.googleId }]);
+    User.validate(props);
     return new User(props, _id);
   }
   cameOnline() {
@@ -87,5 +87,8 @@ export class User extends AggregateRootEntity<UserProps> {
   }
   voteOnPoll(pollId: string, pollChoiceIndex: number) {
     this.apply(new UserCastPollVoteEvent(this.id, pollId, pollChoiceIndex));
+  }
+  private static validate(props: UserProps) {
+    Guard.AgainstNullOrUndefined([{ propName: 'googleId', value: props.googleId }]);
   }
 }
