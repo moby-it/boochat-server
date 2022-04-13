@@ -27,3 +27,4 @@ export class Meetup extends MongoEntity {
 }
 
 export const MeetupSchema = SchemaFactory.createForClass(Meetup);
+export const MEETUP_COLLECTION_NAME = 'Meetups';

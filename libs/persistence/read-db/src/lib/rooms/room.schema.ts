@@ -15,3 +15,4 @@ export class Room extends MongoEntity {
 }
 
 export const RoomSchema = SchemaFactory.createForClass(Room);
+export const ROOM_COLLECTION_NAME = 'Rooms';

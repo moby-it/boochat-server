@@ -22,3 +22,4 @@ export class RoomItem extends MongoEntity {
 }
 
 export const RoomItemSchema = SchemaFactory.createForClass(RoomItem);
+export const ROOM_ITEM_COLLECTION_NAME = 'RoomItems';
