@@ -3,7 +3,7 @@
  * This is only a minimal backend to get started.
  */
 
-import { APPLICATION_EVENTS_QUEUE, MEETUP_EVENTS_QUEUE, ROOM_EVENTS_QUEUE } from '@boochat/application';
+import { MEETUP_EVENTS_QUEUE, ROOM_EVENTS_QUEUE } from '@boochat/application';
 import { ClassSerializerInterceptor, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory, Reflector } from '@nestjs/core';
@@ -22,8 +22,7 @@ async function bootstrap() {
   const config = app.get(ConfigService);
   const queues = [
     getMandatoryVariable<string>(config, ROOM_EVENTS_QUEUE),
-    getMandatoryVariable<string>(config, MEETUP_EVENTS_QUEUE),
-    getMandatoryVariable<string>(config, APPLICATION_EVENTS_QUEUE)
+    getMandatoryVariable<string>(config, MEETUP_EVENTS_QUEUE)
   ];
   for (const queue of queues) {
     app.connectMicroservice<MicroserviceOptions>({

@@ -33,7 +33,6 @@ export class RoomsGateway implements OnGatewayDisconnect {
       const user = await this.getUser(userId);
       if (!user) throw new WsException(`handleDisconnect: UserId was not found`);
       user.closedRoom(userId, roomId, new Date());
-      user.cameOffline();
       user.commit();
       return;
     }

@@ -3,18 +3,15 @@ import { AggregateRootEntity, Guard, RoomId, UserId } from '../common';
 import {
   UserChangedRsvpEvent,
   UserClosedRoomEvent,
-  UserConnectedEvent,
   UserCreatedMeetupEvent,
   UserCreatedPollEvent,
   UserCreatedRoomEvent,
-  UserDisconnectedEvent,
   UserInvitedToRoomEvent,
   UserLeftRoomEvent,
   UserSentMessageEvent
 } from '../events';
 import { UserCastPollVoteEvent } from '../events/user-cast-poll-vote.event';
 import { Rsvp } from '../meetup/rsvp.enum';
-import { UserDto } from './dtos';
 interface UserProps {
   name: string;
   googleId: string;
@@ -45,12 +42,6 @@ export class User extends AggregateRootEntity<UserProps> {
   public static create(props: UserProps, _id: string) {
     User.validate(props);
     return new User(props, _id);
-  }
-  cameOnline() {
-    this.apply(new UserConnectedEvent(this.id));
-  }
-  cameOffline() {
-    this.apply(new UserDisconnectedEvent(this.id));
   }
   sendsMessage(content: string, senderId: string, roomId: RoomId) {
     this.apply(new UserSentMessageEvent(content, senderId, roomId));
