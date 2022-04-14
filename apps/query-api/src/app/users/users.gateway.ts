@@ -22,14 +22,17 @@ export class UsersGateway implements OnGatewayConnection, OnGatewayDisconnect {
   }
   handleConnection(socket: Socket) {
     if (!this.serverInitialized) {
-      this.serverInitialized = true;
-      WsServer.instance = this.server;
-      this.activeUsersService.activeUsers$.pipe(debounceTime(500)).subscribe((userList) => {
-        WsServer.instance.emit('usersList', Array.from(userList.keys()));
-      });
+      this.initializeWsServer();
     }
     const userId = socket.handshake.query['id'] as UserId;
     this.activeUsersService.addUser(userId, socket.id);
     console.log('Connected', userId);
+  }
+  private initializeWsServer() {
+    this.serverInitialized = true;
+    WsServer.instance = this.server;
+    this.activeUsersService.activeUsers$.pipe(debounceTime(500)).subscribe((userList) => {
+      WsServer.instance.emit('usersList', Array.from(userList.keys()));
+    });
   }
 }
