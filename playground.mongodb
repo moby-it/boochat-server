@@ -1,4 +1,7 @@
-export const findByUserIdQuery = (userId: string) => [
+ use('ReadDB')
+ const userId='2e2751e7-b64e-49f6-b33c-31a41ccecae0'
+ db.Rooms.aggregate(
+ [
   {
     $match: {
       participants: userId
@@ -29,7 +32,7 @@ export const findByUserIdQuery = (userId: string) => [
       lastVisits: 1
     }
   },
-  {
+    {
     $project: {
       _id: 1,
       name: 1,
@@ -37,12 +40,12 @@ export const findByUserIdQuery = (userId: string) => [
       participants: 1,
       imageUrl: 1,
       lastVisit: {
-        $first: {
-          $filter: {
-            input: '$lastVisits',
-            cond: { $eq: ['$$this.userId', userId] }
-          }
-        }
+             $first: {
+             $filter: {
+               input:'$lastVisits',
+               cond: {$eq:['$$this.userId',userId]}
+             }
+           }
       }
     }
   },
@@ -50,13 +53,12 @@ export const findByUserIdQuery = (userId: string) => [
     $project: {
       _id: 1,
       name: 1,
-      lastMessage: 1,
-      participants: 1,
-      imageUrl: 1,
-      lastItem: 1,
+      lastMessage:1,
+      participants:1,
+      imageUrl:1,
+      lastItem:1,
       hasUnreadMessage: {
-        $lt: ['$lastVisit.timestamp', '$lastItem.createdAt']
-      }
+         $lt: ["$lastVisit.timestamp","$lastItem.createdAt"]
     }
-  }
-];
+  }}
+])

@@ -2,7 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 import { MongoEntity } from '../common';
 import { RoomItemDocument } from '../room-items';
-import { LastVisit } from './lastVisits';
+import { LastVisit } from './last-visits';
 export type RoomDocument = Room & Document;
 export type RoomWithLastItemDocument = RoomDocument & { lastItem: RoomItemDocument };
 export type RoomWithItemsDocument = RoomDocument & { items: RoomItemDocument[] };
