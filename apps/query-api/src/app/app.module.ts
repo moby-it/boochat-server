@@ -4,6 +4,7 @@ import { ConfigModule } from '@nestjs/config';
 import { CqrsModule } from '@nestjs/cqrs';
 import { AppEventsController } from './app-events.controller';
 import { MeetupModule } from './meetups';
+import { NotificationsGateway } from './notifications';
 import { RoomModule } from './rooms';
 import { UserModule } from './users/users.module';
 @Module({
@@ -15,6 +16,7 @@ import { UserModule } from './users/users.module';
     RoomModule,
     QueryApplicationModule
   ],
-  controllers: [AppEventsController]
+  controllers: [AppEventsController],
+  providers: [NotificationsGateway]
 })
 export class AppModule {}
