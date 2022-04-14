@@ -7,7 +7,7 @@ import { EventBusService } from '../../event-bus/event-bus.service';
 export class MeetupCreatedEventHandler implements IEventHandler<UserCreatedMeetupEvent> {
   constructor(private meetupStore: MeetupEventStoreService, private eventBus: EventBusService) {}
   async handle(event: UserCreatedMeetupEvent) {
-    await this.meetupStore.create(event);
+    await this.meetupStore.save(event);
     await this.eventBus.emitMeetupEvent(event);
   }
 }

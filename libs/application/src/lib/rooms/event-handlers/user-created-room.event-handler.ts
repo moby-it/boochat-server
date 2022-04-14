@@ -1,13 +1,22 @@
+import { CreateRoomDto, Result, UserCreatedRoomEvent } from '@boochat/domain';
+import { RoomsRepository } from '@boochat/persistence/read-db';
 import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
-import { UserCreatedRoomEvent } from '@boochat/domain';
-import { RoomEventsStoreService } from '@boochat/persistence/events-store';
-import { EventBusService } from '../../event-bus/event-bus.service';
 
 @EventsHandler(UserCreatedRoomEvent)
 export class UserCreatedRoomEventHandler implements IEventHandler<UserCreatedRoomEvent> {
-  constructor(private roomStore: RoomEventsStoreService, private eventBus: EventBusService) {}
-  async handle(event: UserCreatedRoomEvent): Promise<void> {
-    await this.roomStore.create(event);
-    await this.eventBus.emitRoomEvent(event);
+  constructor(private repository: RoomsRepository) {}
+  async handle(event: UserCreatedRoomEvent): Promise<Result> {
+    try {
+      const dto: CreateRoomDto = {
+        name: event.roomName,
+        imageUrl: event.imageUrl,
+        participantIds: event.userIds,
+        userId: event.userId
+      };
+      await this.repository.createRoom(dto);
+      return Result.success();
+    } catch (e) {
+      return Result.fail(e);
+    }
   }
 }

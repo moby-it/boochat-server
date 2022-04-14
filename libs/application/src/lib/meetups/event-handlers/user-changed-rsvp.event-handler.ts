@@ -7,7 +7,7 @@ import { EventBusService } from '../../event-bus/event-bus.service';
 export class UserChangedRsvpEventHandler implements IEventHandler<UserChangedRsvpEvent> {
   constructor(private meetupStore: MeetupEventStoreService, private eventBus: EventBusService) {}
   async handle(event: UserChangedRsvpEvent) {
-    await this.meetupStore.create(event);
+    await this.meetupStore.save(event);
     await this.eventBus.emitMeetupEvent(event);
   }
 }

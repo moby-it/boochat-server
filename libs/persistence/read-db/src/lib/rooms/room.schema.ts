@@ -17,7 +17,7 @@ export class Room extends MongoEntity {
   @Prop()
   imageUrl!: string;
   @Prop({ type: Types.Array, default: [] })
-  lastVisit!: LastVisit[];
+  lastVisits!: LastVisit[];
 }
 
 export const RoomSchema = SchemaFactory.createForClass(Room);

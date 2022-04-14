@@ -7,7 +7,7 @@ import { EventBusService } from '../../event-bus/event-bus.service';
 export class UserCastVoteOnPollEventHandler implements IEventHandler<UserCastPollVoteEvent> {
   constructor(private meetupStore: MeetupEventStoreService, private eventBus: EventBusService) {}
   async handle(event: UserCastPollVoteEvent) {
-    await this.meetupStore.create(event);
+    await this.meetupStore.save(event);
     await this.eventBus.emitMeetupEvent(event);
   }
 }

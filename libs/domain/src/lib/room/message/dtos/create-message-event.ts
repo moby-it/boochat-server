@@ -1,6 +1,4 @@
-import { BaseEvent } from '../../../common';
-
-export interface CreateMessageDto extends BaseEvent {
+export interface CreateMessageDto {
   senderId: string;
   roomId: string;
   content: string;

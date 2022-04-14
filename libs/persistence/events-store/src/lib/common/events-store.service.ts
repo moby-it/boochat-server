@@ -7,7 +7,7 @@ export abstract class EventsStoreService<T extends Document> {
   constructor(connection: Connection, modelName: string) {
     this.storeModel = connection.model(modelName);
   }
-  async create(event: BaseEvent) {
+  async save(event: BaseEvent) {
     const storeEntry = new this.storeModel({
       ...event
     });

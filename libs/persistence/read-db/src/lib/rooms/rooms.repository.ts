@@ -1,4 +1,4 @@
-import { RoomId, UserId } from '@boochat/domain';
+import { CreateMessageDto, CreateRoomDto, RoomId, RoomItemEnum, UserId } from '@boochat/domain';
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectConnection } from '@nestjs/mongoose';
 import { Connection, Model } from 'mongoose';
@@ -22,5 +22,41 @@ export class RoomsRepository {
     const queryResult = await this.roomModel.aggregate<RoomWithItemsDocument>(findRoomByIdQuery(roomId));
     if (queryResult.length === 1) return queryResult[0];
     throw new InternalServerErrorException('Invalid query result length for getRoom query');
+  }
+  async createRoom(dto: CreateRoomDto) {
+    const room = new this.roomModel({
+      ...dto
+    });
+    await room.save();
+  }
+  async updateRoomImage(imageUrl: string, roomId: string) {
+    await this.roomModel.updateOne({ id: roomId }, { imageUrl: imageUrl });
+  }
+  async logLastVisit(roomId: RoomId, userId: UserId, timestamp: Date) {
+    await this.roomModel.updateOne(
+      { id: roomId, 'lastVisits.userId': userId },
+      { $set: { 'lastVisits.$.timestamp': timestamp } }
+    );
+  }
+  async inviteUserToRoom(inviteeId: UserId, roomId: RoomId) {
+    await this.roomModel.updateOne({ id: roomId }, { $push: { participantIds: inviteeId } });
+  }
+  async leaveRoom(userId: UserId, roomId: RoomId) {
+    await this.roomModel.updateOne({ id: roomId }, { $pull: { participantIds: userId } });
+  }
+  async saveMessage(dto: CreateMessageDto) {
+    const message = new this.roomItemsModel({
+      type: RoomItemEnum.Message,
+      ...dto
+    });
+    await message.save();
+  }
+  async saveAnnouncement(content: string, roomId: RoomId) {
+    const announcement = new this.roomItemsModel({
+      type: RoomItemEnum.Announcement,
+      content,
+      roomId
+    });
+    await announcement.save();
   }
 }
