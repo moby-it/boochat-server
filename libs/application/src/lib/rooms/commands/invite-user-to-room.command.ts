@@ -20,6 +20,8 @@ export class InviteUserToRoomCommandHandler implements ICommandHandler<InviteUse
       await this.eventBus.emitRoomEvent(event);
       return Result.success();
     } catch (e) {
+      console.error(e);
+
       return Result.fail(e);
     }
   }

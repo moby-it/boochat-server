@@ -8,6 +8,7 @@ export class UserCreatedRoomEventHandler implements IEventHandler<UserCreatedRoo
   async handle(event: UserCreatedRoomEvent): Promise<Result> {
     try {
       const dto: CreateRoomDto = {
+        _id: event.id,
         name: event.roomName,
         imageUrl: event.imageUrl,
         participantIds: event.userIds,
@@ -16,6 +17,7 @@ export class UserCreatedRoomEventHandler implements IEventHandler<UserCreatedRoo
       await this.repository.createRoom(dto);
       return Result.success();
     } catch (e) {
+      console.error(e);
       return Result.fail(e);
     }
   }

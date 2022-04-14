@@ -20,6 +20,8 @@ export class SendMessageCommandHandler implements ICommandHandler<SendMessageCom
       await this.eventBus.emitRoomEvent(event);
       return Result.success();
     } catch (e) {
+      console.error(e);
+
       return Result.fail(e);
     }
   }

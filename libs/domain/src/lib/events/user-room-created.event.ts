@@ -1,5 +1,5 @@
-import { RoomEventEnum } from '../room';
 import { BaseEvent } from '../common';
+import { RoomEventEnum } from '../room';
 
 export class UserCreatedRoomEvent extends BaseEvent {
   type: number;

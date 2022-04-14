@@ -16,7 +16,7 @@ import { UserQueryHandlers } from './users';
     ...MeetupsQueryHandlers,
     ...RoomQueryHandlers,
     ...RoomEventHandlers,
-    ...MeetupEventHandlers,
+    // ...MeetupEventHandlers,
     Mapper
   ],
   exports: []
