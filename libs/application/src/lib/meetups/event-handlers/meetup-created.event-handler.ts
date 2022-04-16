@@ -12,8 +12,9 @@ export class MeetupCreatedEventHandler implements IEventHandler<UserCreatedMeetu
       location: event.location,
       name: event.name,
       organizerId: event.organizerId,
-      roomId: event.roomId,
-      takesPlaceOn: event.takesPlaceOn
+      takesPlaceOn: event.takesPlaceOn,
+      imageUrl: event.imageUrl,
+      roomId: event.roomId
     };
     await this.repository.createMeetup(dto);
   }

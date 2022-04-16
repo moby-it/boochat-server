@@ -1,7 +1,10 @@
 import {
   ChangeRsvpCommand,
   CreateMeetupCommand,
+  CreateMeetupCommandResult,
   CreatePollCommand,
+  CreateRoomCommand,
+  CreateRoomCommandResult,
   GetUserByIdQuery,
   GetUserByIdQueryResult,
   VoteOnPollCommand
@@ -12,6 +15,7 @@ import {
   CreatePollDto,
   PollVoteDto,
   Result,
+  RoomId,
   User,
   UserId
 } from '@boochat/domain';
@@ -28,10 +32,24 @@ export class MeetupsGateway {
   @SubscribeMessage('createMeetup')
   async createMeetup(@MessageBody() createMeetupEvent: CreateMeetupDto) {
     const user = await this.getUser(createMeetupEvent.organizerId);
-    const { name, attendeeIds, location, organizerId, takesPlaceOn, roomId } = createMeetupEvent;
-    const result = await this.commandBus.execute(
-      new CreateMeetupCommand(user.id, name, attendeeIds, location, organizerId, takesPlaceOn, roomId)
-    );
+    const { name, attendeeIds, location, organizerId, takesPlaceOn, imageUrl } = createMeetupEvent;
+    const createRoomResult = (await this.commandBus.execute(
+      new CreateRoomCommand(user.id, name, imageUrl, attendeeIds)
+    )) as CreateRoomCommandResult;
+    if (createRoomResult.failed) throw new WsException('CreateMeetupEvent: Failed to create room');
+    const roomId = createRoomResult.props as RoomId;
+    const result = (await this.commandBus.execute(
+      new CreateMeetupCommand(
+        user.id,
+        name,
+        attendeeIds,
+        location,
+        organizerId,
+        takesPlaceOn,
+        roomId,
+        imageUrl
+      )
+    )) as CreateMeetupCommandResult;
     if (result.failed) throw new WsException('failed to create meetup');
   }
 

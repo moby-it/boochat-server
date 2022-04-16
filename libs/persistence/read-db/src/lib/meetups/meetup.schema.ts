@@ -15,7 +15,7 @@ export class Meetup extends MongoEntity {
   organizerId!: string;
   @Prop({ required: true })
   location!: string;
-  @Prop({ required: true })
+  @Prop({ type: Types.Array, required: true })
   attendeeIds!: string[];
   @Prop()
   takesPlaceOn!: Date;

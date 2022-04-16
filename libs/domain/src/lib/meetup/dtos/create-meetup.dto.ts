@@ -7,5 +7,6 @@ export interface CreateMeetupDto {
   readonly location: string;
   readonly organizerId: UserId;
   readonly takesPlaceOn: Date;
+  readonly imageUrl: string;
   readonly roomId: RoomId;
 }

@@ -11,6 +11,7 @@ export class UserCreatedMeetupEvent extends BaseEvent {
     public readonly location: string,
     public readonly organizerId: string,
     public readonly takesPlaceOn: Date,
+    public readonly imageUrl: string,
     public readonly roomId: string
   ) {
     super();
