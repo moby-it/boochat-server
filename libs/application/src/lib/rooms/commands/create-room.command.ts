@@ -1,4 +1,4 @@
-import { Result, UserCreatedRoomEvent } from '@boochat/domain';
+import { Result, UserCreatedRoomEvent, AnnouncementCreatedEvent } from '@boochat/domain';
 import { RoomEventsStoreService } from '@boochat/persistence/events-store';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { EventBusService } from '../../event-bus';
@@ -16,9 +16,16 @@ export class CreateRoomCommandHandler implements ICommandHandler<CreateRoomComma
   constructor(private roomStore: RoomEventsStoreService, private eventBus: EventBusService) {}
   async execute({ imageUrl, roomName, userId, userIds }: CreateRoomCommand): Promise<Result> {
     try {
-      const event = new UserCreatedRoomEvent(userId, roomName, imageUrl, userIds);
-      await this.roomStore.save(event);
-      await this.eventBus.emitRoomEvent(event);
+      const userCreatedRoomRoomEvent = new UserCreatedRoomEvent(userId, roomName, imageUrl, userIds);
+      const newAnnouncementEvent = new AnnouncementCreatedEvent(
+        'Room Created',
+        userCreatedRoomRoomEvent.id,
+        userId
+      );
+      await this.roomStore.save(userCreatedRoomRoomEvent);
+      await this.eventBus.emitRoomEvent(userCreatedRoomRoomEvent);
+      await this.roomStore.save(newAnnouncementEvent);
+      await this.eventBus.emitRoomEvent(newAnnouncementEvent);
       return Result.success();
     } catch (e) {
       console.error(e);

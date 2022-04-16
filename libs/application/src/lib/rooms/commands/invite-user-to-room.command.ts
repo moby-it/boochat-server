@@ -1,4 +1,4 @@
-import { Result, RoomId, UserCreatedRoomEvent, UserId, UserInvitedToRoomEvent } from '@boochat/domain';
+import { Result, RoomId, UserId, UserInvitedToRoomEvent } from '@boochat/domain';
 import { RoomEventsStoreService } from '@boochat/persistence/events-store';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { EventBusService } from '../../event-bus';

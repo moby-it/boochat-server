@@ -1,7 +1,7 @@
 export const findByUserIdQuery = (userId: string) => [
   {
     $match: {
-      participants: userId
+      participantIds: userId
     }
   },
   {
@@ -55,7 +55,11 @@ export const findByUserIdQuery = (userId: string) => [
       imageUrl: 1,
       lastItem: 1,
       hasUnreadMessage: {
-        $lt: ['$lastVisit.timestamp', '$lastItem.createdAt']
+        $cond: {
+          if: '$lastVisit',
+          then: { $lt: ['$lastVisit.timestamp', '$lastItem.createdAt'] },
+          else: true
+        }
       }
     }
   }

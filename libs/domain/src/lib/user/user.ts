@@ -1,17 +1,5 @@
 import { Expose } from 'class-transformer';
-import { AggregateRootEntity, Guard, RoomId, UserId } from '../common';
-import {
-  UserChangedRsvpEvent,
-  UserClosedRoomEvent,
-  UserCreatedMeetupEvent,
-  UserCreatedPollEvent,
-  UserCreatedRoomEvent,
-  UserInvitedToRoomEvent,
-  UserLeftRoomEvent,
-  UserSentMessageEvent
-} from '../events';
-import { UserCastPollVoteEvent } from '../events/user-cast-poll-vote.event';
-import { Rsvp } from '../meetup/rsvp.enum';
+import { AggregateRootEntity, Guard } from '../common';
 interface UserProps {
   name: string;
   googleId: string;
@@ -42,42 +30,6 @@ export class User extends AggregateRootEntity<UserProps> {
   public static create(props: UserProps, _id: string) {
     User.validate(props);
     return new User(props, _id);
-  }
-  sendsMessage(content: string, senderId: string, roomId: RoomId) {
-    this.apply(new UserSentMessageEvent(content, senderId, roomId));
-  }
-  createRoom(roomName: string, imageUrl: string, userIds: string[]) {
-    this.apply(new UserCreatedRoomEvent(this.id, roomName, imageUrl, userIds));
-  }
-  inviteUserToRoom(inviteeId: UserId, roomId: RoomId) {
-    this.apply(new UserInvitedToRoomEvent(this.id, inviteeId, roomId));
-  }
-  leaveRoom(roomId: RoomId) {
-    this.apply(new UserLeftRoomEvent(this.id, roomId));
-  }
-  closedRoom(userId: UserId, roomId: RoomId, timestamp: Date) {
-    this.apply(new UserClosedRoomEvent(userId, roomId, timestamp));
-  }
-  createMeetup(
-    name: string,
-    attendeeIds: string[],
-    location: string,
-    organizerId: string,
-    takesPlaceOn: Date,
-    roomId: RoomId
-  ) {
-    this.apply(
-      new UserCreatedMeetupEvent(this.id, name, attendeeIds, location, organizerId, takesPlaceOn, roomId)
-    );
-  }
-  changeRsvp(meetupId: string, rsvp: Rsvp) {
-    this.apply(new UserChangedRsvpEvent(this.id, meetupId, rsvp));
-  }
-  createPoll(meetupId: string, description: string, pollChoices: string[]) {
-    this.apply(new UserCreatedPollEvent(this.id, meetupId, description, pollChoices));
-  }
-  voteOnPoll(pollId: string, pollChoiceIndex: number) {
-    this.apply(new UserCastPollVoteEvent(this.id, pollId, pollChoiceIndex));
   }
   private static validate(props: UserProps) {
     Guard.AgainstNullOrUndefined([{ propName: 'googleId', value: props.googleId }]);

@@ -8,7 +8,7 @@ import { Room } from '@boochat/domain';
 import { Controller, Get, InternalServerErrorException, Param } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 
-@Controller('room')
+@Controller('rooms')
 export class RoomController {
   constructor(private queryBus: QueryBus) {}
   @Get('getMany/:id')

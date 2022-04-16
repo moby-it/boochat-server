@@ -4,7 +4,7 @@
  [
   {
     $match: {
-      participants: userId
+      participantIds: userId
     }
   },
   {
@@ -12,7 +12,8 @@
       from: 'RoomItems',
       localField: '_id',
       foreignField: 'roomId',
-      as: 'roomItems'
+      as: 'roomItems',
+
     }
   },
   {
@@ -58,7 +59,12 @@
       imageUrl:1,
       lastItem:1,
       hasUnreadMessage: {
-         $lt: ["$lastVisit.timestamp","$lastItem.createdAt"]
+        $cond: {
+          if: '$lastVisit',
+          then: { $lt: ["$lastVisit.timestamp","$lastItem.createdAt"]},
+          else: true
+        }
+
     }
   }}
 ])
