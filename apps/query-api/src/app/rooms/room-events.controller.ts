@@ -1,4 +1,5 @@
 import {
+  AnnouncementCreatedEvent,
   RoomEventEnum,
   UserClosedRoomEvent,
   UserCreatedRoomEvent,
@@ -21,6 +22,10 @@ export class RoomEventsController {
   @EventPattern(RoomEventEnum[RoomEventEnum.USER_SENT_MESSAGE])
   async sendMessage(event: UserSentMessageEvent) {
     await this.eventBus.publish(plainToInstance(UserSentMessageEvent, event));
+  }
+  @EventPattern(RoomEventEnum[RoomEventEnum.ANNOUNCEMENT_CREATED])
+  async annoucementCreated(event: AnnouncementCreatedEvent) {
+    await this.eventBus.publish(plainToInstance(AnnouncementCreatedEvent, event));
   }
   @EventPattern(RoomEventEnum[RoomEventEnum.USER_CLOSED_ROOM])
   async userClosedRoom(event: UserClosedRoomEvent) {

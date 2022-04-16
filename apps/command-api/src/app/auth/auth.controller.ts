@@ -6,7 +6,7 @@ import { Body, Controller, Param, Post, Put } from '@nestjs/common';
 export class AuthController {
   constructor(private authService: AuthService) {}
 
-  @Post('')
+  @Post()
   async authenticate(@Body() userDto: UserDto): Promise<User> {
     return await this.authService.authenticate(userDto);
   }

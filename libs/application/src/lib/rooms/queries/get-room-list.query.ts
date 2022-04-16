@@ -13,7 +13,7 @@ export class GetRoomsWithLastItemQueryHandler implements IQueryHandler<GetRoomsW
   async execute(query: GetRoomsWithLastItemQuery): Promise<GetRoomsWithLastItemQueryResponse> {
     try {
       const rooms = await this.roomRepository.getRoomsByUserId(query.userId);
-      return Result.success(this.mapper.room.fromDocuments.toRoomsWithLastMessage(rooms));
+      return Result.success(this.mapper.room.fromDocuments.toRoomsWithLastItem(rooms));
     } catch (e) {
       return Result.fail(e);
     }

@@ -1,25 +1,15 @@
-import {
-  CreateMeetupDto,
-  CreatePollDto,
-  MeetupId,
-  PollId,
-  PollStatusEnum,
-  Rsvp,
-  UserId
-} from '@boochat/domain';
-import { Injectable, NotImplementedException } from '@nestjs/common';
+import { CreateMeetupDto, CreatePollDto, MeetupId, PollId, Rsvp, UserId } from '@boochat/domain';
+import { Injectable } from '@nestjs/common';
 import { InjectConnection } from '@nestjs/mongoose';
 import { Connection, Model } from 'mongoose';
 import { READ_DB_CONNECTION_NAME } from '../common';
 import { Meetup, MeetupDocument } from './meetup.schema';
-import { PollDocument, Poll } from './polls';
+import { Poll, PollDocument } from './polls';
 @Injectable()
 export class MeetupsRepository {
   private meetupModel: Model<MeetupDocument>;
-  private pollModel: Model<PollDocument>;
   constructor(@InjectConnection(READ_DB_CONNECTION_NAME) connection: Connection) {
     this.meetupModel = connection.model(Meetup.name);
-    this.pollModel = connection.model(Poll.name);
   }
   async createMeetup(dto: CreateMeetupDto) {
     const meetup = new this.meetupModel({
@@ -47,14 +37,14 @@ export class MeetupsRepository {
     );
   }
   async createPoll(dto: CreatePollDto) {
-    const poll = new this.pollModel({
+    const poll: Partial<Poll> = {
       _id: dto._id,
       type: dto.pollType,
       participantIds: dto.participantIds,
       creatorId: dto.userId,
       description: dto.description,
       pollChoices: dto.pollChoices
-    });
+    };
     await this.meetupModel.updateOne(
       { id: dto.meetupId },
       {

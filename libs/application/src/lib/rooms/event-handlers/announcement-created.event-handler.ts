@@ -5,6 +5,6 @@ import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 export class AnnouncementCreatedEventHandler implements IEventHandler<AnnouncementCreatedEvent> {
   constructor(private repository: RoomsRepository) {}
   async handle(event: AnnouncementCreatedEvent): Promise<void> {
-    await this.repository.saveAnnouncement(event.content, event.roomId);
+    await this.repository.saveAnnouncement(event.id, event.content, event.roomId);
   }
 }

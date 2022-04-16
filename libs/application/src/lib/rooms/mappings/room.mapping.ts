@@ -24,8 +24,8 @@ function ToRoomWithLastItem(document: RoomWithLastItemDocument): Room {
       name: document.name,
       participants: document.participantIds.map((id) => ({ id })),
       imageUrl: document.imageUrl,
-      items: [toRoomItem(document.lastItem)],
-      hasUnreadMessage: false
+      items: document.lastItem ? [toRoomItem(document.lastItem)] : [],
+      hasUnreadMessage: document.isUnread
     },
     document.id
   );

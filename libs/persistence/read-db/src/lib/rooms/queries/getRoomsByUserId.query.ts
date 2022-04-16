@@ -24,7 +24,7 @@ export const findByUserIdQuery = (userId: string) => [
           }
         }
       },
-      participants: 1,
+      participantIds: 1,
       imageUrl: 1,
       lastVisits: 1
     }
@@ -34,7 +34,7 @@ export const findByUserIdQuery = (userId: string) => [
       _id: 1,
       name: 1,
       lastItem: 1,
-      participants: 1,
+      participantIds: 1,
       imageUrl: 1,
       lastVisit: {
         $first: {
@@ -51,13 +51,13 @@ export const findByUserIdQuery = (userId: string) => [
       _id: 1,
       name: 1,
       lastMessage: 1,
-      participants: 1,
+      participantIds: 1,
       imageUrl: 1,
       lastItem: 1,
-      hasUnreadMessage: {
+      isUnread: {
         $cond: {
           if: '$lastVisit',
-          then: { $lt: ['$lastVisit.timestamp', '$lastItem.createdAt'] },
+          then: { $lt: [{ $toDate: '$lastVisit.timestamp' }, '$lastItem.createdAt'] },
           else: true
         }
       }

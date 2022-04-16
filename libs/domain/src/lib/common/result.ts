@@ -24,6 +24,7 @@ export class Result<T = undefined> {
     return new Result(props, true);
   }
   static fail(error?: unknown) {
+    console.error(error);
     return new Result(undefined, false, error);
   }
 }

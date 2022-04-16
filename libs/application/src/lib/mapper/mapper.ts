@@ -25,7 +25,7 @@ export class Mapper {
       toRoomWithItems: RoomMappings.ToRoomWithItems
     },
     fromDocuments: {
-      toRoomsWithLastMessage: RoomMappings.ToRoomsWithLastItem
+      toRoomsWithLastItem: RoomMappings.ToRoomsWithLastItem
     }
   };
 }

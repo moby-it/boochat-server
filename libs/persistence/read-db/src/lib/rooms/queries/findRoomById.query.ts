@@ -3,7 +3,7 @@ import { RoomId } from '@boochat/domain';
 export const findRoomByIdQuery = (roomId: RoomId) => [
   {
     $match: {
-      id: roomId
+      _id: roomId
     }
   },
   {

@@ -4,7 +4,7 @@ import { MongoEntity } from '../common';
 import { RoomItemDocument } from '../room-items';
 import { LastVisit } from './last-visits';
 export type RoomDocument = Room & Document;
-export type RoomWithLastItemDocument = RoomDocument & { lastItem: RoomItemDocument };
+export type RoomWithLastItemDocument = RoomDocument & { lastItem: RoomItemDocument; isUnread: boolean };
 export type RoomWithItemsDocument = RoomDocument & { items: RoomItemDocument[] };
 @Schema({
   timestamps: true

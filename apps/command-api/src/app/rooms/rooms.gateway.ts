@@ -37,7 +37,7 @@ export class RoomsGateway {
     )) as Result;
     if (result.failed) throw new WsException(`InviteUserToRoomCommand failed`);
   }
-  @SubscribeMessage('removeUserFromRoom')
+  @SubscribeMessage('userLeftRoom')
   async removeUserFromRoom(@MessageBody() userLeftRoomDto: UserLeftRoomDto) {
     const { userId, roomId } = userLeftRoomDto;
     const user = await this.getUser(userId);

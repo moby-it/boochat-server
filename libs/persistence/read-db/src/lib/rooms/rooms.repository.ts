@@ -30,19 +30,19 @@ export class RoomsRepository {
     await room.save();
   }
   async updateRoomImage(imageUrl: string, roomId: string) {
-    await this.roomModel.updateOne({ id: roomId }, { imageUrl: imageUrl });
+    await this.roomModel.updateOne({ _id: roomId }, { imageUrl: imageUrl });
   }
   async logLastVisit(roomId: RoomId, userId: UserId, timestamp: Date) {
     await this.roomModel.updateOne(
-      { id: roomId, 'lastVisits.userId': userId },
+      { _id: roomId, 'lastVisits.userId': userId },
       { $set: { 'lastVisits.$.timestamp': timestamp } }
     );
   }
   async inviteUserToRoom(inviteeId: UserId, roomId: RoomId) {
-    await this.roomModel.updateOne({ id: roomId }, { $push: { participantIds: inviteeId } });
+    await this.roomModel.updateOne({ _id: roomId }, { $push: { participantIds: inviteeId } });
   }
   async leaveRoom(userId: UserId, roomId: RoomId) {
-    await this.roomModel.updateOne({ id: roomId }, { $pull: { participantIds: userId } });
+    await this.roomModel.updateOne({ _id: roomId }, { $pull: { participantIds: userId } });
   }
   async saveMessage(dto: CreateMessageDto) {
     const message = new this.roomItemsModel({
@@ -51,8 +51,9 @@ export class RoomsRepository {
     });
     await message.save();
   }
-  async saveAnnouncement(content: string, roomId: RoomId) {
+  async saveAnnouncement(id: string, content: string, roomId: RoomId) {
     const announcement = new this.roomItemsModel({
+      _id: id,
       type: RoomItemEnum.Announcement,
       content,
       roomId

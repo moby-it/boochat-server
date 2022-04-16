@@ -6,7 +6,12 @@ import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 export class UserSentMessageEventHandler implements IEventHandler<UserSentMessageEvent> {
   constructor(private repository: RoomsRepository) {}
   async handle(event: UserSentMessageEvent): Promise<void> {
-    const dto: CreateMessageDto = { content: event.content, roomId: event.roomId, senderId: event.senderId };
+    const dto: CreateMessageDto = {
+      _id: event.id,
+      content: event.content,
+      roomId: event.roomId,
+      senderId: event.senderId
+    };
     await this.repository.saveMessage(dto);
   }
 }
