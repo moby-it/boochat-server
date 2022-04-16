@@ -1,4 +1,4 @@
-import { PollId, Result, UserCastPollVoteEvent, UserId } from '@boochat/domain';
+import { PollId, Result, PollVoteEvent, UserId } from '@boochat/domain';
 import { MeetupEventStoreService } from '@boochat/persistence/events-store';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { EventBusService } from '../../event-bus';
@@ -16,7 +16,7 @@ export class VoteOnPollCommandHandler implements ICommandHandler<VoteOnPollComma
   async execute(command: VoteOnPollCommand): Promise<Result> {
     try {
       const { userId, pollId, choiceIndex } = command;
-      const event = new UserCastPollVoteEvent(userId, pollId, choiceIndex);
+      const event = new PollVoteEvent(userId, pollId, choiceIndex);
       await this.meetupStore.save(event);
       await this.eventBus.emitMeetupEvent(event);
       return Result.success();

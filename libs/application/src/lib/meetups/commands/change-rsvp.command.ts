@@ -1,4 +1,4 @@
-import { MeetupId, Result, Rsvp, UserChangedRsvpEvent, UserId } from '@boochat/domain';
+import { MeetupId, Result, Rsvp, RsvpChangedEvent, UserId } from '@boochat/domain';
 import { MeetupEventStoreService } from '@boochat/persistence/events-store';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { EventBusService } from '../../event-bus';
@@ -16,7 +16,7 @@ export class ChangeRsvpCommandHandler implements ICommandHandler<ChangeRsvpComma
   async execute(command: ChangeRsvpCommand): Promise<Result> {
     try {
       const { userId, meetupId, rsvp } = command;
-      const event = new UserChangedRsvpEvent(userId, meetupId, rsvp);
+      const event = new RsvpChangedEvent(userId, meetupId, rsvp);
       await this.meetupStore.save(event);
       await this.eventBus.emitMeetupEvent(event);
       return Result.success();

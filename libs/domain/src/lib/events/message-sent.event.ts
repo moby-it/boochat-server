@@ -1,7 +1,7 @@
 import { RoomEventEnum } from '../room';
 import { BaseEvent, RoomId, UserId } from '../common';
 
-export class UserSentMessageEvent extends BaseEvent {
+export class MessageSentEvent extends BaseEvent {
   type: number;
   userId: string;
   createdAt: Date;

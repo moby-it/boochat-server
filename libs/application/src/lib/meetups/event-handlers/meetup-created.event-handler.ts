@@ -1,11 +1,11 @@
-import { CreateMeetupDto, UserCreatedMeetupEvent } from '@boochat/domain';
+import { CreateMeetupDto, MeetupCreatedEvent } from '@boochat/domain';
 import { MeetupsRepository } from '@boochat/persistence/read-db';
 import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 
-@EventsHandler(UserCreatedMeetupEvent)
-export class MeetupCreatedEventHandler implements IEventHandler<UserCreatedMeetupEvent> {
+@EventsHandler(MeetupCreatedEvent)
+export class MeetupCreatedEventHandler implements IEventHandler<MeetupCreatedEvent> {
   constructor(private repository: MeetupsRepository) {}
-  async handle(event: UserCreatedMeetupEvent) {
+  async handle(event: MeetupCreatedEvent) {
     const dto: CreateMeetupDto = {
       _id: event.id,
       attendeeIds: event.attendeeIds,

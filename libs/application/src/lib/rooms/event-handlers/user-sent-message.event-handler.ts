@@ -1,11 +1,11 @@
-import { CreateMessageDto, UserSentMessageEvent } from '@boochat/domain';
+import { CreateMessageDto, MessageSentEvent } from '@boochat/domain';
 import { RoomsRepository } from '@boochat/persistence/read-db';
 import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 
-@EventsHandler(UserSentMessageEvent)
-export class UserSentMessageEventHandler implements IEventHandler<UserSentMessageEvent> {
+@EventsHandler(MessageSentEvent)
+export class UserSentMessageEventHandler implements IEventHandler<MessageSentEvent> {
   constructor(private repository: RoomsRepository) {}
-  async handle(event: UserSentMessageEvent): Promise<void> {
+  async handle(event: MessageSentEvent): Promise<void> {
     const dto: CreateMessageDto = {
       _id: event.id,
       content: event.content,

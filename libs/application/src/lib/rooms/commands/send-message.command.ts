@@ -1,4 +1,4 @@
-import { Result, RoomId, UserId, UserSentMessageEvent } from '@boochat/domain';
+import { Result, RoomId, UserId, MessageSentEvent } from '@boochat/domain';
 import { RoomEventsStoreService } from '@boochat/persistence/events-store';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { EventBusService } from '../../event-bus';
@@ -15,7 +15,7 @@ export class SendMessageCommandHandler implements ICommandHandler<SendMessageCom
   constructor(private roomStore: RoomEventsStoreService, private eventBus: EventBusService) {}
   async execute({ roomId, senderId, content }: SendMessageCommand): Promise<Result> {
     try {
-      const event = new UserSentMessageEvent(content, senderId, roomId);
+      const event = new MessageSentEvent(content, senderId, roomId);
       await this.roomStore.save(event);
       await this.eventBus.emitRoomEvent(event);
       return Result.success();

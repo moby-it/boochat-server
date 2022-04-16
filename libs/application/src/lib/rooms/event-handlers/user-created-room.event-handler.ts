@@ -1,11 +1,11 @@
-import { CreateRoomDto, Result, UserCreatedRoomEvent } from '@boochat/domain';
+import { CreateRoomDto, Result, RoomCreatedEvent } from '@boochat/domain';
 import { RoomsRepository } from '@boochat/persistence/read-db';
 import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 
-@EventsHandler(UserCreatedRoomEvent)
-export class UserCreatedRoomEventHandler implements IEventHandler<UserCreatedRoomEvent> {
+@EventsHandler(RoomCreatedEvent)
+export class UserCreatedRoomEventHandler implements IEventHandler<RoomCreatedEvent> {
   constructor(private repository: RoomsRepository) {}
-  async handle(event: UserCreatedRoomEvent): Promise<Result> {
+  async handle(event: RoomCreatedEvent): Promise<Result> {
     try {
       const dto: CreateRoomDto = {
         _id: event.id,

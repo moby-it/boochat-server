@@ -1,7 +1,7 @@
 import { BaseEvent } from '../common';
 import { MeetupEventEnum, PollTypeEnum } from '../meetup';
 
-export class UserCreatedPollEvent extends BaseEvent {
+export class PollCreatedEvent extends BaseEvent {
   type: number;
   createdAt: Date;
   constructor(

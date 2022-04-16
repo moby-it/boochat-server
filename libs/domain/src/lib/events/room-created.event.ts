@@ -1,7 +1,7 @@
 import { BaseEvent } from '../common';
 import { RoomEventEnum } from '../room';
 
-export class UserCreatedRoomEvent extends BaseEvent {
+export class RoomCreatedEvent extends BaseEvent {
   type: number;
   createdAt: Date;
   constructor(

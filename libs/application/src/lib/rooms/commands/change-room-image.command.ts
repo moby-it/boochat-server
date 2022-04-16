@@ -1,4 +1,4 @@
-import { Result, RoomId, UserChangedRoomImageEvent } from '@boochat/domain';
+import { Result, RoomId, RoomImageChangedEvent } from '@boochat/domain';
 import { RoomEventsStoreService } from '@boochat/persistence/events-store';
 import { CommandHandler, ICommand, ICommandHandler } from '@nestjs/cqrs';
 import { EventBusService } from '../../event-bus';
@@ -15,7 +15,7 @@ export class ChangeRoomImageCommandHandler implements ICommandHandler<ChangeRoom
   constructor(private roomStore: RoomEventsStoreService, private eventBus: EventBusService) {}
   async execute(command: ChangeRoomImageCommand): Promise<Result> {
     try {
-      const event = new UserChangedRoomImageEvent(command.userId, command.roomId, command.imageUrl);
+      const event = new RoomImageChangedEvent(command.userId, command.roomId, command.imageUrl);
       await this.roomStore.save(event);
       await this.eventBus.emitRoomEvent(event);
       return Result.success();

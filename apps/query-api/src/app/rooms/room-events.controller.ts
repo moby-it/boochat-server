@@ -1,11 +1,11 @@
 import {
   AnnouncementCreatedEvent,
+  MessageSentEvent,
+  RoomCreatedEvent,
   RoomEventEnum,
   UserClosedRoomEvent,
-  UserCreatedRoomEvent,
   UserInvitedToRoomEvent,
-  UserLeftRoomEvent,
-  UserSentMessageEvent
+  UserLeftRoomEvent
 } from '@boochat/domain';
 import { Controller } from '@nestjs/common';
 import { EventBus } from '@nestjs/cqrs';
@@ -16,12 +16,12 @@ import { plainToInstance } from 'class-transformer';
 export class RoomEventsController {
   constructor(private eventBus: EventBus) {}
   @EventPattern(RoomEventEnum[RoomEventEnum.ROOM_CREATED])
-  async createRoom(event: UserCreatedRoomEvent) {
-    await this.eventBus.publish(plainToInstance(UserCreatedRoomEvent, event));
+  async createRoom(event: RoomCreatedEvent) {
+    await this.eventBus.publish(plainToInstance(RoomCreatedEvent, event));
   }
   @EventPattern(RoomEventEnum[RoomEventEnum.USER_SENT_MESSAGE])
-  async sendMessage(event: UserSentMessageEvent) {
-    await this.eventBus.publish(plainToInstance(UserSentMessageEvent, event));
+  async sendMessage(event: MessageSentEvent) {
+    await this.eventBus.publish(plainToInstance(MessageSentEvent, event));
   }
   @EventPattern(RoomEventEnum[RoomEventEnum.ANNOUNCEMENT_CREATED])
   async annoucementCreated(event: AnnouncementCreatedEvent) {
