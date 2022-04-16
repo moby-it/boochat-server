@@ -8,7 +8,7 @@ import { MeetupsQueryHandlers } from './meetups/queries';
 import { RoomEventHandlers } from './rooms';
 import { RoomQueryHandlers } from './rooms/queries';
 import { ActiveUsersService, UserQueryHandlers } from './users';
-import { WebsocketEventHandlers } from './websockets/event-handlers';
+import { WebsocketEventHandlers } from './websockets';
 
 @Module({
   imports: [CqrsModule, PersistenceReadDbModule, PersistenceSharedDbModule],

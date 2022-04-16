@@ -10,10 +10,10 @@ export class WsServer {
   public static set instance(value: Server) {
     if (!this._instance && value) this._instance = value;
   }
-  emitToRoom(roomId: RoomId, eventName: string, payload: string) {
+  static emitToRoom(roomId: RoomId, eventName: string, payload: unknown) {
     WsServer._instance.to(roomId).emit(eventName, payload);
   }
-  emitToAll(eventName: string, payload: string) {
+  static emitToAll(eventName: string, payload: unknown) {
     WsServer._instance.emit(eventName, payload);
   }
 }
