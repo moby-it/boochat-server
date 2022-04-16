@@ -1,11 +1,11 @@
+import { QueryApplicationModule } from '@boochat/application';
 import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
-import { UserController } from './user.controller';
 import { UsersGateway } from './users.gateway';
 
 @Module({
-  controllers: [UserController],
-  imports: [CqrsModule],
+  controllers: [],
+  imports: [CqrsModule, QueryApplicationModule],
   providers: [UsersGateway]
 })
 export class UserModule {}

@@ -1,4 +1,4 @@
-import { GetMeetupsQuery, GetMeetupsQueryResponse } from '@boochat/application';
+import { GetMeetupsQuery, GetMeetupsQueryResult } from '@boochat/application';
 import { UserId } from '@boochat/domain';
 import { Controller, Get, Param } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
@@ -8,7 +8,7 @@ export class MeetupController {
   constructor(private queryBus: QueryBus) {}
   @Get('getByUserId/:id')
   async getMeetupsByUserId(@Param('id') userId: UserId) {
-    const result = (await this.queryBus.execute(new GetMeetupsQuery(userId))) as GetMeetupsQueryResponse;
+    const result = (await this.queryBus.execute(new GetMeetupsQuery(userId))) as GetMeetupsQueryResult;
     if (result.succeded) return result.props;
     return result.error;
   }

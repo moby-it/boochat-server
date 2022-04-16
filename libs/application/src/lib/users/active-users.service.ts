@@ -1,8 +1,7 @@
-import { WsServer } from '@boochat/application';
 import { RoomId, SocketId, UserId } from '@boochat/domain';
 import { Injectable } from '@nestjs/common';
 import { BehaviorSubject } from 'rxjs';
-import { WebsocketEventsEnum } from '../common';
+import { WebsocketEventsEnum, WsServer } from '../common';
 export type ActiveUsersMap = Map<UserId, SocketId>;
 
 @Injectable()
@@ -20,7 +19,6 @@ export class ActiveUsersService {
   }
   add(userId: UserId, socketId: SocketId) {
     this._activeUsers$.next(this.activeUsersMap.set(userId, socketId));
-    WsServer.instance.emit(WebsocketEventsEnum.USER_LIST, this.activeUsers);
   }
   remove(userId: string) {
     const activeUsers = this.activeUsersMap;

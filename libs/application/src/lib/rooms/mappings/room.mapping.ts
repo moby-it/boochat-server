@@ -11,7 +11,7 @@ function toRoomItem(document: RoomItemDocument): RoomItem {
         dateSent: document.createdAt,
         sender: { id: document.senderId }
       },
-      document.id
+      document._id
     );
   } else {
     return new RoomAnnouncement({
@@ -31,7 +31,7 @@ function ToRoomWithLastItem(document: RoomWithLastItemDocument): Room {
       items: document.lastItem ? [toRoomItem(document.lastItem)] : [],
       hasUnreadMessage: document.isUnread
     },
-    document.id
+    document._id
   );
 }
 
@@ -48,6 +48,6 @@ export function ToRoomWithItems(document: RoomWithItemsDocument): Room {
       items: document.items.map(toRoomItem),
       hasUnreadMessage: false
     },
-    document.id
+    document._id
   );
 }

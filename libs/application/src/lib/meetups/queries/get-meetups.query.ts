@@ -6,11 +6,11 @@ import { Mapper } from '../../mapper';
 export class GetMeetupsQuery implements IQuery {
   constructor(public readonly userId: UserId) {}
 }
-export type GetMeetupsQueryResponse = Result<Meetup[] | undefined>;
+export type GetMeetupsQueryResult = Result<Meetup[] | undefined>;
 @QueryHandler(GetMeetupsQuery)
 export class GetMeetupsQueryHandler implements IQueryHandler<GetMeetupsQuery> {
   constructor(private meetupsRepository: MeetupsRepository, private mapper: Mapper) {}
-  async execute(query: GetMeetupsQuery): Promise<GetMeetupsQueryResponse> {
+  async execute(query: GetMeetupsQuery): Promise<GetMeetupsQueryResult> {
     try {
       const meetupDocuments = await this.meetupsRepository.findByUserId(query.userId);
       return Result.success(this.mapper.meetups.fromDocuments.ToMeetups(meetupDocuments));

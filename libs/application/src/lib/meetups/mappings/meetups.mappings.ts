@@ -14,7 +14,7 @@ export function fromDocumentToEntity(document: MeetupDocument): Meetup {
       room: { id: document.roomId },
       attendants: document.attendeeIds.map((id) => ({ id }))
     },
-    document.id
+    document._id
   );
 }
 

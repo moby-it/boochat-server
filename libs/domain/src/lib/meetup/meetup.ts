@@ -1,5 +1,5 @@
 import { Expose } from 'class-transformer';
-import { AggregateRootEntity } from '../common';
+import { Entity } from '../common';
 import { Room } from '../room';
 import { User } from '../user';
 import { Alert } from './meetup-alert';
@@ -14,7 +14,11 @@ interface MeetupProps {
   polls: Poll[];
   alerts: Alert[];
 }
-export class Meetup extends AggregateRootEntity<MeetupProps> {
+export class Meetup extends Entity<MeetupProps> {
+  @Expose()
+  get id() {
+    return this._id;
+  }
   @Expose()
   get name(): string {
     return this._props.name;
