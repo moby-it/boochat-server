@@ -1,0 +1,36 @@
+import { AnnouncementCreatedEvent, Message, MessageSentEvent, RoomAnnouncement } from '@boochat/domain';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+import { WebsocketEventsEnum, WsServer } from '../../common';
+
+@EventsHandler([MessageSentEvent, AnnouncementCreatedEvent])
+export class RoomItemSentWsEventHandler
+  implements IEventHandler<MessageSentEvent | AnnouncementCreatedEvent>
+{
+  async handle(event: MessageSentEvent | AnnouncementCreatedEvent) {
+    if (event instanceof MessageSentEvent) {
+      const { content, createdAt, senderId, roomId } = event;
+      const message = Message.create(
+        {
+          content,
+          dateSent: createdAt,
+          room: { id: roomId },
+          sender: { id: senderId }
+        },
+        event.id
+      );
+      WsServer.instance
+        .to(event.roomId)
+        .emit<WebsocketEventsEnum>(WebsocketEventsEnum.NEW_ROOM_ITEM, message);
+    } else {
+      const { content, createdAt, roomId } = event;
+      const announcement = new RoomAnnouncement({
+        content,
+        timestamp: createdAt,
+        roomId
+      });
+      WsServer.instance
+        .to(event.roomId)
+        .emit<WebsocketEventsEnum>(WebsocketEventsEnum.NEW_ROOM_ITEM, announcement);
+    }
+  }
+}

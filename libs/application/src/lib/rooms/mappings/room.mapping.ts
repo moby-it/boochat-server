@@ -14,7 +14,11 @@ function toRoomItem(document: RoomItemDocument): RoomItem {
       document.id
     );
   } else {
-    return new RoomAnnouncement({ content: document.content, timestamp: document.createdAt });
+    return new RoomAnnouncement({
+      content: document.content,
+      timestamp: document.createdAt,
+      roomId: document.roomId
+    });
   }
 }
 

@@ -1,9 +1,10 @@
 import { Expose } from 'class-transformer';
-import { ValueObject } from '../common';
+import { RoomId, ValueObject } from '../common';
 
 interface RoomAnnouncementProps {
   content: string;
   timestamp: Date;
+  roomId: RoomId;
 }
 export class RoomAnnouncement extends ValueObject<RoomAnnouncementProps> {
   constructor(props: RoomAnnouncementProps) {

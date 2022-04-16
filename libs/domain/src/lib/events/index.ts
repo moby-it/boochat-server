@@ -10,3 +10,4 @@ export * from './poll-vote.event';
 export * from './room-image-changed.event';
 export * from './poll-closed.event';
 export * from './announcement-created.event';
+export * from './user-connected.event';

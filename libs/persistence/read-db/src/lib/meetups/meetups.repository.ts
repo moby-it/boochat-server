@@ -14,7 +14,10 @@ export class MeetupsRepository {
   async createMeetup(dto: CreateMeetupDto) {
     const meetup = new this.meetupModel({
       ...dto,
-      attendance: dto.attendeeIds.map((id) => ({ userId: id, rsvp: Rsvp.NotResponded }))
+      attendance: dto.attendeeIds.map((id) => {
+        const rsvp = id === dto.organizerId ? Rsvp.Yes : Rsvp.NotResponded;
+        return { userId: id, rsvp: rsvp };
+      })
     });
     await meetup.save();
   }
