@@ -1,7 +1,7 @@
 import { RoomId, SocketId, UserId } from '@boochat/domain';
 import { Injectable } from '@nestjs/common';
 import { BehaviorSubject } from 'rxjs';
-import { WebsocketEventsEnum, WsServer } from '../common';
+import { WsServer } from '../common';
 export type ActiveUsersMap = Map<UserId, SocketId>;
 
 @Injectable()
@@ -37,5 +37,11 @@ export class ActiveUsersService {
     const userSocketId = this.activeUsersMap.get(userId);
     const userSocket = sockets.find((socket) => socket.id === userSocketId);
     userSocket?.join(roomId);
+  }
+  async disconnectUserFromRoom(userId: UserId, roomId: RoomId) {
+    const sockets = await WsServer.instance.fetchSockets();
+    const userSocketId = this.activeUsersMap.get(userId);
+    const userSocket = sockets.find((socket) => socket.id === userSocketId);
+    userSocket?.leave(roomId);
   }
 }

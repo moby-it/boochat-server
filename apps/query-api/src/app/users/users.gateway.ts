@@ -49,7 +49,7 @@ export class UsersGateway implements OnGatewayConnection, OnGatewayDisconnect {
     WsServer.instance = this.server;
   }
   private setUserListWsSubscription() {
-    this.activeUsersService.activeUsers$.pipe(debounceTime(500)).subscribe((userList) => {
+    this.activeUsersService.activeUsers$.subscribe((userList) => {
       WsServer.instance.emit(WebsocketEventsEnum.ACTIVE_USER_LIST, Array.from(userList.keys()));
     });
   }
