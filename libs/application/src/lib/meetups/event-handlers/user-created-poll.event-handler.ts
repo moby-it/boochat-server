@@ -1,13 +1,21 @@
 import { UserCreatedPollEvent } from '@boochat/domain';
-import { MeetupEventStoreService } from '@boochat/persistence/events-store';
+import { MeetupsRepository } from '@boochat/persistence/read-db';
 import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
-import { EventBusService } from '../../event-bus/event-bus.service';
 
 @EventsHandler(UserCreatedPollEvent)
 export class UserCreatedPollEventHandler implements IEventHandler<UserCreatedPollEvent> {
-  constructor(private meetupStore: MeetupEventStoreService, private eventBus: EventBusService) {}
+  constructor(private repository: MeetupsRepository) {}
   async handle(event: UserCreatedPollEvent) {
-    await this.meetupStore.save(event);
-    await this.eventBus.emitMeetupEvent(event);
+    const meetup = await this.repository.findById(event.meetupId);
+    if (!meetup) throw new Error('CreatePollEventHandler: cannot find meetup');
+    await this.repository.createPoll({
+      _id: event.id,
+      description: event.description,
+      meetupId: event.meetupId,
+      participantIds: meetup.attendeeIds,
+      pollType: event.pollType,
+      pollChoices: event.pollChoices,
+      userId: event.userId
+    });
   }
 }

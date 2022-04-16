@@ -6,6 +6,7 @@ import { CqrsModule } from '@nestjs/cqrs';
 import { MeetupEventBusProvider, RoomEventBusProvider } from './event-bus.providers';
 import { EventBusService } from './event-bus/event-bus.service';
 import { Mapper } from './mapper';
+import { MeetupCommandHandlers } from './meetups';
 import { RoomCommandHandlers } from './rooms';
 import { UserQueryHandlers } from './users';
 import { AuthService } from './users/auth.service';
@@ -18,6 +19,7 @@ import { AuthService } from './users/auth.service';
     EventBusService,
     ...UserQueryHandlers,
     ...RoomCommandHandlers,
+    ...MeetupCommandHandlers,
     AuthService,
     Mapper
   ],

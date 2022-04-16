@@ -1,13 +1,20 @@
-import { UserCreatedMeetupEvent } from '@boochat/domain';
-import { MeetupEventStoreService } from '@boochat/persistence/events-store';
+import { CreateMeetupDto, UserCreatedMeetupEvent } from '@boochat/domain';
+import { MeetupsRepository } from '@boochat/persistence/read-db';
 import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
-import { EventBusService } from '../../event-bus/event-bus.service';
 
 @EventsHandler(UserCreatedMeetupEvent)
 export class MeetupCreatedEventHandler implements IEventHandler<UserCreatedMeetupEvent> {
-  constructor(private meetupStore: MeetupEventStoreService, private eventBus: EventBusService) {}
+  constructor(private repository: MeetupsRepository) {}
   async handle(event: UserCreatedMeetupEvent) {
-    await this.meetupStore.save(event);
-    await this.eventBus.emitMeetupEvent(event);
+    const dto: CreateMeetupDto = {
+      _id: event.id,
+      attendeeIds: event.attendeeIds,
+      location: event.location,
+      name: event.name,
+      organizerId: event.organizerId,
+      roomId: event.roomId,
+      takesPlaceOn: event.takesPlaceOn
+    };
+    await this.repository.createMeetup(dto);
   }
 }

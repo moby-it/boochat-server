@@ -1,13 +1,11 @@
 import { UserChangedRsvpEvent } from '@boochat/domain';
-import { MeetupEventStoreService } from '@boochat/persistence/events-store';
+import { MeetupsRepository } from '@boochat/persistence/read-db';
 import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
-import { EventBusService } from '../../event-bus/event-bus.service';
 
 @EventsHandler(UserChangedRsvpEvent)
 export class UserChangedRsvpEventHandler implements IEventHandler<UserChangedRsvpEvent> {
-  constructor(private meetupStore: MeetupEventStoreService, private eventBus: EventBusService) {}
+  constructor(private repository: MeetupsRepository) {}
   async handle(event: UserChangedRsvpEvent) {
-    await this.meetupStore.save(event);
-    await this.eventBus.emitMeetupEvent(event);
+    await this.repository.changeRsvp(event.userId, event.meetupId, event.rsvp);
   }
 }

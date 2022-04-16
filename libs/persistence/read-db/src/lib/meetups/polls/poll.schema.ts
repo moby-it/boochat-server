@@ -12,11 +12,11 @@ export interface PollVote {
 export class Poll extends MongoEntity {
   @Prop({ type: Number })
   type!: PollTypeEnum;
-  @Prop({ type: Number })
+  @Prop({ type: Number, default: PollStatusEnum.ACTIVE })
   status!: PollStatusEnum;
   @Prop({ default: [], type: Types.Array })
   participantIds!: string[];
-  @Prop({ required: true, type: Types.Array })
+  @Prop({ required: true, type: Types.Array, default: [] })
   votes!: PollVote[];
   @Prop({ default: [], required: true })
   creatorId!: string;

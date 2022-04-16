@@ -1,13 +1,11 @@
 import { UserCastPollVoteEvent } from '@boochat/domain';
-import { MeetupEventStoreService } from '@boochat/persistence/events-store';
+import { MeetupsRepository } from '@boochat/persistence/read-db';
 import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
-import { EventBusService } from '../../event-bus/event-bus.service';
 
 @EventsHandler(UserCastPollVoteEvent)
 export class UserCastVoteOnPollEventHandler implements IEventHandler<UserCastPollVoteEvent> {
-  constructor(private meetupStore: MeetupEventStoreService, private eventBus: EventBusService) {}
+  constructor(private repository: MeetupsRepository) {}
   async handle(event: UserCastPollVoteEvent) {
-    await this.meetupStore.save(event);
-    await this.eventBus.emitMeetupEvent(event);
+    await this.repository.voteOnPoll(event.userId, event.pollId, event.pollChoiceIndex);
   }
 }

@@ -1,6 +1,21 @@
-import { GetUserByIdQuery, GetUserByIdQueryResult } from '@boochat/application';
-import { ChangeRsvpDto, CreateMeetupDto, CreatePollDto, PollVoteDto, User, UserId } from '@boochat/domain';
-import { QueryBus } from '@nestjs/cqrs';
+import {
+  ChangeRsvpCommand,
+  CreateMeetupCommand,
+  CreatePollCommand,
+  GetUserByIdQuery,
+  GetUserByIdQueryResult,
+  VoteOnPollCommand
+} from '@boochat/application';
+import {
+  ChangeRsvpDto,
+  CreateMeetupDto,
+  CreatePollDto,
+  PollVoteDto,
+  Result,
+  User,
+  UserId
+} from '@boochat/domain';
+import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { MessageBody, SubscribeMessage, WebSocketGateway, WsException } from '@nestjs/websockets';
 
 @WebSocketGateway({
@@ -9,34 +24,41 @@ import { MessageBody, SubscribeMessage, WebSocketGateway, WsException } from '@n
   }
 })
 export class MeetupsGateway {
-  constructor(private queryBus: QueryBus) {}
+  constructor(private queryBus: QueryBus, private commandBus: CommandBus) {}
   @SubscribeMessage('createMeetup')
   async createMeetup(@MessageBody() createMeetupEvent: CreateMeetupDto) {
     const user = await this.getUser(createMeetupEvent.organizerId);
     const { name, attendeeIds, location, organizerId, takesPlaceOn, roomId } = createMeetupEvent;
-    user.createMeetup(name, attendeeIds, location, organizerId, takesPlaceOn, roomId);
-    user.commit();
+    const result = await this.commandBus.execute(
+      new CreateMeetupCommand(user.id, name, attendeeIds, location, organizerId, takesPlaceOn, roomId)
+    );
+    if (result.failed) throw new WsException('failed to create meetup');
   }
+
   @SubscribeMessage('changeRsvp')
   async changeRsvp(@MessageBody() changeRsvpEvent: ChangeRsvpDto) {
     const user = await this.getUser(changeRsvpEvent.userId);
     const { meetupId, rsvp } = changeRsvpEvent;
-    user.changeRsvp(meetupId, rsvp);
-    user.commit();
+    const result = (await this.commandBus.execute(new ChangeRsvpCommand(user.id, meetupId, rsvp))) as Result;
+    if (result.failed) throw new WsException('failed to change rsvp');
   }
   @SubscribeMessage('createPoll')
   async createPoll(@MessageBody() createPollEvent: CreatePollDto) {
     const user = await this.getUser(createPollEvent.userId);
-    const { meetupId, description, pollChoices } = createPollEvent;
-    user.createPoll(meetupId, description, pollChoices);
-    user.commit();
+    const { meetupId, description, pollType, pollChoices } = createPollEvent;
+    const result = (await this.commandBus.execute(
+      new CreatePollCommand(user.id, meetupId, pollType, description, pollChoices)
+    )) as Result;
+    if (result.failed) throw new WsException('failed to vote on poll');
   }
   @SubscribeMessage('castPollVote')
   async voteOnPoll(@MessageBody() pollVoteEvent: PollVoteDto) {
     const user = await this.getUser(pollVoteEvent.userId);
     const { pollId, choiceIndex } = pollVoteEvent;
-    user.voteOnPoll(pollId, choiceIndex);
-    user.commit();
+    const result = (await this.commandBus.execute(
+      new VoteOnPollCommand(user.id, pollId, choiceIndex)
+    )) as Result;
+    if (result.failed) throw new WsException('failed to vote on poll');
   }
   private async getUser(userId: UserId): Promise<User> {
     const result = (await this.queryBus.execute(new GetUserByIdQuery(userId))) as GetUserByIdQueryResult;

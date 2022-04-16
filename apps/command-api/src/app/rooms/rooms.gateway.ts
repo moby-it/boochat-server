@@ -58,7 +58,6 @@ export class RoomsGateway {
   }
   private async getUser(userId: UserId): Promise<User | undefined> {
     const result = (await this.queryBus.execute(new GetUserByIdQuery(userId))) as GetUserByIdQueryResult;
-    if (result.failed) console.error(result.error);
     return result.props;
   }
 }

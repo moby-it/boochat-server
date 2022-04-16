@@ -1,19 +1,67 @@
-import { UserId } from '@boochat/domain';
+import {
+  CreateMeetupDto,
+  CreatePollDto,
+  MeetupId,
+  PollId,
+  PollStatusEnum,
+  Rsvp,
+  UserId
+} from '@boochat/domain';
 import { Injectable, NotImplementedException } from '@nestjs/common';
 import { InjectConnection } from '@nestjs/mongoose';
 import { Connection, Model } from 'mongoose';
 import { READ_DB_CONNECTION_NAME } from '../common';
 import { Meetup, MeetupDocument } from './meetup.schema';
+import { PollDocument, Poll } from './polls';
 @Injectable()
 export class MeetupsRepository {
-  private model: Model<MeetupDocument>;
-  constructor(@InjectConnection(READ_DB_CONNECTION_NAME) private connection: Connection) {
-    this.model = this.connection.model(Meetup.name);
+  private meetupModel: Model<MeetupDocument>;
+  private pollModel: Model<PollDocument>;
+  constructor(@InjectConnection(READ_DB_CONNECTION_NAME) connection: Connection) {
+    this.meetupModel = connection.model(Meetup.name);
+    this.pollModel = connection.model(Poll.name);
   }
-  async createMeetup() {
-    throw new NotImplementedException();
+  async createMeetup(dto: CreateMeetupDto) {
+    const meetup = new this.meetupModel({
+      ...dto,
+      attendance: dto.attendeeIds.map((id) => ({ userId: id, rsvp: Rsvp.NotResponded }))
+    });
+    await meetup.save();
   }
   async findByUserId(userId: UserId): Promise<MeetupDocument[]> {
-    return await await this.model.find({ attendeeIds: [userId] }).exec();
+    return await this.meetupModel.find({ attendeeIds: [userId] }).exec();
+  }
+  async findById(meetupId: MeetupId): Promise<MeetupDocument | null> {
+    return await this.meetupModel.findOne({ _id: meetupId }).exec();
+  }
+  async voteOnPoll(userId: UserId, pollId: PollId, choiceIndex: number) {
+    await this.meetupModel.updateOne(
+      { polls: { id: pollId } },
+      { polls: { votes: { $push: { userId, choiceIndex } } } }
+    );
+  }
+  async changeRsvp(userId: UserId, meetupId: MeetupId, rsvp: Rsvp) {
+    await this.meetupModel.updateOne(
+      { id: meetupId, 'attendance.userId': userId },
+      { $set: { 'attendance.$.rsvp': rsvp } }
+    );
+  }
+  async createPoll(dto: CreatePollDto) {
+    const poll = new this.pollModel({
+      _id: dto._id,
+      type: dto.pollType,
+      participantIds: dto.participantIds,
+      creatorId: dto.userId,
+      description: dto.description,
+      pollChoices: dto.pollChoices
+    });
+    await this.meetupModel.updateOne(
+      { id: dto.meetupId },
+      {
+        polls: {
+          $push: poll
+        }
+      }
+    );
   }
 }

@@ -1,5 +1,5 @@
 import { BaseEvent } from '../common';
-import { MeetupEventEnum } from '../meetup';
+import { MeetupEventEnum, PollTypeEnum } from '../meetup';
 
 export class UserCreatedPollEvent extends BaseEvent {
   type: number;
@@ -7,6 +7,7 @@ export class UserCreatedPollEvent extends BaseEvent {
   constructor(
     public readonly userId: string,
     public readonly meetupId: string,
+    public readonly pollType: PollTypeEnum,
     public readonly description: string,
     public readonly pollChoices: string[]
   ) {

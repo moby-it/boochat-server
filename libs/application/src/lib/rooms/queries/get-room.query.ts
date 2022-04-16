@@ -15,7 +15,6 @@ export class GetRoomWithItemsQueryHandler implements IQueryHandler<GetRoomWithIt
       const room = await this.roomRepository.getRoom(query.roomId);
       return Result.success(this.mapper.room.fromDocument.toRoomWithItems(room));
     } catch (e) {
-      console.error(e);
       return Result.fail(e);
     }
   }

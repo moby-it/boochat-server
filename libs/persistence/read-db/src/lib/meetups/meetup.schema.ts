@@ -3,6 +3,7 @@ import { Document, Types } from 'mongoose';
 import { MongoEntity } from '../common';
 import { AlertDocument } from './alerts';
 import { PollDocument } from './polls/poll.schema';
+import { Attendance } from './rsvps/rsvp';
 export type MeetupDocument = Meetup & Document;
 @Schema({
   timestamps: true
@@ -20,10 +21,12 @@ export class Meetup extends MongoEntity {
   takesPlaceOn!: Date;
   @Prop({ required: true })
   roomId!: string;
-  @Prop({ type: Types.ArraySubdocument })
+  @Prop({ type: Types.ArraySubdocument, default: [] })
   polls!: PollDocument[];
-  @Prop({ type: Types.ArraySubdocument })
+  @Prop({ type: Types.ArraySubdocument, default: [] })
   alerts!: AlertDocument[];
+  @Prop({ type: Types.Array })
+  attendance!: Attendance[];
 }
 
 export const MeetupSchema = SchemaFactory.createForClass(Meetup);

@@ -15,7 +15,6 @@ export class GetRoomsWithLastItemQueryHandler implements IQueryHandler<GetRoomsW
       const rooms = await this.roomRepository.getRoomsByUserId(query.userId);
       return Result.success(this.mapper.room.fromDocuments.toRoomsWithLastMessage(rooms));
     } catch (e) {
-      console.error(e);
       return Result.fail(e);
     }
   }

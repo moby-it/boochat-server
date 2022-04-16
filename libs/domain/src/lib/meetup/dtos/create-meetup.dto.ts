@@ -1,8 +1,11 @@
+import { RoomId, UserId } from '../../common';
+
 export interface CreateMeetupDto {
-  name: string;
-  attendeeIds: string[];
-  location: string;
-  organizerId: string;
-  takesPlaceOn: Date;
-  roomId: string;
+  readonly _id: string;
+  readonly name: string;
+  readonly attendeeIds: string[];
+  readonly location: string;
+  readonly organizerId: UserId;
+  readonly takesPlaceOn: Date;
+  readonly roomId: RoomId;
 }

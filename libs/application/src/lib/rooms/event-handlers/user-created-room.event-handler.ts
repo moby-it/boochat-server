@@ -17,7 +17,6 @@ export class UserCreatedRoomEventHandler implements IEventHandler<UserCreatedRoo
       await this.repository.createRoom(dto);
       return Result.success();
     } catch (e) {
-      console.error(e);
       return Result.fail(e);
     }
   }

@@ -28,7 +28,6 @@ export class CreateRoomCommandHandler implements ICommandHandler<CreateRoomComma
       await this.eventBus.emitRoomEvent(newAnnouncementEvent);
       return Result.success();
     } catch (e) {
-      console.error(e);
       return Result.fail(e);
     }
   }
