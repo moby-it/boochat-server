@@ -72,9 +72,9 @@ export class MeetupsGateway {
   @SubscribeMessage('castPollVote')
   async voteOnPoll(@MessageBody() pollVoteEvent: PollVoteDto) {
     const user = await this.getUser(pollVoteEvent.userId);
-    const { pollId, choiceIndex } = pollVoteEvent;
+    const { pollId, choiceIndex, meetupId } = pollVoteEvent;
     const result = (await this.commandBus.execute(
-      new VoteOnPollCommand(user.id, pollId, choiceIndex)
+      new VoteOnPollCommand(user.id, pollId, meetupId, choiceIndex)
     )) as Result;
     if (result.failed) throw new WsException('failed to vote on poll');
   }

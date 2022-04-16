@@ -1,3 +1,4 @@
+import { RoomId } from '@boochat/domain';
 import { Server } from 'socket.io';
 
 export class WsServer {
@@ -8,5 +9,11 @@ export class WsServer {
   }
   public static set instance(value: Server) {
     if (!this._instance && value) this._instance = value;
+  }
+  emitToRoom(roomId: RoomId, eventName: string, payload: string) {
+    WsServer._instance.to(roomId).emit(eventName, payload);
+  }
+  emitToAll(eventName: string, payload: string) {
+    WsServer._instance.emit(eventName, payload);
   }
 }

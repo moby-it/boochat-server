@@ -24,10 +24,20 @@ export class MeetupsRepository {
   async findById(meetupId: MeetupId): Promise<MeetupDocument | null> {
     return await this.meetupModel.findOne({ _id: meetupId }).populate('polls').populate('alerts').exec();
   }
-  async voteOnPoll(userId: UserId, pollId: PollId, choiceIndex: number) {
+  async voteOnPoll(userId: UserId, pollId: PollId, meetupId: MeetupId, choiceIndex: number) {
     await this.meetupModel.updateOne(
-      { 'polls._id': pollId },
-      { $push: { 'polls.$.votes': { userId, choiceIndex } } }
+      { _id: meetupId },
+      { $set: { 'polls.$[poll].votes.$[vote].choiceIndex': choiceIndex } },
+      {
+        arrayFilters: [
+          {
+            'poll._id': pollId
+          },
+          {
+            'votes.userId': userId
+          }
+        ]
+      }
     );
   }
   async changeRsvp(userId: UserId, meetupId: MeetupId, rsvp: Rsvp) {

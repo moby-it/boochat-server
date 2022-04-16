@@ -6,6 +6,6 @@ import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 export class UserCastVoteOnPollEventHandler implements IEventHandler<PollVoteEvent> {
   constructor(private repository: MeetupsRepository) {}
   async handle(event: PollVoteEvent) {
-    await this.repository.voteOnPoll(event.userId, event.pollId, event.pollChoiceIndex);
+    await this.repository.voteOnPoll(event.userId, event.pollId, event.meetupId, event.pollChoiceIndex);
   }
 }

@@ -7,6 +7,7 @@ export class PollVoteEvent extends BaseEvent {
   constructor(
     public readonly userId: string,
     public readonly pollId: string,
+    public readonly meetupId: string,
     public readonly pollChoiceIndex: number
   ) {
     super();
