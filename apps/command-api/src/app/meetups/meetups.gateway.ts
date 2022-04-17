@@ -1,5 +1,6 @@
 import {
   ChangeRsvpCommand,
+  ClosePollCommand,
   CreateMeetupCommand,
   CreateMeetupCommandResult,
   CreatePollCommand,
@@ -17,7 +18,8 @@ import {
   Result,
   RoomId,
   User,
-  UserId
+  UserId,
+  ClosePollDto
 } from '@boochat/domain';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { MessageBody, SubscribeMessage, WebSocketGateway, WsException } from '@nestjs/websockets';
@@ -54,29 +56,36 @@ export class MeetupsGateway {
   }
 
   @SubscribeMessage('changeRsvp')
-  async changeRsvp(@MessageBody() changeRsvpEvent: ChangeRsvpDto) {
-    const user = await this.getUser(changeRsvpEvent.userId);
-    const { meetupId, rsvp } = changeRsvpEvent;
+  async changeRsvp(@MessageBody() dto: ChangeRsvpDto) {
+    const user = await this.getUser(dto.userId);
+    const { meetupId, rsvp } = dto;
     const result = (await this.commandBus.execute(new ChangeRsvpCommand(user.id, meetupId, rsvp))) as Result;
     if (result.failed) throw new WsException('failed to change rsvp');
   }
   @SubscribeMessage('createPoll')
-  async createPoll(@MessageBody() createPollEvent: CreatePollDto) {
-    const user = await this.getUser(createPollEvent.userId);
-    const { meetupId, description, pollType, pollChoices } = createPollEvent;
+  async createPoll(@MessageBody() dto: CreatePollDto) {
+    const user = await this.getUser(dto.userId);
+    const { meetupId, description, pollType, pollChoices } = dto;
     const result = (await this.commandBus.execute(
       new CreatePollCommand(user.id, meetupId, pollType, description, pollChoices)
     )) as Result;
     if (result.failed) throw new WsException('failed to vote on poll');
   }
-  @SubscribeMessage('castPollVote')
-  async voteOnPoll(@MessageBody() pollVoteEvent: PollVoteDto) {
-    const user = await this.getUser(pollVoteEvent.userId);
-    const { pollId, choiceIndex, meetupId } = pollVoteEvent;
+  @SubscribeMessage('pollVote')
+  async voteOnPoll(@MessageBody() dto: PollVoteDto) {
+    const user = await this.getUser(dto.userId);
+    const { pollId, choiceIndex, meetupId } = dto;
     const result = (await this.commandBus.execute(
       new VoteOnPollCommand(user.id, pollId, meetupId, choiceIndex)
     )) as Result;
     if (result.failed) throw new WsException('failed to vote on poll');
+  }
+  @SubscribeMessage('closePoll')
+  async closePoll(@MessageBody() dto: ClosePollDto) {
+    const user = await this.getUser(dto.userId);
+    const { pollId, meetupId } = dto;
+    const result = (await this.commandBus.execute(new ClosePollCommand(user.id, pollId, meetupId))) as Result;
+    if (result.failed) throw new WsException('failed to close poll');
   }
   private async getUser(userId: UserId): Promise<User> {
     const result = (await this.queryBus.execute(new GetUserByIdQuery(userId))) as GetUserByIdQueryResult;

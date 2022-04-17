@@ -1,4 +1,7 @@
-import { ValueObject } from '../common';
+export interface AlertDto {
+  type: AlertEnum;
+}
+import { ValueObject } from '../../common';
 
 export enum AlertEnum {
   PENDING_POLL,

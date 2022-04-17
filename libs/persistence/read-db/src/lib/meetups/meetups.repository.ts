@@ -1,4 +1,12 @@
-import { CreateMeetupDto, CreatePollDto, MeetupId, PollId, Rsvp, UserId } from '@boochat/domain';
+import {
+  CreateMeetupDto,
+  CreatePollDto,
+  MeetupId,
+  PollId,
+  PollStatusEnum,
+  Rsvp,
+  UserId
+} from '@boochat/domain';
 import { Injectable } from '@nestjs/common';
 import { InjectConnection } from '@nestjs/mongoose';
 import { Connection, Model } from 'mongoose';
@@ -62,6 +70,17 @@ export class MeetupsRepository {
       { _id: dto.meetupId },
       {
         $push: { polls: poll }
+      }
+    );
+  }
+  async closePoll(meetupId: MeetupId, pollId: PollId) {
+    await this.meetupModel.updateOne(
+      { _id: meetupId },
+      {
+        $set: { 'polls.$[poll].status': PollStatusEnum.CLOSED }
+      },
+      {
+        arrayFilters: [{ 'poll._id': pollId }]
       }
     );
   }

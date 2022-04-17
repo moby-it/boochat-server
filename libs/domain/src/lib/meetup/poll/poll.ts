@@ -1,5 +1,4 @@
 import { Entity, MeetupId, UserId } from '../../common';
-import { PollDto } from '../dtos/polls';
 import { PollVote } from './vote';
 export enum PollTypeEnum {
   GENERIC_POLL,
@@ -27,6 +26,9 @@ export class Poll extends Entity<PollProps> {
   }
   static create(props: PollProps, id: string) {
     return new Poll(props, id);
+  }
+  get id() {
+    return this._id;
   }
   public get isActive() {
     return this._props.status === PollStatusEnum.ACTIVE;

@@ -1,11 +1,11 @@
 import { MeetupCreatedEventHandler } from './meetup-created.event-handler';
-import { UserCastVoteOnPollEventHandler } from './user-cast-vote-on-poll.event-handler';
-import { UserChangedRsvpEventHandler } from './user-changed-rsvp.event-handler';
-import { UserCreatedPollEventHandler } from './user-created-poll.event-handler';
+import { VoteOnPollEventHandler } from './vote-on-poll.event-handler';
+import { RsvpChangedEventHandler } from './rsvp-changed.event-handler';
+import { PollCreatedEventHandler } from './poll-created.event-handler';
 
 export const MeetupEventHandlers = [
   MeetupCreatedEventHandler,
-  UserChangedRsvpEventHandler,
-  UserCreatedPollEventHandler,
-  UserCastVoteOnPollEventHandler
+  RsvpChangedEventHandler,
+  PollCreatedEventHandler,
+  VoteOnPollEventHandler
 ];

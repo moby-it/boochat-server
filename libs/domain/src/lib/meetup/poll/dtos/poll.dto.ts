@@ -1,5 +1,5 @@
 import { MeetupId, UserId } from '../../../common';
-import { PollStatusEnum, PollTypeEnum } from '../../poll';
+import { PollStatusEnum, PollTypeEnum } from '..';
 import { PollVoteDto } from './poll-vote.dto';
 
 export interface PollDto {

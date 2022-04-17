@@ -1,8 +1,8 @@
 import { Expose } from 'class-transformer';
-import { Entity } from '../common';
+import { Entity, PollId } from '../common';
 import { Room } from '../room';
 import { User } from '../user';
-import { Alert } from './meetup-alert';
+import { Alert } from './alerts';
 import { Poll } from './poll';
 interface MeetupProps {
   name: string;
@@ -52,5 +52,15 @@ export class Meetup extends Entity<MeetupProps> {
   }
   public static create(props: MeetupProps, id: string) {
     return new Meetup(props, id);
+  }
+  shouldClosePoll(pollId: PollId) {
+    const poll = this.polls.find((p) => p.id === pollId);
+    if (!poll) throw new Error('failed to check if poll should close');
+    return poll.everyoneHasVoted;
+  }
+  canVoteOnPoll(pollId: PollId) {
+    const poll = this.polls.find((p) => p.id === pollId);
+    if (!poll) throw new Error('failed to check if poll should close');
+    return poll.isActive;
   }
 }

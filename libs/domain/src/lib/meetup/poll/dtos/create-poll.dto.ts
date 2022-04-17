@@ -1,5 +1,5 @@
 import { UserId } from '../../../common';
-import { PollTypeEnum } from '../../poll';
+import { PollTypeEnum } from '..';
 
 export interface CreatePollDto {
   readonly _id: string;

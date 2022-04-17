@@ -1,5 +1,5 @@
-import { AlertDto } from './alerts';
-import { PollDto } from './polls';
+import { AlertDto } from '../alerts';
+import { PollDto } from '../poll';
 
 export interface MeetupDto {
   id: string;

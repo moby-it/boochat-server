@@ -3,7 +3,7 @@ import { MeetupsRepository } from '@boochat/persistence/read-db';
 import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 
 @EventsHandler(PollCreatedEvent)
-export class UserCreatedPollEventHandler implements IEventHandler<PollCreatedEvent> {
+export class PollCreatedEventHandler implements IEventHandler<PollCreatedEvent> {
   constructor(private repository: MeetupsRepository) {}
   async handle(event: PollCreatedEvent) {
     const meetup = await this.repository.findById(event.meetupId);
