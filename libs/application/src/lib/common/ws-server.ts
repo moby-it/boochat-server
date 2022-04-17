@@ -11,9 +11,9 @@ export class WsServer {
     if (!this._instance && value) this._instance = value;
   }
   static emitToRoom(roomId: RoomId, eventName: string, payload: unknown) {
-    WsServer._instance.to(roomId).emit(eventName, payload);
+    if (WsServer._instance) WsServer._instance.to(roomId).emit(eventName, payload);
   }
   static emitToAll(eventName: string, payload: unknown) {
-    WsServer._instance.emit(eventName, payload);
+    if (WsServer._instance) WsServer._instance.emit(eventName, payload);
   }
 }

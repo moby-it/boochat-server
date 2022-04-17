@@ -1,3 +1,4 @@
+import { Expose } from 'class-transformer';
 import { PollId, UserId, ValueObject } from '../../common';
 
 interface PollVoteProps {
@@ -5,9 +6,20 @@ interface PollVoteProps {
   choiceIndex: number;
   pollId: PollId;
 }
-export class PollVote extends ValueObject<PollVoteProps> implements Record<string, unknown> {
+export class PollVote extends ValueObject<PollVoteProps> {
   constructor(props: PollVoteProps) {
     super(props);
   }
-  [x: string]: unknown;
+  @Expose()
+  get userId() {
+    return this._props.userId;
+  }
+  @Expose()
+  get choiceIndex() {
+    return this._props.choiceIndex;
+  }
+  @Expose()
+  get pollId() {
+    return this._props.pollId;
+  }
 }

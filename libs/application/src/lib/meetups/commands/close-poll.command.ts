@@ -1,4 +1,4 @@
-import { PollId, Result, PollVoteEvent, UserId, MeetupId, PollClosedEvent } from '@boochat/domain';
+import { MeetupId, PollClosedEvent, PollId, Result, UserId } from '@boochat/domain';
 import { MeetupEventStoreService } from '@boochat/persistence/events-store';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { EventBusService } from '../../event-bus';

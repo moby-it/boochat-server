@@ -5,6 +5,7 @@ import { CqrsModule } from '@nestjs/cqrs';
 import { Mapper } from './mapper';
 import { MeetupEventHandlers } from './meetups';
 import { MeetupsQueryHandlers } from './meetups/queries';
+import { NotificationService } from './notifications/notification.service';
 import { RoomEventHandlers } from './rooms';
 import { RoomQueryHandlers } from './rooms/queries';
 import { ActiveUsersService, UserQueryHandlers } from './users';
@@ -20,8 +21,9 @@ import { WebsocketEventHandlers } from './websockets';
     ...MeetupEventHandlers,
     ...WebsocketEventHandlers,
     ActiveUsersService,
+    NotificationService,
     Mapper
   ],
-  exports: [ActiveUsersService]
+  exports: [ActiveUsersService, NotificationService]
 })
 export class QueryApplicationModule {}

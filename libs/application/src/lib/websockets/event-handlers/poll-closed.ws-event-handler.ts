@@ -10,6 +10,6 @@ export class PollClosedWsEventHandler implements IEventHandler<PollClosedEvent> 
   async handle(event: PollClosedEvent) {
     const meetupDocument = await this.meetupRepository.findById(event.meetupId);
     if (!meetupDocument) throw new WsException('did not find meetup for new poll');
-    WsServer.emitToRoom(event.id, WebsocketEventsEnum.POLL_CLOSED, event.pollId);
+    WsServer.emitToRoom(meetupDocument.id, WebsocketEventsEnum.POLL_CLOSED, { pollId: event.pollId });
   }
 }

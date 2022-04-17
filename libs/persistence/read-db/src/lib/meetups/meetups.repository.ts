@@ -37,17 +37,12 @@ export class MeetupsRepository {
   }
   async voteOnPoll(userId: UserId, pollId: PollId, meetupId: MeetupId, choiceIndex: number) {
     await this.meetupModel.updateOne(
-      { _id: meetupId },
-      { $set: { 'polls.$[poll].votes.$[vote].choiceIndex': choiceIndex } },
       {
-        arrayFilters: [
-          {
-            'poll._id': pollId
-          },
-          {
-            'votes.userId': userId
-          }
-        ]
+        _id: meetupId,
+        'polls._id': pollId
+      },
+      {
+        $push: { 'polls.$.votes': { userId, choiceIndex } }
       }
     );
   }
@@ -64,7 +59,9 @@ export class MeetupsRepository {
       creatorId: dto.userId,
       description: dto.description,
       pollChoices: dto.pollChoices,
-      votes: []
+      votes: [],
+      status: PollStatusEnum.ACTIVE,
+      participantIds: dto.participantIds
     };
     await this.meetupModel.updateOne(
       { _id: dto.meetupId },
@@ -75,12 +72,9 @@ export class MeetupsRepository {
   }
   async closePoll(meetupId: MeetupId, pollId: PollId) {
     await this.meetupModel.updateOne(
-      { _id: meetupId },
+      { _id: meetupId, 'polls._id': pollId },
       {
-        $set: { 'polls.$[poll].status': PollStatusEnum.CLOSED }
-      },
-      {
-        arrayFilters: [{ 'poll._id': pollId }]
+        $set: { 'polls.$.status': PollStatusEnum.CLOSED }
       }
     );
   }

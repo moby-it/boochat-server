@@ -1,7 +1,8 @@
-import { RoomId, SocketId, UserId } from '@boochat/domain';
+import { Notification, RoomId, SocketId, UserId } from '@boochat/domain';
 import { Injectable } from '@nestjs/common';
 import { BehaviorSubject } from 'rxjs';
-import { WsServer } from '../common';
+import { RemoteSocket } from 'socket.io';
+import { WebsocketEventsEnum, WsServer } from '../common';
 export type ActiveUsersMap = Map<UserId, SocketId>;
 
 @Injectable()
@@ -25,12 +26,11 @@ export class ActiveUsersService {
     activeUsers.delete(userId);
     this._activeUsers$.next(activeUsers);
   }
-  private findSockets(userIds: string[]): SocketId[] {
-    const socketIds = [];
-    for (const [userId, socketId] of this.activeUsersMap) {
-      if (userIds.includes(userId)) socketIds.push(socketId);
-    }
-    return socketIds;
+  private async findUserSocket(userId: string) {
+    const sockets = await WsServer.instance.fetchSockets();
+    const userSocketId = this.activeUsersMap.get(userId);
+    const userSocket = sockets.find((socket) => socket.id === userSocketId);
+    return userSocket;
   }
   async connectUserToRoom(userId: UserId, roomId: RoomId) {
     const sockets = await WsServer.instance.fetchSockets();
@@ -43,5 +43,9 @@ export class ActiveUsersService {
     const userSocketId = this.activeUsersMap.get(userId);
     const userSocket = sockets.find((socket) => socket.id === userSocketId);
     userSocket?.leave(roomId);
+  }
+  async notifyUser(userId: UserId, notification: Notification) {
+    const socket = await this.findUserSocket(userId);
+    socket?.emit(WebsocketEventsEnum.NOTIFICATION, notification);
   }
 }
