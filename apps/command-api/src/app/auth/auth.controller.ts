@@ -1,14 +1,16 @@
-import { AuthService } from '@boochat/application';
-import { User, UserDto } from '@boochat/domain';
-import { Body, Controller, Param, Post, Put } from '@nestjs/common';
+import { AuthResponse, AuthService } from '@boochat/application';
+import { UserDto } from '@boochat/domain';
+import { Body, Controller, Param, Post, Put, SerializeOptions } from '@nestjs/common';
 
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
 
   @Post()
-  async authenticate(@Body() userDto: UserDto): Promise<User> {
-    return await this.authService.authenticate(userDto);
+  @SerializeOptions({ strategy: 'exposeAll' })
+  async authenticate(@Body() userDto: UserDto): Promise<AuthResponse> {
+    const response = await this.authService.authenticate(userDto);
+    return response;
   }
   @Put('update/:id')
   async updateUser(@Param() id: string, @Body() userDto: UserDto): Promise<void> {

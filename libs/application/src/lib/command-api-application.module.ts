@@ -9,7 +9,6 @@ import { Mapper } from './mapper';
 import { MeetupCommandHandlers } from './meetups';
 import { RoomCommandHandlers } from './rooms';
 import { UserQueryHandlers } from './users';
-import { AuthService } from './users/auth.service';
 
 @Module({
   imports: [CqrsModule, ConfigModule, PersistenceEventStoreModule, PersistenceSharedDbModule],
@@ -20,9 +19,8 @@ import { AuthService } from './users/auth.service';
     ...UserQueryHandlers,
     ...RoomCommandHandlers,
     ...MeetupCommandHandlers,
-    AuthService,
     Mapper
   ],
-  exports: [AuthService]
+  exports: []
 })
 export class CommandApplicationModule {}

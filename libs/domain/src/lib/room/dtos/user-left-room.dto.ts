@@ -1,6 +1,5 @@
-import { RoomId, UserId } from '../../common';
+import { RoomId } from '../../common';
 
 export interface UserLeftRoomDto {
-  userId: UserId;
   roomId: RoomId;
 }
