@@ -33,10 +33,14 @@ export class RoomsRepository {
     await this.roomModel.updateOne({ _id: roomId }, { imageUrl: imageUrl });
   }
   async logLastVisit(roomId: RoomId, userId: UserId, timestamp: Date) {
-    await this.roomModel.updateOne(
+    const result = await this.roomModel.updateOne(
       { _id: roomId, 'lastVisits.userId': userId },
       { $set: { 'lastVisits.$.timestamp': timestamp } }
     );
+    if (result.modifiedCount === 0) {
+      await this.roomModel.updateOne({ _id: roomId }, { $push: { lastVisits: { userId, timestamp } } });
+    }
+    console.log(result);
   }
   async inviteUserToRoom(inviteeId: UserId, roomId: RoomId) {
     await this.roomModel.updateOne({ _id: roomId }, { $push: { participantIds: inviteeId } });
