@@ -18,9 +18,7 @@ export class RoomItemSentWsEventHandler
         },
         event.id
       );
-      WsServer.instance
-        .to(event.roomId)
-        .emit<WebsocketEventsEnum>(WebsocketEventsEnum.NEW_ROOM_ITEM, transformToPlain(message));
+      WsServer.emitToRoom(event.roomId, WebsocketEventsEnum.NEW_ROOM_ITEM, transformToPlain(message));
     } else {
       const { content, createdAt, roomId } = event;
       const announcement = new RoomAnnouncement({
@@ -28,9 +26,7 @@ export class RoomItemSentWsEventHandler
         timestamp: createdAt,
         roomId
       });
-      WsServer.instance
-        .to(event.roomId)
-        .emit<WebsocketEventsEnum>(WebsocketEventsEnum.NEW_ROOM_ITEM, transformToPlain(announcement));
+      WsServer.emitToRoom(event.roomId, WebsocketEventsEnum.NEW_ROOM_ITEM, transformToPlain(announcement));
     }
   }
 }

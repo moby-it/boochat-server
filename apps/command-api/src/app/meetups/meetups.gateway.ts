@@ -36,23 +36,14 @@ export class MeetupsGateway {
   @SubscribeMessage('createMeetup')
   async createMeetup(@Token() token: string, @MessageBody() createMeetupEvent: CreateMeetupDto) {
     const userId = this.authService.getUserId(token);
-    const { name, attendeeIds, location, organizerId, takesPlaceOn, imageUrl } = createMeetupEvent;
+    const { name, attendeeIds, location, takesPlaceOn, imageUrl } = createMeetupEvent;
     const createRoomResult = (await this.commandBus.execute(
       new CreateRoomCommand(userId, name, imageUrl, attendeeIds)
     )) as CreateRoomCommandResult;
     if (createRoomResult.failed) throw new WsException('CreateMeetupEvent: Failed to create room');
     const roomId = createRoomResult.props as RoomId;
     const result = (await this.commandBus.execute(
-      new CreateMeetupCommand(
-        userId,
-        name,
-        attendeeIds,
-        location,
-        organizerId,
-        takesPlaceOn,
-        roomId,
-        imageUrl
-      )
+      new CreateMeetupCommand(userId, name, attendeeIds, location, userId, takesPlaceOn, roomId, imageUrl)
     )) as CreateMeetupCommandResult;
     if (result.failed) throw new WsException('failed to create meetup');
   }
