@@ -1,11 +1,15 @@
 import {
+  AuthService,
   CreateRoomCommand,
   GetUserByIdQuery,
   GetUserByIdQueryResult,
   InviteUserToRoomCommand,
-  LeaveRoomCommand
+  LeaveRoomCommand,
+  Token,
+  WsJwtGuard
 } from '@boochat/application';
 import { CreateRoomDto, InviteUserToRoomDto, Result, User, UserId, UserLeftRoomDto } from '@boochat/domain';
+import { UseGuards } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import {
   MessageBody,
@@ -20,44 +24,39 @@ import { Server } from 'socket.io';
     origin: '*'
   }
 })
+@UseGuards(WsJwtGuard)
 export class RoomsGateway {
   @WebSocketServer()
   server!: Server;
-  constructor(private queryBus: QueryBus, private commandBus: CommandBus) {}
+  constructor(private authService: AuthService, private commandBus: CommandBus) {}
 
   @SubscribeMessage('addUserToRoom')
-  async inviteUserToRoom(@MessageBody() inviteUserToRoomDto: InviteUserToRoomDto): Promise<void> {
-    const { userId, inviteeId, roomId } = inviteUserToRoomDto;
-    const user = await this.getUser(userId);
-    const invitee = await this.getUser(inviteeId);
-    if (!user) throw new WsException(`inviteUserToRoom: UserId was not found`);
-    if (!invitee) throw new WsException(`inviteUserToRoom: InviteeId was not found`);
+  async inviteUserToRoom(
+    @Token() token: string,
+    @MessageBody() inviteUserToRoomDto: InviteUserToRoomDto
+  ): Promise<void> {
+    const { inviteeId, roomId } = inviteUserToRoomDto;
+    const userId = await this.authService.getUserId(token);
     const result = (await this.commandBus.execute(
       new InviteUserToRoomCommand(userId, inviteeId, roomId)
     )) as Result;
     if (result.failed) throw new WsException(`InviteUserToRoomCommand failed`);
   }
   @SubscribeMessage('userLeftRoom')
-  async removeUserFromRoom(@MessageBody() userLeftRoomDto: UserLeftRoomDto) {
-    const { userId, roomId } = userLeftRoomDto;
-    const user = await this.getUser(userId);
-    if (!user) throw new WsException(`removeUserFromRoom: UserId was not found`);
+  async removeUserFromRoom(@Token() token: string, @MessageBody() userLeftRoomDto: UserLeftRoomDto) {
+    const { roomId } = userLeftRoomDto;
+    const userId = await this.authService.getUserId(token);
     const result = (await this.commandBus.execute(new LeaveRoomCommand(userId, roomId))) as Result;
     if (result.failed) throw new WsException(`LeaveRoomCommand failed`);
   }
 
   @SubscribeMessage('createRoom')
-  async createRoom(@MessageBody() createRoomEventDto: CreateRoomDto): Promise<void> {
-    const user = await this.getUser(createRoomEventDto.userId);
-    if (!user) throw new WsException(`createRoom: UserId was not found`);
+  async createRoom(@Token() token: string, @MessageBody() createRoomEventDto: CreateRoomDto): Promise<void> {
+    const userId = await this.authService.getUserId(token);
     const { name, imageUrl, participantIds } = createRoomEventDto;
     const result: Result = await this.commandBus.execute(
-      new CreateRoomCommand(user.id, name, imageUrl, participantIds)
+      new CreateRoomCommand(userId, name, imageUrl, participantIds)
     );
     if (result.failed) throw new WsException('failed to create room');
-  }
-  private async getUser(userId: UserId): Promise<User | undefined> {
-    const result = (await this.queryBus.execute(new GetUserByIdQuery(userId))) as GetUserByIdQueryResult;
-    return result.props;
   }
 }

@@ -1,4 +1,5 @@
 import {
+  AuthService,
   ChangeRsvpCommand,
   ClosePollCommand,
   CreateMeetupCommand,
@@ -6,22 +7,21 @@ import {
   CreatePollCommand,
   CreateRoomCommand,
   CreateRoomCommandResult,
-  GetUserByIdQuery,
-  GetUserByIdQueryResult,
-  VoteOnPollCommand
+  Token,
+  VoteOnPollCommand,
+  WsJwtGuard
 } from '@boochat/application';
 import {
   ChangeRsvpDto,
+  ClosePollDto,
   CreateMeetupDto,
   CreatePollDto,
   PollVoteDto,
   Result,
-  RoomId,
-  User,
-  UserId,
-  ClosePollDto
+  RoomId
 } from '@boochat/domain';
-import { CommandBus, QueryBus } from '@nestjs/cqrs';
+import { UseGuards } from '@nestjs/common';
+import { CommandBus } from '@nestjs/cqrs';
 import { MessageBody, SubscribeMessage, WebSocketGateway, WsException } from '@nestjs/websockets';
 
 @WebSocketGateway({
@@ -29,67 +29,55 @@ import { MessageBody, SubscribeMessage, WebSocketGateway, WsException } from '@n
     origin: '*'
   }
 })
+@UseGuards(WsJwtGuard)
 export class MeetupsGateway {
-  constructor(private queryBus: QueryBus, private commandBus: CommandBus) {}
+  constructor(private commandBus: CommandBus, private authService: AuthService) {}
+
   @SubscribeMessage('createMeetup')
-  async createMeetup(@MessageBody() createMeetupEvent: CreateMeetupDto) {
-    const user = await this.getUser(createMeetupEvent.organizerId);
-    const { name, attendeeIds, location, organizerId, takesPlaceOn, imageUrl } = createMeetupEvent;
+  async createMeetup(@Token() token: string, @MessageBody() createMeetupEvent: CreateMeetupDto) {
+    const userId = this.authService.getUserId(token);
+    const { name, attendeeIds, location, takesPlaceOn, imageUrl } = createMeetupEvent;
     const createRoomResult = (await this.commandBus.execute(
-      new CreateRoomCommand(user.id, name, imageUrl, attendeeIds)
+      new CreateRoomCommand(userId, name, imageUrl, attendeeIds)
     )) as CreateRoomCommandResult;
     if (createRoomResult.failed) throw new WsException('CreateMeetupEvent: Failed to create room');
     const roomId = createRoomResult.props as RoomId;
     const result = (await this.commandBus.execute(
-      new CreateMeetupCommand(
-        user.id,
-        name,
-        attendeeIds,
-        location,
-        organizerId,
-        takesPlaceOn,
-        roomId,
-        imageUrl
-      )
+      new CreateMeetupCommand(userId, name, attendeeIds, location, userId, takesPlaceOn, roomId, imageUrl)
     )) as CreateMeetupCommandResult;
     if (result.failed) throw new WsException('failed to create meetup');
   }
 
   @SubscribeMessage('changeRsvp')
-  async changeRsvp(@MessageBody() dto: ChangeRsvpDto) {
-    const user = await this.getUser(dto.userId);
+  async changeRsvp(@Token() token: string, @MessageBody() dto: ChangeRsvpDto) {
+    const userId = this.authService.getUserId(token);
     const { meetupId, rsvp } = dto;
-    const result = (await this.commandBus.execute(new ChangeRsvpCommand(user.id, meetupId, rsvp))) as Result;
+    const result = (await this.commandBus.execute(new ChangeRsvpCommand(userId, meetupId, rsvp))) as Result;
     if (result.failed) throw new WsException('failed to change rsvp');
   }
   @SubscribeMessage('createPoll')
-  async createPoll(@MessageBody() dto: CreatePollDto) {
-    const user = await this.getUser(dto.userId);
+  async createPoll(@Token() token: string, @MessageBody() dto: CreatePollDto) {
+    const userId = this.authService.getUserId(token);
     const { meetupId, description, pollType, pollChoices } = dto;
     const result = (await this.commandBus.execute(
-      new CreatePollCommand(user.id, meetupId, pollType, description, pollChoices)
+      new CreatePollCommand(userId, meetupId, pollType, description, pollChoices)
     )) as Result;
     if (result.failed) throw new WsException('failed to vote on poll');
   }
   @SubscribeMessage('pollVote')
-  async voteOnPoll(@MessageBody() dto: PollVoteDto) {
-    const user = await this.getUser(dto.userId);
+  async voteOnPoll(@Token() token: string, @MessageBody() dto: PollVoteDto) {
+    const userId = this.authService.getUserId(token);
     const { pollId, choiceIndex, meetupId } = dto;
     const result = (await this.commandBus.execute(
-      new VoteOnPollCommand(user.id, pollId, meetupId, choiceIndex)
+      new VoteOnPollCommand(userId, pollId, meetupId, choiceIndex)
     )) as Result;
     if (result.failed) throw new WsException('failed to vote on poll');
   }
   @SubscribeMessage('closePoll')
-  async closePoll(@MessageBody() dto: ClosePollDto) {
-    const user = await this.getUser(dto.userId);
+  async closePoll(@Token() token: string, @MessageBody() dto: ClosePollDto) {
+    const userId = this.authService.getUserId(token);
     const { pollId, meetupId } = dto;
-    const result = (await this.commandBus.execute(new ClosePollCommand(user.id, pollId, meetupId))) as Result;
+    const result = (await this.commandBus.execute(new ClosePollCommand(userId, pollId, meetupId))) as Result;
     if (result.failed) throw new WsException('failed to close poll');
-  }
-  private async getUser(userId: UserId): Promise<User> {
-    const result = (await this.queryBus.execute(new GetUserByIdQuery(userId))) as GetUserByIdQueryResult;
-    if (result.failed) throw new WsException('user not found');
-    return result.props as User;
   }
 }

@@ -1,9 +1,8 @@
-import { QueryApplicationModule } from '@boochat/application';
+import { AuthModule, QueryApplicationModule } from '@boochat/application';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { CqrsModule } from '@nestjs/cqrs';
 import { MeetupModule } from './meetups';
-import { NotificationsGateway } from './notifications';
 import { RoomModule } from './rooms';
 import { UserModule } from './users/users.module';
 @Module({
@@ -13,9 +12,10 @@ import { UserModule } from './users/users.module';
     UserModule,
     MeetupModule,
     RoomModule,
-    QueryApplicationModule
+    QueryApplicationModule,
+    AuthModule
   ],
   controllers: [],
-  providers: [NotificationsGateway]
+  providers: []
 })
 export class AppModule {}
