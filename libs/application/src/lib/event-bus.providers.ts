@@ -23,8 +23,7 @@ export const MeetupEventBusProvider = {
   useFactory: (configService: ConfigService) => {
     const meetupEventQueueName = configService.get('MEETUP_EVENTS_QUEUE');
     const eventBusUrl = configService.get('RABBITMQ_URL');
-    if (!meetupEventQueueName || !eventBusUrl)
-      throw new Error(`Invalid configuration. Queue Env vars missing`);
+    if (!meetupEventQueueName || !eventBusUrl) throw new Error(`Invalid configuration. Queue Env vars missing`);
 
     return ClientProxyFactory.create({
       transport: Transport.RMQ,

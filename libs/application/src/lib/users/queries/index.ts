@@ -4,8 +4,4 @@ import { GetUsersQueryHandler } from './get-users.query';
 export * from './get-user-by-googleId.query';
 export * from './get-user-by-id.query';
 export * from './get-users.query';
-export const UserQueryHandlers = [
-  GetUserByGoogleIdQueryHandler,
-  GetUserByIdQueryHandler,
-  GetUsersQueryHandler
-];
+export const UserQueryHandlers = [GetUserByGoogleIdQueryHandler, GetUserByIdQueryHandler, GetUsersQueryHandler];

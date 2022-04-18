@@ -22,16 +22,7 @@ export class CreateMeetupCommandHandler implements ICommandHandler<CreateMeetupC
   async execute(command: CreateMeetupCommand): Promise<CreateMeetupCommandResult> {
     try {
       const { userId, attendeeIds, name, location, organizerId, roomId, takesPlaceOn, imageUrl } = command;
-      const event = new MeetupCreatedEvent(
-        userId,
-        name,
-        attendeeIds,
-        location,
-        organizerId,
-        takesPlaceOn,
-        imageUrl,
-        roomId
-      );
+      const event = new MeetupCreatedEvent(userId, name, attendeeIds, location, organizerId, takesPlaceOn, imageUrl, roomId);
       await this.meetupStore.save(event);
       await this.eventBus.emitMeetupEvent(event);
       return Result.success();

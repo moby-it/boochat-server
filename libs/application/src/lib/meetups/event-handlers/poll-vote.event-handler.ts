@@ -7,11 +7,7 @@ import { NotificationService } from '../../notifications';
 
 @EventsHandler(PollVoteEvent)
 export class PollVoteEventHandler implements IEventHandler<PollVoteEvent> {
-  constructor(
-    private repository: MeetupsRepository,
-    private mapper: Mapper,
-    private notification: NotificationService
-  ) {}
+  constructor(private repository: MeetupsRepository, private mapper: Mapper, private notification: NotificationService) {}
   async handle(event: PollVoteEvent) {
     const { userId, pollId, meetupId, pollChoiceIndex } = event;
     const meetupDocument = await this.repository.findById(meetupId);

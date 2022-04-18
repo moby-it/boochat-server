@@ -33,9 +33,7 @@ export class UserConnectedWsEventHandler implements IEventHandler<UserConnectedE
     }
   }
   private async getRooms(userId: UserId): Promise<Room[]> {
-    const result = (await this.queryBus.execute(
-      new GetRoomsWithLastItemQuery(userId)
-    )) as GetRoomsWithLastItemQueryResult;
+    const result = (await this.queryBus.execute(new GetRoomsWithLastItemQuery(userId))) as GetRoomsWithLastItemQueryResult;
     if (result.failed) throw new WsException('failed to get rooms for user');
     return result.props as Room[];
   }

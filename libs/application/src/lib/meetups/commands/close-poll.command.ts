@@ -4,11 +4,7 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { EventBusService } from '../../event-bus';
 
 export class ClosePollCommand {
-  constructor(
-    public readonly userId: UserId,
-    public readonly pollId: PollId,
-    public readonly meetupId: MeetupId
-  ) {}
+  constructor(public readonly userId: UserId, public readonly pollId: PollId, public readonly meetupId: MeetupId) {}
 }
 @CommandHandler(ClosePollCommand)
 export class ClosePollCommandHandler implements ICommandHandler<ClosePollCommand> {

@@ -4,11 +4,7 @@ import { CommandHandler, ICommand, ICommandHandler } from '@nestjs/cqrs';
 import { EventBusService } from '../../event-bus';
 
 export class ClosedRoomCommand implements ICommand {
-  constructor(
-    public readonly userId: UserId,
-    public readonly roomId: RoomId,
-    public readonly timestamp: Date
-  ) {}
+  constructor(public readonly userId: UserId, public readonly roomId: RoomId, public readonly timestamp: Date) {}
 }
 @CommandHandler(ClosedRoomCommand)
 export class ClosedRoomCommandHandler implements ICommandHandler<ClosedRoomCommand> {

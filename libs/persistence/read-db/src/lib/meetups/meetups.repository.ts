@@ -1,12 +1,4 @@
-import {
-  CreateMeetupDto,
-  CreatePollDto,
-  MeetupId,
-  PollId,
-  PollStatusEnum,
-  Rsvp,
-  UserId
-} from '@boochat/domain';
+import { CreateMeetupDto, CreatePollDto, MeetupId, PollId, PollStatusEnum, Rsvp, UserId } from '@boochat/domain';
 import { Injectable } from '@nestjs/common';
 import { InjectConnection } from '@nestjs/mongoose';
 import { Connection, Model } from 'mongoose';
@@ -47,10 +39,7 @@ export class MeetupsRepository {
     );
   }
   async changeRsvp(userId: UserId, meetupId: MeetupId, rsvp: Rsvp) {
-    await this.meetupModel.updateOne(
-      { _id: meetupId, 'attendance.userId': userId },
-      { $set: { 'attendance.$.rsvp': rsvp } }
-    );
+    await this.meetupModel.updateOne({ _id: meetupId, 'attendance.userId': userId }, { $set: { 'attendance.$.rsvp': rsvp } });
   }
   async createPoll(dto: CreatePollDto) {
     const poll: Partial<Poll> = {

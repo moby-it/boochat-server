@@ -4,11 +4,7 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { EventBusService } from '../../event-bus';
 
 export class InviteUserToRoomCommand {
-  constructor(
-    public readonly userId: UserId,
-    public readonly inviteeId: UserId,
-    public readonly roomId: RoomId
-  ) {}
+  constructor(public readonly userId: UserId, public readonly inviteeId: UserId, public readonly roomId: RoomId) {}
 }
 @CommandHandler(InviteUserToRoomCommand)
 export class InviteUserToRoomCommandHandler implements ICommandHandler<InviteUserToRoomCommand> {

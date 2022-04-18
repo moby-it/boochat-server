@@ -5,10 +5,7 @@ import { User, UserSchema, USERS_COLLECTION_NAME } from './user.schema';
 
 @Module({
   imports: [
-    MongooseModule.forFeature(
-      [{ name: User.name, schema: UserSchema, collection: USERS_COLLECTION_NAME }],
-      SHARED_DB_CONNECTION_NAME
-    )
+    MongooseModule.forFeature([{ name: User.name, schema: UserSchema, collection: USERS_COLLECTION_NAME }], SHARED_DB_CONNECTION_NAME)
   ]
 })
 export class UserPersistenceModule {}

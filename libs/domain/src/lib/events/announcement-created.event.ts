@@ -5,11 +5,7 @@ export class AnnouncementCreatedEvent extends BaseEvent {
   type: number;
   createdAt: Date;
 
-  constructor(
-    public readonly content: string,
-    public readonly roomId: RoomId,
-    public readonly userId: UserId
-  ) {
+  constructor(public readonly content: string, public readonly roomId: RoomId, public readonly userId: UserId) {
     super();
     this.type = RoomEventEnum.ANNOUNCEMENT_CREATED;
     this.createdAt = new Date();

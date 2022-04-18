@@ -20,10 +20,7 @@ async function bootstrap() {
     })
   );
   const config = app.get(ConfigService);
-  const queues = [
-    getMandatoryVariable<string>(config, ROOM_EVENTS_QUEUE),
-    getMandatoryVariable<string>(config, MEETUP_EVENTS_QUEUE)
-  ];
+  const queues = [getMandatoryVariable<string>(config, ROOM_EVENTS_QUEUE), getMandatoryVariable<string>(config, MEETUP_EVENTS_QUEUE)];
   for (const queue of queues) {
     app.connectMicroservice<MicroserviceOptions>({
       transport: Transport.RMQ,
@@ -42,7 +39,6 @@ bootstrap();
 
 function getMandatoryVariable<T>(config: ConfigService, variableName: string): T {
   const configVariable = config.get(variableName);
-  if (configVariable === undefined)
-    throw new Error(`Cannot start application with ${variableName}=undefined`);
+  if (configVariable === undefined) throw new Error(`Cannot start application with ${variableName}=undefined`);
   return configVariable;
 }
