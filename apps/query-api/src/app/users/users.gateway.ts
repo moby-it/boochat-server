@@ -1,30 +1,28 @@
-import { ActiveUsersService, AuthService, WebsocketEventsEnum, WsServer } from '@boochat/application';
+import { ActiveUsersService, AuthService, WebsocketEventsEnum, WsJwtGuard, WsServer } from '@boochat/application';
 import { UserConnectedEvent, UserId } from '@boochat/domain';
+import { UseGuards } from '@nestjs/common';
 import { EventBus } from '@nestjs/cqrs';
-import {
-  OnGatewayConnection,
-  OnGatewayDisconnect,
-  WebSocketGateway,
-  WebSocketServer
-} from '@nestjs/websockets';
+import { OnGatewayConnection, OnGatewayDisconnect, WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
-@WebSocketGateway()
+@WebSocketGateway({
+  cors: {
+    origin: '*',
+    allowedHeaders: '*'
+  }
+})
 export class UsersGateway implements OnGatewayConnection, OnGatewayDisconnect {
   serverInitialized = false;
   @WebSocketServer()
   server!: Server;
-  constructor(
-    private authService: AuthService,
-    private activeUsersService: ActiveUsersService,
-    private eventBus: EventBus
-  ) {}
+  constructor(private authService: AuthService, private activeUsersService: ActiveUsersService, private eventBus: EventBus) {}
   handleDisconnect(socket: Socket) {
     const userId = socket.handshake.query['id'] as UserId;
     this.activeUsersService.remove(userId);
     console.log('Disconnected');
   }
+  @UseGuards(WsJwtGuard)
   async handleConnection(socket: Socket) {
-    const token = socket.handshake.headers['authorization'] as string;
+    const token = socket.handshake.query['token'] as string;
     const result = await this.authService.verify(token);
     if (!result) {
       console.error(`client with token ${token} failed to authenticate`);

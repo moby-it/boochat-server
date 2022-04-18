@@ -1,10 +1,12 @@
+import ContentLoader from 'react-content-loader';
+import { RoomList } from './components/room-list';
 import './room-list.css';
-import { RoomList } from './room-list';
 export function RoomListContainer() {
+  const loading = true;
   return (
     <div className="room-list-window">
       <div className="room-list-nav"></div>
-      <RoomList />
+      {loading ? <ContentLoader /> : <RoomList rooms={[]} />}
     </div>
   );
 }
