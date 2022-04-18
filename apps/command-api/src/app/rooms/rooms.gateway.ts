@@ -47,7 +47,7 @@ export class RoomsGateway {
   }
   @SubscribeMessage('closedRoom')
   async closedRoom(@Token() token: string, @MessageBody() dto: UserClosedRoomDto): Promise<void> {
-    const userId = this.authService.getUserId(token);
+    const userId = await this.authService.getUserId(token);
     const { roomId } = dto;
     const result: Result = await this.commandBus.execute(new ClosedRoomCommand(userId, roomId, new Date()));
     if (result.failed) throw new WsException('failed to create room');

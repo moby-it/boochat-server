@@ -3,6 +3,6 @@ import { Socket } from 'socket.io';
 
 export const Token = createParamDecorator((data: string, ctx: ExecutionContext) => {
   const client: Socket = ctx.switchToWs().getClient();
-  const userId = client.handshake.headers.authorization;
+  const userId = client.handshake.query.token;
   return userId;
 });

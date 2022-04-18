@@ -37,6 +37,7 @@ export class AuthService {
       const userDocument = await this.userService.findOneByGoogleId(user.googleId);
       return !!userDocument;
     } catch (e) {
+      console.error(e);
       return false;
     }
   }
@@ -47,8 +48,9 @@ export class AuthService {
       throw new InternalServerErrorException(e);
     }
   }
-  public getUserId(token: string) {
-    const user = this.jwtService.decode(token) as User;
+  public async getUserId(token: string) {
+    const descriptedToken = await this.encrypt.decrypt(token);
+    const user = this.jwtService.decode(descriptedToken) as User;
     return user.id;
   }
 }

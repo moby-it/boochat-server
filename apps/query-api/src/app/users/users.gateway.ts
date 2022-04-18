@@ -36,7 +36,7 @@ export class UsersGateway implements OnGatewayConnection, OnGatewayDisconnect {
       this.setStaticWsServer();
       this.setUserListWsSubscription();
     }
-    const userId = this.authService.getUserId(token);
+    const userId = await this.authService.getUserId(token);
     this.activeUsersService.add(userId, socket.id);
     this.eventBus.publish(new UserConnectedEvent(userId, socket));
     console.log('Connected', userId);

@@ -14,11 +14,9 @@ export class MessageGateway {
   constructor(private commandBus: CommandBus, private authService: AuthService) {}
   @SubscribeMessage('sendMessage')
   async onNewMessage(@Token() token: string, @MessageBody() newMessageEvent: CreateMessageDto) {
-    const senderId = this.authService.getUserId(token);
+    const senderId = await this.authService.getUserId(token);
     const { content, roomId } = newMessageEvent;
-    const result = (await this.commandBus.execute(
-      new SendMessageCommand(content, senderId, roomId)
-    )) as Result;
+    const result = (await this.commandBus.execute(new SendMessageCommand(content, senderId, roomId))) as Result;
     if (result.failed) throw new WsException('failed to send message');
   }
 }
