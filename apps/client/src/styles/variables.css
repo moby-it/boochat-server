@@ -1,0 +1,33 @@
+/* Contains colors, fonts and other variables*/
+:root {
+    /* Colors */
+    --main900: hsl(225, 59%, 11%);
+    --main800: hsl(213, 40%, 16%);
+    --main700: hsl(213, 29%, 26%);
+    --main600: hsl(212, 29%, 36%);
+    --main500: hsl(214, 23%, 56%);
+    --main400: hsl(215, 26%, 75%);
+    --main300: hsl(215, 22%, 83%);
+    --main200: hsl(214, 27%, 88%);
+    --main100: hsl(216, 26%, 93%);
+    --main000: hsl(210, 23%, 95%);
+    --white: hsl(0, 0%, 100%);
+    --offwhite100: hsl(0, 0%, 94%);
+    --offwhite50: hsla(0, 0%, 94%, 0.5);
+    --active: hsl(155, 77%, 45%);
+
+    /* Border Radius */
+    --round: 0.6rem;
+    --round-sm: 0.3rem;
+    
+    /* Typography */
+    --fs-xl: 1.5rem;
+    --fs-l: 1.25rem;
+    --fs-m: 1.125rem;
+    --fs-s: 1rem;
+    --fs-xs: 0.875rem;
+
+    /* Spacing */   
+    /* Shadows */
+    --main-shadow: 0px 2px 4px hsla(0, 0%, 0%, 0.25);
+}

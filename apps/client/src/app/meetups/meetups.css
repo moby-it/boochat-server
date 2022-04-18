@@ -1,0 +1,6 @@
+.meetup-window {
+  width: 36.55%;
+  height: 100%;
+  background-color: var(--main800);
+  border-radius: var(--round);
+}
