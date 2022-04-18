@@ -1,45 +1,59 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import ContentLoader from 'react-content-loader';
-import { io, Socket } from 'socket.io-client';
+import { io } from 'socket.io-client';
 import { environment } from '../environments/environment';
-import { ActiveRoomContainer } from './active-room/active-room-container';
-import './app.module.css';
-import Login from './login/login';
-import { MeetupsContainer } from './meetups/meetups-container';
-import { RoomListContainer } from './rooms/room-list-container';
-import { Sidenav } from './sidenav/Sidenav';
-import connector from './store/connector';
-const token =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjhmYWU2ZDQzLWEyNDgtNGIwNS1hZDdhLTBkZTM3N2VjYTA4MiIsImdvb2dsZUlkIjoiZ2V5dWlzZWZ5dWlzZWZpb3JnaW8iLCJuYW1lIjoieXVpc2VmIiwiaW1hZ2VVcmwiOiJodHRwczovL2kxLnNuZGNkbi5jb20vYXJ0d29ya3MtWTJIMGkwaXY2ekdMY0UwNC1rdTcwSkEtdDUwMHg1MDAuanBnIiwiaWF0IjoxNjUwMjg4OTg4LCJleHAiOjE2NTAzMDMzODh9.YSpFTiw2Cu6EoEMrxVJzspaQJ1eqxLSEem7aZqhJ6yg';
+import { ActiveRoomContainer } from './components/active-room-container';
+import { MeetupsContainer } from './components/meetups-container';
+import { RoomListContainer } from './components/room-list-container';
+import { Sidenav } from './components/sidenav';
+import { Login } from './pages/login';
+import { MainContainer } from './pages/main-container';
+import { setCommandSocket, setQuerySocket } from './shared/socket-manager';
+import { selectLoggedIn, selectToken, setCurrentUser } from './store/auth/auth.reducer';
+import { useAppDispatch, useAppSelector } from './store/hooks';
 export function App() {
-  const [isLoggedIn, logIn] = useState(false);
-  const [connected, connect] = useState(false);
-
+  const loggedIn = useAppSelector(selectLoggedIn);
+  const token = useAppSelector(selectToken);
+  const [appReady, setAppReady] = useState(false);
+  const dispatch = useAppDispatch();
   useEffect(() => {
-    commandSocket = io(environment.commandApiUrl, {
-      extraHeaders: {
-        authorization: ''
-      }
-    }).connect();
-    querySocket = io(environment.queryApiUrl + `?token=${token}`, {
-      transports: ['websocket']
-    }).connect();
-    // querySocket.on('ALL_USERS', (users) => {
-    //   console.log(users);
-    // });
+    async function login() {
+      const response = await fetch(`http://${environment.commandApiUrl}/auth`, {
+        body: JSON.stringify({
+          name: 'yuisef',
+          googleId: 'geyuisefyuisefiorgio',
+          imageUrl: 'https://i1.sndcdn.com/artworks-Y2H0i0iv6zGLcE04-ku70JA-t500x500.jpg'
+        }),
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        },
+        method: 'POST'
+      });
+      const result = await response.json();
+      console.log(result);
+      dispatch(setCurrentUser(result));
+    }
+    login();
   }, []);
-  if (!isLoggedIn) return <Login />;
-  if (!connected) return <ContentLoader />;
+  useEffect(() => {
+    if (!token) return;
+    const commandSocket = io(environment.commandApiUrl + `?token=${token}`, { transports: ['websocket'] }).connect();
+    const querySocket = io(environment.queryApiUrl + `?token=${token}`, { transports: ['websocket'] }).connect();
+    setQuerySocket(querySocket, dispatch);
+    setCommandSocket(commandSocket);
+    setAppReady(true);
+  }, [token]);
+  if (!loggedIn) return <Login />;
+  if (!appReady) return <ContentLoader />;
   return (
     <div className="app-shell">
       <Sidenav />
       <div className="main-container">
-        <RoomListContainer />
-        <ActiveRoomContainer />
-        <MeetupsContainer />
+        <MainContainer />
       </div>
     </div>
   );
 }
 
-export default connector(App);
+export default App;

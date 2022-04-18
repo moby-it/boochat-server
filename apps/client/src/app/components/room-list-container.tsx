@@ -1,5 +1,5 @@
 import ContentLoader from 'react-content-loader';
-import { RoomList } from './components/room-list';
+import { RoomList } from './room-list';
 import './room-list.css';
 export function RoomListContainer() {
   const loading = true;
