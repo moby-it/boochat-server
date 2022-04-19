@@ -4,7 +4,9 @@ import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { transformToPlain, WsServer } from '../../common';
 
 @EventsHandler(MessageSentEvent, AnnouncementCreatedEvent)
-export class RoomItemSentWsEventHandler implements IEventHandler<MessageSentEvent | AnnouncementCreatedEvent> {
+export class RoomItemSentWsEventHandler
+  implements IEventHandler<MessageSentEvent | AnnouncementCreatedEvent>
+{
   async handle(event: MessageSentEvent | AnnouncementCreatedEvent) {
     if (event instanceof MessageSentEvent) {
       const { content, createdAt, senderId, roomId } = event;
@@ -21,6 +23,7 @@ export class RoomItemSentWsEventHandler implements IEventHandler<MessageSentEven
     } else {
       const { content, createdAt, roomId } = event;
       const announcement = new RoomAnnouncement({
+        id: event.id,
         content,
         timestamp: createdAt,
         roomId

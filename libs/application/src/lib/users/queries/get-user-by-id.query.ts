@@ -10,19 +10,17 @@ export type GetUserByIdQueryResult = Result<User | undefined>;
 
 @QueryHandler(GetUserByIdQuery)
 export class GetUserByIdQueryHandler implements IQueryHandler<GetUserByIdQuery> {
-  constructor(private usersService: UserPersistenceService, private publisher: EventPublisher) {}
+  constructor(private usersService: UserPersistenceService) {}
   async execute(query: GetUserByIdQuery): Promise<GetUserByIdQueryResult> {
     const userDto = await this.usersService.findById(query.userId);
     if (!userDto) return Result.fail(`User for Id: ${query.userId} not found`);
-    const user = this.publisher.mergeObjectContext(
-      User.create(
-        {
-          googleId: userDto.googleId,
-          name: userDto.name,
-          imageUrl: userDto.imageUrl
-        },
-        userDto.id
-      )
+    const user = User.create(
+      {
+        googleId: userDto.googleId,
+        name: userDto.name,
+        imageUrl: userDto.imageUrl
+      },
+      userDto.id
     );
     return Result.success(user);
   }

@@ -3,7 +3,12 @@ import { UserConnectedEvent, UserId } from '@boochat/domain';
 import { WebsocketEventsEnum } from '@boochat/shared';
 import { UseGuards } from '@nestjs/common';
 import { EventBus } from '@nestjs/cqrs';
-import { OnGatewayConnection, OnGatewayDisconnect, WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
+import {
+  OnGatewayConnection,
+  OnGatewayDisconnect,
+  WebSocketGateway,
+  WebSocketServer
+} from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 @WebSocketGateway({
   cors: {
@@ -15,9 +20,14 @@ export class UsersGateway implements OnGatewayConnection, OnGatewayDisconnect {
   serverInitialized = false;
   @WebSocketServer()
   server!: Server;
-  constructor(private authService: AuthService, private activeUsersService: ActiveUsersService, private eventBus: EventBus) {}
-  handleDisconnect(socket: Socket) {
-    const userId = socket.handshake.query['id'] as UserId;
+  constructor(
+    private authService: AuthService,
+    private activeUsersService: ActiveUsersService,
+    private eventBus: EventBus
+  ) {}
+  async handleDisconnect(socket: Socket) {
+    const token = socket.handshake.query['token'] as string;
+    const userId = await this.authService.getUserId(token);
     this.activeUsersService.remove(userId);
     console.log('Disconnected');
   }
