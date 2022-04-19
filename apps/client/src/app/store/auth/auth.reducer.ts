@@ -1,14 +1,16 @@
 import { User } from '@boochat/domain';
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 
 interface AuthState {
   isLoggedIn: boolean;
+  googleToken: string | null;
   token: string | null;
   user: User | null;
 }
 const initialState: AuthState = {
   isLoggedIn: false,
+  googleToken: null,
   token: null,
   user: null
 };
@@ -20,6 +22,9 @@ export const authSlice = createSlice({
       state.isLoggedIn = false;
       state.token = null;
     },
+    setGoogleToken: (state, action: PayloadAction<string>) => {
+      state.googleToken = action.payload;
+    },
     setCurrentUser: (state, action) => {
       state.token = action.payload.token;
       state.user = action.payload.user;
@@ -27,7 +32,7 @@ export const authSlice = createSlice({
     }
   }
 });
-export const { logout, setCurrentUser } = authSlice.actions;
+export const { logout, setCurrentUser, setGoogleToken } = authSlice.actions;
 export const selectLoggedIn = (state: RootState) => {
   console.log('LOGIN CHANGED', state.auth.isLoggedIn);
   return state.auth.isLoggedIn;
