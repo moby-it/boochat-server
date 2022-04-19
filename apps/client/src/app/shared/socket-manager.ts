@@ -1,12 +1,12 @@
-import { Socket } from 'socket.io-client';
+import { WebsocketEventsEnum } from '@boochat/shared';
+import { io, Socket } from 'socket.io-client';
+import { environment } from '../../environments/environment';
 import { AppDispatch } from '../store/store';
 import { setUsers } from '../store/users/users.reducer';
-import { WebsocketEventsEnum } from '@boochat/shared';
-export let commandSocket: Socket;
-export let querySocket: Socket;
-export function setQuerySocket(socket: Socket, dispatch: AppDispatch) {
-  querySocket = socket;
-
+let commandSocket: Socket | undefined;
+let querySocket: Socket | undefined;
+function initializeQuerySocketEventListeners(dispatch: AppDispatch) {
+  querySocket = querySocket as Socket;
   querySocket.on(WebsocketEventsEnum.ALL_USERS, (users) => {
     console.log('ALL USERS', users);
     dispatch(setUsers(users));
@@ -21,6 +21,13 @@ export function setQuerySocket(socket: Socket, dispatch: AppDispatch) {
     console.log('ROOMS LIST', rooms);
   });
 }
-export function setCommandSocket(socket: Socket) {
-  commandSocket = socket;
+function initializeSocketManager(dispatch: AppDispatch, token: string) {
+  if (!querySocket) {
+    querySocket = io(environment.queryApiUrl + `?token=${token}`, { transports: ['websocket'] }).connect();
+    initializeQuerySocketEventListeners(dispatch);
+  }
+  if (!commandSocket) commandSocket = io(environment.commandApiUrl + `?token=${token}`, { transports: ['websocket'] }).connect();
 }
+export const SocketManager = {
+  initializeSocketManager
+};
