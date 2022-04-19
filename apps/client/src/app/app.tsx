@@ -1,7 +1,7 @@
 import { UserDto } from '@boochat/domain';
 import jwtDecode from 'jwt-decode';
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { MainPage } from './pages/main-page';
 import { login } from './shared/login';
 import { setGoogleToken } from './store/auth/auth.reducer';
@@ -25,6 +25,7 @@ export function App() {
     <div className="app-shell">
       <Routes>
         <Route path="/" element={<MainPage />}></Route>
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </div>
   );
