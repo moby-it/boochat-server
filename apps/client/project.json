@@ -34,6 +34,14 @@
           "namedChunks": false,
           "extractLicenses": true,
           "vendorChunk": false
+        },
+        "development": {
+          "optimization": false,
+          "outputHashing": "none",
+          "sourceMap": true,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
         }
       }
     },
@@ -46,6 +54,10 @@
       "configurations": {
         "production": {
           "buildTarget": "client:build:production",
+          "hmr": false
+        },
+        "development": {
+          "buildTarget": "client:build:development",
           "hmr": false
         }
       }

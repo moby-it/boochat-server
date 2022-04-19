@@ -1,13 +1,14 @@
 services:
-  # client:
-  #   depends_on:
-  #     - query-api
-  #     - command-api
-  #   build:
-  #     context: .
-  #     dockerfile: docker/client.dockerfile
-  #   ports:
-  #     - 4200:80
+  client:
+    container_name: client
+    depends_on:
+      - query-api
+      - command-api
+    build:
+      context: .
+      dockerfile: docker/client.dockerfile
+    ports:
+      - 4200:80
   command-api:
     depends_on:
       - mongodb

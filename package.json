@@ -8,6 +8,7 @@
     "start:query-api": "nx serve query-api",
     "start:client": "nx serve client",
     "build:client": "nx build client",
+    "build:client:dev": "nx build client --configuration=development",
     "build": "nx build",
     "test": "nx test",
     "prettify:all": "prettier --write ."

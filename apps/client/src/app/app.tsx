@@ -15,7 +15,7 @@ export function App() {
   const dispatch = useAppDispatch();
   useEffect(() => {
     async function login() {
-      const response = await fetch(`http://${environment.commandApiUrl}/auth`, {
+      const response = await fetch(`${environment.production ? 'https://' : 'http://'}://${environment.commandApiUrl}/auth`, {
         body: JSON.stringify({
           name: 'yuisef',
           googleId: 'geyuisefyuisefiorgio',
