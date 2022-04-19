@@ -1,6 +1,7 @@
 import { Meetup, MeetupCreatedEvent } from '@boochat/domain';
+import { WebsocketEventsEnum } from '@boochat/shared';
 import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
-import { transformToPlain, WebsocketEventsEnum, WsServer } from '../../common';
+import { transformToPlain, WsServer } from '../../common';
 import { ActiveUsersService } from '../../users';
 
 @EventsHandler(MeetupCreatedEvent)

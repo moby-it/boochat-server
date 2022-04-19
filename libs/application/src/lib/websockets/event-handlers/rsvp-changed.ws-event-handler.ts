@@ -1,6 +1,7 @@
 import { ChangeRsvpDto, RsvpChangedEvent } from '@boochat/domain';
+import { WebsocketEventsEnum } from '@boochat/shared';
 import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
-import { WebsocketEventsEnum, WsServer } from '../../common';
+import { WsServer } from '../../common';
 
 @EventsHandler(RsvpChangedEvent)
 export class RsvpChangedWsEventHandler implements IEventHandler<RsvpChangedEvent> {

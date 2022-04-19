@@ -1,5 +1,6 @@
-import { ActiveUsersService, AuthService, WebsocketEventsEnum, WsJwtGuard, WsServer } from '@boochat/application';
+import { ActiveUsersService, AuthService, WsJwtGuard, WsServer } from '@boochat/application';
 import { UserConnectedEvent, UserId } from '@boochat/domain';
+import { WebsocketEventsEnum } from '@boochat/shared';
 import { UseGuards } from '@nestjs/common';
 import { EventBus } from '@nestjs/cqrs';
 import { OnGatewayConnection, OnGatewayDisconnect, WebSocketGateway, WebSocketServer } from '@nestjs/websockets';

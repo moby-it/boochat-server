@@ -21,7 +21,8 @@
       "@boochat/persistence": ["libs/persistence/src/index.ts"],
       "@boochat/persistence/events-store": ["libs/persistence/events-store/src/index.ts"],
       "@boochat/persistence/read-db": ["libs/persistence/read-db/src/index.ts"],
-      "@boochat/persistence/shared-db": ["libs/persistence/shared-db/src/index.ts"]
+      "@boochat/persistence/shared-db": ["libs/persistence/shared-db/src/index.ts"],
+      "@boochat/shared": ["libs/shared/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

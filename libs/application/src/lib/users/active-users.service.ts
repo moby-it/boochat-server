@@ -1,7 +1,8 @@
 import { Notification, RoomId, SocketId, UserId } from '@boochat/domain';
+import { WebsocketEventsEnum } from '@boochat/shared';
 import { Injectable } from '@nestjs/common';
 import { BehaviorSubject } from 'rxjs';
-import { WebsocketEventsEnum, WsServer } from '../common';
+import { WsServer } from '../common';
 export type ActiveUsersMap = Map<UserId, SocketId>;
 
 @Injectable()

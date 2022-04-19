@@ -1,8 +1,9 @@
 import { Poll, PollCreatedEvent, PollStatusEnum } from '@boochat/domain';
 import { MeetupsRepository } from '@boochat/persistence/read-db';
+import { WebsocketEventsEnum } from '@boochat/shared';
 import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { WsException } from '@nestjs/websockets';
-import { transformToPlain, WebsocketEventsEnum, WsServer } from '../../common';
+import { transformToPlain, WsServer } from '../../common';
 
 @EventsHandler(PollCreatedEvent)
 export class PollCreatedWsEventHandler implements IEventHandler<PollCreatedEvent> {

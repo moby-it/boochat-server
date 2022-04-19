@@ -1,8 +1,9 @@
 import { Meetup, Room, User, UserConnectedEvent, UserId } from '@boochat/domain';
+import { WebsocketEventsEnum } from '@boochat/shared';
 import { EventsHandler, IEventHandler, QueryBus } from '@nestjs/cqrs';
 import { WsException } from '@nestjs/websockets';
 import { Socket } from 'socket.io';
-import { transformToPlain, WebsocketEventsEnum } from '../../common';
+import { transformToPlain } from '../../common';
 import { GetMeetupsQuery, GetMeetupsQueryResult } from '../../meetups';
 import { GetRoomsWithLastItemQuery, GetRoomsWithLastItemQueryResult } from '../../rooms';
 import { GetUsersQuery, GetUsersQueryResult } from '../../users';

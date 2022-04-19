@@ -1,6 +1,7 @@
 import { AnnouncementCreatedEvent, Message, MessageSentEvent, RoomAnnouncement } from '@boochat/domain';
+import { WebsocketEventsEnum } from '@boochat/shared';
 import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
-import { transformToPlain, WebsocketEventsEnum, WsServer } from '../../common';
+import { transformToPlain, WsServer } from '../../common';
 
 @EventsHandler(MessageSentEvent, AnnouncementCreatedEvent)
 export class RoomItemSentWsEventHandler implements IEventHandler<MessageSentEvent | AnnouncementCreatedEvent> {

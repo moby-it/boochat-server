@@ -1,7 +1,7 @@
 import { Socket } from 'socket.io-client';
 import { AppDispatch } from '../store/store';
 import { setUsers } from '../store/users/users.reducer';
-import { WebsocketEventsEnum } from './websocket-events.enum';
+import { WebsocketEventsEnum } from '@boochat/shared';
 export let commandSocket: Socket;
 export let querySocket: Socket;
 export function setQuerySocket(socket: Socket, dispatch: AppDispatch) {

@@ -9,6 +9,7 @@
     "persistence-events-store": "libs/persistence/events-store",
     "persistence-read-db": "libs/persistence/read-db",
     "persistence-shared-db": "libs/persistence/shared-db",
-    "query-api": "apps/query-api"
+    "query-api": "apps/query-api",
+    "shared": "libs/shared"
   }
 }

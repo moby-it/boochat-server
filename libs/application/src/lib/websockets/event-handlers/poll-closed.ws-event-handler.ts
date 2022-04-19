@@ -1,8 +1,9 @@
 import { PollClosedEvent } from '@boochat/domain';
 import { MeetupsRepository } from '@boochat/persistence/read-db';
+import { WebsocketEventsEnum } from '@boochat/shared';
 import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { WsException } from '@nestjs/websockets';
-import { WebsocketEventsEnum, WsServer } from '../../common';
+import { WsServer } from '../../common';
 
 @EventsHandler(PollClosedEvent)
 export class PollClosedWsEventHandler implements IEventHandler<PollClosedEvent> {
