@@ -1,12 +1,14 @@
-import { User } from '@boochat/domain';
-import { createSlice } from '@reduxjs/toolkit';
+import { Room, User, UserId } from '@boochat/domain';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 
 interface UsersState {
   users: User[];
+  activeUsers: string[];
 }
 const initialState: UsersState = {
-  users: []
+  users: [],
+  activeUsers: []
 };
 
 export const usersSlice = createSlice({
@@ -15,10 +17,19 @@ export const usersSlice = createSlice({
   reducers: {
     setUsers: (state, action) => {
       state.users = [...action.payload];
+    },
+    setActiveUsers: (state, action: PayloadAction<UserId[]>) => {
+      state.activeUsers = action.payload;
     }
   }
 });
-export const { setUsers } = usersSlice.actions;
+export const { setUsers, setActiveUsers } = usersSlice.actions;
 export const selectUsers = (state: RootState) => state.users.users;
+export const selectUserIsActive = (room: Room) => (state: RootState) => {
+  if (room.participants.length > 2) return false;
+  const currentUserId = state.auth.user?.id;
+  const otherParticipant = room.participants.filter((p) => p.id !== currentUserId)[0];
+  return !!state.users.activeUsers.find((id) => id === otherParticipant.id);
+};
 
 export default usersSlice.reducer;
