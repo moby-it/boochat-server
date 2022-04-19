@@ -10,18 +10,21 @@
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap');
     </style>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script>
+      window.handleCredentialResponse = (response) => {
+        const event = new CustomEvent('onGoogleLogin', { detail: response });
+        window.dispatchEvent(event);
+      };
+    </script>
   </head>
   <body>
     <div id="root"></div>
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
-    <script>
-      window.handleCredentialResponse = (...args) => {
-        console.log(args);
-      };
-    </script>
+
     <div
       id="g_id_onload"
       data-client_id="1069407691503-82frscmg3jamnh1lg714u5b1f5j90m1v.apps.googleusercontent.com"
+      data-auto_select="true"
       data-callback="handleCredentialResponse"
     ></div>
   </body>
