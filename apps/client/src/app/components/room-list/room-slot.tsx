@@ -15,7 +15,7 @@ export function RoomSlot(props: RoomSlotProps) {
       </div>
       <div className="room-slot-txt">
         <div>{room.name}</div>
-        <div>{room.items[0]}</div>
+        <div>{room.items[0].content}</div>
       </div>
     </div>
   );

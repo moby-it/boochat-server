@@ -1,11 +1,11 @@
 import { Expose } from 'class-transformer';
-import { AggregateRootEntity, Guard } from '../common';
+import { Entity, Guard } from '../common';
 interface UserProps {
   name: string;
   googleId: string;
   imageUrl: string;
 }
-export class User extends AggregateRootEntity<UserProps> {
+export class User extends Entity<UserProps> {
   @Expose()
   get id() {
     return this._id;

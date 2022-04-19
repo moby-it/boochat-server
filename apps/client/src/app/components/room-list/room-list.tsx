@@ -8,7 +8,7 @@ export function RoomList(props: RoomListProps) {
   return (
     <div className="room-list">
       {props.rooms.map((room) => (
-        <RoomSlot room={room} />
+        <RoomSlot room={room} key={room.id} />
       ))}
     </div>
   );

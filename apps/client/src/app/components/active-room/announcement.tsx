@@ -1,10 +1,12 @@
+import { RoomAnnouncement } from '@boochat/domain';
+
 interface AnnouncementProps {
-  content: string;
+  announcement: RoomAnnouncement;
 }
 export function Announcement(props: AnnouncementProps) {
   return (
     <div className="announcement">
-      <span>{props.content}</span>
+      <span>{props.announcement.content}</span>
     </div>
   );
 }

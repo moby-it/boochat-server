@@ -1,6 +1,5 @@
-import { IEvent } from '@nestjs/cqrs';
 import { v4 as uuid } from 'uuid';
-export abstract class BaseEvent implements IEvent {
+export abstract class BaseEvent {
   private readonly _id: string;
   public abstract readonly type: number;
   public abstract readonly userId: string;

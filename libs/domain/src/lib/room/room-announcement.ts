@@ -2,6 +2,7 @@ import { Expose } from 'class-transformer';
 import { RoomId, ValueObject } from '../common';
 
 interface RoomAnnouncementProps {
+  id: string;
   content: string;
   timestamp: Date;
   roomId: RoomId;
@@ -9,6 +10,10 @@ interface RoomAnnouncementProps {
 export class RoomAnnouncement extends ValueObject<RoomAnnouncementProps> {
   constructor(props: RoomAnnouncementProps) {
     super(props);
+  }
+  @Expose()
+  public get id() {
+    return this._props.id;
   }
   @Expose()
   public get content() {

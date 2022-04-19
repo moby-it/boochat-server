@@ -11,7 +11,11 @@ export function ActiveRoomContainer() {
     <div className="room-window">
       <div className="message-list">
         {room?.items.map((item) =>
-          isMessage(item) ? <Message message={item} /> : <Announcement content={item.content} />
+          isMessage(item) ? (
+            <Message message={item} key={item.id} />
+          ) : (
+            <Announcement key={item.id} announcement={item} />
+          )
         )}
       </div>
       <MessageInput />
