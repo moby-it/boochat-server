@@ -14,6 +14,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const port = process.env.PORT || 4444;
   //#region Middleware
+  app.enableCors();
   app.useGlobalInterceptors(
     new ClassSerializerInterceptor(app.get(Reflector), {
       excludePrefixes: ['_']
