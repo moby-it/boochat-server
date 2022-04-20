@@ -6,7 +6,6 @@ import { EncryptService } from '../../common/encrypt.service';
 import { AuthService } from './auth.service';
 import { jwtConstants } from './constants';
 import { JwtGuard } from './jwt.guard';
-import { JwtStrategy } from './jwt.strategy';
 import { WsJwtGuard } from './ws-jwt.guard';
 @Module({
   imports: [
@@ -17,7 +16,7 @@ import { WsJwtGuard } from './ws-jwt.guard';
       signOptions: { expiresIn: '4h' }
     })
   ],
-  providers: [AuthService, WsJwtGuard, JwtStrategy, JwtGuard, EncryptService],
+  providers: [AuthService, WsJwtGuard, JwtGuard, EncryptService],
   exports: [AuthService, WsJwtGuard, JwtGuard]
 })
 export class AuthModule {}
