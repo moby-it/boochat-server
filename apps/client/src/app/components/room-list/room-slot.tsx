@@ -1,6 +1,8 @@
-import { Room, UserId } from '@boochat/domain';
+import { Room, RoomId, UserId } from '@boochat/domain';
+import { http } from '../../shared/http-service';
+import { setActiveRoom } from '../../store/active-room/active-room.reducer';
 import { selectCurrentUser } from '../../store/auth/auth.reducer';
-import { useAppSelector } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { selectUserIsActive, selectUsers } from '../../store/users/users.reducer';
 interface RoomSlotProps {
   room: Room;
@@ -9,6 +11,7 @@ function twoPeopleRoom(room: Room) {
   return room.participants.length === 2;
 }
 export function RoomSlot(props: RoomSlotProps) {
+  const dispath = useAppDispatch();
   const currentUser = useAppSelector(selectCurrentUser);
   const allUsers = useAppSelector(selectUsers);
   const { room } = props;
@@ -20,7 +23,7 @@ export function RoomSlot(props: RoomSlotProps) {
     if (otherUserImage) roomImage = otherUserImage;
   }
   return (
-    <div className="room-slot">
+    <div className="room-slot" onClick={() => chooseRoom(props.room.id)}>
       <div className="avatar">
         <img alt="profile" src={roomImage} className="avatar-md" />
         {userIsActive && <span className="active-user"></span>}
@@ -31,5 +34,9 @@ export function RoomSlot(props: RoomSlotProps) {
       </div>
     </div>
   );
+  async function chooseRoom(roomId: RoomId) {
+    const room: Room = await http.fetchWithAuth(`/rooms/getOne/${roomId}`);
+    dispath(setActiveRoom(room));
+  }
 }
 export default RoomSlot;

@@ -1,7 +1,7 @@
 import { Message as DomainMessage } from '@boochat/domain';
 import { selectCurrentUser } from '../../store/auth/auth.reducer';
 import { useAppSelector } from '../../store/hooks';
-
+import moment from 'moment';
 interface MessageProps {
   message: DomainMessage;
 }
@@ -10,7 +10,7 @@ export function Message(props: MessageProps) {
   const { message } = props;
   const isSent = message.sender.id === currentUser?.id;
   return (
-    <div className={'message' + isSent ? ' sent-message' : ' received-message'}>
+    <div className={`message ${isSent ? ' sent-message' : ' received-message'}`}>
       {isSent && (
         <img
           alt="profile"
@@ -22,7 +22,7 @@ export function Message(props: MessageProps) {
         <span>{message.content}</span>
       </div>
       <div className="timestamp">
-        <span>{message.dateSent}</span>
+        <span>{moment(message.dateSent).format('hh:mm')}</span>
       </div>
     </div>
   );

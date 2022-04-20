@@ -38,6 +38,7 @@ export const selectLoggedIn = (state: RootState) => {
   return state.auth.isLoggedIn;
 };
 export const selectToken = (state: RootState) => state.auth.token;
+export const selectGoogleToken = (state: RootState) => state.auth.googleToken;
 export const selectCurrentUser = (state: RootState) => state.auth.user;
 
 export default authSlice.reducer;
