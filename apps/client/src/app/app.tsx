@@ -9,7 +9,7 @@ export function App() {
     window.addEventListener('onGoogleLogin', async (event: unknown) => {
       const googleToken = (event as CustomEvent<{ credential: string }>).detail.credential;
       dispatch(setGoogleToken(googleToken));
-      const result = await http.login(googleToken);
+      const result = await http.auth.login(googleToken);
       dispatch(setCurrentUser(result.user));
     });
   });
