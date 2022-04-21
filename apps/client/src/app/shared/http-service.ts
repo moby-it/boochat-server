@@ -1,9 +1,15 @@
 import { UserDto } from '@boochat/domain';
+import jwtDecode from 'jwt-decode';
 import { environment } from '../../environments/environment';
-import { setCurrentUser } from '../store/auth/auth.reducer';
-import { AppDispatch } from '../store/store';
+import { AuthResponse } from './auth.response.model';
 const urlPrefix = environment.production ? 'https://' : 'http://';
-async function login(dto: UserDto, dispatch: AppDispatch) {
+async function login(googleToken: string) {
+  const user = jwtDecode(googleToken) as { sub: string; name: string; picture: string };
+  const dto: UserDto = {
+    googleId: user.sub,
+    imageUrl: user.picture,
+    name: user.name
+  };
   const response = await fetch(`${urlPrefix}${environment.commandApiUrl}/auth`, {
     body: JSON.stringify({
       ...dto
@@ -14,9 +20,9 @@ async function login(dto: UserDto, dispatch: AppDispatch) {
     },
     method: 'POST'
   });
-  const result = await response.json();
+  const result: AuthResponse = await response.json();
   localStorage.setItem('token', result.token);
-  dispatch(setCurrentUser(result));
+  return result;
 }
 async function fetchWithAuth<T>(endpoint: string): Promise<T> {
   const token = localStorage.getItem('token');
