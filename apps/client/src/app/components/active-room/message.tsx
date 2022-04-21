@@ -1,6 +1,5 @@
 import { Message as DomainMessage } from '@boochat/domain';
-import { selectCurrentUser } from '../../store/auth/auth.reducer';
-import { useAppSelector } from '../../store/hooks';
+import { selectCurrentUser, useAppSelector } from '../../store';
 import moment from 'moment';
 interface MessageProps {
   message: DomainMessage;

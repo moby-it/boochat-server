@@ -1,5 +1,4 @@
-import { useAppSelector } from '../../store/hooks';
-import { selectRoomList } from '../../store/room-list/room-list.reducer';
+import { useAppSelector, selectRoomList } from '../../store';
 import { RoomList } from './room-list';
 import './room-list.css';
 export function RoomListContainer() {

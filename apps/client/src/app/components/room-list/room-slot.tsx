@@ -1,9 +1,13 @@
-import { Room, RoomId, User, UserId } from '@boochat/domain';
-import { http } from '../../shared/http-service';
-import { setActiveRoom } from '../../store/active-room/active-room.reducer';
-import { selectCurrentUser } from '../../store/auth/auth.reducer';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { selectUserIsActive, selectUsers } from '../../store/users/users.reducer';
+import { Room, RoomId, User } from '@boochat/domain';
+import { http } from '../../data';
+import {
+  setActiveRoom,
+  useAppDispatch,
+  useAppSelector,
+  selectCurrentUser,
+  selectUserIsActive,
+  selectUsers
+} from '../../store';
 interface RoomSlotProps {
   room: Room;
 }

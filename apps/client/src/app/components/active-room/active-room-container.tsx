@@ -1,7 +1,6 @@
 import { isMessage } from '@boochat/domain';
 import { createRef, useEffect } from 'react';
-import { selectActiveRoom } from '../../store/active-room/active-room.reducer';
-import { useAppSelector } from '../../store/hooks';
+import { selectActiveRoom, useAppSelector } from '../../store';
 import './active-room.css';
 import { Announcement } from './announcement';
 import { Message } from './message';

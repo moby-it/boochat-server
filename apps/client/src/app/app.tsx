@@ -1,9 +1,8 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
-import { MainPage } from './pages/main-page';
-import { http } from './shared/http-service';
-import { setCurrentUser, setGoogleToken } from './store/auth/auth.reducer';
-import { useAppDispatch } from './store/hooks';
+import { http } from './data';
+import { MainPage } from './pages';
+import { setCurrentUser, setGoogleToken, useAppDispatch } from './store';
 export function App() {
   const dispatch = useAppDispatch();
   useEffect(() => {
