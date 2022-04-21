@@ -10,7 +10,7 @@ export function App() {
       const googleToken = (event as CustomEvent<{ credential: string }>).detail.credential;
       dispatch(setGoogleToken(googleToken));
       const result = await http.auth.login(googleToken);
-      dispatch(setCurrentUser(result.user));
+      dispatch(setCurrentUser(result));
     });
   });
 

@@ -43,7 +43,7 @@ export function RoomSlot(props: RoomSlotProps) {
     </div>
   );
   async function chooseRoom(roomId: RoomId) {
-    const room: Room = await http.rooms.fetchOne(`/rooms/getOne/${roomId}`);
+    const room: Room = await http.rooms.fetchOne(roomId);
     dispath(setActiveRoom(room));
   }
 }
