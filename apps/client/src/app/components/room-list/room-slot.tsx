@@ -1,4 +1,4 @@
-import { Room, RoomId, UserId } from '@boochat/domain';
+import { Room, RoomId, User, UserId } from '@boochat/domain';
 import { http } from '../../shared/http-service';
 import { setActiveRoom } from '../../store/active-room/active-room.reducer';
 import { selectCurrentUser } from '../../store/auth/auth.reducer';
@@ -10,18 +10,22 @@ interface RoomSlotProps {
 function twoPeopleRoom(room: Room) {
   return room.participants.length === 2;
 }
-export function RoomSlot(props: RoomSlotProps) {
-  const dispath = useAppDispatch();
-  const currentUser = useAppSelector(selectCurrentUser);
-  const allUsers = useAppSelector(selectUsers);
-  const { room } = props;
+function getRoomImage(room: Room, allUsers: User[], currentUser: User) {
   let roomImage = room.imageUrl;
-  const userIsActive = useAppSelector(selectUserIsActive(room));
   if (twoPeopleRoom(room)) {
     const otherUser = room.participants.filter((participant) => participant.id !== currentUser?.id)[0];
     const otherUserImage = allUsers.find((user) => user.id === otherUser.id)?.imageUrl;
     if (otherUserImage) roomImage = otherUserImage;
   }
+  return roomImage;
+}
+export function RoomSlot(props: RoomSlotProps) {
+  const dispath = useAppDispatch();
+  const currentUser = useAppSelector(selectCurrentUser) as User;
+  const allUsers = useAppSelector(selectUsers);
+  const { room } = props;
+  const userIsActive = useAppSelector(selectUserIsActive(room));
+  const roomImage = getRoomImage(room, allUsers, currentUser);
   return (
     <div className="room-slot" onClick={() => chooseRoom(props.room.id)}>
       <div className="avatar">
