@@ -1,6 +1,6 @@
 {
   "headers": {
-    "no-referrer": "no-referrer-when-downgrade"
+    "Referrer-Policy": "no-referrer-when-downgrade"
   },
   "auth": {
     "identityProviders": {
