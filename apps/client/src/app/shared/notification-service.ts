@@ -1,5 +1,5 @@
 function notify() {
-  const audio = new Audio('../../assets/notification_2.wav');
+  const audio = new Audio('../../assets/notification.mp3');
   audio.play().catch(() => {
     console.log('failed to play');
   });
