@@ -8,7 +8,7 @@ export function App() {
   const dispatch = useAppDispatch();
   useEffect(() => {
     if (!listenerAdded) {
-      console.log('adding listener for google login..');
+      console.log('adding listener for google login...');
       window.addEventListener('onGoogleLogin', async (event: unknown) => {
         const googleToken = (event as CustomEvent<{ credential: string }>).detail.credential;
         dispatch(setGoogleToken(googleToken));
