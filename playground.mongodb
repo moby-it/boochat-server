@@ -1,5 +1,5 @@
  use('ReadDB')
- const userId='0374d0da-8d09-4928-8ddb-8877394ad177'
+ const userId='8b2823bb-d6d3-412e-a6b3-06491703d017'
 db.Rooms.aggregate([
   {
     $match: {
@@ -18,13 +18,11 @@ db.Rooms.aggregate([
     $project: {
       _id: 1,
       name: 1,
-      lastItem: {
-        $first: {
+      lastItems: {
           $filter: {
             input: '$roomItems',
             cond: { $eq: ['$$this.createdAt', { $max: '$roomItems.createdAt' }] }
           }
-        }
       },
       participantIds: 1,
       imageUrl: 1,
@@ -35,7 +33,7 @@ db.Rooms.aggregate([
     $project: {
       _id: 1,
       name: 1,
-      lastItem: 1,
+      lastItem: {$arrayElemAt:["$lastItems",0]},
       participantIds: 1,
       imageUrl: 1,
       lastVisit: {

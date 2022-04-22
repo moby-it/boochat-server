@@ -18,12 +18,10 @@ export const findByUserIdQuery: (userId: UserId) => PipelineStage[] = (userId: s
     $project: {
       _id: 1,
       name: 1,
-      lastItem: {
-        $first: {
-          $filter: {
-            input: '$roomItems',
-            cond: { $eq: ['$$this.createdAt', { $max: '$roomItems.createdAt' }] }
-          }
+      lastItems: {
+        $filter: {
+          input: '$roomItems',
+          cond: { $eq: ['$$this.createdAt', { $max: '$roomItems.createdAt' }] }
         }
       },
       participantIds: 1,
@@ -35,7 +33,7 @@ export const findByUserIdQuery: (userId: UserId) => PipelineStage[] = (userId: s
     $project: {
       _id: 1,
       name: 1,
-      lastItem: 1,
+      lastItem: { $arrayElemAt: ['$lastItems', 0] },
       participantIds: 1,
       imageUrl: 1,
       lastVisit: {
