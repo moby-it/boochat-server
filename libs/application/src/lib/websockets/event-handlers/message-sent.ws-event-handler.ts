@@ -1,5 +1,5 @@
 import { AnnouncementCreatedEvent, Message, MessageSentEvent, RoomAnnouncement } from '@boochat/domain';
-import { WebsocketEventsEnum } from '@boochat/shared';
+import { QuerySocketEventsEnum } from '@boochat/shared';
 import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { transformToPlain, WsServer } from '../../common';
 
@@ -19,7 +19,7 @@ export class RoomItemSentWsEventHandler
         },
         event.id
       );
-      WsServer.emitToRoom(event.roomId, WebsocketEventsEnum.NEW_ROOM_ITEM, transformToPlain(message));
+      WsServer.emitToRoom(event.roomId, QuerySocketEventsEnum.NEW_ROOM_ITEM, transformToPlain(message));
     } else {
       const { content, createdAt, roomId } = event;
       const announcement = new RoomAnnouncement({
@@ -28,7 +28,7 @@ export class RoomItemSentWsEventHandler
         timestamp: createdAt,
         roomId
       });
-      WsServer.emitToRoom(event.roomId, WebsocketEventsEnum.NEW_ROOM_ITEM, transformToPlain(announcement));
+      WsServer.emitToRoom(event.roomId, QuerySocketEventsEnum.NEW_ROOM_ITEM, transformToPlain(announcement));
     }
   }
 }

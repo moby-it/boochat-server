@@ -1,6 +1,6 @@
 import { User } from '@boochat/domain';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AuthResponse } from '../../data';
+import { AuthResponse } from '@boochat/shared';
 import { RootState } from '../store';
 
 interface AuthState {

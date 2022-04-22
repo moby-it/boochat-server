@@ -10,7 +10,7 @@ export function Message(props: MessageProps) {
   const isSent = message.sender.id === currentUser?.id;
   return (
     <div className={`message ${isSent ? ' sent-message' : ' received-message'}`}>
-      {isSent && (
+      {!isSent && (
         <img
           alt="profile"
           className="sender-avatar"
@@ -21,7 +21,7 @@ export function Message(props: MessageProps) {
         <span>{message.content}</span>
       </div>
       <div className="timestamp">
-        <span>{moment(message.dateSent).format('hh:mm')}</span>
+        <span>{moment(message.timestamp).format('hh:mm')}</span>
       </div>
     </div>
   );

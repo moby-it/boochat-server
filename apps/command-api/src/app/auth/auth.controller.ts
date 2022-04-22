@@ -1,5 +1,6 @@
-import { AuthResponse, AuthService } from '@boochat/application';
+import { AuthService } from '@boochat/application';
 import { UserDto } from '@boochat/domain';
+import { AuthResponse } from '@boochat/shared';
 import { Body, Controller, Param, Post, Put, SerializeOptions } from '@nestjs/common';
 
 @Controller('auth')

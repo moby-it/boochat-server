@@ -50,10 +50,4 @@ export class Room extends Entity<RoomProps> {
     Guard.AgainstEmptyArray({ propName: 'participants', value: props.participants });
     return new Room(props, id);
   }
-  changeToUnread() {
-    this._props.hasUnreadMessage = true;
-  }
-  changeToRead() {
-    this._props.hasUnreadMessage = false;
-  }
 }

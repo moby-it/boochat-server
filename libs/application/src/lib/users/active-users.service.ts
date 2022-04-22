@@ -1,5 +1,5 @@
 import { Notification, RoomId, SocketId, UserId } from '@boochat/domain';
-import { WebsocketEventsEnum } from '@boochat/shared';
+import { QuerySocketEventsEnum } from '@boochat/shared';
 import { Injectable } from '@nestjs/common';
 import { BehaviorSubject } from 'rxjs';
 import { WsServer } from '../common';
@@ -46,6 +46,6 @@ export class ActiveUsersService {
   }
   async notifyUser(userId: UserId, notification: Notification) {
     const socket = await this.findUserSocket(userId);
-    socket?.emit(WebsocketEventsEnum.NOTIFICATION, notification);
+    socket?.emit(QuerySocketEventsEnum.NOTIFICATION, notification);
   }
 }

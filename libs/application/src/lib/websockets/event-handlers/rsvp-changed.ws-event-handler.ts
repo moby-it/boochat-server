@@ -1,5 +1,5 @@
 import { ChangeRsvpDto, RsvpChangedEvent } from '@boochat/domain';
-import { WebsocketEventsEnum } from '@boochat/shared';
+import { QuerySocketEventsEnum } from '@boochat/shared';
 import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { WsServer } from '../../common';
 
@@ -11,6 +11,6 @@ export class RsvpChangedWsEventHandler implements IEventHandler<RsvpChangedEvent
       rsvp: event.rsvp,
       userId: event.userId
     };
-    WsServer.emitToRoom(event.meetupId, WebsocketEventsEnum.RSVP_CHANGED, rsvp);
+    WsServer.emitToRoom(event.meetupId, QuerySocketEventsEnum.RSVP_CHANGED, rsvp);
   }
 }

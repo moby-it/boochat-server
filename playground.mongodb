@@ -1,7 +1,6 @@
  use('ReadDB')
- const userId='2e2751e7-b64e-49f6-b33c-31a41ccecae0'
- db.Rooms.aggregate(
- [
+ const userId='0374d0da-8d09-4928-8ddb-8877394ad177'
+db.Rooms.aggregate([
   {
     $match: {
       participantIds: userId
@@ -12,8 +11,7 @@
       from: 'RoomItems',
       localField: '_id',
       foreignField: 'roomId',
-      as: 'roomItems',
-
+      as: 'roomItems'
     }
   },
   {
@@ -33,7 +31,7 @@
       lastVisits: 1
     }
   },
-    {
+  {
     $project: {
       _id: 1,
       name: 1,
@@ -41,12 +39,12 @@
       participantIds: 1,
       imageUrl: 1,
       lastVisit: {
-             $first: {
-             $filter: {
-               input:'$lastVisits',
-               cond: {$eq:['$$this.userId',userId]}
-             }
-           }
+        $first: {
+          $filter: {
+            input: '$lastVisits',
+            cond: { $eq: ['$$this.userId', userId] }
+          }
+        }
       }
     }
   },
@@ -54,20 +52,22 @@
     $project: {
       _id: 1,
       name: 1,
-      lastMessage:1,
-      participantIds:1,
-      imageUrl:1,
-      lastItem:1,
-      lastVisit:1,
-      hasUnreadMessage: {
+      lastMessage: 1,
+      participantIds: 1,
+      imageUrl: 1,
+      lastItem: 1,
+      isUnread: {
         $cond: {
-          if: "$lastVisit",
-          then: {
-            $lt:[{$toDate:"$lastVisit.timestamp"},"$lastItem.createdAt"]
-            },
+          if: '$lastVisit',
+          then: { $lt: [{ $toDate: '$lastVisit.timestamp' }, '$lastItem.createdAt'] },
           else: true
         }
-
+      }
     }
-  }}
-])
+  },
+  {
+    $sort: {
+      'lastItem.createdAt': -1
+    }
+  }
+]);

@@ -1,39 +1,53 @@
-import { WebsocketEventsEnum } from '@boochat/shared';
+import { Meetup, Room, RoomItem, User } from '@boochat/domain';
+import { QuerySocketEventsEnum } from '@boochat/shared';
 import { io, Socket } from 'socket.io-client';
 import { environment } from '../../environments/environment';
-import { setRoomList } from '../store/room-list/room-list.reducer';
+import { appendRoomItem, setRoomList } from '../store/rooms';
 import { AppDispatch } from '../store/store';
 import { setActiveUsers, setUsers } from '../store/users/users.reducer';
-let commandSocket: Socket | undefined;
-let querySocket: Socket | undefined;
+import { NotificationService } from './notification-service';
+interface ISocketManager {
+  initializeSocketManager: (dispatch: AppDispatch, token: string) => void;
+  querySocket: Socket | undefined;
+  commandSocket: Socket | undefined;
+}
+const SocketManager: ISocketManager = {
+  initializeSocketManager,
+  querySocket: undefined,
+  commandSocket: undefined
+};
 function initializeQuerySocketEventListeners(dispatch: AppDispatch) {
-  querySocket = querySocket as Socket;
-  querySocket.on(WebsocketEventsEnum.ALL_USERS, (users) => {
+  SocketManager.querySocket?.on(QuerySocketEventsEnum.ALL_USERS, (users: User[]) => {
     console.log('ALL USERS', users);
     dispatch(setUsers(users));
   });
-  querySocket.on(WebsocketEventsEnum.ACTIVE_USER_LIST, (activeUsers) => {
+  SocketManager.querySocket?.on(QuerySocketEventsEnum.ACTIVE_USER_LIST, (activeUsers: string[]) => {
     console.log('ACTIVE USERS', activeUsers);
     dispatch(setActiveUsers(activeUsers));
   });
-  querySocket.on(WebsocketEventsEnum.MEETUP_LIST, (meetups) => {
+  SocketManager.querySocket?.on(QuerySocketEventsEnum.MEETUP_LIST, (meetups: Meetup[]) => {
     console.log('MEETUPS LIST', meetups);
   });
-  querySocket.on(WebsocketEventsEnum.ROOM_LIST, (rooms) => {
+  SocketManager.querySocket?.on(QuerySocketEventsEnum.ROOM_LIST, (rooms: Room[]) => {
     console.log('ROOMS LIST', rooms);
     dispatch(setRoomList(rooms));
   });
+  SocketManager.querySocket?.on(QuerySocketEventsEnum.NEW_ROOM_ITEM, (item: RoomItem) => {
+    dispatch(appendRoomItem(item));
+    NotificationService.notify();
+  });
 }
 function initializeSocketManager(dispatch: AppDispatch, token: string) {
-  if (!querySocket) {
-    querySocket = io(environment.queryApiUrl + `?token=${token}`, { transports: ['websocket'] }).connect();
+  if (!SocketManager.querySocket) {
+    SocketManager.querySocket = io(environment.queryApiUrl + `?token=${token}`, {
+      transports: ['websocket']
+    }).connect();
     initializeQuerySocketEventListeners(dispatch);
   }
-  if (!commandSocket)
-    commandSocket = io(environment.commandApiUrl + `?token=${token}`, {
+  if (!SocketManager.commandSocket)
+    SocketManager.commandSocket = io(environment.commandApiUrl + `?token=${token}`, {
       transports: ['websocket']
     }).connect();
 }
-export const SocketManager = {
-  initializeSocketManager
-};
+
+export default SocketManager;

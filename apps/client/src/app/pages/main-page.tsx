@@ -5,7 +5,7 @@ import ActiveRoomContainer from '../components/active-room/active-room-container
 import MeetupsContainer from '../components/meetups/meetups-container';
 import RoomListContainer from '../components/room-list/room-list-container';
 import Sidenav from '../components/sidenav';
-import { SocketManager } from '../shared/socket-manager';
+import SocketManager from '../shared/socket-manager';
 import { selectToken } from '../store/auth/auth.reducer';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 

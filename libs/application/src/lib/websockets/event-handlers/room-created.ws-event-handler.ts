@@ -1,5 +1,5 @@
 import { Room, RoomCreatedEvent } from '@boochat/domain';
-import { WebsocketEventsEnum } from '@boochat/shared';
+import { QuerySocketEventsEnum } from '@boochat/shared';
 import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { transformToPlain, WsServer } from '../../common';
 import { ActiveUsersService } from '../../users';
@@ -25,7 +25,7 @@ export class RoomCreatedWsEventHandler implements IEventHandler<RoomCreatedEvent
       event.id
     );
     for (const socket of activeSockets) {
-      socket.emit(WebsocketEventsEnum.ROOM_CREATED, transformToPlain(room));
+      socket.emit(QuerySocketEventsEnum.ROOM_CREATED, transformToPlain(room));
     }
   }
 }

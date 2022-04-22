@@ -1,12 +1,16 @@
-import { useAppSelector, selectRoomList } from '../../store';
-import { RoomList } from './room-list';
+import { selectActiveRoom, selectRoomList, useAppSelector } from '../../store';
 import './room-list.css';
+import RoomSlot from './room-slot';
 export function RoomListContainer() {
   const rooms = useAppSelector(selectRoomList);
   return (
     <div className="room-list-window">
       <div className="room-list-nav"></div>
-      <RoomList rooms={rooms} />
+      <div className="room-list">
+        {rooms.map((room) => (
+          <RoomSlot room={room} key={room.id} />
+        ))}
+      </div>
     </div>
   );
 }

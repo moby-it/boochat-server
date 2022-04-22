@@ -1,7 +1,7 @@
 import { UserDto } from '@boochat/domain';
 import jwtDecode from 'jwt-decode';
 import { environment } from '../../environments/environment';
-import { AuthResponse } from './auth.response.model';
+import { AuthResponse } from '@boochat/shared';
 import { urlPrefix } from './variable';
 
 async function login(googleToken: string) {
