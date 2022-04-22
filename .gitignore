@@ -41,4 +41,4 @@ Thumbs.db
 *.env
 !.example.env
 # docker persistence folders
-data
+/data

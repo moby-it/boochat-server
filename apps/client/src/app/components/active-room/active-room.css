@@ -6,6 +6,7 @@
   border-radius: var(--round);
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 }
 
 .message-list {

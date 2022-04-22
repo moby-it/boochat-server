@@ -24,13 +24,13 @@ export class Message extends Entity<MessageProps> {
   }
 
   @Expose()
-  get dateSent() {
+  get timestamp() {
     return this._props.dateSent;
   }
 
   @Expose()
-  get room() {
-    return this._props.room;
+  get roomId() {
+    return this._props.room.id;
   }
   private constructor(props: MessageProps, id: string) {
     super(props, id);

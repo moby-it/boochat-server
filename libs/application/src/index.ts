@@ -6,3 +6,4 @@ export * from './lib/event-bus';
 export * from './lib/meetups';
 export * from './lib/rooms';
 export * from './lib/notifications';
+export * from './lib/active-users.module';

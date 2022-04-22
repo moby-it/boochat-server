@@ -1,4 +1,4 @@
-export enum WebsocketEventsEnum {
+export enum QuerySocketEventsEnum {
   ACTIVE_USER_LIST = 'ACTIVE_USER_LIST',
   ALL_USERS = 'ALL_USERS',
   ROOM_LIST = 'ROOM_LIST',

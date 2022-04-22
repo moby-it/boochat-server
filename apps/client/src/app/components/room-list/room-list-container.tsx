@@ -1,13 +1,19 @@
-import { useAppSelector } from '../../store/hooks';
-import { selectRoomList } from '../../store/room-list/room-list.reducer';
-import { RoomList } from './room-list';
+import { selectRoomList, useAppSelector } from '../../store';
+import CreateRoomForm from './create-room';
 import './room-list.css';
+import RoomSlot from './room-slot';
+import { v4 as uuid } from 'uuid';
 export function RoomListContainer() {
   const rooms = useAppSelector(selectRoomList);
   return (
     <div className="room-list-window">
+      <CreateRoomForm />
       <div className="room-list-nav"></div>
-      <RoomList rooms={rooms} />
+      <div className="room-list">
+        {rooms.map((room) => (
+          <RoomSlot room={room} key={room.id + room.items[0]?.id ?? uuid()} />
+        ))}
+      </div>
     </div>
   );
 }

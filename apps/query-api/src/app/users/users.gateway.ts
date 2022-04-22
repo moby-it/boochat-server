@@ -1,6 +1,6 @@
 import { ActiveUsersService, AuthService, WsJwtGuard, WsServer } from '@boochat/application';
-import { UserConnectedEvent, UserId } from '@boochat/domain';
-import { WebsocketEventsEnum } from '@boochat/shared';
+import { UserClosedRoomEvent, UserConnectedEvent, UserId } from '@boochat/domain';
+import { QuerySocketEventsEnum } from '@boochat/shared';
 import { UseGuards } from '@nestjs/common';
 import { EventBus } from '@nestjs/cqrs';
 import {
@@ -29,6 +29,11 @@ export class UsersGateway implements OnGatewayConnection, OnGatewayDisconnect {
     const token = socket.handshake.query['token'] as string;
     const userId = await this.authService.getUserId(token);
     this.activeUsersService.remove(userId);
+    const lastVisitedRoomId = this.activeUsersService.userRoomsMap.get(userId);
+    if (lastVisitedRoomId) {
+      this.eventBus.publish(new UserClosedRoomEvent(userId, lastVisitedRoomId, new Date()));
+      this.activeUsersService.userRoomsMap.delete(userId);
+    }
     console.log('Disconnected');
   }
   @UseGuards(WsJwtGuard)
@@ -58,7 +63,7 @@ export class UsersGateway implements OnGatewayConnection, OnGatewayDisconnect {
   }
   private setUserListWsSubscription() {
     this.activeUsersService.activeUsers$.subscribe((userList) => {
-      WsServer.instance.emit(WebsocketEventsEnum.ACTIVE_USER_LIST, Array.from(userList.keys()));
+      WsServer.instance.emit(QuerySocketEventsEnum.ACTIVE_USER_LIST, Array.from(userList.keys()));
     });
   }
 }

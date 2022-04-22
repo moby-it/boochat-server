@@ -1,5 +1,6 @@
 import { User } from '@boochat/domain';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { AuthResponse } from '@boochat/shared';
 import { RootState } from '../store';
 
 interface AuthState {
@@ -25,7 +26,7 @@ export const authSlice = createSlice({
     setGoogleToken: (state, action: PayloadAction<string>) => {
       state.googleToken = action.payload;
     },
-    setCurrentUser: (state, action) => {
+    setCurrentUser: (state, action: PayloadAction<AuthResponse>) => {
       state.token = action.payload.token;
       state.user = action.payload.user;
       state.isLoggedIn = true;
@@ -38,6 +39,7 @@ export const selectLoggedIn = (state: RootState) => {
   return state.auth.isLoggedIn;
 };
 export const selectToken = (state: RootState) => state.auth.token;
+export const selectGoogleToken = (state: RootState) => state.auth.googleToken;
 export const selectCurrentUser = (state: RootState) => state.auth.user;
 
 export default authSlice.reducer;

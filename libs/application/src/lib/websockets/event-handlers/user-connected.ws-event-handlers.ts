@@ -1,5 +1,5 @@
 import { Meetup, Room, User, UserConnectedEvent, UserId } from '@boochat/domain';
-import { WebsocketEventsEnum } from '@boochat/shared';
+import { QuerySocketEventsEnum } from '@boochat/shared';
 import { EventsHandler, IEventHandler, QueryBus } from '@nestjs/cqrs';
 import { WsException } from '@nestjs/websockets';
 import { Socket } from 'socket.io';
@@ -14,14 +14,14 @@ export class UserConnectedWsEventHandler implements IEventHandler<UserConnectedE
     const { socket, userId } = event;
     const rooms = await this.getRooms(userId);
     this.userJoinsRooms(socket, rooms);
-    socket.emit(WebsocketEventsEnum.ROOM_LIST, transformToPlain(rooms));
+    socket.emit(QuerySocketEventsEnum.ROOM_LIST, transformToPlain(rooms));
 
     const meetups = await this.getMeetups(userId);
     this.userJoinsMeetups(socket, meetups);
-    socket.emit(WebsocketEventsEnum.MEETUP_LIST, transformToPlain(meetups));
+    socket.emit(QuerySocketEventsEnum.MEETUP_LIST, transformToPlain(meetups));
 
     const users = await this.getAllUsers();
-    socket.emit(WebsocketEventsEnum.ALL_USERS, transformToPlain(users));
+    socket.emit(QuerySocketEventsEnum.ALL_USERS, transformToPlain(users));
   }
   private userJoinsRooms(socket: Socket, rooms: Room[]) {
     for (const room of rooms) {
@@ -34,7 +34,9 @@ export class UserConnectedWsEventHandler implements IEventHandler<UserConnectedE
     }
   }
   private async getRooms(userId: UserId): Promise<Room[]> {
-    const result = (await this.queryBus.execute(new GetRoomsWithLastItemQuery(userId))) as GetRoomsWithLastItemQueryResult;
+    const result = (await this.queryBus.execute(
+      new GetRoomsWithLastItemQuery(userId)
+    )) as GetRoomsWithLastItemQueryResult;
     if (result.failed) throw new WsException('failed to get rooms for user');
     return result.props as Room[];
   }

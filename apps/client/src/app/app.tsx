@@ -1,26 +1,23 @@
-import { UserDto } from '@boochat/domain';
-import jwtDecode from 'jwt-decode';
-import React from 'react';
+import { useEffect } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
-import { MainPage } from './pages/main-page';
-import { login } from './shared/login';
-import { setGoogleToken } from './store/auth/auth.reducer';
-import { useAppDispatch } from './store/hooks';
+import { http } from './data';
+import { MainPage } from './pages';
+import { setCurrentUser, setGoogleToken, useAppDispatch } from './store';
+let listenerAdded = false;
 export function App() {
   const dispatch = useAppDispatch();
-  window.addEventListener('onGoogleLogin', (event: unknown) => {
-    const e = event as { detail: { credential: string } };
-    const credential = e.detail.credential;
-    dispatch(setGoogleToken(credential));
-    const user = jwtDecode(credential) as { sub: string; name: string; picture: string };
-    console.log(user);
-    const dto: UserDto = {
-      googleId: user.sub,
-      imageUrl: user.picture,
-      name: user.name
-    };
-    login(dto, dispatch);
+  useEffect(() => {
+    if (!listenerAdded) {
+      window.addEventListener('onGoogleLogin', async (event: unknown) => {
+        const googleToken = (event as CustomEvent<{ credential: string }>).detail.credential;
+        dispatch(setGoogleToken(googleToken));
+        const result = await http.auth.login(googleToken);
+        dispatch(setCurrentUser(result));
+      });
+      listenerAdded = true;
+    }
   });
+
   return (
     <div className="app-shell">
       <Routes>

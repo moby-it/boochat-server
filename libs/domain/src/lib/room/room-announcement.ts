@@ -1,4 +1,4 @@
-import { Expose } from 'class-transformer';
+import { Exclude, Expose } from 'class-transformer';
 import { RoomId, ValueObject } from '../common';
 
 interface RoomAnnouncementProps {
@@ -22,5 +22,9 @@ export class RoomAnnouncement extends ValueObject<RoomAnnouncementProps> {
   @Expose()
   public get timestamp() {
     return this._props.timestamp;
+  }
+  @Exclude()
+  public get roomId() {
+    return this._props.roomId;
   }
 }

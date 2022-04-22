@@ -1,5 +1,5 @@
 import { Meetup, MeetupCreatedEvent } from '@boochat/domain';
-import { WebsocketEventsEnum } from '@boochat/shared';
+import { QuerySocketEventsEnum } from '@boochat/shared';
 import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { transformToPlain, WsServer } from '../../common';
 import { ActiveUsersService } from '../../users';
@@ -24,6 +24,6 @@ export class MeetupCreatedWsEventHandler implements IEventHandler<MeetupCreatedE
       },
       event.id
     );
-    WsServer.emitToRoom(event.id, WebsocketEventsEnum.NEW_MEETUP, transformToPlain(meetup));
+    WsServer.emitToRoom(event.id, QuerySocketEventsEnum.NEW_MEETUP, transformToPlain(meetup));
   }
 }

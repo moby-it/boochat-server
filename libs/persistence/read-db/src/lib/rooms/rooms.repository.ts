@@ -1,4 +1,4 @@
-import { CreateMessageDto, CreateRoomDto, RoomId, RoomItemEnum, UserId } from '@boochat/domain';
+import { CreateMessageDto, CreateRoomEventDto, RoomId, RoomItemEnum, UserId } from '@boochat/domain';
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectConnection } from '@nestjs/mongoose';
 import { Connection, Model } from 'mongoose';
@@ -23,7 +23,7 @@ export class RoomsRepository {
     if (queryResult.length === 1) return queryResult[0];
     throw new InternalServerErrorException('Invalid query result length for getRoom query');
   }
-  async createRoom(dto: CreateRoomDto) {
+  async createRoom(dto: CreateRoomEventDto) {
     const room = new this.roomModel({
       ...dto
     });

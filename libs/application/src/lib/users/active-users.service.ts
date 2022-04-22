@@ -1,5 +1,5 @@
 import { Notification, RoomId, SocketId, UserId } from '@boochat/domain';
-import { WebsocketEventsEnum } from '@boochat/shared';
+import { QuerySocketEventsEnum } from '@boochat/shared';
 import { Injectable } from '@nestjs/common';
 import { BehaviorSubject } from 'rxjs';
 import { WsServer } from '../common';
@@ -7,6 +7,7 @@ export type ActiveUsersMap = Map<UserId, SocketId>;
 
 @Injectable()
 export class ActiveUsersService {
+  public userRoomsMap: Map<UserId, RoomId> = new Map();
   private _activeUsers$: BehaviorSubject<ActiveUsersMap> = new BehaviorSubject(new Map<UserId, SocketId>());
   public activeUsers$ = this._activeUsers$.asObservable();
   get activeUsersMap() {
@@ -46,6 +47,6 @@ export class ActiveUsersService {
   }
   async notifyUser(userId: UserId, notification: Notification) {
     const socket = await this.findUserSocket(userId);
-    socket?.emit(WebsocketEventsEnum.NOTIFICATION, notification);
+    socket?.emit(QuerySocketEventsEnum.NOTIFICATION, notification);
   }
 }

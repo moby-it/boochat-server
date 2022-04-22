@@ -1,4 +1,6 @@
-export const findByUserIdQuery = (userId: string) => [
+import { UserId } from '@boochat/domain';
+import { PipelineStage } from 'mongoose';
+export const findByUserIdQuery: (userId: UserId) => PipelineStage[] = (userId: string) => [
   {
     $match: {
       participantIds: userId
@@ -61,6 +63,11 @@ export const findByUserIdQuery = (userId: string) => [
           else: true
         }
       }
+    }
+  },
+  {
+    $sort: {
+      'lastItem.createdAt': -1
     }
   }
 ];

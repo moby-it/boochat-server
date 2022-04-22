@@ -1,6 +1,6 @@
 import { Poll, PollCreatedEvent, PollStatusEnum } from '@boochat/domain';
 import { MeetupsRepository } from '@boochat/persistence/read-db';
-import { WebsocketEventsEnum } from '@boochat/shared';
+import { QuerySocketEventsEnum } from '@boochat/shared';
 import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { WsException } from '@nestjs/websockets';
 import { transformToPlain, WsServer } from '../../common';
@@ -25,6 +25,6 @@ export class PollCreatedWsEventHandler implements IEventHandler<PollCreatedEvent
       },
       event.id
     );
-    WsServer.emitToRoom(meetupDocument.id, WebsocketEventsEnum.POLL_CREATED, transformToPlain(poll));
+    WsServer.emitToRoom(meetupDocument.id, QuerySocketEventsEnum.POLL_CREATED, transformToPlain(poll));
   }
 }
