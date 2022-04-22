@@ -2,7 +2,7 @@ import { Room, RoomId, User } from '@boochat/domain';
 import { CommandSocketEventsEnum } from '@boochat/shared';
 import { useState } from 'react';
 import { http } from '../../data';
-import SocketManager from '../../shared/socket-manager';
+import SocketManager from '../../data/socket-manager';
 import {
   selectActiveRoom,
   selectCurrentUser,
@@ -48,7 +48,7 @@ export function RoomSlot(props: RoomSlotProps) {
       <div className="room-slot-txt">
         {hasUnreadMessage && <span>HAS UNREAD MESSAGE</span>}
         <div>{room.name}</div>
-        <div>{room.items[0].content}</div>
+        <div>{room.items[0]?.content}</div>
       </div>
     </div>
   );

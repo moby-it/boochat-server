@@ -8,7 +8,11 @@ import { AuthResponse } from './auth-response.model';
 @Injectable()
 export class AuthService {
   saltRounds = 10;
-  constructor(private userService: UserPersistenceService, private jwtService: JwtService, private encrypt: EncryptService) {}
+  constructor(
+    private userService: UserPersistenceService,
+    private jwtService: JwtService,
+    private encrypt: EncryptService
+  ) {}
   public async authenticate(userDto: UserDto): Promise<AuthResponse> {
     try {
       let userDocument = await this.userService.findOneByGoogleId(userDto.googleId);

@@ -1,6 +1,4 @@
-export interface CreateRoomEventDto {
-  readonly _id: string;
-  readonly userId: string;
+export interface CreateRoomDto {
   readonly name: string;
   readonly imageUrl: string;
   readonly participantIds: string[];

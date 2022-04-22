@@ -1,5 +1,6 @@
 import { Room, RoomItem } from '@boochat/domain';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { WritableDraft } from 'immer/dist/internal';
 import { RootState } from '../store';
 
 interface RoomsState {
@@ -10,6 +11,9 @@ const initialState: RoomsState = {
   roomList: [],
   activeRoom: null
 };
+function sortRoomFn(a: WritableDraft<Room>, b: WritableDraft<Room>) {
+  return a.items[0].timestamp < b.items[0].timestamp ? 1 : -1;
+}
 const roomsSlice = createSlice({
   name: 'rooms',
   initialState,
@@ -24,15 +28,18 @@ const roomsSlice = createSlice({
         room.items = [item];
         room.hasUnreadMessage = state.activeRoom?.id !== item.roomId;
       }
-      state.roomList.sort((a, b) => (a.items[0].timestamp < b.items[0].timestamp ? 1 : -1));
+      if (room?.items) state.roomList = state.roomList.sort(sortRoomFn);
     },
     setActiveRoom: (state, action: PayloadAction<Room>) => {
       state.activeRoom = action.payload;
+    },
+    addRoom: (state, action: PayloadAction<Room>) => {
+      state.roomList.unshift(action.payload);
     }
   }
 });
 
-export const { setRoomList, appendRoomItem, setActiveRoom } = roomsSlice.actions;
+export const { setRoomList, appendRoomItem, setActiveRoom, addRoom } = roomsSlice.actions;
 
 export const selectRoomList = (state: RootState) => state.rooms.roomList;
 export const selectActiveRoom = (state: RootState) => state.rooms.activeRoom;

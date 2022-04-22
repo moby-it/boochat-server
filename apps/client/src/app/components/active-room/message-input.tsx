@@ -1,6 +1,6 @@
 import { CommandSocketEventsEnum } from '@boochat/shared';
 import { ChangeEvent, useState } from 'react';
-import SocketManager from '../../shared/socket-manager';
+import SocketManager from '../../data/socket-manager';
 import { selectActiveRoom, useAppSelector } from '../../store';
 
 export function MessageInput() {

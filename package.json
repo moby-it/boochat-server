@@ -87,6 +87,7 @@
     "react-is": "18.0.0",
     "react-redux": "^8.0.0",
     "react-router-dom": "^6.3.0",
+    "react-select": "^5.3.0",
     "react-test-renderer": "18.0.0",
     "reflect-metadata": "^0.1.13",
     "regenerator-runtime": "0.13.7",
