@@ -8,7 +8,7 @@ import './create-room.css';
 type Option = { label: string; value: string };
 interface FormState {
   name: string;
-  participants: string[];
+  participants: Option[];
 }
 function CreateRoomForm() {
   const allUsers = useAppSelector(selectUsers);
@@ -30,7 +30,7 @@ function CreateRoomForm() {
   function handleSelect(users: MultiValue<Option>) {
     setState({
       ...state,
-      participants: [...users.map((user) => user.value)]
+      participants: [...users]
     });
   }
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -40,7 +40,7 @@ function CreateRoomForm() {
       if (!currentUser) throw new Error('Current User Does not exist!');
       const dto: CreateRoomDto = {
         name,
-        participantIds: [...participants, currentUser.id],
+        participantIds: [...participants.map((p) => p.value), currentUser.id],
         imageUrl:
           'https://www.pngkey.com/png/full/470-4703342_generic-placeholder-image-conference-room-free-icon.png'
       };
@@ -64,6 +64,7 @@ function CreateRoomForm() {
       <Select
         isMulti
         options={options}
+        value={state.participants}
         onChange={(e) => {
           handleSelect(e);
         }}
