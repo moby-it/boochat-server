@@ -44,13 +44,15 @@ function initializeQuerySocketEventListeners(dispatch: AppDispatch, currentUser:
 function initializeSocketManager(dispatch: AppDispatch, token: string, currentUser: User) {
   if (!SocketManager.querySocket) {
     SocketManager.querySocket = io(environment.queryApiUrl + `?token=${token}`, {
-      transports: ['websocket']
+      transports: ['websocket'],
+      reconnectionAttempts: 5
     }).connect();
     initializeQuerySocketEventListeners(dispatch, currentUser);
   }
   if (!SocketManager.commandSocket)
     SocketManager.commandSocket = io(environment.commandApiUrl + `?token=${token}`, {
-      transports: ['websocket']
+      transports: ['websocket'],
+      reconnectionAttempts: 5
     }).connect();
 }
 

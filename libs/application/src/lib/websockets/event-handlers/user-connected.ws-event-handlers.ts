@@ -37,17 +37,17 @@ export class UserConnectedWsEventHandler implements IEventHandler<UserConnectedE
     const result = (await this.queryBus.execute(
       new GetRoomsWithLastItemQuery(userId)
     )) as GetRoomsWithLastItemQueryResult;
-    if (result.failed) throw new WsException('failed to get rooms for user');
+    if (result.failed) throw new WsException(result.error as any);
     return result.props as Room[];
   }
   private async getMeetups(userId: UserId): Promise<Meetup[]> {
     const result = (await this.queryBus.execute(new GetMeetupsQuery(userId))) as GetMeetupsQueryResult;
-    if (result.failed) throw new WsException('failed to get meetups for user');
+    if (result.failed) throw new WsException(result.error as any);
     return result.props as Meetup[];
   }
   private async getAllUsers() {
     const result = (await this.queryBus.execute(new GetUsersQuery())) as GetUsersQueryResult;
-    if (result.failed) throw new WsException('failed to get meetups for user');
+    if (result.failed) throw new WsException(result.error as any);
     return result.props as User[];
   }
 }
