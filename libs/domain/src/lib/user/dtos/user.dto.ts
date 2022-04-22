@@ -1,6 +1,5 @@
 export interface UserDto {
-  id?: string;
-  googleId: string;
+  id: string;
   name: string;
   imageUrl: string;
 }

@@ -1,11 +1,11 @@
 import { PollTypeEnum } from '..';
-import { UserId } from '../../../common';
+import { GoogleId } from '../../../common';
 
 export interface CreatePollDto {
   readonly _id: string;
-  readonly userId: UserId;
+  readonly userId: GoogleId;
   readonly pollType: PollTypeEnum;
-  readonly participantIds: UserId[];
+  readonly participantIds: GoogleId[];
   readonly description: string;
   readonly pollChoices: string[];
   readonly meetupId: string;

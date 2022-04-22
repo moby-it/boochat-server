@@ -7,7 +7,7 @@ import { urlPrefix } from './variable';
 async function login(googleToken: string) {
   const user = jwtDecode(googleToken) as { sub: string; name: string; picture: string };
   const dto: UserDto = {
-    googleId: user.sub,
+    id: user.sub,
     imageUrl: user.picture,
     name: user.name
   };

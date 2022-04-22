@@ -1,10 +1,10 @@
-import { Meetup, Result, UserId } from '@boochat/domain';
+import { Meetup, Result, GoogleId } from '@boochat/domain';
 import { IQuery, IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { MeetupsRepository } from '@boochat/persistence/read-db';
 import { Mapper } from '../../mapper';
 
 export class GetMeetupsQuery implements IQuery {
-  constructor(public readonly userId: UserId) {}
+  constructor(public readonly userId: GoogleId) {}
 }
 export type GetMeetupsQueryResult = Result<Meetup[] | undefined>;
 @QueryHandler(GetMeetupsQuery)

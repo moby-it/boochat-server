@@ -4,6 +4,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { EVENTS_STORE_DB_CONNECTION_NAME, EVENTS_STORE_DB_NAME, EVENT_STORE_SERVER_URL } from './common';
 import { MeetupEventStoreModule, MeetupEventStoreService } from './meetup-events-store';
 import { RoomEventsStoreService, RoomsEventStoreModule } from './rooms-events-store';
+import { UserEventsStoreService, UsersEventStoreModule } from './user-events-store';
 
 @Module({
   imports: [
@@ -13,9 +14,10 @@ import { RoomEventsStoreService, RoomsEventStoreModule } from './rooms-events-st
       dbName: process.env[EVENTS_STORE_DB_NAME]
     }),
     RoomsEventStoreModule,
-    MeetupEventStoreModule
+    MeetupEventStoreModule,
+    UsersEventStoreModule
   ],
-  providers: [RoomEventsStoreService, MeetupEventStoreService],
-  exports: [RoomEventsStoreService, MeetupEventStoreService]
+  providers: [RoomEventsStoreService, MeetupEventStoreService, UserEventsStoreService],
+  exports: [RoomEventsStoreService, MeetupEventStoreService, UserEventsStoreService]
 })
 export class PersistenceEventStoreModule {}

@@ -1,6 +1,6 @@
-import { Rsvp, UserId } from '@boochat/domain';
+import { Rsvp, GoogleId } from '@boochat/domain';
 
 export interface Attendance {
-  userId: UserId;
+  userId: GoogleId;
   rsvp: Rsvp;
 }

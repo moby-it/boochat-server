@@ -1,6 +1,6 @@
-import { UserId } from '@boochat/domain';
+import { GoogleId } from '@boochat/domain';
 
 export interface LastVisit {
-  userId: UserId;
+  userId: GoogleId;
   timestamp: Date;
 }

@@ -1,10 +1,14 @@
-import { MeetupId, Result, Rsvp, RsvpChangedEvent, UserId } from '@boochat/domain';
+import { MeetupId, Result, Rsvp, RsvpChangedEvent, GoogleId } from '@boochat/domain';
 import { MeetupEventStoreService } from '@boochat/persistence/events-store';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { EventBusService } from '../../event-bus';
 
 export class ChangeRsvpCommand {
-  constructor(public readonly userId: UserId, public readonly meetupId: MeetupId, public readonly rsvp: Rsvp) {}
+  constructor(
+    public readonly userId: GoogleId,
+    public readonly meetupId: MeetupId,
+    public readonly rsvp: Rsvp
+  ) {}
 }
 @CommandHandler(ChangeRsvpCommand)
 export class ChangeRsvpCommandHandler implements ICommandHandler<ChangeRsvpCommand> {

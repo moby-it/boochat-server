@@ -1,8 +1,8 @@
-import { UserId } from '../../common';
+import { GoogleId } from '../../common';
 import { Rsvp } from '../rsvp.enum';
 
 export interface ChangeRsvpDto {
-  userId: UserId;
+  userId: GoogleId;
   rsvp: Rsvp;
   meetupId: string;
 }

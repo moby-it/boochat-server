@@ -1,5 +1,5 @@
 import { ActiveUsersService, AuthService, WsJwtGuard, WsServer } from '@boochat/application';
-import { UserClosedRoomEvent, UserConnectedEvent, UserId } from '@boochat/domain';
+import { UserClosedRoomEvent, UserConnectedEvent, GoogleId } from '@boochat/domain';
 import { QuerySocketEventsEnum } from '@boochat/shared';
 import { UseGuards } from '@nestjs/common';
 import { EventBus } from '@nestjs/cqrs';

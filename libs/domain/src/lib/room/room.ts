@@ -1,5 +1,5 @@
 import { Expose } from 'class-transformer';
-import { Entity, Guard, UserId } from '../common';
+import { Entity, Guard, GoogleId } from '../common';
 import { Message } from './message';
 import { User } from '../user';
 import { RoomAnnouncement } from './room-announcement';

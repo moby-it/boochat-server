@@ -1,4 +1,4 @@
-import { BaseEvent, UserId } from '../common';
+import { BaseEvent, GoogleId } from '../common';
 import { MeetupEventEnum } from '../meetup';
 
 export class MeetupCreatedEvent extends BaseEvent {
@@ -7,7 +7,7 @@ export class MeetupCreatedEvent extends BaseEvent {
   constructor(
     public readonly userId: string,
     public readonly name: string,
-    public readonly attendeeIds: UserId[],
+    public readonly attendeeIds: GoogleId[],
     public readonly location: string,
     public readonly organizerId: string,
     public readonly takesPlaceOn: Date,

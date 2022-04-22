@@ -1,11 +1,10 @@
 import { User } from '@boochat/domain';
-import { UserDocument } from '@boochat/persistence/shared-db';
+import { UserDocument } from '@boochat/persistence/read-db';
 
 export function fromDocumentToEntity(user: UserDocument): User {
   return User.create(
     {
       name: user.name,
-      googleId: user.googleId,
       imageUrl: user.imageUrl
     },
     user._id

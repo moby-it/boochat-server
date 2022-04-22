@@ -1,14 +1,14 @@
-import { Notification, RoomId, SocketId, UserId } from '@boochat/domain';
+import { Notification, RoomId, SocketId, GoogleId } from '@boochat/domain';
 import { QuerySocketEventsEnum } from '@boochat/shared';
 import { Injectable } from '@nestjs/common';
 import { BehaviorSubject } from 'rxjs';
 import { WsServer } from '../common';
-export type ActiveUsersMap = Map<UserId, SocketId>;
+export type ActiveUsersMap = Map<GoogleId, SocketId>;
 
 @Injectable()
 export class ActiveUsersService {
-  public userRoomsMap: Map<UserId, RoomId> = new Map();
-  private _activeUsers$: BehaviorSubject<ActiveUsersMap> = new BehaviorSubject(new Map<UserId, SocketId>());
+  public userRoomsMap: Map<GoogleId, RoomId> = new Map();
+  private _activeUsers$: BehaviorSubject<ActiveUsersMap> = new BehaviorSubject(new Map<GoogleId, SocketId>());
   public activeUsers$ = this._activeUsers$.asObservable();
   get activeUsersMap() {
     return this._activeUsers$.getValue();
@@ -19,7 +19,7 @@ export class ActiveUsersService {
   get activeUserSocketIds() {
     return Array.from(this.activeUsersMap.values());
   }
-  add(userId: UserId, socketId: SocketId) {
+  add(userId: GoogleId, socketId: SocketId) {
     this._activeUsers$.next(this.activeUsersMap.set(userId, socketId));
   }
   remove(userId: string) {
@@ -33,19 +33,19 @@ export class ActiveUsersService {
     const userSocket = sockets.find((socket) => socket.id === userSocketId);
     return userSocket;
   }
-  async connectUserToRoom(userId: UserId, roomId: RoomId) {
+  async connectUserToRoom(userId: GoogleId, roomId: RoomId) {
     const sockets = await WsServer.instance.fetchSockets();
     const userSocketId = this.activeUsersMap.get(userId);
     const userSocket = sockets.find((socket) => socket.id === userSocketId);
     userSocket?.join(roomId);
   }
-  async disconnectUserFromRoom(userId: UserId, roomId: RoomId) {
+  async disconnectUserFromRoom(userId: GoogleId, roomId: RoomId) {
     const sockets = await WsServer.instance.fetchSockets();
     const userSocketId = this.activeUsersMap.get(userId);
     const userSocket = sockets.find((socket) => socket.id === userSocketId);
     userSocket?.leave(roomId);
   }
-  async notifyUser(userId: UserId, notification: Notification) {
+  async notifyUser(userId: GoogleId, notification: Notification) {
     const socket = await this.findUserSocket(userId);
     socket?.emit(QuerySocketEventsEnum.NOTIFICATION, notification);
   }

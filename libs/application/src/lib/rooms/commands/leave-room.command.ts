@@ -1,10 +1,10 @@
-import { AnnouncementCreatedEvent, Result, RoomId, UserId, UserLeftRoomEvent } from '@boochat/domain';
+import { AnnouncementCreatedEvent, Result, RoomId, GoogleId, UserLeftRoomEvent } from '@boochat/domain';
 import { RoomEventsStoreService } from '@boochat/persistence/events-store';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { EventBusService } from '../../event-bus';
 
 export class LeaveRoomCommand {
-  constructor(public readonly userId: UserId, public readonly roomId: RoomId) {}
+  constructor(public readonly userId: GoogleId, public readonly roomId: RoomId) {}
 }
 @CommandHandler(LeaveRoomCommand)
 export class LeaveRoomCommandHandler implements ICommandHandler<LeaveRoomCommand> {

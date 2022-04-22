@@ -1,11 +1,11 @@
-import { PollId, Result, PollVoteEvent, UserId, MeetupId } from '@boochat/domain';
+import { PollId, Result, PollVoteEvent, GoogleId, MeetupId } from '@boochat/domain';
 import { MeetupEventStoreService } from '@boochat/persistence/events-store';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { EventBusService } from '../../event-bus';
 
 export class VoteOnPollCommand {
   constructor(
-    public readonly userId: UserId,
+    public readonly userId: GoogleId,
     public readonly pollId: PollId,
     public readonly meetupId: MeetupId,
     public readonly choiceIndex: number

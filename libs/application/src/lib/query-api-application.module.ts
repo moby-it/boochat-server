@@ -1,5 +1,4 @@
 import { PersistenceReadDbModule } from '@boochat/persistence/read-db';
-import { PersistenceSharedDbModule } from '@boochat/persistence/shared-db';
 import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import { ActiveUsersModule } from './active-users.module';
@@ -9,17 +8,18 @@ import { MeetupsQueryHandlers } from './meetups/queries';
 import { NotificationService } from './notifications/notification.service';
 import { RoomEventHandlers } from './rooms';
 import { RoomQueryHandlers } from './rooms/queries';
-import { UserQueryHandlers } from './users';
+import { UserEventHandlers, UserQueryHandlers } from './users';
 import { AuthModule } from './users/auth/auth.module';
 import { WebsocketEventHandlers } from './websockets';
 
 @Module({
-  imports: [CqrsModule, PersistenceReadDbModule, PersistenceSharedDbModule, AuthModule, ActiveUsersModule],
+  imports: [CqrsModule, PersistenceReadDbModule, AuthModule, ActiveUsersModule],
   providers: [
     ...UserQueryHandlers,
     ...MeetupsQueryHandlers,
     ...RoomQueryHandlers,
     ...RoomEventHandlers,
+    ...UserEventHandlers,
     ...MeetupEventHandlers,
     ...WebsocketEventHandlers,
     NotificationService,

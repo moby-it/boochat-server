@@ -1,22 +1,21 @@
-import { EventPublisher, IQuery, IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { Result, User, UserId } from '@boochat/domain';
-import { UserPersistenceService } from '@boochat/persistence/shared-db';
+import { GoogleId, Result, User } from '@boochat/domain';
+import { UserRepository } from '@boochat/persistence/read-db';
+import { IQuery, IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 
 export class GetUserByIdQuery implements IQuery {
-  constructor(public readonly userId: UserId) {}
+  constructor(public readonly userId: GoogleId) {}
 }
 
 export type GetUserByIdQueryResult = Result<User | undefined>;
 
 @QueryHandler(GetUserByIdQuery)
 export class GetUserByIdQueryHandler implements IQueryHandler<GetUserByIdQuery> {
-  constructor(private usersService: UserPersistenceService) {}
+  constructor(private repository: UserRepository) {}
   async execute(query: GetUserByIdQuery): Promise<GetUserByIdQueryResult> {
-    const userDto = await this.usersService.findById(query.userId);
+    const userDto = await this.repository.findById(query.userId);
     if (!userDto) return Result.fail(`User for Id: ${query.userId} not found`);
     const user = User.create(
       {
-        googleId: userDto.googleId,
         name: userDto.name,
         imageUrl: userDto.imageUrl
       },

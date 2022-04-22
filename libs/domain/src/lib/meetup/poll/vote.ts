@@ -1,8 +1,8 @@
 import { Expose } from 'class-transformer';
-import { PollId, UserId, ValueObject } from '../../common';
+import { PollId, GoogleId, ValueObject } from '../../common';
 
 interface PollVoteProps {
-  userId: UserId;
+  userId: GoogleId;
   choiceIndex: number;
   pollId: PollId;
 }

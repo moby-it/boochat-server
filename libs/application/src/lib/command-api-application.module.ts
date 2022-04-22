@@ -1,24 +1,24 @@
 import { PersistenceEventStoreModule } from '@boochat/persistence/events-store';
-import { PersistenceSharedDbModule } from '@boochat/persistence/shared-db';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { CqrsModule } from '@nestjs/cqrs';
-import { MeetupEventBusProvider, RoomEventBusProvider } from './event-bus.providers';
+import { MeetupEventBusProvider, RoomEventBusProvider, UserEventBusProvider } from './event-bus.providers';
 import { EventBusService } from './event-bus/event-bus.service';
 import { Mapper } from './mapper';
 import { MeetupCommandHandlers } from './meetups';
 import { RoomCommandHandlers } from './rooms';
-import { UserQueryHandlers } from './users';
+import { AuthModule, UserCommandHandlers } from './users';
 
 @Module({
-  imports: [CqrsModule, ConfigModule, PersistenceEventStoreModule, PersistenceSharedDbModule],
+  imports: [CqrsModule, ConfigModule, PersistenceEventStoreModule, AuthModule],
   providers: [
     RoomEventBusProvider,
     MeetupEventBusProvider,
+    UserEventBusProvider,
     EventBusService,
-    ...UserQueryHandlers,
     ...RoomCommandHandlers,
     ...MeetupCommandHandlers,
+    ...UserCommandHandlers,
     Mapper
   ],
   exports: []

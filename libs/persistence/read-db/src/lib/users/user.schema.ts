@@ -6,8 +6,6 @@ export type UserDocument = User & Document;
 @Schema()
 export class User extends MongoEntity {
   @Prop({ required: true })
-  googleId!: string;
-  @Prop({ required: true })
   name!: string;
   @Prop({ required: true })
   imageUrl!: string;

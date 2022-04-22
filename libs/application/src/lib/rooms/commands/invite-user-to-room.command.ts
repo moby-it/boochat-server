@@ -1,10 +1,14 @@
-import { AnnouncementCreatedEvent, Result, RoomId, UserId, UserInvitedToRoomEvent } from '@boochat/domain';
+import { AnnouncementCreatedEvent, Result, RoomId, GoogleId, UserInvitedToRoomEvent } from '@boochat/domain';
 import { RoomEventsStoreService } from '@boochat/persistence/events-store';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { EventBusService } from '../../event-bus';
 
 export class InviteUserToRoomCommand {
-  constructor(public readonly userId: UserId, public readonly inviteeId: UserId, public readonly roomId: RoomId) {}
+  constructor(
+    public readonly userId: GoogleId,
+    public readonly inviteeId: GoogleId,
+    public readonly roomId: RoomId
+  ) {}
 }
 @CommandHandler(InviteUserToRoomCommand)
 export class InviteUserToRoomCommandHandler implements ICommandHandler<InviteUserToRoomCommand> {

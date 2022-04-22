@@ -1,4 +1,4 @@
-import { Meetup, Room, User, UserConnectedEvent, UserId } from '@boochat/domain';
+import { Meetup, Room, User, UserConnectedEvent, GoogleId } from '@boochat/domain';
 import { QuerySocketEventsEnum } from '@boochat/shared';
 import { EventsHandler, IEventHandler, QueryBus } from '@nestjs/cqrs';
 import { WsException } from '@nestjs/websockets';
@@ -33,14 +33,14 @@ export class UserConnectedWsEventHandler implements IEventHandler<UserConnectedE
       socket.join(meetup.id);
     }
   }
-  private async getRooms(userId: UserId): Promise<Room[]> {
+  private async getRooms(userId: GoogleId): Promise<Room[]> {
     const result = (await this.queryBus.execute(
       new GetRoomsWithLastItemQuery(userId)
     )) as GetRoomsWithLastItemQueryResult;
     if (result.failed) throw new WsException('failed to get rooms for user');
     return result.props as Room[];
   }
-  private async getMeetups(userId: UserId): Promise<Meetup[]> {
+  private async getMeetups(userId: GoogleId): Promise<Meetup[]> {
     const result = (await this.queryBus.execute(new GetMeetupsQuery(userId))) as GetMeetupsQueryResult;
     if (result.failed) throw new WsException('failed to get meetups for user');
     return result.props as Meetup[];

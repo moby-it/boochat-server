@@ -1,5 +1,5 @@
 import { Expose } from 'class-transformer';
-import { Entity, MeetupId, UserId } from '../../common';
+import { Entity, MeetupId, GoogleId } from '../../common';
 import { PollVote } from './vote';
 export enum PollTypeEnum {
   GENERIC_POLL,
@@ -11,11 +11,11 @@ export enum PollStatusEnum {
   ACTIVE
 }
 interface PollProps {
-  readonly participantIds: UserId[];
+  readonly participantIds: GoogleId[];
   readonly type: PollTypeEnum;
   readonly status: PollStatusEnum;
   readonly votes: PollVote[];
-  readonly creatorId: UserId;
+  readonly creatorId: GoogleId;
   readonly meetupId: MeetupId;
   readonly dateCreated: Date;
   readonly description: string;
@@ -71,7 +71,7 @@ export class Poll extends Entity<PollProps> {
   public get isActive() {
     return this._props.status === PollStatusEnum.ACTIVE;
   }
-  public userHasVoted(userId: UserId) {
+  public userHasVoted(userId: GoogleId) {
     return this._props.votes.map((v) => v.userId).includes(userId);
   }
   get everyoneHasVoted() {

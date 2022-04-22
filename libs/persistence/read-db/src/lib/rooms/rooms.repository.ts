@@ -1,4 +1,4 @@
-import { CreateMessageDto, CreateRoomEventDto, RoomId, RoomItemEnum, UserId } from '@boochat/domain';
+import { CreateMessageDto, CreateRoomEventDto, GoogleId, RoomId, RoomItemEnum } from '@boochat/domain';
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectConnection } from '@nestjs/mongoose';
 import { Connection, Model } from 'mongoose';
@@ -15,7 +15,7 @@ export class RoomsRepository {
     this.roomItemsModel = this.connection.model(RoomItem.name);
     this.roomModel = this.connection.model(Room.name);
   }
-  async getRoomsByUserId(userId: UserId): Promise<RoomWithLastItemDocument[]> {
+  async getRoomsByUserId(userId: GoogleId): Promise<RoomWithLastItemDocument[]> {
     return await this.roomModel.aggregate<RoomWithLastItemDocument>(findByUserIdQuery(userId));
   }
   async getRoom(roomId: RoomId): Promise<RoomWithItemsDocument> {
@@ -32,7 +32,7 @@ export class RoomsRepository {
   async updateRoomImage(imageUrl: string, roomId: string) {
     await this.roomModel.updateOne({ _id: roomId }, { imageUrl: imageUrl });
   }
-  async logLastVisit(roomId: RoomId, userId: UserId, timestamp: Date) {
+  async logLastVisit(roomId: RoomId, userId: GoogleId, timestamp: Date) {
     const result = await this.roomModel.updateOne(
       { _id: roomId, 'lastVisits.userId': userId },
       { $set: { 'lastVisits.$.timestamp': timestamp } }
@@ -42,10 +42,10 @@ export class RoomsRepository {
     }
     console.log(result);
   }
-  async inviteUserToRoom(inviteeId: UserId, roomId: RoomId) {
+  async inviteUserToRoom(inviteeId: GoogleId, roomId: RoomId) {
     await this.roomModel.updateOne({ _id: roomId }, { $push: { participantIds: inviteeId } });
   }
-  async leaveRoom(userId: UserId, roomId: RoomId) {
+  async leaveRoom(userId: GoogleId, roomId: RoomId) {
     await this.roomModel.updateOne({ _id: roomId }, { $pull: { participantIds: userId } });
   }
   async saveMessage(dto: CreateMessageDto) {

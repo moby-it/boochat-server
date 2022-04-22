@@ -6,7 +6,15 @@ import { MeetupModule } from './meetups';
 import { RoomModule } from './rooms';
 import { UserModule } from './users/users.module';
 @Module({
-  imports: [CqrsModule, ConfigModule.forRoot({ isGlobal: true }), UserModule, MeetupModule, RoomModule, QueryApplicationModule, AuthModule],
+  imports: [
+    CqrsModule,
+    ConfigModule.forRoot({ isGlobal: true }),
+    UserModule,
+    MeetupModule,
+    RoomModule,
+    QueryApplicationModule,
+    AuthModule
+  ],
   controllers: [],
   providers: []
 })

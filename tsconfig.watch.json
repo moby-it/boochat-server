@@ -35,9 +35,6 @@
       "@boochat/persistence/read-db": [
         "libs/persistence/read-db/src/index.ts"
       ],
-      "@boochat/persistence/shared-db": [
-        "libs/persistence/shared-db/src/index.ts"
-      ],
       "@boochat/shared": [
         "libs/shared/src/index.ts"
       ]

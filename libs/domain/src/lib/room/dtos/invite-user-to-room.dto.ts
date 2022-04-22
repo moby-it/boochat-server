@@ -1,6 +1,6 @@
-import { RoomId, UserId } from '../../common';
+import { RoomId, GoogleId } from '../../common';
 
 export interface InviteUserToRoomDto {
-  inviteeId: UserId;
+  inviteeId: GoogleId;
   roomId: RoomId;
 }

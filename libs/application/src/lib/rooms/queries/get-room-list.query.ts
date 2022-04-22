@@ -1,10 +1,10 @@
-import { Result, Room, UserId } from '@boochat/domain';
+import { Result, Room, GoogleId } from '@boochat/domain';
 import { RoomsRepository } from '@boochat/persistence/read-db';
 import { IQuery, IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { Mapper } from '../../mapper';
 
 export class GetRoomsWithLastItemQuery implements IQuery {
-  constructor(public readonly userId: UserId) {}
+  constructor(public readonly userId: GoogleId) {}
 }
 export type GetRoomsWithLastItemQueryResult = Result<Room[] | undefined>;
 @QueryHandler(GetRoomsWithLastItemQuery)

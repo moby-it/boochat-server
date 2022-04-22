@@ -3,7 +3,7 @@
  * This is only a minimal backend to get started.
  */
 
-import { MEETUP_EVENTS_QUEUE, ROOM_EVENTS_QUEUE } from '@boochat/application';
+import { MEETUP_EVENTS_QUEUE, ROOM_EVENTS_QUEUE, USER_EVENTS_QUEUE } from '@boochat/application';
 import { ClassSerializerInterceptor, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory, Reflector } from '@nestjs/core';
@@ -21,7 +21,11 @@ async function bootstrap() {
     })
   );
   const config = app.get(ConfigService);
-  const queues = [getMandatoryVariable<string>(config, ROOM_EVENTS_QUEUE), getMandatoryVariable<string>(config, MEETUP_EVENTS_QUEUE)];
+  const queues = [
+    getMandatoryVariable<string>(config, ROOM_EVENTS_QUEUE),
+    getMandatoryVariable<string>(config, MEETUP_EVENTS_QUEUE),
+    getMandatoryVariable<string>(config, USER_EVENTS_QUEUE)
+  ];
   for (const queue of queues) {
     app.connectMicroservice<MicroserviceOptions>({
       transport: Transport.RMQ,
@@ -40,6 +44,7 @@ bootstrap();
 
 function getMandatoryVariable<T>(config: ConfigService, variableName: string): T {
   const configVariable = config.get(variableName);
-  if (configVariable === undefined) throw new Error(`Cannot start application with ${variableName}=undefined`);
+  if (configVariable === undefined)
+    throw new Error(`Cannot start application with ${variableName}=undefined`);
   return configVariable;
 }

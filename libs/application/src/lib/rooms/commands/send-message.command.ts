@@ -1,10 +1,14 @@
-import { Result, RoomId, UserId, MessageSentEvent } from '@boochat/domain';
+import { Result, RoomId, GoogleId, MessageSentEvent } from '@boochat/domain';
 import { RoomEventsStoreService } from '@boochat/persistence/events-store';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { EventBusService } from '../../event-bus';
 
 export class SendMessageCommand {
-  constructor(public readonly content: string, public readonly senderId: UserId, public readonly roomId: RoomId) {}
+  constructor(
+    public readonly content: string,
+    public readonly senderId: GoogleId,
+    public readonly roomId: RoomId
+  ) {}
 }
 @CommandHandler(SendMessageCommand)
 export class SendMessageCommandHandler implements ICommandHandler<SendMessageCommand> {

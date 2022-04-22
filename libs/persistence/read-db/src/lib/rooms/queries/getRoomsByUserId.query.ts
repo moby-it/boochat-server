@@ -1,6 +1,6 @@
-import { UserId } from '@boochat/domain';
+import { GoogleId } from '@boochat/domain';
 import { PipelineStage } from 'mongoose';
-export const findByUserIdQuery: (userId: UserId) => PipelineStage[] = (userId: string) => [
+export const findByUserIdQuery: (userId: GoogleId) => PipelineStage[] = (userId: string) => [
   {
     $match: {
       participantIds: userId

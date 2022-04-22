@@ -1,4 +1,4 @@
-import { Room, User, UserId } from '@boochat/domain';
+import { Room, User, GoogleId } from '@boochat/domain';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 
@@ -18,7 +18,7 @@ export const usersSlice = createSlice({
     setUsers: (state, action) => {
       state.users = [...action.payload];
     },
-    setActiveUsers: (state, action: PayloadAction<UserId[]>) => {
+    setActiveUsers: (state, action: PayloadAction<GoogleId[]>) => {
       state.activeUsers = action.payload;
     }
   }

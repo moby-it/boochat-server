@@ -1,4 +1,4 @@
-import { MeetupId, UserId } from '../../../common';
+import { MeetupId, GoogleId } from '../../../common';
 import { PollStatusEnum, PollTypeEnum } from '..';
 import { PollVoteDto } from './poll-vote.dto';
 
@@ -8,7 +8,7 @@ export interface PollDto {
   type: PollTypeEnum;
   status: PollStatusEnum;
   votes: PollVoteDto[];
-  creatorId: UserId;
+  creatorId: GoogleId;
   meetupId: MeetupId;
   dateCreated: Date;
   description: string;
