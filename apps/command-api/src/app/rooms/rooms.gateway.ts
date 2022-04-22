@@ -4,7 +4,7 @@ import {
   CreateRoomCommand,
   InviteUserToRoomCommand,
   LeaveRoomCommand,
-  Token,
+  WsToken,
   WsJwtGuard
 } from '@boochat/application';
 import {
@@ -38,7 +38,7 @@ export class RoomsGateway {
 
   @SubscribeMessage(CommandSocketEventsEnum.ADD_USER_TO_ROOM)
   async inviteUserToRoom(
-    @Token() token: string,
+    @WsToken() token: string,
     @MessageBody() inviteUserToRoomDto: InviteUserToRoomDto
   ): Promise<void> {
     const { inviteeId, roomId } = inviteUserToRoomDto;
@@ -49,7 +49,7 @@ export class RoomsGateway {
     if (result.failed) throw new WsException(`InviteUserToRoomCommand failed`);
   }
   @SubscribeMessage(CommandSocketEventsEnum.USER_LEFT_ROOM)
-  async removeUserFromRoom(@Token() token: string, @MessageBody() userLeftRoomDto: UserLeftRoomDto) {
+  async removeUserFromRoom(@WsToken() token: string, @MessageBody() userLeftRoomDto: UserLeftRoomDto) {
     const { roomId } = userLeftRoomDto;
     const userId = await this.authService.getUserId(token);
     const result = (await this.commandBus.execute(new LeaveRoomCommand(userId, roomId))) as Result;
@@ -57,7 +57,10 @@ export class RoomsGateway {
   }
 
   @SubscribeMessage(CommandSocketEventsEnum.CREATE_ROOM)
-  async createRoom(@Token() token: string, @MessageBody() createRoomEventDto: CreateRoomDto): Promise<void> {
+  async createRoom(
+    @WsToken() token: string,
+    @MessageBody() createRoomEventDto: CreateRoomDto
+  ): Promise<void> {
     const userId = await this.authService.getUserId(token);
     const { name, imageUrl, participantIds } = createRoomEventDto;
     const result: Result = await this.commandBus.execute(
@@ -66,7 +69,7 @@ export class RoomsGateway {
     if (result.failed) throw new WsException('failed to create room');
   }
   @SubscribeMessage(CommandSocketEventsEnum.CLOSED_ROOM)
-  async closedRoom(@Token() token: string, @MessageBody() dto: UserClosedRoomDto): Promise<void> {
+  async closedRoom(@WsToken() token: string, @MessageBody() dto: UserClosedRoomDto): Promise<void> {
     const userId = await this.authService.getUserId(token);
     const { roomId } = dto;
     const result: Result = await this.commandBus.execute(new ClosedRoomCommand(userId, roomId, new Date()));

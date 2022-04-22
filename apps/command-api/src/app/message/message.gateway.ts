@@ -1,4 +1,4 @@
-import { AuthService, SendMessageCommand, Token, WsJwtGuard } from '@boochat/application';
+import { AuthService, SendMessageCommand, WsToken, WsJwtGuard } from '@boochat/application';
 import { CreateMessageDto, Result } from '@boochat/domain';
 import { CommandSocketEventsEnum } from '@boochat/shared';
 import { UseGuards } from '@nestjs/common';
@@ -14,7 +14,7 @@ import { MessageBody, SubscribeMessage, WebSocketGateway, WsException } from '@n
 export class MessageGateway {
   constructor(private commandBus: CommandBus, private authService: AuthService) {}
   @SubscribeMessage(CommandSocketEventsEnum.SEND_MESSAGE)
-  async onNewMessage(@Token() token: string, @MessageBody() newMessageEvent: CreateMessageDto) {
+  async onNewMessage(@WsToken() token: string, @MessageBody() newMessageEvent: CreateMessageDto) {
     const senderId = await this.authService.getUserId(token);
     const { content, roomId } = newMessageEvent;
     const result = (await this.commandBus.execute(

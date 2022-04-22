@@ -1,13 +1,12 @@
 import { isMessage, RoomItem } from '@boochat/domain';
-import { createRef, useEffect } from 'react';
+import { QuerySocketEventsEnum } from '@boochat/shared';
+import { createRef, useEffect, useState } from 'react';
+import SocketManager from '../../shared/socket-manager';
 import { selectActiveRoom, useAppSelector } from '../../store';
 import './active-room.css';
 import { Announcement } from './announcement';
 import { Message } from './message';
 import MessageInput from './message-input';
-import SocketManager from '../../shared/socket-manager';
-import { QuerySocketEventsEnum } from '@boochat/shared';
-import { useState } from 'react';
 export function ActiveRoomContainer() {
   const room = useAppSelector(selectActiveRoom);
   const [roomItems, setRoomItems] = useState<RoomItem[]>([]);

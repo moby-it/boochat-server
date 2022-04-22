@@ -7,7 +7,7 @@ import {
   CreatePollCommand,
   CreateRoomCommand,
   CreateRoomCommandResult,
-  Token,
+  WsToken,
   VoteOnPollCommand,
   WsJwtGuard
 } from '@boochat/application';
@@ -35,7 +35,7 @@ export class MeetupsGateway {
   constructor(private commandBus: CommandBus, private authService: AuthService) {}
 
   @SubscribeMessage(CommandSocketEventsEnum.CREATE_MEETUP)
-  async createMeetup(@Token() token: string, @MessageBody() createMeetupEvent: CreateMeetupDto) {
+  async createMeetup(@WsToken() token: string, @MessageBody() createMeetupEvent: CreateMeetupDto) {
     const userId = await this.authService.getUserId(token);
     const { name, attendeeIds, location, takesPlaceOn, imageUrl } = createMeetupEvent;
     const createRoomResult = (await this.commandBus.execute(
@@ -50,14 +50,14 @@ export class MeetupsGateway {
   }
 
   @SubscribeMessage(CommandSocketEventsEnum.CHANGE_RSVP)
-  async changeRsvp(@Token() token: string, @MessageBody() dto: ChangeRsvpDto) {
+  async changeRsvp(@WsToken() token: string, @MessageBody() dto: ChangeRsvpDto) {
     const userId = await this.authService.getUserId(token);
     const { meetupId, rsvp } = dto;
     const result = (await this.commandBus.execute(new ChangeRsvpCommand(userId, meetupId, rsvp))) as Result;
     if (result.failed) throw new WsException('failed to change rsvp');
   }
   @SubscribeMessage(CommandSocketEventsEnum.CREATE_POLL)
-  async createPoll(@Token() token: string, @MessageBody() dto: CreatePollDto) {
+  async createPoll(@WsToken() token: string, @MessageBody() dto: CreatePollDto) {
     const userId = await this.authService.getUserId(token);
     const { meetupId, description, pollType, pollChoices } = dto;
     const result = (await this.commandBus.execute(
@@ -66,7 +66,7 @@ export class MeetupsGateway {
     if (result.failed) throw new WsException('failed to vote on poll');
   }
   @SubscribeMessage(CommandSocketEventsEnum.POLL_VOTE)
-  async voteOnPoll(@Token() token: string, @MessageBody() dto: PollVoteDto) {
+  async voteOnPoll(@WsToken() token: string, @MessageBody() dto: PollVoteDto) {
     const userId = await this.authService.getUserId(token);
     const { pollId, choiceIndex, meetupId } = dto;
     const result = (await this.commandBus.execute(
@@ -75,7 +75,7 @@ export class MeetupsGateway {
     if (result.failed) throw new WsException('failed to vote on poll');
   }
   @SubscribeMessage(CommandSocketEventsEnum.CLOSE_POLL)
-  async closePoll(@Token() token: string, @MessageBody() dto: ClosePollDto) {
+  async closePoll(@WsToken() token: string, @MessageBody() dto: ClosePollDto) {
     const userId = await this.authService.getUserId(token);
     const { pollId, meetupId } = dto;
     const result = (await this.commandBus.execute(new ClosePollCommand(userId, pollId, meetupId))) as Result;

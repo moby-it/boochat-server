@@ -28,9 +28,12 @@ export class UsersGateway implements OnGatewayConnection, OnGatewayDisconnect {
   async handleDisconnect(socket: Socket) {
     const token = socket.handshake.query['token'] as string;
     const userId = await this.authService.getUserId(token);
-    const lastRoomId = socket.data.lastRoomId as string;
-    if (lastRoomId) this.eventBus.publish(new UserClosedRoomEvent(userId, lastRoomId, new Date()));
     this.activeUsersService.remove(userId);
+    const lastVisitedRoomId = this.activeUsersService.userRoomsMap.get(userId);
+    if (lastVisitedRoomId) {
+      this.eventBus.publish(new UserClosedRoomEvent(userId, lastVisitedRoomId, new Date()));
+      this.activeUsersService.userRoomsMap.delete(userId);
+    }
     console.log('Disconnected');
   }
   @UseGuards(WsJwtGuard)

@@ -7,6 +7,7 @@ export type ActiveUsersMap = Map<UserId, SocketId>;
 
 @Injectable()
 export class ActiveUsersService {
+  public userRoomsMap: Map<UserId, RoomId> = new Map();
   private _activeUsers$: BehaviorSubject<ActiveUsersMap> = new BehaviorSubject(new Map<UserId, SocketId>());
   public activeUsers$ = this._activeUsers$.asObservable();
   get activeUsersMap() {
