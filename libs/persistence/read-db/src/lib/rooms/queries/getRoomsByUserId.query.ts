@@ -36,13 +36,16 @@ export const findByUserIdQuery: (userId: UserId) => PipelineStage[] = (userId: s
       lastItem: { $arrayElemAt: ['$lastItems', 0] },
       participantIds: 1,
       imageUrl: 1,
-      lastVisit: {
-        $first: {
-          $filter: {
-            input: '$lastVisits',
-            cond: { $eq: ['$$this.userId', userId] }
-          }
-        }
+      lastVisits: {
+        $arrayElemAt: [
+          {
+            $filter: {
+              input: '$lastVisits',
+              cond: { $eq: ['$$this.userId', userId] }
+            }
+          },
+          0
+        ]
       }
     }
   },
