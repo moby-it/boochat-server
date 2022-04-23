@@ -36,7 +36,7 @@ export const findByUserIdQuery: (userId: GoogleId) => PipelineStage[] = (userId:
       lastItem: { $arrayElemAt: ['$lastItems', 0] },
       participantIds: 1,
       imageUrl: 1,
-      lastVisits: {
+      lastVisit: {
         $arrayElemAt: [
           {
             $filter: {

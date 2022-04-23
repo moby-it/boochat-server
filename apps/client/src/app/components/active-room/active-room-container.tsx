@@ -1,16 +1,20 @@
 import { isMessage, RoomItem } from '@boochat/domain';
 import { QuerySocketEventsEnum } from '@boochat/shared';
 import { createRef, useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { http } from '../../data';
 import SocketManager from '../../data/socket-manager';
-import { selectActiveRoom, useAppSelector } from '../../store';
+import { selectActiveRoom, setActiveRoom, useAppDispatch, useAppSelector } from '../../store';
 import './active-room.css';
 import { Announcement } from './announcement';
 import { Message } from './message';
 import MessageInput from './message-input';
 export function ActiveRoomContainer() {
+  const { roomId } = useParams();
   const activeRoom = useAppSelector(selectActiveRoom);
   const [roomItems, setRoomItems] = useState<RoomItem[]>([]);
   const messageListRef = createRef<HTMLDivElement>();
+  const dispatch = useAppDispatch();
   useEffect(() => {
     messageListRef.current?.scrollIntoView();
   }, [activeRoom, messageListRef]);
@@ -21,6 +25,11 @@ export function ActiveRoomContainer() {
       }
     });
   });
+  useEffect(() => {
+    if (roomId) {
+      http.rooms.fetchOne(roomId).then((room) => dispatch(setActiveRoom(room)));
+    }
+  }, [roomId, dispatch]);
   useEffect(() => {
     if (activeRoom) {
       setRoomItems(activeRoom.items);

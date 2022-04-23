@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import ContentLoader from 'react-content-loader';
-import { useNavigate } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import ActiveRoomContainer from '../components/active-room/active-room-container';
 import MeetupsContainer from '../components/meetups/meetups-container';
 import RoomListContainer from '../components/room-list/room-list-container';
@@ -27,7 +27,17 @@ export function MainPage() {
       <Sidenav />
       <div className="main-container">
         <RoomListContainer />
-        <ActiveRoomContainer />
+        <Routes>
+          <Route path="/room/:roomId" element={<ActiveRoomContainer />} />
+          <Route
+            path="*"
+            element={
+              <div className="room-window">
+                <h2>No Room Selected</h2>
+              </div>
+            }
+          />
+        </Routes>
         <MeetupsContainer />
       </div>
     </>

@@ -1,15 +1,13 @@
 import { Room, RoomId, User } from '@boochat/domain';
 import { CommandSocketEventsEnum } from '@boochat/shared';
 import { useState } from 'react';
-import { http } from '../../data';
+import { useNavigate } from 'react-router-dom';
 import SocketManager from '../../data/socket-manager';
 import {
   selectActiveRoom,
   selectCurrentUser,
   selectUserIsActive,
   selectUsers,
-  setActiveRoom,
-  useAppDispatch,
   useAppSelector
 } from '../../store';
 interface RoomSlotProps {
@@ -28,8 +26,8 @@ function getRoomImage(room: Room, allUsers: User[], currentUser: User) {
   return roomImage;
 }
 export function RoomSlot(props: RoomSlotProps) {
+  const navigate = useNavigate();
   const { room } = props;
-  const dispath = useAppDispatch();
   const [hasUnreadMessage, setUnreadStatus] = useState(room.hasUnreadMessage);
   const activeRoom = useAppSelector(selectActiveRoom);
   const currentUser = useAppSelector(selectCurrentUser) as User;
@@ -56,9 +54,9 @@ export function RoomSlot(props: RoomSlotProps) {
     if (activeRoom) {
       SocketManager.commandSocket?.emit(CommandSocketEventsEnum.CLOSED_ROOM, { roomId: activeRoom.id });
     }
-    const room: Room = await http.rooms.fetchOne(roomId);
-    dispath(setActiveRoom(room));
+
     setUnreadStatus(false);
+    navigate(`/room/${roomId}`);
   }
 }
 export default RoomSlot;

@@ -1,11 +1,12 @@
 import { useEffect } from 'react';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { http } from './data';
 import { MainPage } from './pages';
 import { setCurrentUser, setGoogleToken, useAppDispatch } from './store';
 let listenerAdded = false;
 export function App() {
   const dispatch = useAppDispatch();
+
   useEffect(() => {
     if (!listenerAdded) {
       console.log('adding listener for google login...');
@@ -18,12 +19,10 @@ export function App() {
       listenerAdded = true;
     }
   });
-
   return (
     <div className="app-shell">
       <Routes>
-        <Route path="/" element={<MainPage />}></Route>
-        <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="*" element={<MainPage />}></Route>
       </Routes>
     </div>
   );
