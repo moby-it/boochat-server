@@ -3,7 +3,7 @@
   "background_color": "#182739",
   "display": "standalone",
   "scope": "/",
-  "start_url": "/index.html",
+  "start_url": "/",
   "name": "Boochat",
   "short_name": "Boochat",
   "description": "Let's chat, but keep it secret",
