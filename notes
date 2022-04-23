@@ -3,6 +3,3 @@
 Build dependencies
 docker build . -f docker/dependencies.dockerfile -t boochat.azurecr.io/dependencies:latest
 docker push boochat.azurecr.io/dependencies:latest
-
-- New users on db does not emit AllUsers event
-- photos do not work

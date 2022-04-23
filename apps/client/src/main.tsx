@@ -5,7 +5,6 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import App from './app/app';
 import { store } from './app/store/store';
-import register from './registerServiceWorker';
 const container = document.getElementById('root');
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 const root = createRoot(container!);
@@ -18,5 +17,8 @@ root.render(
     </Provider>
   </StrictMode>
 );
-
-register();
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw.js').then(() => {
+    console.log('SW REGISTERED');
+  });
+}
