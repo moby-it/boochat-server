@@ -17,7 +17,7 @@ export function MainPage() {
   const dispatch = useAppDispatch();
   useEffect(() => {
     if (token && currentUser) {
-      SocketManager.initializeSocketManager(dispatch, token, currentUser);
+      SocketManager.initializeSocketManager({ dispatch, token, currentUser });
       setLoading(false);
     }
   }, [token, navitate, dispatch, currentUser]);

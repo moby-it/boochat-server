@@ -1,7 +1,7 @@
-import { Entity, Guard } from '../../common';
-import { Room } from '../room';
-import { User } from '../../user';
 import { Expose } from 'class-transformer';
+import { Entity, Guard } from '../../common';
+import { User } from '../../user';
+import { Room } from '../room';
 interface MessageProps {
   readonly sender: Partial<User> & Pick<User, 'id'>;
   readonly content: string;

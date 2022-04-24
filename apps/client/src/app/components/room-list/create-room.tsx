@@ -3,7 +3,7 @@ import { CommandSocketEventsEnum } from '@boochat/shared';
 import React, { FormEvent, useState } from 'react';
 import Select, { MultiValue } from 'react-select';
 import SocketManager from '../../data/socket-manager';
-import { selectCurrentUser, selectUsers, useAppSelector } from '../../store';
+import { selectCurrentUser, selectAllUsers, useAppSelector } from '../../store';
 import './create-room.css';
 type Option = { label: string; value: string };
 interface FormState {
@@ -11,7 +11,7 @@ interface FormState {
   participants: Option[];
 }
 function CreateRoomForm() {
-  const allUsers = useAppSelector(selectUsers);
+  const allUsers = useAppSelector(selectAllUsers);
   const currentUser = useAppSelector(selectCurrentUser);
   const [state, setState] = useState<FormState>({
     name: '',

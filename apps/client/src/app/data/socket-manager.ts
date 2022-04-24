@@ -1,14 +1,18 @@
-import { isMessage, Meetup, Room, RoomItem, User } from '@boochat/domain';
+import { Meetup, Room, RoomItem, User } from '@boochat/domain';
 import { QuerySocketEventsEnum } from '@boochat/shared';
 import { io, Socket } from 'socket.io-client';
 import { environment } from '../../environments/environment';
+import NotificationService from '../shared/notification-service';
 import { addRoom, appendRoomItem, setRoomList } from '../store/rooms';
 import { AppDispatch } from '../store/store';
 import { setActiveUsers, setUsers } from '../store/users/users.reducer';
-import { NotificationService } from '../shared/notification-service';
-import { notify } from '../store/layout/layout.reducer';
+interface SocketManagerConfig {
+  dispatch: AppDispatch;
+  currentUser: User;
+  token: string;
+}
 interface ISocketManager {
-  initializeSocketManager: (dispatch: AppDispatch, token: string, currentUser: User) => void;
+  initializeSocketManager: (confing: SocketManagerConfig) => void;
   querySocket: Socket | undefined;
   commandSocket: Socket | undefined;
 }
@@ -38,12 +42,11 @@ function initializeQuerySocketEventListeners(dispatch: AppDispatch, currentUser:
   });
   SocketManager.querySocket?.on(QuerySocketEventsEnum.NEW_ROOM_ITEM, (item: RoomItem) => {
     dispatch(appendRoomItem(item));
-    if (!isMessage(item) || (isMessage(item) && item.sender.id !== currentUser.id))
-      NotificationService.playAudio();
-    dispatch(notify());
+    NotificationService.notify(item);
   });
 }
-function initializeSocketManager(dispatch: AppDispatch, token: string, currentUser: User) {
+function initializeSocketManager(config: SocketManagerConfig) {
+  const { dispatch, currentUser, token } = config;
   if (!SocketManager.querySocket) {
     SocketManager.querySocket = io(environment.queryApiUrl + `?token=${token}`, {
       transports: ['websocket'],

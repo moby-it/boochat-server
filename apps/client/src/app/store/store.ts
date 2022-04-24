@@ -1,6 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from './auth/auth.reducer';
-import layoutReducer from './layout/layout.reducer';
 import roomReducer from './rooms/room.reducer';
 import usersReducer from './users/users.reducer';
 // ...
@@ -10,8 +9,7 @@ export const store = configureStore({
   reducer: {
     auth: authReducer,
     users: usersReducer,
-    rooms: roomReducer,
-    layout: layoutReducer
+    rooms: roomReducer
   }
 });
 export type RootState = ReturnType<typeof store.getState>;

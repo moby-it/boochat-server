@@ -7,7 +7,7 @@ import {
   selectActiveRoom,
   selectCurrentUser,
   selectUserIsActive,
-  selectUsers,
+  selectAllUsers,
   useAppSelector
 } from '../../store';
 interface RoomSlotProps {
@@ -31,7 +31,7 @@ export function RoomSlot(props: RoomSlotProps) {
   const [hasUnreadMessage, setUnreadStatus] = useState(room.hasUnreadMessage);
   const activeRoom = useAppSelector(selectActiveRoom);
   const currentUser = useAppSelector(selectCurrentUser) as User;
-  const allUsers = useAppSelector(selectUsers);
+  const allUsers = useAppSelector(selectAllUsers);
   const userIsActive = useAppSelector(selectUserIsActive(room));
   const roomImage = getRoomImage(room, allUsers, currentUser);
   return (

@@ -24,7 +24,7 @@ export const usersSlice = createSlice({
   }
 });
 export const { setUsers, setActiveUsers } = usersSlice.actions;
-export const selectUsers = (state: RootState) => state.users.users;
+export const selectAllUsers = (state: RootState) => state.users.users;
 export const selectUserIsActive = (room: Room) => (state: RootState) => {
   if (room.participants.length > 2) return false;
   const currentUserId = state.auth.user?.id;
