@@ -54,7 +54,6 @@ export function RoomSlot(props: RoomSlotProps) {
     if (activeRoom) {
       SocketManager.commandSocket?.emit(CommandSocketEventsEnum.CLOSED_ROOM, { roomId: activeRoom.id });
     }
-
     setUnreadStatus(false);
     navigate(`/room/${roomId}`);
   }

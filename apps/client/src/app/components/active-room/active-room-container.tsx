@@ -1,6 +1,7 @@
 import { isMessage, RoomItem } from '@boochat/domain';
 import { QuerySocketEventsEnum } from '@boochat/shared';
 import { createRef, useEffect, useState } from 'react';
+import ContentLoader from 'react-content-loader';
 import { useParams } from 'react-router-dom';
 import { http } from '../../data';
 import SocketManager from '../../data/socket-manager';
@@ -11,6 +12,7 @@ import { Message } from './message';
 import MessageInput from './message-input';
 export function ActiveRoomContainer() {
   const { roomId } = useParams();
+  const [loading, setLoading] = useState(false);
   const activeRoom = useAppSelector(selectActiveRoom);
   const [roomItems, setRoomItems] = useState<RoomItem[]>([]);
   const messageListRef = createRef<HTMLDivElement>();
@@ -27,18 +29,19 @@ export function ActiveRoomContainer() {
   });
   useEffect(() => {
     if (roomId) {
-      http.rooms.fetchOne(roomId).then((room) => dispatch(setActiveRoom(room)));
+      setLoading(true);
+      http.rooms.fetchOne(roomId).then((room) => {
+        dispatch(setActiveRoom(room));
+        setRoomItems(room.items);
+        setLoading(false);
+      });
     }
   }, [roomId, dispatch]);
-  useEffect(() => {
-    if (activeRoom) {
-      setRoomItems(activeRoom.items);
-    }
-  }, [activeRoom]);
   return (
     <div className="room-window">
       {!activeRoom && <h2>No Room selected</h2>}
-      {activeRoom && (
+      {loading && <ContentLoader />}
+      {activeRoom && !loading && (
         <>
           <div className="message-list">
             {roomItems.map((item) =>

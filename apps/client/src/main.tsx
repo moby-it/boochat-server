@@ -1,11 +1,11 @@
-import 'reflect-metadata';
+/* eslint-disable no-restricted-globals */
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
+import 'reflect-metadata';
 import App from './app/app';
 import { store } from './app/store/store';
-import { environment } from './environments/environment';
 const container = document.getElementById('root');
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 const root = createRoot(container!);
@@ -22,7 +22,7 @@ const notificationButton = document.createElement('button');
 notificationButton.classList.add('notification-button');
 notificationButton.innerHTML = 'Enable Notifications';
 document.body.appendChild(notificationButton);
-if ('serviceWorker' in navigator && environment.production) {
+if ('serviceWorker' in navigator && !isLocalhost()) {
   navigator.serviceWorker.register('./sw.js').then(() => {
     console.log('SW REGISTERED');
   });
@@ -30,8 +30,14 @@ if ('serviceWorker' in navigator && environment.production) {
 const button = document.querySelector('.notification-button');
 if ('Notification' in window && Notification.permission !== 'granted') {
   button?.addEventListener('click', () => {
-    Notification.requestPermission();
+    Notification.requestPermission().then((response) => {
+      if (response === 'granted') button.remove();
+    });
+    button.remove();
   });
 } else {
   button?.remove();
+}
+function isLocalhost() {
+  return location.hostname.indexOf('localhost') >= 0;
 }

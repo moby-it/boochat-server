@@ -12,3 +12,24 @@
 .notification-button:hover {
   background-color: var(--main800);
 }
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+  .sidenav {
+    display: none;
+  }
+  .main-container {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0;
+  }
+  .room-list-window {
+    width: 100% !important;
+    margin: 1rem 0 0 0;
+  }
+  .room-window {
+    width: 100% !important;
+  }
+  .app-shell {
+    height: auto;
+  }
+}
