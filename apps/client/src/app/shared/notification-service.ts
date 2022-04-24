@@ -18,15 +18,15 @@ const createNotificationDocumentTitle = () => `(${notificationCount}) ${DOCUMENT
 const notify = (item: RoomItem) => {
   if (!currentUser) throw new Error('cannot notify when current user in null');
   if (!isMessage(item) || (isMessage(item) && item.sender.id !== currentUser.id)) {
+    notificationCount++;
+    const notificationCountTitle = createNotificationDocumentTitle();
+    let notificationMessage = item.content;
+    if (isMessage(item)) {
+      const sender = allUsers.find((user) => user.id === item.sender.id);
+      if (!sender) throw new Error('Notify: sender not found');
+      notificationMessage = `${sender.name} sent a message.`;
+    }
     if (!document.hasFocus()) {
-      notificationCount++;
-      const notificationCountTitle = createNotificationDocumentTitle();
-      let notificationMessage = item.content;
-      if (isMessage(item)) {
-        const sender = allUsers.find((user) => user.id === item.sender.id);
-        if (!sender) throw new Error('Notify: sender not found');
-        notificationMessage = `${sender.name} sent a message.`;
-      }
       notificationInterval = setInterval(() => {
         if (document.title === notificationCountTitle || document.title === DOCUMENT_TITLE) {
           document.title = notificationMessage;
@@ -35,7 +35,14 @@ const notify = (item: RoomItem) => {
         }
       }, EVERY_SECOND);
     }
-    playAudio();
+    if (Notification.permission === 'granted') {
+      new Notification(notificationMessage, {
+        body: item.content,
+        icon: '../../favicon.ico',
+        timestamp: new Date(item.timestamp).getTime()
+      });
+      playAudio();
+    }
   }
 };
 const clearNotifications = () => {

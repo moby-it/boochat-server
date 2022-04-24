@@ -1,0 +1,14 @@
+.notification-button {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  padding: 1rem 2rem;
+  background-color: gray;
+  color: var(--white);
+  border-radius: var(--round);
+  cursor: pointer;
+}
+
+.notification-button:hover {
+  background-color: var(--main800);
+}
