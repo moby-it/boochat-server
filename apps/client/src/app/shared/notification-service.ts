@@ -25,7 +25,7 @@ const notify = (item: RoomItem) => {
       if (isMessage(item)) {
         const sender = allUsers.find((user) => user.id === item.sender.id);
         if (!sender) throw new Error('Notify: sender not found');
-        notificationMessage = sender.name;
+        notificationMessage = `${sender.name} sent a message.`;
       }
       notificationInterval = setInterval(() => {
         if (document.title === notificationCountTitle || document.title === DOCUMENT_TITLE) {
@@ -41,6 +41,7 @@ const notify = (item: RoomItem) => {
 const clearNotifications = () => {
   notificationCount = 0;
   if (notificationInterval) clearInterval(notificationInterval);
+  document.title = DOCUMENT_TITLE;
 };
 function playAudio() {
   const audio = new Audio('../../assets/notification.mp3');
