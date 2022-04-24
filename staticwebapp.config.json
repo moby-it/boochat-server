@@ -1,5 +1,8 @@
 {
   "globalHeaders": {
     "Referrer-Policy": "no-referrer-when-downgrade"
+  },
+  "navigationFallback": {
+    "rewrite": "/index.html"
   }
 }
