@@ -6,6 +6,7 @@ import { addRoom, appendRoomItem, setRoomList } from '../store/rooms';
 import { AppDispatch } from '../store/store';
 import { setActiveUsers, setUsers } from '../store/users/users.reducer';
 import { NotificationService } from '../shared/notification-service';
+import { notify } from '../store/layout/layout.reducer';
 interface ISocketManager {
   initializeSocketManager: (dispatch: AppDispatch, token: string, currentUser: User) => void;
   querySocket: Socket | undefined;
@@ -38,7 +39,8 @@ function initializeQuerySocketEventListeners(dispatch: AppDispatch, currentUser:
   SocketManager.querySocket?.on(QuerySocketEventsEnum.NEW_ROOM_ITEM, (item: RoomItem) => {
     dispatch(appendRoomItem(item));
     if (!isMessage(item) || (isMessage(item) && item.sender.id !== currentUser.id))
-      NotificationService.notify();
+      NotificationService.playAudio();
+    dispatch(notify());
   });
 }
 function initializeSocketManager(dispatch: AppDispatch, token: string, currentUser: User) {
