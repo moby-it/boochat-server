@@ -11,9 +11,6 @@ export class RoomCreatedWsEventHandler implements IEventHandler<RoomCreatedEvent
     for (const userId of event.userIds) {
       this.activeUserService.connectUserToRoom(userId, event.id);
     }
-    const sockets = await WsServer.instance.fetchSockets();
-    const activeUserSocketIds = this.activeUserService.activeUserSocketIds;
-    const activeSockets = sockets.filter((socket) => activeUserSocketIds.includes(socket.id));
     const room = Room.create(
       {
         name: event.roomName,
@@ -24,8 +21,6 @@ export class RoomCreatedWsEventHandler implements IEventHandler<RoomCreatedEvent
       },
       event.id
     );
-    for (const socket of activeSockets) {
-      socket.emit(QuerySocketEventsEnum.ROOM_CREATED, transformToPlain(room));
-    }
+    WsServer.emitToRoom(event.id, QuerySocketEventsEnum.ROOM_CREATED, transformToPlain(room));
   }
 }
