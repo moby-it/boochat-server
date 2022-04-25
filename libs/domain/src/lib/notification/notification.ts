@@ -10,6 +10,7 @@ interface NotificationProps {
   timestamp: Date;
   message: string;
   title: string;
+  navigateUrl: string;
 }
 export class Notification extends ValueObject<NotificationProps> {
   constructor(props: NotificationProps) {
@@ -31,13 +32,35 @@ export class Notification extends ValueObject<NotificationProps> {
   get type() {
     return this._props.type;
   }
+  @Expose()
+  get navigateUrl() {
+    return this._props.navigateUrl;
+  }
   static createError(title: string, message: string) {
-    return new Notification({ title, message, timestamp: new Date(), type: NotificationType.ERROR });
+    return new Notification({
+      title,
+      message,
+      timestamp: new Date(),
+      type: NotificationType.ERROR,
+      navigateUrl: ''
+    });
   }
   static createWarning(title: string, message: string) {
-    return new Notification({ title, message, timestamp: new Date(), type: NotificationType.WARN });
+    return new Notification({
+      title,
+      message,
+      timestamp: new Date(),
+      type: NotificationType.WARN,
+      navigateUrl: ''
+    });
   }
-  static createInfo(title: string, message: string) {
-    return new Notification({ title, message, timestamp: new Date(), type: NotificationType.INFO });
+  static createInfo(title: string, message: string, navigateUrl = '') {
+    return new Notification({
+      title,
+      message,
+      timestamp: new Date(),
+      type: NotificationType.INFO,
+      navigateUrl
+    });
   }
 }

@@ -32,7 +32,7 @@ export class PushNotificationService {
       const subs = this.findUserSubscriptions(userId);
       subs.forEach(async (sub) => {
         this.setVapidDetails();
-        const notification = Notification.createInfo(`New message`, roomItem.content);
+        const notification = Notification.createInfo(`New message`, roomItem.content, roomItem.roomId);
         const payload = JSON.stringify(transformToPlain(notification));
         webpush.sendNotification(sub, payload);
       });
