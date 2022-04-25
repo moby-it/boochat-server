@@ -8,7 +8,9 @@
   border-radius: var(--round);
   cursor: pointer;
 }
-
+.room-list-window {
+  overflow-y: scroll;
+}
 .notification-button:hover {
   background-color: var(--main800);
 }
