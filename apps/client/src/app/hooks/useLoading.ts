@@ -1,14 +1,13 @@
 import { useEffect, useState } from 'react';
-import { selectAllUsers, selectRoomList, useAppSelector } from '../store';
+import { selectAllUsers, useAppSelector } from '../store';
 function useLoading() {
   const allUsers = useAppSelector(selectAllUsers);
-  const roomList = useAppSelector(selectRoomList);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    if (allUsers.length && roomList.length) {
+    if (allUsers.length) {
       setLoading(false);
     }
-  }, [allUsers, roomList]);
+  }, [allUsers]);
   return [loading];
 }
 export default useLoading;
