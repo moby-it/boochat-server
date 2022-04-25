@@ -1,4 +1,4 @@
-import { Notification, RoomId, SocketId, GoogleId } from '@boochat/domain';
+import { GoogleId, Notification, RoomId, SocketId } from '@boochat/domain';
 import { QuerySocketEventsEnum } from '@boochat/shared';
 import { Injectable } from '@nestjs/common';
 import { BehaviorSubject } from 'rxjs';
@@ -19,6 +19,9 @@ export class ActiveUsersService {
   get activeUserSocketIds() {
     return Array.from(this.activeUsersMap.values());
   }
+  get activeUserIds() {
+    return Array.from(this.activeUsersMap.keys());
+  }
   add(userId: GoogleId, socketId: SocketId) {
     this._activeUsers$.next(this.activeUsersMap.set(userId, socketId));
   }
@@ -27,12 +30,14 @@ export class ActiveUsersService {
     activeUsers.delete(userId);
     this._activeUsers$.next(activeUsers);
   }
+
   private async findUserSocket(userId: string) {
     const sockets = await WsServer.instance.fetchSockets();
     const userSocketId = this.activeUsersMap.get(userId);
     const userSocket = sockets.find((socket) => socket.id === userSocketId);
     return userSocket;
   }
+
   async connectUserToRoom(userId: GoogleId, roomId: RoomId) {
     const sockets = await WsServer.instance.fetchSockets();
     const userSocketId = this.activeUsersMap.get(userId);
@@ -47,6 +52,8 @@ export class ActiveUsersService {
   }
   async notifyUser(userId: GoogleId, notification: Notification) {
     const socket = await this.findUserSocket(userId);
-    socket?.emit(QuerySocketEventsEnum.NOTIFICATION, notification);
+    if (socket) {
+      socket?.emit(QuerySocketEventsEnum.NOTIFICATION, notification);
+    }
   }
 }

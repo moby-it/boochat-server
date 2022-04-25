@@ -1,9 +1,6 @@
 services:
   client:
     container_name: client
-    depends_on:
-      - query-api
-      - command-api
     build:
       context: .
       dockerfile: docker/client.dockerfile

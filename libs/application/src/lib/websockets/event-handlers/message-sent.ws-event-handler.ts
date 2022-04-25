@@ -1,13 +1,22 @@
-import { AnnouncementCreatedEvent, Message, MessageSentEvent, RoomAnnouncement } from '@boochat/domain';
+import {
+  AnnouncementCreatedEvent,
+  Message,
+  MessageSentEvent,
+  RoomAnnouncement,
+  RoomItem
+} from '@boochat/domain';
 import { QuerySocketEventsEnum } from '@boochat/shared';
 import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { transformToPlain, WsServer } from '../../common';
+import { PushNotificationService } from '../../notifications';
 
 @EventsHandler(MessageSentEvent, AnnouncementCreatedEvent)
 export class RoomItemSentWsEventHandler
   implements IEventHandler<MessageSentEvent | AnnouncementCreatedEvent>
 {
+  constructor(private pushNotification: PushNotificationService) {}
   async handle(event: MessageSentEvent | AnnouncementCreatedEvent) {
+    let roomItem: RoomItem;
     if (event instanceof MessageSentEvent) {
       const { content, createdAt, senderId, roomId } = event;
       const message = Message.create(
@@ -19,7 +28,7 @@ export class RoomItemSentWsEventHandler
         },
         event.id
       );
-      WsServer.emitToRoom(event.roomId, QuerySocketEventsEnum.NEW_ROOM_ITEM, transformToPlain(message));
+      roomItem = message;
     } else {
       const { content, createdAt, roomId } = event;
       const announcement = new RoomAnnouncement({
@@ -28,7 +37,9 @@ export class RoomItemSentWsEventHandler
         timestamp: createdAt,
         roomId
       });
-      WsServer.emitToRoom(event.roomId, QuerySocketEventsEnum.NEW_ROOM_ITEM, transformToPlain(announcement));
+      roomItem = announcement;
     }
+    WsServer.emitToRoom(event.roomId, QuerySocketEventsEnum.NEW_ROOM_ITEM, transformToPlain(roomItem));
+    await this.pushNotification.messageSent(roomItem);
   }
 }

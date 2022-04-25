@@ -4,6 +4,7 @@ import { http } from './data';
 import { MainPage } from './pages';
 import Offline from './pages/offline';
 import NotificationService from './shared/notification-service';
+import { PushSubscriptionService } from './shared/push-subscription';
 import { DOCUMENT_TITLE } from './shared/variable';
 import {
   selectCurrentUser,
@@ -38,11 +39,13 @@ export function App() {
     }
   });
   useEffect(() => {
-    if (currentUser && allUsers.length)
+    if (currentUser && allUsers.length) {
       NotificationService.initialize({
         allUsers,
         currentUser
       });
+      PushSubscriptionService.initializePushSubscription();
+    }
   }, [currentUser, allUsers]);
   return (
     <div className="app-shell">

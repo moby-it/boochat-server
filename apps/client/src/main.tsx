@@ -22,8 +22,8 @@ const notificationButton = document.createElement('button');
 notificationButton.classList.add('notification-button');
 notificationButton.innerHTML = 'Enable Notifications';
 document.body.appendChild(notificationButton);
-if ('serviceWorker' in navigator && !isLocalhost()) {
-  navigator.serviceWorker.register('./sw.js').then(() => {
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw.js').then((swreg) => {
     console.log('SW REGISTERED');
   });
 }

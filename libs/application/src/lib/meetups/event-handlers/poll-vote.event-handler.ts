@@ -3,11 +3,15 @@ import { MeetupsRepository } from '@boochat/persistence/read-db';
 import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { WsException } from '@nestjs/websockets';
 import { Mapper } from '../../mapper';
-import { NotificationService } from '../../notifications';
+import { DialogNotificationService } from '../../notifications';
 
 @EventsHandler(PollVoteEvent)
 export class PollVoteEventHandler implements IEventHandler<PollVoteEvent> {
-  constructor(private repository: MeetupsRepository, private mapper: Mapper, private notification: NotificationService) {}
+  constructor(
+    private repository: MeetupsRepository,
+    private mapper: Mapper,
+    private notification: DialogNotificationService
+  ) {}
   async handle(event: PollVoteEvent) {
     const { userId, pollId, meetupId, pollChoiceIndex } = event;
     const meetupDocument = await this.repository.findById(meetupId);
@@ -16,7 +20,7 @@ export class PollVoteEventHandler implements IEventHandler<PollVoteEvent> {
     if (meetup.pollIsActive(pollId) && !meetup.userHasVotedOnPoll(userId, pollId)) {
       await this.repository.voteOnPoll(userId, pollId, meetupId, pollChoiceIndex);
     } else {
-      const notification = Notification.createWarning('You have already voted');
+      const notification = Notification.createWarning('Warning', 'You have already voted');
       this.notification.send(userId, notification);
     }
   }
