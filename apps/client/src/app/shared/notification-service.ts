@@ -17,7 +17,7 @@ function initialize(config: NotificationServiceConfig) {
 const createNotificationDocumentTitle = () => `(${notificationCount}) ${DOCUMENT_TITLE}`;
 const notify = (item: RoomItem) => {
   if (!currentUser) throw new Error('cannot notify when current user in null');
-  if (!document.hasFocus()) {
+  if (document.hidden) {
     if (!isMessage(item) || (isMessage(item) && item.sender.id !== currentUser.id)) {
       notificationCount++;
       const notificationCountTitle = createNotificationDocumentTitle();

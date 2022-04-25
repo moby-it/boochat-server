@@ -1,4 +1,7 @@
 /* eslint-disable no-restricted-globals */
+
+import { audioService } from './app/shared/audio.service';
+
 /* eslint-disable no-undef */
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/6.4.1/workbox-sw.js');
 self.addEventListener('install', () => {
@@ -22,11 +25,12 @@ self.addEventListener('push', (ev) => {
       }
     ]
   });
+  audioService.play();
 });
 self.addEventListener('notificationclick', function (event) {
   event.notification.close();
   if (event.action === 'open') {
-    clients.openWindow();
+    clients.openWindow('/');
   }
 });
 

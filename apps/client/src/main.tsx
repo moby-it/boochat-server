@@ -18,25 +18,15 @@ root.render(
     </Provider>
   </StrictMode>
 );
-const notificationButton = document.createElement('button');
-notificationButton.classList.add('notification-button');
-notificationButton.innerHTML = 'Enable Notifications';
-document.body.appendChild(notificationButton);
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('./sw.js').then((swreg) => {
     console.log('SW REGISTERED');
   });
 }
-const button = document.querySelector('.notification-button');
 if ('Notification' in window && Notification.permission !== 'granted') {
-  button?.addEventListener('click', () => {
-    Notification.requestPermission().then((response) => {
-      if (response === 'granted') button.remove();
-    });
-    button.remove();
+  Notification.requestPermission().then((response) => {
+    if (response === 'granted') console.log('notification permission granted!');
   });
-} else {
-  button?.remove();
 }
 function isLocalhost() {
   return location.hostname.indexOf('localhost') >= 0;
