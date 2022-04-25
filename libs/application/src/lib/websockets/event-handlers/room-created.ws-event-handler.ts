@@ -9,7 +9,7 @@ export class RoomCreatedWsEventHandler implements IEventHandler<RoomCreatedEvent
   constructor(private activeUserService: ActiveUsersService) {}
   async handle(event: RoomCreatedEvent) {
     for (const userId of event.userIds) {
-      this.activeUserService.connectUserToRoom(userId, event.id);
+      await this.activeUserService.connectUserToRoom(userId, event.id);
     }
     const room = Room.create(
       {

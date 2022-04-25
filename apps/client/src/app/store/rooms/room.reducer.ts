@@ -35,6 +35,7 @@ const roomsSlice = createSlice({
     },
     addRoom: (state, action: PayloadAction<Room>) => {
       state.roomList.unshift(action.payload);
+      state.roomList = [...state.roomList];
     }
   }
 });
