@@ -1,3 +1,4 @@
+import { Expose } from 'class-transformer';
 import { ValueObject } from '../common';
 export enum NotificationType {
   INFO,
@@ -13,6 +14,22 @@ interface NotificationProps {
 export class Notification extends ValueObject<NotificationProps> {
   constructor(props: NotificationProps) {
     super(props);
+  }
+  @Expose()
+  get title() {
+    return this._props.title;
+  }
+  @Expose()
+  get message() {
+    return this._props.message;
+  }
+  @Expose()
+  get timestamp() {
+    return this._props.timestamp;
+  }
+  @Expose()
+  get type() {
+    return this._props.type;
   }
   static createError(title: string, message: string) {
     return new Notification({ title, message, timestamp: new Date(), type: NotificationType.ERROR });

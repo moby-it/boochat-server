@@ -14,9 +14,22 @@ self.addEventListener('push', (ev) => {
   console.log('Got push', data);
   self.registration.showNotification(data.title, {
     body: data.message,
-    icon: './assets/icon-192x192.png'
+    icon: './assets/icon-192x192.png',
+    actions: [
+      {
+        action: 'open',
+        title: 'Open Boochat'
+      }
+    ]
   });
 });
+self.addEventListener('notificationclick', function (event) {
+  event.notification.close();
+  if (event.action === 'open') {
+    clients.openWindow('/roomId/12389375');
+  }
+});
+
 const { precacheAndRoute } = workbox.precaching;
 
 precacheAndRoute(self.__WB_MANIFEST);

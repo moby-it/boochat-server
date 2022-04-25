@@ -23,18 +23,18 @@ export class PushNotificationService {
     webpush.setVapidDetails('mailto:gespa11019@gmail.com', publicKey, privateKey);
   }
   async messageSent(roomItem: RoomItem) {
-    this.setVapidDetails();
     const room = await this.roomRepository.getRoom(roomItem.roomId);
     const participantIds = room.participantIds;
     const offlineParticipantIds = participantIds.filter(
-      (id) => !this.activeUserService.activeUserIds.includes(id)
+      (id) => !this.activeUserService.activeUserIds.includes(id) || true
     );
     offlineParticipantIds.forEach((userId) => {
       const subs = this.findUserSubscriptions(userId);
       subs.forEach(async (sub) => {
         this.setVapidDetails();
-        const notification = Notification.createInfo(`Something in the way`, roomItem.content);
-        webpush.sendNotification(sub, JSON.stringify(transformToPlain(notification)));
+        const notification = Notification.createInfo(`New message`, roomItem.content);
+        const payload = JSON.stringify(transformToPlain(notification));
+        webpush.sendNotification(sub, payload);
       });
     });
   }

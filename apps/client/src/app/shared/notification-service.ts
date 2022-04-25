@@ -27,15 +27,14 @@ const notify = (item: RoomItem) => {
         if (!sender) throw new Error('Notify: sender not found');
         notificationMessage = `${sender.name} sent a message.`;
       }
-      if (!document.hasFocus()) {
-        notificationInterval = setInterval(() => {
-          if (document.title === notificationCountTitle || document.title === DOCUMENT_TITLE) {
-            document.title = notificationMessage;
-          } else {
-            document.title = notificationCountTitle;
-          }
-        }, EVERY_SECOND);
-      }
+      if (notificationInterval) clearInterval(notificationInterval);
+      notificationInterval = setInterval(() => {
+        if (document.title === notificationCountTitle || document.title === DOCUMENT_TITLE) {
+          document.title = notificationMessage;
+        } else {
+          document.title = notificationCountTitle;
+        }
+      }, EVERY_SECOND);
       if (Notification.permission === 'granted') {
         new Notification(notificationMessage, {
           body: item.content,
