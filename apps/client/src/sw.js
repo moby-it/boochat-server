@@ -12,25 +12,15 @@ self.addEventListener('install', () => {
 self.addEventListener('push', (ev) => {
   const data = ev.data.json();
   console.log('Got push', data);
-  self.registration.getNotifications().then((notifications) => {
-    let message = data.message;
-    let title = data.title;
-    if (notifications.length) {
-      const currentNotification = notifications.pop();
-      currentNotification.close();
-      title = 'You have new messages';
-      message = ``;
-    }
-    self.registration.showNotification(title, {
-      body: message,
-      icon: './assets/icon-192x192.png',
-      actions: [
-        {
-          action: 'open',
-          title: 'Open Boochat'
-        }
-      ]
-    });
+  self.registration.showNotification(data.title, {
+    body: data.message,
+    icon: './assets/icon-192x192.png',
+    actions: [
+      {
+        action: 'open',
+        title: 'Open Boochat'
+      }
+    ]
   });
 });
 self.addEventListener('notificationclick', function (event) {
