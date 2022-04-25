@@ -8,7 +8,9 @@
     "recommendations": [
       "esbenp.prettier-vscode",
       "firsttris.vscode-jest-runner",
-      "dbaeumer.vscode-eslint"
+      "dbaeumer.vscode-eslint",
+      "mongodb.mongodb-vscode",
+      "nrwl.angular-console"
     ]
   },
   "settings": {
