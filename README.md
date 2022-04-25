@@ -215,15 +215,27 @@ enum ApplicationEventEnum {
 
 - [x] Create Persitence Layer
   - [x] Finalize Database Entities
-  - [ ] Create Database Architecture for saving denormalized events
-- [ ] Req/Res Layer
-  - [ ] Create Queries and Query Handlers
-- [ ] Web Socket Layer 
-  - [ ] Emit Web Socket messages after consuming events from Message Broker
+  - [x] Create Database Architecture for saving denormalized events
+- [x] Req/Res Layer
+  - [x] Create Queries and Query Handlers
+- [x] Web Socket Layer 
+  - [x] Emit Web Socket messages after consuming events from Message Broker
+
 
 
 ## 3. Create Client with React
-
+- [x] Log in with Google and save user to database. User's collection primary key will always be Google Id
+- [x] Implement Command/Query logic for getting inital data.
+- [x] Port the application to PWA.
+- [ ] Implement notification logic
+  - [x] New message with sound
+  - [x] Show notification when tab is open and user window is not focused
+  - [x] Send notification when browser is closed.
+    - [x] Send notification on new Message
+    - [ ] Send notification on new Room
+    - [ ] Send notification on new Meetup
+    - [ ] Send notification on new Poll
+    - [ ] Send notification on Poll Closed
 ### Design Roadmap Priorities
 
 Provide HTML/CSS for:
