@@ -17,31 +17,33 @@ function initialize(config: NotificationServiceConfig) {
 const createNotificationDocumentTitle = () => `(${notificationCount}) ${DOCUMENT_TITLE}`;
 const notify = (item: RoomItem) => {
   if (!currentUser) throw new Error('cannot notify when current user in null');
-  if (!isMessage(item) || (isMessage(item) && item.sender.id !== currentUser.id)) {
-    notificationCount++;
-    const notificationCountTitle = createNotificationDocumentTitle();
-    let notificationMessage = item.content;
-    if (isMessage(item)) {
-      const sender = allUsers.find((user) => user.id === item.sender.id);
-      if (!sender) throw new Error('Notify: sender not found');
-      notificationMessage = `${sender.name} sent a message.`;
-    }
-    if (!document.hasFocus()) {
-      notificationInterval = setInterval(() => {
-        if (document.title === notificationCountTitle || document.title === DOCUMENT_TITLE) {
-          document.title = notificationMessage;
-        } else {
-          document.title = notificationCountTitle;
-        }
-      }, EVERY_SECOND);
-    }
-    if (Notification.permission === 'granted') {
-      new Notification(notificationMessage, {
-        body: item.content,
-        icon: '../../favicon.ico',
-        timestamp: new Date(item.timestamp).getTime()
-      });
-      playAudio();
+  if (!document.hasFocus()) {
+    if (!isMessage(item) || (isMessage(item) && item.sender.id !== currentUser.id)) {
+      notificationCount++;
+      const notificationCountTitle = createNotificationDocumentTitle();
+      let notificationMessage = item.content;
+      if (isMessage(item)) {
+        const sender = allUsers.find((user) => user.id === item.sender.id);
+        if (!sender) throw new Error('Notify: sender not found');
+        notificationMessage = `${sender.name} sent a message.`;
+      }
+      if (!document.hasFocus()) {
+        notificationInterval = setInterval(() => {
+          if (document.title === notificationCountTitle || document.title === DOCUMENT_TITLE) {
+            document.title = notificationMessage;
+          } else {
+            document.title = notificationCountTitle;
+          }
+        }, EVERY_SECOND);
+      }
+      if (Notification.permission === 'granted') {
+        new Notification(notificationMessage, {
+          body: item.content,
+          icon: '../../favicon.ico',
+          timestamp: new Date(item.timestamp).getTime()
+        });
+        playAudio();
+      }
     }
   }
 };

@@ -3,3 +3,6 @@
 Build dependencies
 docker build . -f docker/dependencies.dockerfile -t boochat.azurecr.io/dependencies:latest
 docker push boochat.azurecr.io/dependencies:latest
+
+- Dont display notification if window on focus, maybe no sound
+- check  token validations
