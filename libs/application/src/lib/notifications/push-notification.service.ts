@@ -26,7 +26,7 @@ export class PushNotificationService {
     const room = await this.roomRepository.getRoom(roomItem.roomId);
     const participantIds = room.participantIds;
     const offlineParticipantIds = participantIds.filter(
-      (id) => !this.activeUserService.activeUserIds.includes(id) || true
+      (id) => !this.activeUserService.activeUserIds.includes(id)
     );
     offlineParticipantIds.forEach((userId) => {
       const subs = this.findUserSubscriptions(userId);

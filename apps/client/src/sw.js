@@ -18,7 +18,8 @@ self.addEventListener('push', (ev) => {
     actions: [
       {
         action: 'open',
-        title: 'Open Boochat'
+        title: 'Open Boochat',
+        roomId: data.roomId
       }
     ]
   });
@@ -26,7 +27,7 @@ self.addEventListener('push', (ev) => {
 self.addEventListener('notificationclick', function (event) {
   event.notification.close();
   if (event.action === 'open') {
-    clients.openWindow('/roomId/12389375');
+    clients.openWindow(`/roomId/${event.roomId}`);
   }
 });
 
