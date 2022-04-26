@@ -43,7 +43,6 @@
   "exclude": [
     "node_modules",
     "tmp",
-    "apps/client-e2e",
     "apps/client"
   ]
 }
