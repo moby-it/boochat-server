@@ -11,27 +11,6 @@ self.addEventListener('install', () => {
     });
   });
 });
-self.addEventListener('push', (ev) => {
-  const data = ev.data.json();
-  console.log('Got push', data);
-  self.registration.showNotification(data.title, {
-    body: data.message,
-    icon: './assets/icon-192x192.png',
-    actions: [
-      {
-        action: 'open',
-        title: 'Open Boochat',
-        url: data.navigateUrl
-      }
-    ]
-  });
-});
-self.addEventListener('notificationclick', function (event) {
-  event.notification.close();
-  if (event.action === 'open') {
-    clients.openWindow(event.url);
-  }
-});
 
 const { precacheAndRoute } = workbox.precaching;
 

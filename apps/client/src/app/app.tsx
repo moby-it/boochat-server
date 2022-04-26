@@ -4,11 +4,10 @@ import { http } from './data';
 import { MainPage } from './pages';
 import Offline from './pages/offline';
 import NotificationService from './shared/notification-service';
-import { PushSubscriptionService } from './shared/push-subscription';
 import { DOCUMENT_TITLE } from './shared/variable';
 import {
-  selectCurrentUser,
   selectAllUsers,
+  selectCurrentUser,
   setCurrentUser,
   setGoogleToken,
   useAppDispatch,
@@ -44,7 +43,6 @@ export function App() {
         allUsers,
         currentUser
       });
-      PushSubscriptionService.initializePushSubscription();
     }
   }, [currentUser, allUsers]);
   return (

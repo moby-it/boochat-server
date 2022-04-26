@@ -5,7 +5,6 @@ import { CqrsModule } from '@nestjs/cqrs';
 import { MeetupModule } from './meetups';
 import { RoomModule } from './rooms';
 import { UserModule } from './users/users.module';
-import { WebPushModule } from './web-push/web-push.module';
 @Module({
   imports: [
     CqrsModule,
@@ -13,7 +12,6 @@ import { WebPushModule } from './web-push/web-push.module';
     UserModule,
     MeetupModule,
     RoomModule,
-    WebPushModule,
     QueryApplicationModule,
     AuthModule
   ],
