@@ -10,7 +10,7 @@ import { Notification } from '@boochat/domain';
 @Injectable()
 export class PushNotificationService {
   private userSubscriptions: Map<GoogleId, PushSubscription[]> = new Map();
-
+  private navigateUrl = this.config.get<string>('CLIENT_URL');
   constructor(
     private roomRepository: RoomsRepository,
     private activeUserService: ActiveUsersService,
@@ -32,7 +32,7 @@ export class PushNotificationService {
       const subs = this.findUserSubscriptions(userId);
       subs.forEach(async (sub) => {
         this.setVapidDetails();
-        const notification = Notification.createInfo(`New message`, roomItem.content, roomItem.roomId);
+        const notification = Notification.createInfo(`New message`, roomItem.content, this.navigateUrl);
         const payload = JSON.stringify(transformToPlain(notification));
         webpush.sendNotification(sub, payload);
       });
@@ -45,5 +45,8 @@ export class PushNotificationService {
     const existingSubs = this.userSubscriptions.get(googleId) || [];
     this.userSubscriptions.set(googleId, [subscription, ...existingSubs]);
     console.log('subscription added');
+  }
+  removeSubscriptions(googleId: GoogleId) {
+    this.userSubscriptions.delete(googleId);
   }
 }

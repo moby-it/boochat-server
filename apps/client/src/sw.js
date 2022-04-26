@@ -1,9 +1,8 @@
 /* eslint-disable no-restricted-globals */
-
-import { audioService } from './app/shared/audio.service';
-
 /* eslint-disable no-undef */
+
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/6.4.1/workbox-sw.js');
+
 self.addEventListener('install', () => {
   console.log('clearing cache...');
   caches.keys().then((cacheNames) => {
@@ -21,16 +20,16 @@ self.addEventListener('push', (ev) => {
     actions: [
       {
         action: 'open',
-        title: 'Open Boochat'
+        title: 'Open Boochat',
+        url: data.navigateUrl
       }
     ]
   });
-  audioService.play();
 });
 self.addEventListener('notificationclick', function (event) {
   event.notification.close();
   if (event.action === 'open') {
-    clients.openWindow('/');
+    clients.openWindow(event.url);
   }
 });
 
