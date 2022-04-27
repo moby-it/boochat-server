@@ -7,9 +7,8 @@
     "start:command-api": "nx serve command-api",
     "start:query-api": "nx serve query-api",
     "start:client": "nx serve client ",
-    "build:client": "nx build client && npm run prepare:pwa",
-    "build:client:dev": "nx build client --configuration=development && npm run prepare:pwa",
-    "prepare:pwa": "workbox injectManifest workbox-config.js",
+    "build:client": "nx build client",
+    "build:client:dev": "nx build client --configuration=development",
     "build": "nx build",
     "test": "nx test",
     "prettify:all": "prettier --write ."
@@ -92,8 +91,6 @@
     "socket.io": "^4.4.1",
     "socket.io-client": "^4.4.1",
     "tslib": "^2.0.0",
-    "uuid": "^8.3.2",
-    "web-push": "^3.4.5",
-    "workbox-cli": "^6.5.3"
+    "uuid": "^8.3.2"
   }
 }

@@ -18,11 +18,7 @@ root.render(
     </Provider>
   </StrictMode>
 );
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('./sw.js').then((swreg) => {
-    console.log('SW REGISTERED');
-  });
-}
+
 if ('Notification' in window && Notification.permission !== 'granted') {
   Notification.requestPermission().then((response) => {
     if (response === 'granted') console.log('notification permission granted!');
