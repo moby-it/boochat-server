@@ -23,7 +23,7 @@ export class RoomAnnouncement extends ValueObject<RoomAnnouncementProps> {
   public get timestamp() {
     return this._props.timestamp;
   }
-  @Exclude()
+  @Expose()
   public get roomId() {
     return this._props.roomId;
   }
