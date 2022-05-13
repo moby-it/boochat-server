@@ -39,6 +39,7 @@ export class UsersGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @UseGuards(WsJwtGuard)
   async handleConnection(socket: Socket) {
     const token = socket.handshake.query['token'] as string;
+    const registrationToken = socket.handshake.query['registrationToken'] as string;
     const result = await this.authService.verify(token);
     if (!result) {
       console.error(`client with token ${token} failed to authenticate`);
