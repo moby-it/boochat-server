@@ -49,17 +49,5 @@
       "titleBar.inactiveForeground": "#e7e7e799"
     },
     "peacock.color": "#0C142D"
-  },
-  "launch": {
-    "configurations": [
-      {
-        "name": "Launch Chrome",
-        "request": "launch",
-        "type": "chrome",
-        "url": "http://localhost:4200",
-        "webRoot": "${workspaceFolder}/apps/client"
-      }
-    ],
-    "compounds": []
   }
 }

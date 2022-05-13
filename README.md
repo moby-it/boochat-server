@@ -25,7 +25,7 @@ You should a working local version of the whole stack.
 
 ## FrontEnd
 
-React
+Flutter 
 # Workflow
 
 [Workflow diagram](https://drive.google.com/file/d/1XJzlzoQUj-PqQLEX88pa8PiPA7PyO-d4/view?usp=sharing)

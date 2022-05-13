@@ -40,6 +40,5 @@ export class RoomItemSentWsEventHandler
       roomItem = announcement;
     }
     WsServer.emitToRoom(event.roomId, QuerySocketEventsEnum.NEW_ROOM_ITEM, transformToPlain(roomItem));
-    await this.pushNotification.messageSent(roomItem);
   }
 }

@@ -39,10 +39,5 @@
         "libs/shared/src/index.ts"
       ]
     }
-  },
-  "exclude": [
-    "node_modules",
-    "tmp",
-    "apps/client"
-  ]
+  }
 }

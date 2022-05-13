@@ -2,7 +2,6 @@
   "version": 2,
   "projects": {
     "application": "libs/application",
-    "client": "apps/client",
     "command-api": "apps/command-api",
     "domain": "libs/domain",
     "persistence-events-store": "libs/persistence/events-store",
