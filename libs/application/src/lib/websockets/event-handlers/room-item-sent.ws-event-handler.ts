@@ -2,6 +2,7 @@ import {
   AnnouncementCreatedEvent,
   Message,
   MessageSentEvent,
+  Notification,
   RoomAnnouncement,
   RoomItem
 } from '@boochat/domain';
@@ -40,5 +41,7 @@ export class RoomItemSentWsEventHandler
       roomItem = announcement;
     }
     WsServer.emitToRoom(event.roomId, QuerySocketEventsEnum.NEW_ROOM_ITEM, transformToPlain(roomItem));
+    const notification = Notification.createInfo(roomItem.roomId, roomItem.content);
+    await this.pushNotification.notify(notification, roomItem.roomId);
   }
 }
