@@ -26,7 +26,7 @@ export class Notification extends ValueObject<NotificationProps> {
   }
   @Expose()
   get timestamp() {
-    return this._props.timestamp;
+    return this._props.timestamp.toDateString();
   }
   @Expose()
   get type() {
