@@ -12,7 +12,7 @@ export class PushNotificationService {
     await firebase.messaging().send({
       data: notification.toFirebaseNotification(),
       notification: {
-        title: notification.title,
+        title: room.name,
         body: notification.message
       },
       android: {
