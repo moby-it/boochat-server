@@ -10,15 +10,11 @@ export class PushNotificationService {
     const room = await this.roomRepository.getRoom(roomId);
     await firebase.messaging().send({
       data: notification.toFirebaseNotification(),
-      notification: {
-        title: notification.title,
-        body: notification.message
-      },
-      apns: {
-        payload: {
-          aps: {
-            sound: 'default'
-          }
+      android: {
+        notification: {
+          title: notification.title,
+          body: notification.message,
+          sound: 'notification'
         }
       },
       topic: room.name
