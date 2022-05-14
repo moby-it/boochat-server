@@ -23,7 +23,7 @@ export class PushNotificationService {
       .flatMap((tokensSet: Set<string>) => Array.from(tokensSet))
       .flat();
 
-    await firebase.messaging().subscribeToTopic(registrationTokens, topic);
+    await this.subscribeToTopic(registrationTokens, topic);
   }
   async addSubscription(userId: GoogleId, registrationToken: RegistrationToken) {
     const hasAlreadySubscribed = this.userIdRegistrationTokenMap.get(userId)?.has(registrationToken);
@@ -35,20 +35,20 @@ export class PushNotificationService {
         this.userIdRegistrationTokenMap.set(userId, new Set([registrationToken]));
       }
       for (const room of userRooms) {
-        await firebase.messaging().subscribeToTopic(registrationToken, room.id);
+        await this.subscribeToTopic([registrationToken], room.id);
       }
     }
   }
   async subscribeToTopics(userId: GoogleId, topics: string[]) {
     const registrationTokens = this.getRegistrationTokensForUserId([userId]);
     for (const topic of topics) {
-      await firebase.messaging().subscribeToTopic(registrationTokens, topic);
+      await this.subscribeToTopic(registrationTokens, topic);
     }
   }
   async unsubscribeFromTopics(userId: GoogleId, topics: string[]) {
     const registrationTokens = this.getRegistrationTokensForUserId([userId]);
     for (const topic of topics) {
-      await firebase.messaging().unsubscribeFromTopic(registrationTokens, topic);
+      await this.unsubscribeFromTopic(registrationTokens, topic);
     }
   }
   private getRegistrationTokensForUserId(userIds: GoogleId[]): string[] {
@@ -57,5 +57,11 @@ export class PushNotificationService {
       .flatMap((tokensSet: Set<string>) => Array.from(tokensSet))
       .flat();
     return registrationTokens;
+  }
+  private async subscribeToTopic(registrationTokens: string[], topic: string) {
+    await firebase.messaging().subscribeToTopic(registrationTokens, `$/topics/${topic}`);
+  }
+  private async unsubscribeFromTopic(registrationTokens: string[], topic: string) {
+    await firebase.messaging().unsubscribeFromTopic(registrationTokens, `$/topics/${topic}`);
   }
 }
