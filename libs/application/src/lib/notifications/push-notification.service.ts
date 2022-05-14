@@ -37,17 +37,14 @@ export class PushNotificationService {
       for (const room of userRooms) {
         await this.subscribeToTopic([registrationToken], room.id);
       }
-      console.log(
-        `RegistrationToken: ${registrationToken} for user ${userId} subscribed to ${
-          (userRooms
-            .map((room) => room.id)
-            .reduce((accumulator: string, value) => {
-              accumulator += ', ' + value.id;
-              return accumulator;
-            }),
-          '')
-        }`
-      );
+      const roomIds = userRooms
+        .map((room) => room.id)
+        .reduce<string>((accumulator: string, value) => {
+          accumulator += ', ' + value;
+          return accumulator;
+        }, '');
+
+      console.log(`RegistrationToken: ${registrationToken} for user ${userId} subscribed to ${roomIds}`);
     }
   }
   async subscribeToTopics(userId: GoogleId, topics: string[]) {
