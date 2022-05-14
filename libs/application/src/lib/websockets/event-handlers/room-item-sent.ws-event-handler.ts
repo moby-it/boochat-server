@@ -42,6 +42,6 @@ export class RoomItemSentWsEventHandler
     }
     WsServer.emitToRoom(event.roomId, QuerySocketEventsEnum.NEW_ROOM_ITEM, transformToPlain(roomItem));
     const notification = Notification.createInfo(roomItem.roomId, roomItem.content);
-    await this.pushNotification.notify(notification, roomItem.roomId);
+    await this.pushNotification.notifyRoom(notification, roomItem.roomId);
   }
 }

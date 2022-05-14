@@ -1,21 +1,31 @@
 import { GoogleId, Notification, RegistrationToken } from '@boochat/domain';
 import { RoomsRepository } from '@boochat/persistence/read-db';
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotImplementedException } from '@nestjs/common';
 import * as firebase from 'firebase-admin';
-import { transformToPlain } from '../common';
 @Injectable()
 export class PushNotificationService {
   private userIdRegistrationTokenMap: Map<GoogleId, RegistrationToken> = new Map();
   constructor(private roomRepository: RoomsRepository) {}
-  async notify(notification: Notification, topic: string) {
+  async notifyRoom(notification: Notification, roomId: string) {
+    const room = await this.roomRepository.getRoom(roomId);
     await firebase.messaging().send({
       data: notification.toFirebaseNotification(),
       notification: {
         title: notification.title,
         body: notification.message
       },
-      topic
+      apns: {
+        payload: {
+          aps: {
+            sound: 'default'
+          }
+        }
+      },
+      topic: room.name
     });
+  }
+  async notifyMeetup(notification: Notification, meetupId: string) {
+    throw new NotImplementedException();
   }
   async subscribeUsersToTopic(userIds: GoogleId[], topic: string) {
     const registrationTokens = userIds
