@@ -2,14 +2,14 @@ name: Deploy Command Api
 
 on:
   workflow_dispatch:
-  # push:
-  #   branches:
-  #     - main
-  #   paths:
-  #     - 'apps/command-api/**'
-  #     - 'libs/persistence/**'
-  #     - 'libs/domain/**'
-  #     - 'libs/application/**'
+  push:
+    branches:
+      - main
+    paths:
+      - 'apps/command-api/**'
+      - 'libs/persistence/**'
+      - 'libs/domain/**'
+      - 'libs/application/**'
 
 jobs:
   build:
