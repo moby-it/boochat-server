@@ -20,7 +20,7 @@ export class PushNotificationService {
           sound: 'notification'
         }
       },
-      topic: room.id
+      topic: room._id
     });
   }
   async notifyMeetup(notification: Notification, meetupId: string) {
