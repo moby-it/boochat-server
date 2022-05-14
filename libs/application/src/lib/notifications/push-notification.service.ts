@@ -5,7 +5,7 @@ import * as firebase from 'firebase-admin';
 import { transformToPlain } from '../common';
 @Injectable()
 export class PushNotificationService {
-  private userIdRegistrationTokenMap: Map<GoogleId, Set<RegistrationToken>> = new Map();
+  private userIdRegistrationTokenMap: Map<GoogleId, RegistrationToken> = new Map();
   constructor(private roomRepository: RoomsRepository) {}
   async notify(notification: Notification, topic: string) {
     await firebase.messaging().send({
@@ -19,34 +19,26 @@ export class PushNotificationService {
   }
   async subscribeUsersToTopic(userIds: GoogleId[], topic: string) {
     const registrationTokens = userIds
-      .map((userId) => this.userIdRegistrationTokenMap.get(userId) || new Set<string>())
-      .flatMap((tokensSet: Set<string>) => Array.from(tokensSet))
-      .flat();
+      .map((userId) => this.userIdRegistrationTokenMap.get(userId))
+      .filter((v) => !!v) as string[];
 
     await this.subscribeToTopic(registrationTokens, topic);
   }
   async addSubscription(userId: GoogleId, registrationToken: RegistrationToken) {
-    const hasAlreadySubscribed = this.userIdRegistrationTokenMap.get(userId)?.has(registrationToken);
-    if (!hasAlreadySubscribed) {
-      const userRooms = await this.roomRepository.getRoomsByUserId(userId);
-      if (this.userIdRegistrationTokenMap.has(userId)) {
-        this.userIdRegistrationTokenMap.get(userId)?.add(registrationToken);
-      } else {
-        this.userIdRegistrationTokenMap.set(userId, new Set([registrationToken]));
-      }
-      for (const room of userRooms) {
-        await this.subscribeToTopic([registrationToken], room.id);
-      }
-      console.log('room for new subscribed user are', userRooms.map((r) => r.id).toString());
-      const roomIds = userRooms
-        .map((room) => room.id)
-        .reduce<string>((accumulator: string, value) => {
-          accumulator += ', ' + value;
-          return accumulator;
-        }, '');
-
-      console.log(`RegistrationToken: ${registrationToken} for user ${userId} subscribed to ${roomIds}`);
+    const userRooms = await this.roomRepository.getRoomsByUserId(userId);
+    this.userIdRegistrationTokenMap.set(userId, registrationToken);
+    for (const room of userRooms) {
+      await this.subscribeToTopic([registrationToken], room._id);
     }
+    console.log('room for new subscribed user are', userRooms.map((r) => r._id).toString());
+    const roomIds = userRooms
+      .map((room) => room._id)
+      .reduce<string>((accumulator: string, value) => {
+        accumulator += ', ' + value;
+        return accumulator;
+      }, '');
+
+    console.log(`RegistrationToken: ${registrationToken} for user ${userId} subscribed to ${roomIds}`);
   }
   async subscribeToTopics(userId: GoogleId, topics: string[]) {
     const registrationTokens = this.getRegistrationTokensForUserId([userId]);
@@ -62,9 +54,9 @@ export class PushNotificationService {
   }
   private getRegistrationTokensForUserId(userIds: GoogleId[]): string[] {
     const registrationTokens = userIds
-      .map((userId) => this.userIdRegistrationTokenMap.get(userId) || new Set<string>())
-      .flatMap((tokensSet: Set<string>) => Array.from(tokensSet))
-      .flat();
+      .map((userId) => this.userIdRegistrationTokenMap.get(userId))
+      .filter((v) => !!v) as string[];
+
     return registrationTokens;
   }
   private async subscribeToTopic(registrationTokens: string[], topic: string) {
