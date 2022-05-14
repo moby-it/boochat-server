@@ -59,9 +59,9 @@ export class PushNotificationService {
     return registrationTokens;
   }
   private async subscribeToTopic(registrationTokens: string[], topic: string) {
-    await firebase.messaging().subscribeToTopic(registrationTokens, `$/topics/${topic}`);
+    await firebase.messaging().subscribeToTopic(registrationTokens, `/topics/${topic}`);
   }
   private async unsubscribeFromTopic(registrationTokens: string[], topic: string) {
-    await firebase.messaging().unsubscribeFromTopic(registrationTokens, `$/topics/${topic}`);
+    await firebase.messaging().unsubscribeFromTopic(registrationTokens, `/topics/${topic}`);
   }
 }
