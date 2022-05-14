@@ -1,4 +1,10 @@
-import { ActiveUsersService, AuthService, WsJwtGuard, WsServer } from '@boochat/application';
+import {
+  ActiveUsersService,
+  AuthService,
+  PushNotificationService,
+  WsJwtGuard,
+  WsServer
+} from '@boochat/application';
 import { UserClosedRoomEvent, UserConnectedEvent, GoogleId } from '@boochat/domain';
 import { QuerySocketEventsEnum } from '@boochat/shared';
 import { UseGuards } from '@nestjs/common';
@@ -23,6 +29,7 @@ export class UsersGateway implements OnGatewayConnection, OnGatewayDisconnect {
   constructor(
     private authService: AuthService,
     private activeUsersService: ActiveUsersService,
+    private pushNotificationService: PushNotificationService,
     private eventBus: EventBus
   ) {}
   async handleDisconnect(socket: Socket) {
@@ -39,7 +46,7 @@ export class UsersGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @UseGuards(WsJwtGuard)
   async handleConnection(socket: Socket) {
     const token = socket.handshake.query['token'] as string;
-    const registrationToken = socket.handshake.query['registrationToken'] as string;
+    const registrationToken: string = socket.handshake.query['registrationToken'] as string;
     const result = await this.authService.verify(token);
     if (!result) {
       console.error(`client with token ${token} failed to authenticate`);
@@ -55,6 +62,9 @@ export class UsersGateway implements OnGatewayConnection, OnGatewayDisconnect {
     }
     const userId = await this.authService.getUserId(token);
     this.activeUsersService.add(userId, socket.id);
+    if (registrationToken) {
+      await this.pushNotificationService.addSubscription(userId, registrationToken);
+    }
     this.eventBus.publish(new UserConnectedEvent(userId, socket));
     console.log('Connected', userId);
   }
