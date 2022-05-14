@@ -8,6 +8,7 @@ export class UserAuthenticatedEvent extends BaseEvent {
   constructor(
     public readonly userId: GoogleId,
     public readonly imageUrl: string,
+    public readonly email: string,
     public readonly name: string
   ) {
     super();

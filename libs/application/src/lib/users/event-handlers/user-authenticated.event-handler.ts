@@ -13,6 +13,7 @@ export class UserAuthenticatedEventHandler implements IEventHandler<UserAuthenti
     if (!userDocument) {
       userDocument = await this.repository.create({
         id: event.userId,
+        email: event.email,
         imageUrl: event.imageUrl,
         name: event.name
       });
