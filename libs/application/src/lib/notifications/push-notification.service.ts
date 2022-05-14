@@ -37,6 +37,7 @@ export class PushNotificationService {
       for (const room of userRooms) {
         await this.subscribeToTopic([registrationToken], room.id);
       }
+      console.log('room for new subscribed user are', userRooms.map((r) => r.id).toString());
       const roomIds = userRooms
         .map((room) => room.id)
         .reduce<string>((accumulator: string, value) => {
@@ -67,9 +68,12 @@ export class PushNotificationService {
     return registrationTokens;
   }
   private async subscribeToTopic(registrationTokens: string[], topic: string) {
+    console.log('Subscribed to topic', topic);
     await firebase.messaging().subscribeToTopic(registrationTokens, `/topics/${topic}`);
   }
   private async unsubscribeFromTopic(registrationTokens: string[], topic: string) {
+    console.log('unsubscribed to topic', topic);
+
     await firebase.messaging().unsubscribeFromTopic(registrationTokens, `/topics/${topic}`);
   }
 }
