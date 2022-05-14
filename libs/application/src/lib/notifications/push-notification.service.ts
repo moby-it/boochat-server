@@ -7,12 +7,12 @@ import { transformToPlain } from '../common';
 export class PushNotificationService {
   private userIdRegistrationTokenMap: Map<GoogleId, Set<RegistrationToken>> = new Map();
   constructor(private roomRepository: RoomsRepository) {}
-  async notify(payload: Notification, topic: string) {
+  async notify(notification: Notification, topic: string) {
     await firebase.messaging().sendToTopic(`/topics/${topic}`, {
-      data: transformToPlain(payload),
+      data: notification.toFirebaseNotification(),
       notification: {
-        title: payload.title,
-        body: payload.message,
+        title: notification.title,
+        body: notification.message,
         sound: 'notification'
       }
     });

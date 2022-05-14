@@ -26,7 +26,7 @@ export class Notification extends ValueObject<NotificationProps> {
   }
   @Expose()
   get timestamp() {
-    return this._props.timestamp.toDateString();
+    return this._props.timestamp;
   }
   @Expose()
   get type() {
@@ -62,5 +62,13 @@ export class Notification extends ValueObject<NotificationProps> {
       type: NotificationType.INFO,
       navigateUrl
     });
+  }
+  toFirebaseNotification(): Record<string, string> {
+    return {
+      title: this.title,
+      message: this.message,
+      timestamp: this.timestamp.toDateString(),
+      type: this.type.toString()
+    };
   }
 }
