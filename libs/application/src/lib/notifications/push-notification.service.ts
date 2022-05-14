@@ -8,12 +8,15 @@ export class PushNotificationService {
   constructor(private roomRepository: RoomsRepository) {}
   async notifyRoom(notification: Notification, roomId: string) {
     const room = await this.roomRepository.getRoom(roomId);
+    console.log(`new notification in ${room.name}`);
     await firebase.messaging().send({
       data: notification.toFirebaseNotification(),
+      notification: {
+        title: notification.title,
+        body: notification.message
+      },
       android: {
         notification: {
-          title: notification.title,
-          body: notification.message,
           sound: 'notification'
         }
       },
