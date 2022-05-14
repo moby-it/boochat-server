@@ -8,7 +8,7 @@ export class PushNotificationService {
   private userIdRegistrationTokenMap: Map<GoogleId, Set<RegistrationToken>> = new Map();
   constructor(private roomRepository: RoomsRepository) {}
   async notify(payload: Notification, topic: string) {
-    await firebase.messaging().sendToTopic(topic, {
+    await firebase.messaging().sendToTopic(`/topics/${topic}`, {
       data: transformToPlain(payload),
       notification: {
         title: payload.title,
