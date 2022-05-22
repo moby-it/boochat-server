@@ -316,6 +316,13 @@ enum ApplicationEventEnum {
   - pollId: string
   - pollChoiceIndex: number
 
+## Rest Endpoints
+
+Even though the application mainly works asynchronously via RabbitMQ and WebSockets, there some Rest Endpoints. 
+
+- The main authentication endpoint resides in the command-api layer. The user grabs an encrypted JWT token that each service knows how to decode by sharing a secret. The encryption is done by the native nodjs encryption libraries.
+- When a user clicks a room, the user gets all the roomItems of that specific room. This is an endpoint that resides in query-api.
+
 
 # Development Roadmap
 
