@@ -1,7 +1,6 @@
 # Project Description
 
 Boochat is a chat and meetups application developed as a hobby for my friends.
-
 The project is inspired by ideas from [Event-driven Architecture](https://en.wikipedia.org/wiki/Event-driven_architecture) and [Event Sourcing](https://martinfowler.com/eaaDev/EventSourcing.html).
 
 # How to run
@@ -20,10 +19,6 @@ You should a working local version of the whole stack.
 1.  [NestJs](https://docs.nestjs.com/) - Opinionated Node.js framework for building server-side applications.
 2.  [MongoDB](https://www.mongodb.com/) - Classified as a NoSQL database program, MongoDB uses JSON-like documents with optional schemas.
 3.  [RabbitMQ](https://www.rabbitmq.com/) - RabbitMQ is the most widely deployed open source message broker.
-
-## FrontEnd
-
-Currently working on it, using [Flutter](https://flutter.dev/).
 
 # Workflow
 
@@ -344,18 +339,3 @@ Even though the application mainly works asynchronously via RabbitMQ and WebSock
   - [x] Create Queries and Query Handlers
 - [x] Web Socket Layer 
   - [x] Emit Web Socket messages after consuming events from Message Broker
-
-## 3. Front End
-- [x] Create multi platform app environment with [Flutter](https://flutter.dev)
-- [ ] Create Messaging functionalities for flutter web
-  - [x] Exchange messages
-  - [x] Recieve notifications when online
-  - [ ] Ability to Create Rooms
-  - [ ] Finalize designs for web
-- [ ] Create Messaging functionalities for Android
-  - [x] Exchange messages
-  - [x] Recieve notifications 
-  - [ ] Bulk notifications so that we don't mobile bar.
-  - [ ] Ability to Create Rooms
-- [ ] Create Meetup functionalities for flutter web
-- [ ] Create Meetup functionalities for Android
