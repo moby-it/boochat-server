@@ -316,7 +316,7 @@ enum ApplicationEventEnum {
   - pollId: string
   - pollChoiceIndex: number
 
-## Rest Endpoints
+# Rest Endpoints
 
 Even though the application mainly works asynchronously via RabbitMQ and WebSockets, there some Rest Endpoints. 
 
