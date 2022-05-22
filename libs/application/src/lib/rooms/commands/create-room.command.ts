@@ -15,10 +15,19 @@ export type CreateRoomCommandResult = Result<string | undefined>;
 @CommandHandler(CreateRoomCommand)
 export class CreateRoomCommandHandler implements ICommandHandler<CreateRoomCommand> {
   constructor(private roomStore: RoomEventsStoreService, private eventBus: EventBusService) {}
-  async execute({ imageUrl, roomName, userId, userIds }: CreateRoomCommand): Promise<CreateRoomCommandResult> {
+  async execute({
+    imageUrl,
+    roomName,
+    userId,
+    userIds
+  }: CreateRoomCommand): Promise<CreateRoomCommandResult> {
     try {
       const userCreatedRoomRoomEvent = new RoomCreatedEvent(userId, roomName, imageUrl, userIds);
-      const newAnnouncementEvent = new AnnouncementCreatedEvent('Room Created', userCreatedRoomRoomEvent.id, userId);
+      const newAnnouncementEvent = new AnnouncementCreatedEvent(
+        'Room Created',
+        userCreatedRoomRoomEvent.id,
+        userId
+      );
       await this.roomStore.save(userCreatedRoomRoomEvent);
       await this.eventBus.emitRoomEvent(userCreatedRoomRoomEvent);
       await this.roomStore.save(newAnnouncementEvent);

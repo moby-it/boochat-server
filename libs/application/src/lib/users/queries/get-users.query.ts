@@ -4,10 +4,13 @@ import { IQuery, IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { Mapper } from '../../mapper';
 
 export class GetUsersQuery implements IQuery {}
+
 export type GetUsersQueryResult = Result<User[] | undefined>;
+
 @QueryHandler(GetUsersQuery)
 export class GetUsersQueryHandler implements IQueryHandler<GetUsersQuery> {
   constructor(private repository: UserRepository, private mapper: Mapper) {}
+
   async execute(query: GetUsersQuery): Promise<GetUsersQueryResult> {
     try {
       const userDocuments = await this.repository.findAll();

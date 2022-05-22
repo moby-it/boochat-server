@@ -1,9 +1,10 @@
 import { Expose } from 'class-transformer';
-import { Entity, Guard, GoogleId } from '../common';
+import { Entity, Guard } from '../common';
 import { Message } from './message';
 import { User } from '../user';
 import { RoomAnnouncement } from './room-announcement';
 import { RoomItem } from './room-item';
+
 interface RoomProps {
   name: string;
   participants: Partial<User>[] & Pick<User, 'id'>[];
@@ -23,7 +24,7 @@ export class Room extends Entity<RoomProps> {
   get messages() {
     return this._props.items.filter((item) => item instanceof Message) as Message[];
   }
-  get annoucements() {
+  get announcements() {
     return this._props.items.filter((item) => item instanceof RoomAnnouncement) as RoomAnnouncement[];
   }
   @Expose()

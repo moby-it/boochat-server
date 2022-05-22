@@ -4,7 +4,7 @@ const isEntity = (v: unknown): v is Entity<unknown> => {
 export abstract class Entity<T> {
   constructor(protected _props: T, protected readonly _id: string) {}
   public equals(object?: Entity<T>): boolean {
-    if (object == null || object == undefined) {
+    if (object == null) {
       return false;
     }
     if (this === object) {

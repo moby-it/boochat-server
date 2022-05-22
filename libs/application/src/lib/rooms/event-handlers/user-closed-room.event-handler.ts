@@ -6,6 +6,6 @@ import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 export class UserClosedRoomEventHandler implements IEventHandler<UserClosedRoomEvent> {
   constructor(private repository: RoomsRepository) {}
   async handle(event: UserClosedRoomEvent): Promise<void> {
-    this.repository.logLastVisit(event.roomId, event.userId, event.timestamp);
+    await this.repository.logLastVisit(event.roomId, event.userId, event.timestamp);
   }
 }

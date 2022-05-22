@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectConnection } from '@nestjs/mongoose';
 import { Connection, Model } from 'mongoose';
-import { v4 as uuid } from 'uuid';
 import { CreateUserDto, UserDto } from '@boochat/domain';
 import { User, UserDocument } from './user.schema';
 import { READ_DB_CONNECTION_NAME } from '../common';
+
 @Injectable()
 export class UserRepository {
   userModel: Model<UserDocument>;

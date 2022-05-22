@@ -21,7 +21,7 @@ export class PollVoteEventHandler implements IEventHandler<PollVoteEvent> {
       await this.repository.voteOnPoll(userId, pollId, meetupId, pollChoiceIndex);
     } else {
       const notification = Notification.createWarning('Warning', 'You have already voted');
-      this.notification.send(userId, notification);
+      await this.notification.send(userId, notification);
     }
   }
 }

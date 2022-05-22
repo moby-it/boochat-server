@@ -2,13 +2,13 @@ import { shallowEqual } from 'shallow-equal-object';
 
 /**
  * @desc ValueObjects are objects that we determine their
- * equality through their structrual property.
+ * equality through their structural property.
  */
 
 export abstract class ValueObject<T> {
   protected readonly _props: T;
 
-  constructor(props: T) {
+  protected constructor(props: T) {
     this._props = Object.freeze(props);
   }
 

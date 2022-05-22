@@ -1,4 +1,4 @@
-import { Exclude, Expose } from 'class-transformer';
+import { Expose } from 'class-transformer';
 import { RoomId, ValueObject } from '../common';
 
 interface RoomAnnouncementProps {

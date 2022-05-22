@@ -1,20 +1,10 @@
 {
   "root": true,
-  "ignorePatterns": [
-    "**/*"
-  ],
-  "plugins": [
-    "@nrwl/nx",
-    "eslint-plugin-prettier"
-  ],
+  "ignorePatterns": ["**/*"],
+  "plugins": ["@nrwl/nx", "eslint-plugin-prettier"],
   "overrides": [
     {
-      "files": [
-        "*.ts",
-        "*.tsx",
-        "*.js",
-        "*.jsx"
-      ],
+      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
       "rules": {
         "@nrwl/nx/enforce-module-boundaries": [
           "error",
@@ -24,39 +14,23 @@
             "depConstraints": [
               {
                 "sourceTag": "type:application",
-                "onlyDependOnLibsWithTags": [
-                  "type:lib",
-                  "scope:domain",
-                  "scope:application",
-                  "scope:shared"
-                ]
+                "onlyDependOnLibsWithTags": ["type:lib", "scope:domain", "scope:application", "scope:shared"]
               },
               {
                 "sourceTag": "scope:application",
-                "onlyDependOnLibsWithTags": [
-                  "scope:domain",
-                  "scope:persistence",
-                  "scope:shared"
-                ]
+                "onlyDependOnLibsWithTags": ["scope:domain", "scope:persistence", "scope:shared"]
               },
               {
                 "sourceTag": "scope:persistence",
-                "onlyDependOnLibsWithTags": [
-                  "scope:domain",
-                  "scope:shared"
-                ]
+                "onlyDependOnLibsWithTags": ["scope:domain", "scope:shared"]
               },
               {
                 "sourceTag": "scope:shared",
-                "onlyDependOnLibsWithTags": [
-                  "scope:domain"
-                ]
+                "onlyDependOnLibsWithTags": ["scope:domain"]
               },
               {
                 "sourceTag": "scope:domain",
-                "onlyDependOnLibsWithTags": [
-                  ""
-                ]
+                "onlyDependOnLibsWithTags": [""]
               }
             ]
           }
@@ -64,29 +38,17 @@
       }
     },
     {
-      "files": [
-        "*.ts",
-        "*.tsx"
-      ],
-      "extends": [
-        "plugin:@nrwl/nx/typescript"
-      ],
+      "files": ["*.ts", "*.tsx"],
+      "extends": ["plugin:@nrwl/nx/typescript"],
       "rules": {
         "@typescript-eslint/no-empty-interface": "off"
       }
     },
     {
-      "files": [
-        "*.js",
-        "*.jsx"
-      ],
-      "extends": [
-        "plugin:@nrwl/nx/javascript"
-      ],
+      "files": ["*.js", "*.jsx"],
+      "extends": ["plugin:@nrwl/nx/javascript"],
       "rules": {
-        "prettier/prettier": [
-          "error"
-        ]
+        "prettier/prettier": ["error"]
       }
     }
   ]

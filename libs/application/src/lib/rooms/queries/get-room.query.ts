@@ -1,4 +1,4 @@
-import { Result, Room, RoomId, GoogleId } from '@boochat/domain';
+import { Result, Room, RoomId } from '@boochat/domain';
 import { RoomsRepository } from '@boochat/persistence/read-db';
 import { IQuery, IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { Mapper } from '../../mapper';

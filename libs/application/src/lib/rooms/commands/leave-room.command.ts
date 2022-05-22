@@ -11,9 +11,9 @@ export class LeaveRoomCommandHandler implements ICommandHandler<LeaveRoomCommand
   constructor(private roomStore: RoomEventsStoreService, private eventBus: EventBusService) {}
   async execute({ roomId, userId }: LeaveRoomCommand): Promise<Result> {
     try {
-      const userLeftRoomEventt = new UserLeftRoomEvent(userId, roomId);
-      await this.roomStore.save(userLeftRoomEventt);
-      await this.eventBus.emitRoomEvent(userLeftRoomEventt);
+      const userLeftRoomEvent = new UserLeftRoomEvent(userId, roomId);
+      await this.roomStore.save(userLeftRoomEvent);
+      await this.eventBus.emitRoomEvent(userLeftRoomEvent);
       const newRoomItemEvent = new AnnouncementCreatedEvent(userId + ' left room', roomId, userId);
       await this.roomStore.save(newRoomItemEvent);
       await this.eventBus.emitRoomEvent(newRoomItemEvent);

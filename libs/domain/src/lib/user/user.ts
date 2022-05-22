@@ -1,5 +1,6 @@
 import { Expose } from 'class-transformer';
-import { Entity, Guard } from '../common';
+import { Entity } from '../common';
+
 interface UserProps {
   name: string;
   imageUrl: string;

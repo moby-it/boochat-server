@@ -11,7 +11,9 @@ export function fromDocumentToEntity(document: PollDocument, meetupId: MeetupId)
     pollChoices: document.pollChoices,
     status: document.status,
     type: document.type,
-    votes: document.votes.map((vote) => new PollVote({ pollId: document.id, userId: vote.userId, choiceIndex: vote.choiceIndex }))
+    votes: document.votes.map(
+      (vote) => new PollVote({ pollId: document.id, userId: vote.userId, choiceIndex: vote.choiceIndex })
+    )
   };
   return Poll.create(props, document._id);
 }
