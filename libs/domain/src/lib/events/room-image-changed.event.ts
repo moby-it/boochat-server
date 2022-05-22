@@ -6,7 +6,7 @@ export class RoomImageChangedEvent extends BaseEvent {
   createdAt: Date;
   constructor(public readonly userId: string, public readonly roomId: RoomId, public readonly imageUrl: string) {
     super();
-    this.type = MeetupEventEnum.USER_CHANGED_ROOM_IMAGE;
+    this.type = MeetupEventEnum.USER_CHANGED_MEETUP_IMAGE;
     this.createdAt = new Date();
   }
 }

@@ -23,7 +23,7 @@ export class MeetupEventsController {
   async pollClosed(event: PollClosedEvent) {
     await this.eventBus.publish(plainToInstance(PollClosedEvent, event));
   }
-  @EventPattern(MeetupEventEnum[MeetupEventEnum.USER_CHANGED_ROOM_IMAGE])
+  @EventPattern(MeetupEventEnum[MeetupEventEnum.USER_CHANGED_MEETUP_IMAGE])
   async changedRoomImage(event: RoomImageChangedEvent) {
     await this.eventBus.publish(plainToInstance(RoomImageChangedEvent, event));
   }

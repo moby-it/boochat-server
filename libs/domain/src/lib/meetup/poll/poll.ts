@@ -1,6 +1,6 @@
 import { Expose } from 'class-transformer';
 import { Entity, MeetupId, GoogleId } from '../../common';
-import { PollVote } from './vote';
+import { PollVote } from './poll-vote';
 export enum PollTypeEnum {
   GENERIC_POLL,
   RESCHEDULE_POLL,

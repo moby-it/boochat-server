@@ -4,7 +4,7 @@ export abstract class BaseEvent {
   public abstract readonly type: number;
   public abstract readonly userId: string;
   public abstract readonly createdAt: Date;
-  constructor() {
+  protected constructor() {
     this._id = uuid();
   }
   get id() {

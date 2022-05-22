@@ -1,3 +1,3 @@
 export * from './poll';
-export * from './vote';
+export * from './poll-vote';
 export * from './dtos';
