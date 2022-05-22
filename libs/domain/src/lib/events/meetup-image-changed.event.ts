@@ -1,7 +1,7 @@
 import { BaseEvent, RoomId } from '../common';
 import { MeetupEventEnum } from '../meetup';
 
-export class RoomImageChangedEvent extends BaseEvent {
+export class MeetupImageChangedEvent extends BaseEvent {
   type: number;
   createdAt: Date;
   constructor(public readonly userId: string, public readonly roomId: RoomId, public readonly imageUrl: string) {

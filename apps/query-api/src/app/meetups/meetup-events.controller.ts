@@ -4,7 +4,7 @@ import {
   PollClosedEvent,
   PollCreatedEvent,
   PollVoteEvent,
-  RoomImageChangedEvent,
+  MeetupImageChangedEvent,
   RsvpChangedEvent
 } from '@boochat/domain';
 import { Controller } from '@nestjs/common';
@@ -24,8 +24,8 @@ export class MeetupEventsController {
     await this.eventBus.publish(plainToInstance(PollClosedEvent, event));
   }
   @EventPattern(MeetupEventEnum[MeetupEventEnum.USER_CHANGED_MEETUP_IMAGE])
-  async changedRoomImage(event: RoomImageChangedEvent) {
-    await this.eventBus.publish(plainToInstance(RoomImageChangedEvent, event));
+  async changedRoomImage(event: MeetupImageChangedEvent) {
+    await this.eventBus.publish(plainToInstance(MeetupImageChangedEvent, event));
   }
   @EventPattern(MeetupEventEnum[MeetupEventEnum.USER_CHANGED_RSVP])
   async changedRsvp(event: RsvpChangedEvent) {

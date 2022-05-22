@@ -1,10 +1,10 @@
-import { RoomImageChangedEvent } from '@boochat/domain';
+import { MeetupImageChangedEvent } from '@boochat/domain';
 import { RoomsRepository } from '@boochat/persistence/read-db';
 import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
-@EventsHandler(RoomImageChangedEvent)
-export class UserChangedRoomImageEventHandler implements IEventHandler<RoomImageChangedEvent> {
+@EventsHandler(MeetupImageChangedEvent)
+export class UserChangedRoomImageEventHandler implements IEventHandler<MeetupImageChangedEvent> {
   constructor(private repository: RoomsRepository) {}
-  async handle(event: RoomImageChangedEvent): Promise<void> {
+  async handle(event: MeetupImageChangedEvent): Promise<void> {
     await this.repository.updateRoomImage(event.imageUrl, event.imageUrl);
   }
 }

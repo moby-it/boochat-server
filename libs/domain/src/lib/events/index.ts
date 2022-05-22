@@ -7,7 +7,7 @@ export * from './meetup-created.event';
 export * from './rsvp-changed.event';
 export * from './poll-created.event';
 export * from './poll-vote.event';
-export * from './room-image-changed.event';
+export * from './meetup-image-changed.event';
 export * from './poll-closed.event';
 export * from './announcement-created.event';
 export * from './user-connected.event';
