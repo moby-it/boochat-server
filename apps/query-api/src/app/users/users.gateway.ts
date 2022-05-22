@@ -1,21 +1,11 @@
-import {
-  ActiveUsersService,
-  AuthService,
-  PushNotificationService,
-  WsJwtGuard,
-  WsServer
-} from '@boochat/application';
-import { UserClosedRoomEvent, UserConnectedEvent, GoogleId } from '@boochat/domain';
+import { ActiveUsersService, AuthService, PushNotificationService, WsJwtGuard, WsServer } from '@boochat/application';
+import { UserClosedRoomEvent, UserConnectedEvent } from '@boochat/domain';
 import { QuerySocketEventsEnum } from '@boochat/shared';
 import { UseGuards } from '@nestjs/common';
 import { EventBus } from '@nestjs/cqrs';
-import {
-  OnGatewayConnection,
-  OnGatewayDisconnect,
-  WebSocketGateway,
-  WebSocketServer
-} from '@nestjs/websockets';
+import { OnGatewayConnection, OnGatewayDisconnect, WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
+
 @WebSocketGateway({
   cors: {
     origin: '*',

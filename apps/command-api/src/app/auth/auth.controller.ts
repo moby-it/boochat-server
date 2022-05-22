@@ -1,4 +1,4 @@
-import { AuthenticateCommand, AuthenticateCommandResult, AuthService } from '@boochat/application';
+import { AuthenticateCommand, AuthenticateCommandResult } from '@boochat/application';
 import { UserDto } from '@boochat/domain';
 import { AuthResponse } from '@boochat/shared';
 import {
