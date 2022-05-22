@@ -1,5 +1,4 @@
 {
-  "root": "apps/command-api",
   "sourceRoot": "apps/command-api/src",
   "projectType": "application",
   "targets": {
@@ -54,7 +53,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/apps/command-api"],
       "options": {
-        "jestConfig": "apps/command-api/jest.config.js",
+        "jestConfig": "apps/command-api/jest.config.ts",
         "passWithNoTests": true
       }
     }

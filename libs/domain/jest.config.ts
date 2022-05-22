@@ -1,15 +1,15 @@
-module.exports = {
-  displayName: 'application',
+/* eslint-disable */
+export default {
+  displayName: 'domain',
   preset: '../../jest.preset.js',
   globals: {
     'ts-jest': {
       tsconfig: '<rootDir>/tsconfig.spec.json'
     }
   },
-  testEnvironment: 'node',
   transform: {
     '^.+\\.[tj]sx?$': 'ts-jest'
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
-  coverageDirectory: '../../coverage/libs/application'
+  coverageDirectory: '../../coverage/libs/domain'
 };

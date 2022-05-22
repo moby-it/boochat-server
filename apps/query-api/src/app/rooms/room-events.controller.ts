@@ -24,7 +24,7 @@ export class RoomEventsController {
     await this.eventBus.publish(plainToInstance(MessageSentEvent, event));
   }
   @EventPattern(RoomEventEnum[RoomEventEnum.ANNOUNCEMENT_CREATED])
-  async annoucementCreated(event: AnnouncementCreatedEvent) {
+  async announcementCreated(event: AnnouncementCreatedEvent) {
     await this.eventBus.publish(plainToInstance(AnnouncementCreatedEvent, event));
   }
   @EventPattern(RoomEventEnum[RoomEventEnum.USER_CLOSED_ROOM])

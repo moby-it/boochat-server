@@ -1,6 +1,7 @@
-module.exports = {
-  displayName: 'persistence-events-store',
-  preset: '../../../jest.preset.js',
+/* eslint-disable */
+export default {
+  displayName: 'query-api',
+  preset: '../../jest.preset.js',
   globals: {
     'ts-jest': {
       tsconfig: '<rootDir>/tsconfig.spec.json'
@@ -11,5 +12,5 @@ module.exports = {
     '^.+\\.[tj]s$': 'ts-jest'
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
-  coverageDirectory: '../../../coverage/libs/persistence/events-store'
+  coverageDirectory: '../../coverage/apps/query-api'
 };

@@ -1,5 +1,4 @@
 {
-  "root": "libs/persistence/events-store",
   "sourceRoot": "libs/persistence/events-store/src",
   "targets": {
     "lint": {
@@ -13,7 +12,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/persistence/events-store"],
       "options": {
-        "jestConfig": "libs/persistence/events-store/jest.config.js",
+        "jestConfig": "libs/persistence/events-store/jest.config.ts",
         "passWithNoTests": true
       }
     }

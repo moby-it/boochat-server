@@ -1,6 +1,7 @@
-module.exports = {
-  displayName: 'command-api',
-  preset: '../../jest.preset.js',
+/* eslint-disable */
+export default {
+  displayName: 'persistence-read-db',
+  preset: '../../../jest.preset.js',
   globals: {
     'ts-jest': {
       tsconfig: '<rootDir>/tsconfig.spec.json'
@@ -11,5 +12,5 @@ module.exports = {
     '^.+\\.[tj]s$': 'ts-jest'
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
-  coverageDirectory: '../../coverage/apps/command-api'
+  coverageDirectory: '../../../coverage/libs/persistence/read-db'
 };

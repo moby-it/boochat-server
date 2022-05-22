@@ -1,5 +1,4 @@
 {
-  "root": "apps/query-api",
   "sourceRoot": "apps/query-api/src",
   "projectType": "application",
   "targets": {
@@ -60,7 +59,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/apps/query-api"],
       "options": {
-        "jestConfig": "apps/query-api/jest.config.js",
+        "jestConfig": "apps/query-api/jest.config.ts",
         "passWithNoTests": true
       }
     }
