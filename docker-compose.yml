@@ -25,7 +25,6 @@ services:
       - 4444:4444
   rabbitmq:
     image: rabbitmq:3-management
-    restart: always
     container_name: rabbitmq
     hostname: event-bus
     ports:
@@ -33,7 +32,6 @@ services:
       - 8080:15672
   mongodb:
     image: mongo
-    restart: always
     container_name: mongo
     environment:
       - MONGO_INITDB_ROOT_USERNAME=gspanos
