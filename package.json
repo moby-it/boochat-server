@@ -53,7 +53,6 @@
     "@nestjs/platform-express": "^8.0.0",
     "@nestjs/platform-socket.io": "^8.2.6",
     "@nestjs/websockets": "^8.2.6",
-    "@reduxjs/toolkit": "^1.8.1",
     "amqp-connection-manager": "^4.1.1",
     "amqplib": "^0.8.0",
     "class-transformer": "^0.5.1",
