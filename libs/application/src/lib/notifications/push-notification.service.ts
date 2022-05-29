@@ -30,8 +30,9 @@ export class PushNotificationService {
     const registrationTokens = userIds
       .map((userId) => this.userIdRegistrationTokenMap.get(userId))
       .filter((v) => !!v) as string[];
-
-    await this.subscribeToTopic(registrationTokens, topic);
+    if (registrationTokens.length) {
+      await this.subscribeToTopic(registrationTokens, topic);
+    }
   }
   async addSubscription(userId: GoogleId, registrationToken: RegistrationToken) {
     const userRooms = await this.roomRepository.getRoomsByUserId(userId);
