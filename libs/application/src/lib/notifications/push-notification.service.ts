@@ -16,6 +16,7 @@ export class PushNotificationService {
         body: notification.message
       },
       android: {
+        collapseKey: room._id,
         notification: {
           sound: 'notification'
         }
