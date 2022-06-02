@@ -21,6 +21,7 @@ export class RoomController {
   @Get('getOne/:id')
   async getRoomById(@HttpToken() token: string, @Param('id') id: string): Promise<Room> {
     const userId = await this.authService.getUserId(token);
+    console.log(`User ${userId} requested room data with roomId ${id}`);
     this.activeUserService.userRoomsMap.set(userId, id);
     const result = (await this.queryBus.execute(
       new GetRoomWithItemsQuery(id)
