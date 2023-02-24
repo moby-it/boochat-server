@@ -1,15 +1,19 @@
 {
+  "name": "query-api",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/query-api/src",
   "projectType": "application",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:webpack",
+      "executor": "@nrwl/webpack:webpack",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/apps/query-api",
         "main": "apps/query-api/src/main.ts",
         "tsConfig": "apps/query-api/tsconfig.app.json",
-        "assets": ["apps/query-api/src/assets"]
+        "assets": ["apps/query-api/src/assets"],
+        "target": "node",
+        "compiler": "tsc"
       },
       "configurations": {
         "production": {
@@ -57,7 +61,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/query-api"],
+      "outputs": ["{workspaceRoot}/coverage/apps/query-api"],
       "options": {
         "jestConfig": "apps/query-api/jest.config.ts",
         "passWithNoTests": true

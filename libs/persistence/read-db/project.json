@@ -1,4 +1,6 @@
 {
+  "name": "persistence-read-db",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/persistence/read-db/src",
   "targets": {
     "lint": {
@@ -10,7 +12,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/persistence/read-db"],
+      "outputs": ["{workspaceRoot}/coverage/libs/persistence/read-db"],
       "options": {
         "jestConfig": "libs/persistence/read-db/jest.config.ts",
         "passWithNoTests": true

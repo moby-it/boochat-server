@@ -1,15 +1,19 @@
 {
+  "name": "command-api",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/command-api/src",
   "projectType": "application",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:webpack",
+      "executor": "@nrwl/webpack:webpack",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/apps/command-api",
         "main": "apps/command-api/src/main.ts",
         "tsConfig": "apps/command-api/tsconfig.app.json",
-        "assets": ["apps/command-api/src/assets"]
+        "assets": ["apps/command-api/src/assets"],
+        "target": "node",
+        "compiler": "tsc"
       },
       "configurations": {
         "production": {
@@ -51,7 +55,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/command-api"],
+      "outputs": ["{workspaceRoot}/coverage/apps/command-api"],
       "options": {
         "jestConfig": "apps/command-api/jest.config.ts",
         "passWithNoTests": true

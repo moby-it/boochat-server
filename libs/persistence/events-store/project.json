@@ -1,4 +1,6 @@
 {
+  "name": "persistence-events-store",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/persistence/events-store/src",
   "targets": {
     "lint": {
@@ -10,7 +12,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/persistence/events-store"],
+      "outputs": ["{workspaceRoot}/coverage/libs/persistence/events-store"],
       "options": {
         "jestConfig": "libs/persistence/events-store/jest.config.ts",
         "passWithNoTests": true
