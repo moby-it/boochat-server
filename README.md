@@ -6,7 +6,7 @@ The project is inspired by ideas from [Event-driven Architecture](https://en.wik
 # How to run
 
 1. Make sure you have docker installed on your machine, with docker-compose. [Install guide](https://docs.docker.com/engine/)
-2. Create three copies of the file `.env.example` and name them `.env`, `.docker.env` and `.local.env`. The local env file should have the variables that affect the local serve of the app. The .docker.env file relates to the docker stack and its variables. Τhe `.env` file should have the variables that affect the release app. The .env.example file is a valid .docker.env file, so that should work out of the box.
+2. Create two copies of the file `.env.example` and name them `.env` and `.local.env`. The local env file should have the variables that affect the local serve of the app. The already existing .docker.env file relates to the docker stack and its variables. Τhe `.env` file should have the variables that affect the release app. The .env.example file is a valid .docker.env file, so that should work out of the box.
 3. Run `docker-compose up -d` inside the root directory of the project.
 4. For watching logs, run `docker-compose logs --follow`
 
