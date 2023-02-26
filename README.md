@@ -7,8 +7,9 @@ The project is inspired by ideas from [Event-driven Architecture](https://en.wik
 
 1. Make sure you have docker installed on your machine, with docker-compose. [Install guide](https://docs.docker.com/engine/)
 2. Create two copies of the file `.env.example` and name them `.env` and `.local.env`. The local env file should have the variables that affect the local serve of the app. The already existing .docker.env file relates to the docker stack and its variables. Τhe `.env` file should have the variables that affect the release app. The .env.example file is a valid .docker.env file, so that should work out of the box.
-3. Run `docker-compose up -d` inside the root directory of the project.
-4. For watching logs, run `docker-compose logs --follow`
+3. The app has the potential serve push notifications to android devices leveraging Firebase Cloud messaging. Follow the instruction on how to set this up [here](https://firebase.google.com/docs/admin/setup) and remember to update the respective .env files with `GOOGLE_APPLICATION_CREDENTIALS`.
+4. Run `docker-compose up -d` inside the root directory of the project.
+5. For watching logs, run `docker-compose logs --follow`
 
 You should a working local version of the whole stack.
 
