@@ -1,6 +1,7 @@
 # Project Description
 
-Boochat is a chat and meetups application developed as a hobby for my friends. This repository refers to the server implementation monorepo. For the ui repository check [here](https://github.com/moby-it/boochat-ui)
+Boochat is a chat and meetups application developed as a hobby for my friends. This repository refers to the server implementation monorepo. For the ui repository check [here](https://github.com/moby-it/boochat-ui).
+
 The project is inspired by ideas from [Event-driven Architecture](https://en.wikipedia.org/wiki/Event-driven_architecture) and [Event Sourcing](https://martinfowler.com/eaaDev/EventSourcing.html).
 
 # How to run
